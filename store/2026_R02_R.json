@@ -1,0 +1,724 @@
+{
+  "circuit_name": "China",
+  "circuit_type": "power",
+  "race_round": 2,
+  "year": 2026,
+  "session_type": "R",
+  "fingerprints": [
+    {
+      "driver_code": "ANT",
+      "team": "Mercedes",
+      "pu_name": "Mercedes",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 96.176,
+      "lap_time_rank": 1,
+      "lap_time_gap_pct": 0.0,
+      "straight_speed_delta_kph": 0.0,
+      "braking_speed_delta_kph": 0.0,
+      "corner_speed_delta_kph": 0.0,
+      "braking_harvest_ratio": 1.0,
+      "straight_deploy_ratio": 0.85,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.9671163228761736,
+      "time_lost_braking_s": 0.43959832858007886,
+      "time_lost_corners_s": 0.35167866286406313,
+      "time_lost_total_s": 1.7583933143203154,
+      "completed_race": true,
+      "laps_completed": 56,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "RUS",
+      "team": "Mercedes",
+      "pu_name": "Mercedes",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 96.207,
+      "lap_time_rank": 2,
+      "lap_time_gap_pct": 0.032232573615030465,
+      "straight_speed_delta_kph": -5.23204432686254,
+      "braking_speed_delta_kph": 12.315946265005408,
+      "corner_speed_delta_kph": -16.565026866985388,
+      "braking_harvest_ratio": 0.9615160479513553,
+      "straight_deploy_ratio": 0.8338017203502708,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.26969152686096565,
+      "time_lost_braking_s": 0.6348391078977533,
+      "time_lost_corners_s": 0.8538626795100507,
+      "time_lost_total_s": 1.7583933142687695,
+      "completed_race": true,
+      "laps_completed": 56,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "HAM",
+      "team": "Ferrari",
+      "pu_name": "Ferrari",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 96.771,
+      "lap_time_rank": 3,
+      "lap_time_gap_pct": 0.6186574613209105,
+      "straight_speed_delta_kph": -4.366607559156502,
+      "braking_speed_delta_kph": 0.3669853294853343,
+      "corner_speed_delta_kph": -11.101100336431452,
+      "braking_harvest_ratio": 0.9882315768652372,
+      "straight_deploy_ratio": 0.8364810911481223,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.48489815550316157,
+      "time_lost_braking_s": 0.040752576674999694,
+      "time_lost_corners_s": 1.2327425820311073,
+      "time_lost_total_s": 1.7583933142092685,
+      "completed_race": true,
+      "laps_completed": 56,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "LEC",
+      "team": "Ferrari",
+      "pu_name": "Ferrari",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 96.877,
+      "lap_time_rank": 4,
+      "lap_time_gap_pct": 0.7288720678755546,
+      "straight_speed_delta_kph": -5.499721788290003,
+      "braking_speed_delta_kph": 0.1010009852751826,
+      "corner_speed_delta_kph": -4.62705208053063,
+      "braking_harvest_ratio": 0.9393040164826787,
+      "straight_deploy_ratio": 0.8329729975594736,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.9455305929356335,
+      "time_lost_braking_s": 0.017364427723901232,
+      "time_lost_corners_s": 0.7954982934888571,
+      "time_lost_total_s": 1.7583933141483918,
+      "completed_race": true,
+      "laps_completed": 56,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "BEA",
+      "team": "Haas",
+      "pu_name": "Ferrari",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 97.496,
+      "lap_time_rank": 5,
+      "lap_time_gap_pct": 1.3724837797371414,
+      "straight_speed_delta_kph": -4.517181542706278,
+      "braking_speed_delta_kph": -0.24548692860096188,
+      "corner_speed_delta_kph": -3.637197305349213,
+      "braking_harvest_ratio": 1.0191485873381838,
+      "straight_deploy_ratio": 0.8360149178244387,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.9456081840490939,
+      "time_lost_braking_s": 0.0513892228079617,
+      "time_lost_corners_s": 0.761395907253924,
+      "time_lost_total_s": 1.7583933141109795,
+      "completed_race": true,
+      "laps_completed": 56,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "VER",
+      "team": "Red Bull",
+      "pu_name": "RedBullFord",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 97.869,
+      "lap_time_rank": 7,
+      "lap_time_gap_pct": 1.76031442355681,
+      "straight_speed_delta_kph": -6.6903480574456795,
+      "braking_speed_delta_kph": 5.3467993426326785,
+      "corner_speed_delta_kph": -16.8021629772937,
+      "braking_harvest_ratio": 1.0254017438676721,
+      "straight_deploy_ratio": 0.8292868481193632,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.40792457032921847,
+      "time_lost_braking_s": 0.32600558382798184,
+      "time_lost_corners_s": 1.024463160102143,
+      "time_lost_total_s": 1.7583933142593433,
+      "completed_race": true,
+      "laps_completed": 45,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "HAD",
+      "team": "Red Bull",
+      "pu_name": "RedBullFord",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 98.006,
+      "lap_time_rank": 8,
+      "lap_time_gap_pct": 1.9027616037264998,
+      "straight_speed_delta_kph": -1.3270028405710548,
+      "braking_speed_delta_kph": -3.229248891748886,
+      "corner_speed_delta_kph": -18.322636843481522,
+      "braking_harvest_ratio": 1.0443954793203858,
+      "straight_deploy_ratio": 0.8458916320725354,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.10198891065496091,
+      "time_lost_braking_s": 0.24818905177435727,
+      "time_lost_corners_s": 1.408215351814141,
+      "time_lost_total_s": 1.7583933142434591,
+      "completed_race": true,
+      "laps_completed": 56,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "HUL",
+      "team": "Audi",
+      "pu_name": "Audi",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 98.064,
+      "lap_time_rank": 9,
+      "lap_time_gap_pct": 1.9630677091997908,
+      "straight_speed_delta_kph": -3.3869272073919725,
+      "braking_speed_delta_kph": 1.0862124531242219,
+      "corner_speed_delta_kph": -7.123408377560547,
+      "braking_harvest_ratio": 1.0314496865136715,
+      "straight_deploy_ratio": 0.8395141572526564,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.5135623236759145,
+      "time_lost_braking_s": 0.16470321246193576,
+      "time_lost_corners_s": 1.0801277780308345,
+      "time_lost_total_s": 1.7583933141686847,
+      "completed_race": true,
+      "laps_completed": 55,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "OCO",
+      "team": "Haas",
+      "pu_name": "Ferrari",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 98.068,
+      "lap_time_rank": 10,
+      "lap_time_gap_pct": 1.9672267509565755,
+      "straight_speed_delta_kph": -1.706039206226606,
+      "braking_speed_delta_kph": -11.715002852993042,
+      "corner_speed_delta_kph": -3.1127249254968894,
+      "braking_harvest_ratio": 0.9257303019793997,
+      "straight_deploy_ratio": 0.8447181448723634,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.18144007574249685,
+      "time_lost_braking_s": 1.245909822712652,
+      "time_lost_corners_s": 0.33104341575881524,
+      "time_lost_total_s": 1.758393314213964,
+      "completed_race": true,
+      "laps_completed": 55,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "COL",
+      "team": "Alpine",
+      "pu_name": "Mercedes",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 98.07,
+      "lap_time_rank": 11,
+      "lap_time_gap_pct": 1.9693062718349599,
+      "straight_speed_delta_kph": -3.1500681712976757,
+      "braking_speed_delta_kph": -6.351057251715143,
+      "corner_speed_delta_kph": -12.670408534093305,
+      "braking_harvest_ratio": 0.9441807021293779,
+      "straight_deploy_ratio": 0.8402474669619266,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.24982749603745494,
+      "time_lost_braking_s": 0.5036934580793163,
+      "time_lost_corners_s": 1.0048723601242355,
+      "time_lost_total_s": 1.7583933142410069,
+      "completed_race": true,
+      "laps_completed": 55,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "LAW",
+      "team": "VCARB",
+      "pu_name": "RedBullFord",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 98.084,
+      "lap_time_rank": 12,
+      "lap_time_gap_pct": 1.983862917983698,
+      "straight_speed_delta_kph": -5.408127271695487,
+      "braking_speed_delta_kph": 1.8219593677927055,
+      "corner_speed_delta_kph": -22.253299655185945,
+      "braking_harvest_ratio": 0.994792242507898,
+      "straight_deploy_ratio": 0.8332565719142554,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.322541472752673,
+      "time_lost_braking_s": 0.1086619134980441,
+      "time_lost_corners_s": 1.3271899280099582,
+      "time_lost_total_s": 1.7583933142606751,
+      "completed_race": true,
+      "laps_completed": 56,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "LIN",
+      "team": "VCARB",
+      "pu_name": "RedBullFord",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 98.321,
+      "lap_time_rank": 13,
+      "lap_time_gap_pct": 2.2302861420728624,
+      "straight_speed_delta_kph": -4.1257402143084265,
+      "braking_speed_delta_kph": 5.1654711029711065,
+      "corner_speed_delta_kph": -20.925886885412424,
+      "braking_harvest_ratio": 1.0114363213924784,
+      "straight_deploy_ratio": 0.8372268104820172,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.24008506576505148,
+      "time_lost_braking_s": 0.3005890834239476,
+      "time_lost_corners_s": 1.2177191650731245,
+      "time_lost_total_s": 1.7583933142621235,
+      "completed_race": true,
+      "laps_completed": 55,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "BOT",
+      "team": "Cadillac",
+      "pu_name": "Ferrari",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 99.768,
+      "lap_time_rank": 15,
+      "lap_time_gap_pct": 3.734819497587755,
+      "straight_speed_delta_kph": -10.457973259041472,
+      "braking_speed_delta_kph": 0.27625661375662325,
+      "corner_speed_delta_kph": -17.790531026571887,
+      "braking_harvest_ratio": 1.0152494907256273,
+      "straight_deploy_ratio": 0.8176223738110171,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.6446760526501257,
+      "time_lost_braking_s": 0.017029688149291913,
+      "time_lost_corners_s": 1.0966875734592536,
+      "time_lost_total_s": 1.7583933142586712,
+      "completed_race": true,
+      "laps_completed": 55,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "PER",
+      "team": "Cadillac",
+      "pu_name": "Ferrari",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 99.799,
+      "lap_time_rank": 16,
+      "lap_time_gap_pct": 3.7670520712027997,
+      "straight_speed_delta_kph": -1.4575778211460364,
+      "braking_speed_delta_kph": -17.92686029475245,
+      "corner_speed_delta_kph": 3.189949078177073,
+      "braking_harvest_ratio": 0.7769032948644828,
+      "straight_deploy_ratio": 0.8454873751667306,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.1135355335964053,
+      "time_lost_braking_s": 1.3963821483456893,
+      "time_lost_corners_s": 0.24847563230032763,
+      "time_lost_total_s": 1.7583933142424222,
+      "completed_race": true,
+      "laps_completed": 55,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "ALO",
+      "team": "Aston Martin",
+      "pu_name": "Honda",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 100.356,
+      "lap_time_rank": 17,
+      "lap_time_gap_pct": 4.346198635834296,
+      "straight_speed_delta_kph": -8.779349839976874,
+      "braking_speed_delta_kph": -16.783303090985598,
+      "corner_speed_delta_kph": -5.227279738702851,
+      "braking_harvest_ratio": 0.7967351256143185,
+      "straight_deploy_ratio": 0.8228193503406288,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.5013830406132189,
+      "time_lost_braking_s": 0.9584836791643058,
+      "time_lost_corners_s": 0.29852659448568136,
+      "time_lost_total_s": 1.758393314263206,
+      "completed_race": true,
+      "laps_completed": 32,
+      "source": "FastF1",
+      "confidence": 1.0
+    },
+    {
+      "driver_code": "STR",
+      "team": "Aston Martin",
+      "pu_name": "Honda",
+      "circuit_name": "China",
+      "circuit_type": "power",
+      "race_round": 2,
+      "year": 2026,
+      "session_type": "R",
+      "lap_time_s": 100.956,
+      "lap_time_rank": 18,
+      "lap_time_gap_pct": 4.970054899351191,
+      "straight_speed_delta_kph": -14.003044507237723,
+      "braking_speed_delta_kph": 1.4537625901131672,
+      "corner_speed_delta_kph": -21.368611508508728,
+      "braking_harvest_ratio": 0.8712315802419008,
+      "straight_deploy_ratio": 0.8066469210302237,
+      "corner_deploy_ratio": 0.85,
+      "time_lost_straights_s": 0.6686376088354915,
+      "time_lost_braking_s": 0.06941635739037624,
+      "time_lost_corners_s": 1.0203393480466985,
+      "time_lost_total_s": 1.7583933142725663,
+      "completed_race": false,
+      "laps_completed": 10,
+      "source": "FastF1",
+      "confidence": 0.6
+    }
+  ],
+  "stint_data": {
+    "ANT": [
+      {
+        "stint": 1,
+        "compound": "MEDIUM",
+        "avg_pace": 97.3155,
+        "stint_length": 4,
+        "degradation_rate": 0.04619999999999978
+      },
+      {
+        "stint": 2,
+        "compound": "HARD",
+        "avg_pace": 96.1037027027027,
+        "stint_length": 37,
+        "degradation_rate": -0.02678307662667208
+      }
+    ],
+    "RUS": [
+      {
+        "stint": 1,
+        "compound": "MEDIUM",
+        "avg_pace": 97.34939999999999,
+        "stint_length": 5,
+        "degradation_rate": -0.05110000000000992
+      },
+      {
+        "stint": 2,
+        "compound": "HARD",
+        "avg_pace": 96.12582857142857,
+        "stint_length": 35,
+        "degradation_rate": -0.03464823218559638
+      }
+    ],
+    "HAM": [
+      {
+        "stint": 1,
+        "compound": "MEDIUM",
+        "avg_pace": 98.02380000000001,
+        "stint_length": 5,
+        "degradation_rate": 0.14369999999999128
+      },
+      {
+        "stint": 2,
+        "compound": "HARD",
+        "avg_pace": 96.61250000000001,
+        "stint_length": 34,
+        "degradation_rate": -0.022319373709565795
+      }
+    ],
+    "LEC": [
+      {
+        "stint": 1,
+        "compound": "MEDIUM",
+        "avg_pace": 97.98339999999999,
+        "stint_length": 5,
+        "degradation_rate": 0.019199999999989722
+      },
+      {
+        "stint": 2,
+        "compound": "HARD",
+        "avg_pace": 96.77827777777779,
+        "stint_length": 36,
+        "degradation_rate": -0.023183716965047996
+      }
+    ],
+    "BEA": [
+      {
+        "stint": 1,
+        "compound": "MEDIUM",
+        "avg_pace": 99.21825000000001,
+        "stint_length": 4,
+        "degradation_rate": 0.05089999999999523
+      },
+      {
+        "stint": 2,
+        "compound": "HARD",
+        "avg_pace": 97.27684375000001,
+        "stint_length": 32,
+        "degradation_rate": -0.02763329285471429
+      }
+    ],
+    "GAS": [
+      {
+        "stint": 1,
+        "compound": "MEDIUM",
+        "avg_pace": 98.48859999999999,
+        "stint_length": 5,
+        "degradation_rate": 0.039899999999988285
+      },
+      {
+        "stint": 2,
+        "compound": "HARD",
+        "avg_pace": 97.46874999999999,
+        "stint_length": 36,
+        "degradation_rate": -0.06099471504378945
+      }
+    ],
+    "LAW": [
+      {
+        "stint": 1,
+        "compound": "MEDIUM",
+        "avg_pace": 99.788,
+        "stint_length": 4,
+        "degradation_rate": -0.033200000000011096
+      },
+      {
+        "stint": 2,
+        "compound": "HARD",
+        "avg_pace": 97.95058333333333,
+        "stint_length": 36,
+        "degradation_rate": -0.0509675786435473
+      }
+    ],
+    "HAD": [
+      {
+        "stint": 2,
+        "compound": "HARD",
+        "avg_pace": 98.57300000000001,
+        "stint_length": 5,
+        "degradation_rate": 0.0075999999999926075
+      },
+      {
+        "stint": 3,
+        "compound": "HARD",
+        "avg_pace": 97.9265,
+        "stint_length": 32,
+        "degradation_rate": -0.022673852347250754
+      }
+    ],
+    "SAI": [
+      {
+        "stint": 1,
+        "compound": "MEDIUM",
+        "avg_pace": 100.10900000000001,
+        "stint_length": 4,
+        "degradation_rate": 0.0969999999999858
+      },
+      {
+        "stint": 2,
+        "compound": "HARD",
+        "avg_pace": 98.58467647058824,
+        "stint_length": 34,
+        "degradation_rate": -0.02922076210064254
+      }
+    ],
+    "COL": [
+      {
+        "stint": 1,
+        "compound": "HARD",
+        "avg_pace": 98.75278947368419,
+        "stint_length": 19,
+        "degradation_rate": -0.027559496284062356
+      },
+      {
+        "stint": 2,
+        "compound": "MEDIUM",
+        "avg_pace": 97.25576470588236,
+        "stint_length": 17,
+        "degradation_rate": 0.04410647405029571
+      }
+    ],
+    "HUL": [
+      {
+        "stint": 1,
+        "compound": "HARD",
+        "avg_pace": 98.7273,
+        "stint_length": 20,
+        "degradation_rate": -0.03812467787458439
+      },
+      {
+        "stint": 2,
+        "compound": "MEDIUM",
+        "avg_pace": 97.1325,
+        "stint_length": 16,
+        "degradation_rate": 0.07384533462422761
+      }
+    ],
+    "LIN": [
+      {
+        "stint": 1,
+        "compound": "HARD",
+        "avg_pace": 98.95132142857142,
+        "stint_length": 28,
+        "degradation_rate": -0.03513657427271948
+      },
+      {
+        "stint": 2,
+        "compound": "MEDIUM",
+        "avg_pace": 96.584,
+        "stint_length": 11,
+        "degradation_rate": 0.1346582109479291
+      }
+    ],
+    "BOT": [
+      {
+        "stint": 1,
+        "compound": "MEDIUM",
+        "avg_pace": 101.03119999999998,
+        "stint_length": 5,
+        "degradation_rate": 0.08859999999999327
+      },
+      {
+        "stint": 2,
+        "compound": "HARD",
+        "avg_pace": 99.60702941176471,
+        "stint_length": 34,
+        "degradation_rate": -0.021263562420714973
+      }
+    ],
+    "OCO": [
+      {
+        "stint": 1,
+        "compound": "HARD",
+        "avg_pace": 98.894,
+        "stint_length": 16,
+        "degradation_rate": -0.019492718255531324
+      },
+      {
+        "stint": 2,
+        "compound": "MEDIUM",
+        "avg_pace": 97.9903076923077,
+        "stint_length": 13,
+        "degradation_rate": 0.07144782608695732
+      },
+      {
+        "stint": 3,
+        "compound": "SOFT",
+        "avg_pace": 96.42814285714287,
+        "stint_length": 7,
+        "degradation_rate": -0.05481164383561552
+      }
+    ],
+    "PER": [
+      {
+        "stint": 1,
+        "compound": "MEDIUM",
+        "avg_pace": 100.889,
+        "stint_length": 4,
+        "degradation_rate": 0.07360000000000083
+      },
+      {
+        "stint": 2,
+        "compound": "HARD",
+        "avg_pace": 99.70334375,
+        "stint_length": 32,
+        "degradation_rate": -0.021042306927598658
+      }
+    ],
+    "VER": [
+      {
+        "stint": 1,
+        "compound": "SOFT",
+        "avg_pace": 99.45675,
+        "stint_length": 4,
+        "degradation_rate": 0.0016999999999974783
+      },
+      {
+        "stint": 2,
+        "compound": "HARD",
+        "avg_pace": 97.53063636363639,
+        "stint_length": 22,
+        "degradation_rate": -0.0453822926521604
+      }
+    ],
+    "ALO": [
+      {
+        "stint": 1,
+        "compound": "HARD",
+        "avg_pace": 100.4815,
+        "stint_length": 18,
+        "degradation_rate": -0.08366582809224414
+      }
+    ],
+    "STR": [
+      {
+        "stint": 1,
+        "compound": "HARD",
+        "avg_pace": 100.9505,
+        "stint_length": 4,
+        "degradation_rate": -0.027257142857134306
+      }
+    ]
+  }
+}

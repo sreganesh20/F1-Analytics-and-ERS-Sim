@@ -1,0 +1,90 @@
+[
+  {
+    "round": 1,
+    "circuit": "Australia",
+    "date": "2026-03-08",
+    "headline": "Russell opens 2026 as Mercedes announce their dominance",
+    "body": "George Russell took a composed victory in Melbourne, with Antonelli P2 and Leclerc P3. The result announced an early pecking order: Mercedes comfortably ahead, Ferrari closest challenger, Red Bull's RB22 struggling with the rear instability and tyre graining that would define their first half of the season. Aston Martin already showing the chassis deficit that would force their B-spec programme.",
+    "tags": ["Mercedes", "Russell", "season opener", "Red Bull"]
+  },
+  {
+    "round": 2,
+    "circuit": "China",
+    "date": "2026-03-15",
+    "headline": "Antonelli wins race, Russell takes sprint — Mercedes clean sweep in Shanghai",
+    "body": "Sprint weekend in Shanghai delivered a full Mercedes lockout. Russell claimed the sprint race, Antonelli took the Grand Prix, with Hamilton P3. Ferrari remained competitive but the gap at China's long back straight highlighted the early Mercedes ERS deployment advantage. Red Bull's rotating rear wing debuted testing but didn't fire in race conditions.",
+    "tags": ["Mercedes", "Antonelli", "Russell", "Sprint", "China"]
+  },
+  {
+    "round": 3,
+    "circuit": "Japan",
+    "date": "2026-03-29",
+    "headline": "Antonelli wins Suzuka — FIA introduces one-off superclip restriction",
+    "body": "Antonelli won at Suzuka, his second consecutive race victory. The FIA introduced a one-off restriction on superclip duration — reduced from 10 seconds to 6 seconds per lap — following safety concerns around excessive closing speeds into braking zones, particularly after Bearman's incident in practice. Piastri was P2, Leclerc P3. McLaren showed signs of the pace that their Miami upgrade would unlock.",
+    "tags": ["Antonelli", "Japan", "FIA", "superclip", "McLaren"]
+  },
+  {
+    "round": 4,
+    "circuit": "Miami",
+    "date": "2026-05-03",
+    "headline": "Antonelli wins Miami — Ferrari, Red Bull and McLaren transform their cars overnight",
+    "body": "Miami was the development flashpoint of 2026. Ferrari brought 11 new parts — the largest upgrade package of any team — McLaren and Red Bull each introduced 7. Mercedes held back, saving their major package for Canada. Despite the surge, Antonelli won the race as Mercedes retained overall edge. Norris took sprint pole — the first non-Mercedes pole of the season — and McLaren won the sprint 1-2. The formalised per-circuit harvest limits and increased superclip ceiling to 350kW came into effect here.",
+    "tags": ["Miami", "Antonelli", "upgrades", "McLaren", "Ferrari", "Red Bull", "regulations"]
+  },
+  {
+    "round": 5,
+    "circuit": "Canada",
+    "date": "2026-05-25",
+    "headline": "Antonelli makes it five straight — Mercedes Canada package arrives",
+    "body": "Mercedes unleashed the upgrade they had held back from Miami and Antonelli converted it to a fifth consecutive race win. Canada introduced the first Sprint weekend for the circuit. The 6MJ qualifying harvest limit reflected Montreal's limited braking zones — among the lowest on the calendar. Russell took the Canada sprint but retired from the main race.",
+    "tags": ["Canada", "Antonelli", "Mercedes", "Sprint", "harvest limit"]
+  },
+  {
+    "round": 6,
+    "circuit": "Monaco",
+    "date": "2026-06-07",
+    "headline": "Antonelli wins Monaco — compression rule changes F1's power equation",
+    "body": "The Monaco Grand Prix was the pivotal regulatory moment of 2026. Antonelli won to make it six race victories, but the bigger story was off-track: the FIA's compression ratio hot-test rule came into effect from 1 June, closing the loophole that had given Mercedes a measurable advantage in qualifying. ADUO results were also revealed on race day: Red Bull-Ford holds the benchmark ICE. Mercedes get 1 upgrade allocation, Ferrari, Honda, and Audi each get 2. Monaco also confirmed the highest harvest limit on the calendar — 9MJ — reflecting the circuit's extensive braking zones.",
+    "tags": ["Monaco", "Antonelli", "compression rule", "ADUO", "regulations", "harvest limit"]
+  },
+  {
+    "round": 7,
+    "circuit": "Spain",
+    "date": "2026-06-14",
+    "headline": "Hamilton wins in Barcelona — Ferrari's development pace begins to show",
+    "body": "Lewis Hamilton took Ferrari's first win of 2026 in Barcelona-Catalunya, ending Mercedes' six-race winning streak. The result reflected the gap closing after Monaco's compression rule change — and Ferrari's impressive development rate since Miami. Hamilton's race management and Ferrari's tyre strategy on a circuit that rewards mechanical grip put them ahead of a Mercedes that had lost its qualifying edge.",
+    "tags": ["Ferrari", "Hamilton", "Barcelona", "first win", "compression rule effect"]
+  },
+  {
+    "round": 8,
+    "circuit": "Austria",
+    "date": "2026-06-28",
+    "headline": "Russell wins Red Bull Ring — Mercedes reclaims the top step",
+    "body": "George Russell won at the Red Bull Ring, restoring Mercedes to the top of the podium. Austria's 6MJ qualifying harvest limit — among the lowest of the post-Miami circuits — compressed the field. Red Bull showed improved pace at their home circuit but still couldn't convert to a podium. Mercedes brought minor updates at Austria while Ferrari continued their development push.",
+    "tags": ["Mercedes", "Russell", "Austria", "Red Bull", "harvest limit"]
+  },
+  {
+    "round": 9,
+    "circuit": "Britain",
+    "date": "2026-07-05",
+    "headline": "Leclerc wins Silverstone — McLaren lead team on updates as sprint returns",
+    "body": "Charles Leclerc took Ferrari's second win of 2026 at Silverstone's high-speed circuit. McLaren led all teams in updates at the British Grand Prix — the biggest single-round improvement of their season to that point — with Norris winning the sprint race on Saturday. A 5-second time penalty for Antonelli for exceeding track limits dropped him from P2 to P4. Britain's 7.5MJ harvest limit reflected its balanced energy demands.",
+    "tags": ["Ferrari", "Leclerc", "Silverstone", "McLaren", "Sprint", "updates"]
+  },
+  {
+    "round": 10,
+    "circuit": "Belgium",
+    "date": "2026-07-19",
+    "headline": "Antonelli wins Spa — Belgium qualifying harvest limit cut from planned 8MJ to 7MJ",
+    "body": "Antonelli took his sixth and final win of the first half at Spa-Francorchamps. The Belgian GP confirmed a notable FIA intervention: qualifying harvest limit was reduced from the planned 8MJ to 7MJ ahead of the weekend. Race limit remained at 8.5MJ. Spa's famous Kemmel Straight created severe superclipping — cars visibly losing 30-50kph when batteries depleted. Aston Martin confirmed their Hungary B-spec package and Honda revealed an engine upgrade was coming within two races.",
+    "tags": ["Antonelli", "Belgium", "harvest limit", "Aston Martin", "Honda", "FIA"]
+  },
+  {
+    "round": 11,
+    "circuit": "Hungary",
+    "date": "2026-07-26",
+    "headline": "Norris wins Hungary — Aston Martin's 16-part B-spec changes their season",
+    "body": "Lando Norris claimed McLaren's first win of 2026 at the Hungaroring, with part 1 of their 2-part development package onboard. The bigger story was Aston Martin's 16-part B-spec overhaul: new nose, complete front wing package, all permitted floor surfaces, rear wing — essentially a new car. The upgrade immediately showed Aston Martin ahead of Cadillac in race pace for the first time all season. Honda also confirmed their ADUO power unit upgrade is imminent — expected at Netherlands or Italy.",
+    "tags": ["McLaren", "Norris", "Hungary", "Aston Martin", "B-spec", "Honda", "ADUO"]
+  }
+]
