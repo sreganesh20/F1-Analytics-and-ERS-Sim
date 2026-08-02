@@ -2,7 +2,7 @@
 
 A telemetry-driven F1 analytics platform built on FastF1. Fingerprints every car's ERS behaviour from real qualifying and race data, runs a dynamic-programming optimizer to find the theoretically optimal energy strategy per circuit, and produces race predictions from the combined signal.
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io)
+[![Streamlit App](https://f1-analytics-and-ers-sim-qvp7tgfjxrwmbz4zs9nxr7.streamlit.app/)
 
 ---
 
