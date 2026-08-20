@@ -32,6 +32,13 @@ class TrackSegment:
     brake_mean:   float          # 0–1
     time_s:       float          # seconds spent in segment
 
+    # Corner speed classification (corners only; "" for non-corner segments)
+    # Thresholds (2026 cars, user-verified):
+    #   slow   : apex speed  < 130 kph
+    #   medium : apex speed  130-210 kph
+    #   fast   : apex speed  > 210 kph
+    speed_class:  str = ""
+
     # Energy opportunity (filled by physics model)
     kinetic_energy_delta_mj: float = 0.0   # +ve = energy released (harvestable)
     harvest_opportunity_mj:  float = 0.0   # how much could be recovered
@@ -42,6 +49,21 @@ class TrackSegment:
                 f"d={self.d_start:.0f}-{self.d_end:.0f}m  "
                 f"v={self.speed_entry:.0f}→{self.speed_min:.0f}→{self.speed_exit:.0f} kph  "
                 f"t={self.time_s:.2f}s")
+
+
+# ── Corner speed classification ──────────────────────────
+# Thresholds based on apex (minimum) speed through the corner.
+CORNER_SLOW_MAX   = 130.0   # kph — below this = slow corner (hairpins, chicanes)
+CORNER_MEDIUM_MAX = 210.0   # kph — 130-210 = medium; above = fast/flowing
+
+
+def classify_corner_speed(speed_min_kph: float) -> str:
+    """Classify a corner by apex speed. Returns 'slow' | 'medium' | 'fast'."""
+    if speed_min_kph < CORNER_SLOW_MAX:
+        return "slow"
+    elif speed_min_kph < CORNER_MEDIUM_MAX:
+        return "medium"
+    return "fast"
 
 
 def segment_lap(df: pd.DataFrame,
@@ -133,9 +155,14 @@ def segment_lap(df: pd.DataFrame,
         if lbl == "straight" and np.mean(speed_vals) > 260 and np.mean(thr_vals) > 97:
             seg_type = "superclip"
 
+        # Classify corners by apex speed; blank for non-corner segments
+        speed_class = (classify_corner_speed(float(np.min(speed_vals)))
+                       if seg_type == "corner" else "")
+
         seg = TrackSegment(
             index         = seg_idx,
             seg_type      = seg_type,
+            speed_class   = speed_class,
             d_start       = d_start,
             d_end         = d_end,
             length        = length,
@@ -170,7 +197,12 @@ def print_track_summary(segments: list[TrackSegment], circuit_name: str):
     print(f"  Braking zones:   {counts.get('braking', 0)}  ({total_braking:.0f}m total)")
     print(f"  Straights:       {counts.get('straight', 0)}")
     print(f"  Superclip zones: {counts.get('superclip', 0)}")
-    print(f"  Corners:         {counts.get('corner', 0)}")
+    corner_segs = [s for s in segments if s.seg_type == "corner"]
+    n_slow   = sum(1 for s in corner_segs if s.speed_class == "slow")
+    n_medium = sum(1 for s in corner_segs if s.speed_class == "medium")
+    n_fast   = sum(1 for s in corner_segs if s.speed_class == "fast")
+    print(f"  Corners:         {counts.get('corner', 0)}  "
+          f"(slow {n_slow} / medium {n_medium} / fast {n_fast})")
     print(f"  Lift/Coast:      {counts.get('lift_coast', 0)}")
     print(f"\n  Key braking zones:")
     for s in braking_segs:

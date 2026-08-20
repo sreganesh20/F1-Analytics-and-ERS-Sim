@@ -77,7 +77,10 @@ def season_evolution_chart(fps, sessions=None):
     tick_labels = [circuit_map.get(r, f"R{r}")[:3].upper() for r in all_rounds]
     fig.update_layout(
         **DARK,
-        title=dict(text="PU Performance Evolution — Best Car per PU", font=dict(size=14)),
+        title=dict(text="PU Performance Evolution — Best Car per PU<br>"
+                        "<sup style='color:#888'>Baseline: fastest car of each session (0%). "
+                        "Lower = closer to session-topping pace.</sup>",
+                   font=dict(size=14)),
         xaxis=dict(**_ax(), title="Race Round",
                    tickmode="array", tickvals=all_rounds, ticktext=tick_labels),
         yaxis=dict(**_ax(), title="Lap Time Gap to Leader (%)", autorange="reversed"),
@@ -235,7 +238,9 @@ def pu_straight_speed_chart(fps):
     tick_labels = [circuit_map.get(r, f"R{r}")[:3].upper() for r in all_rounds]
     fig.update_layout(
         **DARK,
-        title=dict(text="Straight-Line Speed Delta — Factory Teams (Qualifying)",
+        title=dict(text="Straight-Line Speed Delta — Factory Teams (Qualifying)<br>"
+                        "<sup style='color:#888'>Baseline: fastest car of each session = 0. "
+                        "Positive = faster than that session's reference on the straights.</sup>",
                    font=dict(size=14)),
         xaxis=dict(**_ax(), title="Round",
                    tickmode="array", tickvals=all_rounds, ticktext=tick_labels),
@@ -302,10 +307,10 @@ def straight_vs_corner_scatter(fps):
     y_pad = (max(all_y) - min(all_y)) * 0.15 or 2
 
     for label, x_frac, y_frac in [
-        ("Fast everywhere",   0.75, 0.85),
-        ("Corner specialist", 0.15, 0.85),
-        ("Power car",         0.75, 0.15),
-        ("Needs work",        0.15, 0.15),
+        ("Closest to reference",     0.78, 0.88),
+        ("Corner-biased",            0.15, 0.88),
+        ("Straight-line biased",     0.78, 0.12),
+        ("Furthest from reference",  0.15, 0.12),
     ]:
         x_pos = min(all_x) - x_pad + (max(all_x) - min(all_x) + 2*x_pad) * x_frac
         y_pos = min(all_y) - y_pad + (max(all_y) - min(all_y) + 2*y_pad) * y_frac
@@ -314,10 +319,12 @@ def straight_vs_corner_scatter(fps):
 
     fig.update_layout(
         **DARK,
-        title=dict(text="2026 — Team Performance Profile: Straight vs Corner",
+        title=dict(text="2026 — Team Performance Profile: Straight vs Corner<br>"
+                        "<sup style='color:#888'>Baseline: session-fastest car = 0. All values are season "
+                        "averages of per-session deltas — negative is normal (the reference is the fastest car).</sup>",
                    font=dict(size=14)),
-        xaxis=dict(**_ax(), title="Straight Speed Delta vs session leader (kph)"),
-        yaxis=dict(**_ax(), title="Corner Speed Delta vs session leader (kph)"),
+        xaxis=dict(**_ax(), title="Straight-line speed vs session-fastest car (kph)"),
+        yaxis=dict(**_ax(), title="Corner speed vs session-fastest car (kph)"),
         height=500,
     )
     return fig
@@ -349,8 +356,11 @@ def corner_profile_ranking(fps):
     fig.add_vline(x=0, line_color="#555", line_width=1)
     fig.update_layout(
         **DARK,
-        title=dict(text="Corner Performance Ranking — All Teams (Qualifying)", font=dict(size=14)),
-        xaxis=dict(**_ax(), title="Corner Speed Delta vs session leader (kph)"),
+        title=dict(text="Corner Performance Ranking — All Teams (Qualifying)<br>"
+                        "<sup style='color:#888'>Baseline: session-fastest car = 0. "
+                        "Less negative = closer to reference pace in corners.</sup>",
+                   font=dict(size=14)),
+        xaxis=dict(**_ax(), title="Corner speed vs session-fastest car (kph)"),
         yaxis=dict(**_ax(), autorange="reversed"),
         height=420,
     )
@@ -484,7 +494,7 @@ def strategy_chart(optimal):
             font=dict(size=13)
         ),
         xaxis=dict(**_ax(), title="Lap distance"),
-        yaxis=dict(**_ax(), title="Energy (MJ)", zeroline=True),
+        yaxis=dict(**_ax(), title="Energy (MJ)", zeroline=True, zerolinecolor="#555"),
         yaxis2=dict(title="Battery SoC (MJ)", overlaying="y", side="right",
                     range=[-0.1, 4.3], gridcolor="#2A2A2A", color="#FFD700"),
         barmode="overlay", height=400,
@@ -569,5 +579,184 @@ def upgrade_timeline_chart(events, all_teams=None):
         height=max(450, len(all_teams) * 55 + 100),
         margin=dict(l=130, r=40, t=70, b=60),
         hovermode="closest",
+    )
+    return fig
+
+
+# ── WAVE 3: Corner performance by speed class (season aggregate) ──
+
+MIN_CLASS_SAMPLES = 8   # minimum fingerprint datapoints season-wide for a class to be shown
+
+
+def corner_class_ranking(fps):
+    """
+    Team ranking within each corner speed class (slow / medium / fast),
+    aggregated across ALL qualifying sessions of the season.
+
+    Honesty rules (user decision 13 Aug):
+    - Season-aggregate ONLY — never per-circuit corner counts (detection is
+      throttle/brake-based; flat-out corners are invisible, so per-circuit
+      counts are not publishable facts).
+    - A class with < MIN_CLASS_SAMPLES datapoints is suppressed (fast corners
+      are systematically under-detected — a ranking built on 3 points is noise).
+    Returns (figure, suppressed_classes) so the page can explain gaps.
+    """
+    field_map = {
+        "slow":   "corner_slow_delta_kph",
+        "medium": "corner_medium_delta_kph",
+        "fast":   "corner_fast_delta_kph",
+    }
+    quali = [fp for fp in fps if fp.session_type in ("Q", "SQ") and fp.confidence >= 0.5]
+
+    class_team_vals = {c: defaultdict(list) for c in field_map}
+    team_pu = {}
+    for fp in quali:
+        team_pu[fp.team] = fp.pu_name
+        for cls, field in field_map.items():
+            val = getattr(fp, field, None)
+            if val is not None:
+                class_team_vals[cls][fp.team].append(val)
+
+    shown, suppressed = [], []
+    for cls in ("slow", "medium", "fast"):
+        n_total = sum(len(v) for v in class_team_vals[cls].values())
+        (shown if n_total >= MIN_CLASS_SAMPLES else suppressed).append(cls)
+
+    if not shown:
+        return go.Figure(), suppressed
+
+    fig = go.Figure()
+    class_offsets = {c: i for i, c in enumerate(shown)}
+    class_labels  = {"slow": "Slow (<130 kph)", "medium": "Medium (130–210)", "fast": "Fast (>210)"}
+    class_colours = {"slow": "#FF4444", "medium": "#FFD700", "fast": "#00C851"}
+
+    # Order teams by slow-corner performance (or first shown class)
+    order_cls = shown[0]
+    team_order = sorted(class_team_vals[order_cls].keys(),
+                        key=lambda t: -np.mean(class_team_vals[order_cls][t]))
+
+    for cls in shown:
+        vals   = class_team_vals[cls]
+        teams  = [t for t in team_order if t in vals]
+        means  = [np.mean(vals[t]) for t in teams]
+        ns     = [len(vals[t]) for t in teams]
+        fig.add_trace(go.Bar(
+            y=teams, x=means, orientation="h",
+            name=class_labels[cls],
+            marker_color=class_colours[cls], opacity=0.85,
+            customdata=list(zip([f"{m:+.1f} kph" for m in means], ns)),
+            hovertemplate="<b>%{y}</b> — " + class_labels[cls] +
+                          "<br>Avg delta: %{customdata[0]}<br>"
+                          "Corners sampled: %{customdata[1]}<extra></extra>",
+        ))
+
+    fig.update_layout(
+        **DARK,
+        title=dict(
+            text="Corner Performance by Speed Class — Season Aggregate<br>"
+                 "<sup style='color:#888'>Baseline: session-fastest car = 0 · Qualifying only · "
+                 "Detection is throttle/brake-based — flat-out corners not captured.</sup>",
+            font=dict(size=14)),
+        xaxis=dict(**_ax(), title="Corner speed vs session-fastest car (kph)"),
+        yaxis=dict(**_ax(), autorange="reversed"),
+        barmode="group",
+        height=max(450, len(team_order) * 38 + 140),
+    )
+    return fig, suppressed
+
+
+# ── WAVE 3: Driver finishing position across season ───────
+
+def finish_history_chart(history, driver_code, team_colour="#FF1E00"):
+    """Finishing position per round. DNF/NC plotted as a red X at the bottom."""
+    rounds  = [r for r, _ in history]
+    circuit_map = get_circuits_with_data()
+    fin_r   = [r for r, p in history if p is not None]
+    fin_p   = [p for _, p in history if p is not None]
+    dnf_r   = [r for r, p in history if p is None]
+
+    fig = go.Figure()
+    if fin_r:
+        fig.add_trace(go.Scatter(
+            x=fin_r, y=fin_p, mode="lines+markers", name="Finish",
+            line=dict(color=team_colour, width=2.5),
+            marker=dict(size=9, color=team_colour),
+            customdata=[circuit_map.get(r, f"R{r}") for r in fin_r],
+            hovertemplate="<b>%{customdata}</b><br>Finished P%{y}<extra></extra>",
+        ))
+    if dnf_r:
+        fig.add_trace(go.Scatter(
+            x=dnf_r, y=[21] * len(dnf_r), mode="markers", name="DNF / NC",
+            marker=dict(size=13, color="#FF4444", symbol="x", line=dict(width=2)),
+            customdata=[circuit_map.get(r, f"R{r}") for r in dnf_r],
+            hovertemplate="<b>%{customdata}</b><br>Did not finish<extra></extra>",
+        ))
+    fig.add_hrect(y0=0.5, y1=3.5, fillcolor=_hex_rgba("#FFD700", 0.08),
+                  line_width=0, annotation_text="Podium",
+                  annotation_font_color="#FFD700", annotation_position="top left")
+
+    ticks = sorted(set(rounds))
+    fig.update_layout(
+        **DARK,
+        title=dict(text=f"{driver_code} — Finishing Position by Round", font=dict(size=13)),
+        xaxis=dict(**_ax(), title="Round", tickmode="array", tickvals=ticks,
+                   ticktext=[circuit_map.get(r, f"R{r}")[:3].upper() for r in ticks]),
+        yaxis=dict(**_ax(), title="Finishing position", autorange="reversed",
+                   range=[22, 0], dtick=2),
+        height=340,
+    )
+    return fig
+
+
+def qualifying_ranking_chart(ranking):
+    """All drivers ranked by average qualifying gap to pole."""
+    drivers = [r["driver"] for r in ranking]
+    gaps    = [r["avg_gap"] for r in ranking]
+    colours = [TEAM_COLOURS.get(r["team"], "#888") for r in ranking]
+
+    fig = go.Figure(go.Bar(
+        y=drivers, x=gaps, orientation="h", marker_color=colours,
+        customdata=[(r["team"], f"{r['avg_gap']:.3f}%", f"{r['best_gap']:.3f}%",
+                     r["sessions"]) for r in ranking],
+        hovertemplate=("<b>%{y}</b> — %{customdata[0]}<br>"
+                       "Avg gap: %{customdata[1]}<br>Best: %{customdata[2]}<br>"
+                       "Sessions: %{customdata[3]}<extra></extra>"),
+    ))
+    fig.update_layout(
+        **DARK,
+        title=dict(text="Qualifying Pace Ranking — Average Gap to Pole<br>"
+                        "<sup style='color:#888'>Lower is better · all Q and SQ sessions</sup>",
+                   font=dict(size=14)),
+        xaxis=dict(**_ax(), title="Average gap to session pole (%)"),
+        yaxis=dict(**_ax(), autorange="reversed"),
+        height=max(460, len(drivers) * 26 + 130),
+    )
+    return fig
+
+
+def teammate_hierarchy_chart(ranking):
+    """Intra-team qualifying gaps, biggest margin first. Colour = team."""
+    labels = [f"{r['faster']} vs {r['slower']}" for r in ranking]
+    gaps   = [r["gap_s"] for r in ranking]
+    cols   = [TEAM_COLOURS.get(r["team"], "#888") for r in ranking]
+
+    fig = go.Figure(go.Bar(
+        y=labels, x=gaps, orientation="h", marker_color=cols,
+        text=[f"{g:.3f}s" for g in gaps], textposition="outside",
+        textfont=dict(color="#E0E0E0", size=11),
+        customdata=[(r["team"], r["faster"], r["faster_wins"], r["rounds"],
+                     f"{r['gap_pct']:.3f}%") for r in ranking],
+        hovertemplate=("<b>%{customdata[0]}</b><br>"
+                       "%{customdata[1]} faster by %{x:.3f}s (%{customdata[4]})<br>"
+                       "H2H: %{customdata[2]}/%{customdata[3]} rounds<extra></extra>"),
+    ))
+    fig.update_layout(
+        **DARK,
+        title=dict(text="Intra-Team Qualifying Battle — Margin of Dominance<br>"
+                        "<sup style='color:#888'>Widest gap at top · faster driver named first</sup>",
+                   font=dict(size=14)),
+        xaxis=dict(**_ax(), title="Average qualifying gap between teammates (s)"),
+        yaxis=dict(**_ax(), autorange="reversed"),
+        height=max(400, len(labels) * 42 + 130),
     )
     return fig

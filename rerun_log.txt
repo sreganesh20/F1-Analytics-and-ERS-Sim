@@ -1,0 +1,2935 @@
+﻿python : core           INFO 	Loading data for Australian Grand Prix - Race [v3.8.2]
+At line:6 char:124
++ ... ,"britain","belgium","hungary")) { python run.py race $c 2>&1 | Out-F ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (core           ...- Race [v3.8.2]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	No lap data for driver 81
+core        WARNING 	Failed to perform lap accuracy check - all laps marked as inaccurate (driver 81)
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['63', '12', '16', '44', '1', '3', '87', '41', '5', '10', 
+'31', '23', '30', '43', '55', '11', '18', '14', '77', '6', '81', '27']
+core           INFO 	Loading data for Australian Grand Prix - Race [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	No lap data for driver 81
+core        WARNING 	Failed to perform lap accuracy check - all laps marked as inaccurate (driver 81)
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['63', '12', '16', '44', '1', '3', '87', '41', '5', '10', 
+'31', '23', '30', '43', '55', '11', '18', '14', '77', '6', '81', '27']
+
+Loading race session for Australia...
+
+------------------------------------------------------------
+  Race Pipeline: Australia  [R — Rd 1 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Australia
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Australian Grand Prix 2026 — R...
+  Using fastest lap: VER  0 days 00:01:22.091000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Australia
+═══════════════════════════════════════════════════════
+  Total segments:  26
+  Lap distance:    5214 m
+  Braking zones:   6  (721m total)
+  Straights:       4
+  Superclip zones: 4
+  Corners:         12  (slow 3 / medium 5 / fast 4)
+  Lift/Coast:      0
+
+  Key braking zones:
+    Seg[001] braking      d=236-367m  v=294→159→159 kph  t=2.44s
+    Seg[004] braking      d=938-1111m  v=280→103→103 kph  t=4.40s
+    Seg[011] braking      d=1774-1846m  v=247→207→207 kph  t=1.56s
+    Seg[014] braking      d=3178-3281m  v=292→226→226 kph  t=1.84s
+    Seg[018] braking      d=3983-4114m  v=268→116→116 kph  t=3.08s
+    Seg[023] braking      d=4520-4632m  v=200→85→86 kph  t=3.52s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Australian Grand Prix [R]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   7.243 MJ  (85.2% of limit)
+  Total deployed:    11.218 MJ
+  Battery floor:     0.025 MJ
+  Lap time vs base:  -1.213s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=236–367m  harvest=0.759MJ  (max=0.854MJ)
+    superclip    d=454–904m  harvest=0.268MJ  (max=0.292MJ)
+    braking      d=938–1111m  harvest=1.540MJ  (max=1.540MJ)
+    corner       d=1115–1222m  harvest=0.100MJ  (max=0.100MJ)
+    braking      d=1774–1846m  harvest=0.546MJ  (max=0.546MJ)
+    superclip    d=1937–3148m  harvest=0.292MJ  (max=0.292MJ)
+    braking      d=3178–3281m  harvest=0.644MJ  (max=0.644MJ)
+    corner       d=3293–3433m  harvest=0.100MJ  (max=0.100MJ)
+    superclip    d=3449–3875m  harvest=0.292MJ  (max=0.292MJ)
+    braking      d=3983–4114m  harvest=1.078MJ  (max=1.078MJ)
+    braking      d=4520–4632m  harvest=1.232MJ  (max=1.232MJ)
+    corner       d=4639–4835m  harvest=0.100MJ  (max=0.100MJ)
+    superclip    d=4845–5214m  harvest=0.292MJ  (max=0.292MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Lappedx11, Finishedx6, Retiredx3, Did not startx2
+  Race laps: 58
+  RUS    Mercedes             83.188s  2 stints
+  ANT    Mercedes             83.038s  2 stints
+  LEC    Ferrari              83.236s  2 stints
+  HAM    Ferrari              83.310s  2 stints
+  NOR    McLaren              83.687s  3 stints
+  VER    Red Bull             83.587s  3 stints
+  BEA    Haas                 84.756s  2 stints
+  LIN    VCARB                84.747s  2 stints
+  BOR    Audi                 84.694s  3 stints
+  GAS    Alpine               85.096s  2 stints
+  OCO    Haas                 85.106s  2 stints
+  ALB    Williams             85.334s  3 stints
+  LAW    VCARB                85.041s  3 stints
+  COL    Alpine               85.600s  3 stints
+  SAI    Williams             85.600s  4 stints
+  PER    Cadillac             87.625s  3 stints
+  STR    Aston Martin         87.370s  5 stints
+  ALO    DNF — 22/58 laps [Retired]
+  ALO    Aston Martin         87.040s  2 stints
+  BOT    DNF — 16/58 laps [Retired]
+  BOT    Cadillac             87.804s  2 stints
+  HAD    DNF — 11/58 laps [Retired]
+  HAD    Red Bull             85.355s  1 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: Australia [R]  Rd 1 — 2026
+  Circuit type: balanced
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  ANT    Mercedes           Mercedes       1:23.038     +0.0    +0.0   0.90   0.85  1.00 A_pre_miami
+  RUS    Mercedes           Mercedes       1:23.188     +2.4    +1.9   0.88   0.86  1.00 A_pre_miami
+  LEC    Ferrari            Ferrari        1:23.236     +2.7    -7.8   0.83   0.86  1.00 A_pre_miami
+  HAM    Ferrari            Ferrari        1:23.310     +1.0    +1.4   0.85   0.85  1.00 A_pre_miami
+  VER    Red Bull           RedBullFord    1:23.587     +0.1   -10.8   0.75   0.85  1.00 A_pre_miami
+  NOR    McLaren            Mercedes       1:23.687     -1.0    +1.0   0.68   0.85  1.00 A_pre_miami
+  BOR    Audi               Audi           1:24.694     -6.6    +1.5   0.91   0.83  1.00 A_pre_miami
+  LIN    VCARB              RedBullFord    1:24.747     -1.9    -8.6   0.85   0.84  1.00 A_pre_miami
+  BEA    Haas               Ferrari        1:24.756     +3.3   -24.1   0.74   0.86  1.00 A_pre_miami
+  LAW    VCARB              RedBullFord    1:25.041     -5.8    +0.4   0.88   0.83  1.00 A_pre_miami
+  GAS    Alpine             Mercedes       1:25.096     -7.2   +21.6   0.67   0.83  1.00 A_pre_miami
+  OCO    Haas               Ferrari        1:25.106     -3.0    -9.3   0.83   0.84  1.00 A_pre_miami
+  ALB    Williams           Mercedes       1:25.334     -0.2   -12.2   0.73   0.85  1.00 A_pre_miami
+  HAD    Red Bull           RedBullFord    1:25.355     -7.7    -0.7   0.77   0.83  0.60 A_pre_miami
+  COL    Alpine             Mercedes       1:25.600     -2.5   -13.9   0.80   0.84  1.00 A_pre_miami
+  SAI    Williams           Mercedes       1:25.600     -1.7    +0.1   0.88   0.84  1.00 A_pre_miami
+  ALO    Aston Martin       Honda          1:27.040     -9.9   -14.3   0.78   0.82  0.60 A_pre_miami
+  STR    Aston Martin       Honda          1:27.370    -13.6    -8.0   0.76   0.81  1.00 A_pre_miami
+  PER    Cadillac           Ferrari        1:27.625     -7.5   -24.4   0.65   0.83  1.00 A_pre_miami
+  BOT    Cadillac           Ferrari        1:27.804     -6.0   -25.8   0.70   0.83  0.60 A_pre_miami
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 20 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R01_R.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+python : core           INFO 	Loading data for Chinese Grand Prix - Race [v3.8.2]
+At line:6 char:124
++ ... ,"britain","belgium","hungary")) { python run.py race $c 2>&1 | Out-F ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (core           ...- Race [v3.8.2]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Driver 12 completed the race distance 00:00.022000 before the recorded end of the session.
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '63', '44', '16', '87', '10', '30', '6', '55', '43', 
+'27', '41', '77', '31', '11', '3', '14', '18', '81', '1', '5', '23']
+core           INFO 	Loading data for Chinese Grand Prix - Race [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Driver 12 completed the race distance 00:00.022000 before the recorded end of the session.
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '63', '44', '16', '87', '10', '30', '6', '55', '43', 
+'27', '41', '77', '31', '11', '3', '14', '18', '81', '1', '5', '23']
+
+Loading race session for China...
+
+------------------------------------------------------------
+  Race Pipeline: China  [R — Rd 2 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: China
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Chinese Grand Prix 2026 — R...
+  Using fastest lap: ANT  0 days 00:01:35.275000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: China
+═══════════════════════════════════════════════════════
+  Total segments:  25
+  Lap distance:    5383 m
+  Braking zones:   9  (1182m total)
+  Straights:       6
+  Superclip zones: 2
+  Corners:         8  (slow 6 / medium 2 / fast 0)
+  Lift/Coast:      0
+
+  Key braking zones:
+    Seg[001] braking      d=462-836m  v=291→99→112 kph  t=8.72s
+    Seg[002] braking      d=850-910m  v=113→94→95 kph  t=2.56s
+    Seg[005] braking      d=1434-1580m  v=273→82→82 kph  t=4.00s
+    Seg[008] braking      d=2204-2321m  v=242→188→188 kph  t=2.28s
+    Seg[010] braking      d=2436-2525m  v=188→119→119 kph  t=2.40s
+    Seg[013] braking      d=2999-3112m  v=249→94→94 kph  t=3.12s
+    Seg[017] braking      d=3574-3629m  v=263→263→281 kph  t=0.92s
+    Seg[019] braking      d=4621-4748m  v=289→66→66 kph  t=3.92s
+    Seg[022] braking      d=5016-5117m  v=227→160→160 kph  t=2.20s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Chinese Grand Prix [R]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   8.409 MJ  (98.9% of limit)
+  Total deployed:    12.311 MJ
+  Battery floor:     0.098 MJ
+  Lap time vs base:  -1.742s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=462–836m  harvest=1.665MJ  (max=3.052MJ)
+    braking      d=850–910m  harvest=0.197MJ  (max=0.896MJ)
+    braking      d=1434–1580m  harvest=1.400MJ  (max=1.400MJ)
+    braking      d=2204–2321m  harvest=0.798MJ  (max=0.798MJ)
+    corner       d=2336–2425m  harvest=0.100MJ  (max=0.100MJ)
+    braking      d=2436–2525m  harvest=0.840MJ  (max=0.840MJ)
+    braking      d=2999–3112m  harvest=1.092MJ  (max=1.092MJ)
+    corner       d=3120–3193m  harvest=0.100MJ  (max=0.100MJ)
+    superclip    d=3662–4598m  harvest=0.200MJ  (max=0.300MJ)
+    braking      d=4621–4748m  harvest=1.247MJ  (max=1.372MJ)
+    braking      d=5016–5117m  harvest=0.770MJ  (max=0.770MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Finishedx8, Lappedx7, Did not startx4, Retiredx3
+  Race laps: 56
+  ANT    Mercedes             96.176s  2 stints
+  RUS    Mercedes             96.207s  2 stints
+  HAM    Ferrari              96.771s  2 stints
+  LEC    Ferrari              96.877s  2 stints
+  BEA    Haas                 97.496s  2 stints
+  GAS    Alpine               97.584s  2 stints
+  LAW    VCARB                98.084s  2 stints
+  HAD    Red Bull             98.006s  2 stints
+  SAI    Williams             98.744s  2 stints
+  COL    Alpine               98.070s  2 stints
+  HUL    Audi                 98.064s  2 stints
+  LIN    VCARB                98.321s  2 stints
+  BOT    Cadillac             99.768s  2 stints
+  OCO    Haas                 98.068s  3 stints
+  PER    Cadillac             99.799s  2 stints
+  VER    DNF — 45/56 laps [Retired]
+  VER    Red Bull             97.869s  2 stints
+  ALO    DNF — 32/56 laps [Retired]
+  ALO    Aston Martin         100.356s  1 stints
+  STR    DNF — 10/56 laps [Retired]
+  STR    Aston Martin         100.956s  1 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: China [R]  Rd 2 — 2026
+  Circuit type: power
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  ANT    Mercedes           Mercedes       1:36.176     +0.0    +0.0   0.82   0.85  1.00 A_pre_miami
+  RUS    Mercedes           Mercedes       1:36.207     -5.2   +12.3   0.79   0.83  1.00 A_pre_miami
+  HAM    Ferrari            Ferrari        1:36.771     -4.4    +0.4   0.81   0.84  1.00 A_pre_miami
+  LEC    Ferrari            Ferrari        1:36.877     -5.5    +0.1   0.78   0.83  1.00 A_pre_miami
+  BEA    Haas               Ferrari        1:37.496     -4.5    -0.2   0.86   0.84  1.00 A_pre_miami
+  GAS    Alpine             Mercedes       1:37.584    -35.2   +37.4   0.59   0.74  1.00 A_pre_miami
+  VER    Red Bull           RedBullFord    1:37.869     -6.7    +5.3   0.85   0.83  0.60 A_pre_miami
+  HAD    Red Bull           RedBullFord    1:38.006     -1.3    -3.2   0.83   0.85  1.00 A_pre_miami
+  HUL    Audi               Audi           1:38.064     -3.4    +1.1   0.84   0.84  1.00 A_pre_miami
+  OCO    Haas               Ferrari        1:38.068     -1.7   -11.7   0.74   0.84  1.00 A_pre_miami
+  COL    Alpine             Mercedes       1:38.070     -3.2    -6.4   0.77   0.84  1.00 A_pre_miami
+  LAW    VCARB              RedBullFord    1:38.084     -5.4    +1.8   0.81   0.83  1.00 A_pre_miami
+  LIN    VCARB              RedBullFord    1:38.321     -4.1    +5.2   0.85   0.84  1.00 A_pre_miami
+  SAI    Williams           Mercedes       1:38.744    -57.7   +63.4   0.49   0.67  1.00 A_pre_miami
+  BOT    Cadillac           Ferrari        1:39.768    -10.5    +0.3   0.82   0.82  1.00 A_pre_miami
+  PER    Cadillac           Ferrari        1:39.799     -1.5   -17.9   0.59   0.85  1.00 A_pre_miami
+  ALO    Aston Martin       Honda          1:40.356     -8.8   -16.8   0.63   0.82  0.60 A_pre_miami
+  STR    Aston Martin       Honda          1:40.956    -14.0    +1.5   0.69   0.81  0.60 A_pre_miami
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 18 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R02_R.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+core           INFO 	Loading data for Chinese Grand Prix - Sprint [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Driver 63 completed the race distance 00:00.009000 before the recorded end of the session.
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['63', '16', '44', '1', '12', '81', '30', '87', '3', '31', 
+'10', '55', '5', '43', '6', '23', '14', '18', '11', '27', '77', '41']
+core           INFO 	Loading data for Chinese Grand Prix - Sprint [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Driver 63 completed the race distance 00:00.009000 before the recorded end of the session.
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['63', '16', '44', '1', '12', '81', '30', '87', '3', '31', 
+'10', '55', '5', '43', '6', '23', '14', '18', '11', '27', '77', '41']
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+
+  Sprint weekend — also loading S session...
+
+------------------------------------------------------------
+  Race Pipeline: China  [S — Rd 2 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: China
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Chinese Grand Prix 2026 — S...
+  Using fastest lap: LEC  0 days 00:01:34.753000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: China
+═══════════════════════════════════════════════════════
+  Total segments:  25
+  Lap distance:    5364 m
+  Braking zones:   10  (1053m total)
+  Straights:       5
+  Superclip zones: 2
+  Corners:         7  (slow 5 / medium 2 / fast 0)
+  Lift/Coast:      1
+
+  Key braking zones:
+    Seg[001] braking      d=462-666m  v=300→161→161 kph  t=3.68s
+    Seg[002] braking      d=676-732m  v=157→125→125 kph  t=1.68s
+    Seg[004] braking      d=773-832m  v=103→101→112 kph  t=2.16s
+    Seg[005] braking      d=844-884m  v=113→96→96 kph  t=1.80s
+    Seg[008] braking      d=1420-1559m  v=268→81→81 kph  t=3.80s
+    Seg[011] braking      d=2188-2274m  v=246→199→199 kph  t=1.56s
+    Seg[013] braking      d=2415-2503m  v=183→125→125 kph  t=2.36s
+    Seg[016] braking      d=2984-3091m  v=254→93→93 kph  t=3.08s
+    Seg[019] braking      d=4590-4732m  v=279→69→69 kph  t=4.16s
+    Seg[022] braking      d=4978-5111m  v=246→157→157 kph  t=2.76s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Chinese Grand Prix [S]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   7.906 MJ  (93.0% of limit)
+  Total deployed:    11.828 MJ
+  Battery floor:     0.055 MJ
+  Lap time vs base:  -1.654s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=462–666m  harvest=0.351MJ  (max=1.288MJ)
+    braking      d=676–732m  harvest=0.196MJ  (max=0.588MJ)
+    braking      d=773–832m  harvest=0.756MJ  (max=0.756MJ)
+    braking      d=1420–1559m  harvest=1.330MJ  (max=1.330MJ)
+    braking      d=2188–2274m  harvest=0.546MJ  (max=0.546MJ)
+    corner       d=2294–2406m  harvest=0.100MJ  (max=0.100MJ)
+    braking      d=2415–2503m  harvest=0.826MJ  (max=0.826MJ)
+    braking      d=2984–3091m  harvest=1.078MJ  (max=1.078MJ)
+    superclip    d=3373–4564m  harvest=0.300MJ  (max=0.300MJ)
+    braking      d=4590–4732m  harvest=1.456MJ  (max=1.456MJ)
+    braking      d=4978–5111m  harvest=0.966MJ  (max=0.966MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Finishedx19, Retiredx3
+  Race laps: 19
+  RUS    Mercedes             96.715s  2 stints
+  LEC    Ferrari              96.946s  2 stints
+  HAM    Ferrari              97.433s  2 stints
+  NOR    McLaren              97.355s  2 stints
+  ANT    Mercedes             96.485s  2 stints
+  PIA    McLaren              97.548s  2 stints
+  LAW    VCARB                98.769s  1 stints
+  BEA    Haas                 99.174s  1 stints
+  VER    Red Bull             98.324s  2 stints
+  OCO    Haas                 99.119s  1 stints
+  GAS    Alpine               99.236s  1 stints
+  SAI    Williams             99.094s  1 stints
+  BOR    Audi                 98.848s  1 stints
+  COL    Alpine               99.269s  2 stints
+  HAD    Red Bull             99.184s  2 stints
+  ALB    Williams             98.791s  2 stints
+  ALO    Aston Martin         99.474s  1 stints
+  STR    Aston Martin         99.707s  2 stints
+  PER    Cadillac             100.219s  2 stints
+  HUL    DNF — 13/19 laps [Retired]
+  HUL    Audi                 99.176s  1 stints
+  BOT    DNF — 12/19 laps [Retired]
+  BOT    Cadillac             99.567s  1 stints
+  LIN    DNF — 11/19 laps [Retired]
+  LIN    VCARB                99.287s  1 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: China [S]  Rd 2 — 2026
+  Circuit type: power
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  ANT    Mercedes           Mercedes       1:36.485     +0.0    +0.0   0.77   0.85  1.00 A_pre_miami
+  RUS    Mercedes           Mercedes       1:36.715    +39.6   +21.9   0.85   0.97  1.00 A_pre_miami
+  LEC    Ferrari            Ferrari        1:36.946    -20.7    +6.5   0.73   0.79  1.00 A_pre_miami
+  NOR    McLaren            Mercedes       1:37.355    -32.5    -7.6   0.48   0.75  1.00 A_pre_miami
+  HAM    Ferrari            Ferrari        1:37.433     -7.6   +13.1   0.90   0.83  1.00 A_pre_miami
+  PIA    McLaren            Mercedes       1:37.548     -4.6    -1.6   0.88   0.84  1.00 A_pre_miami
+  VER    Red Bull           RedBullFord    1:38.324     +7.9    +0.7   0.56   0.87  1.00 A_pre_miami
+  LAW    VCARB              RedBullFord    1:38.769    +26.8   +11.5   0.58   0.93  1.00 A_pre_miami
+  ALB    Williams           Mercedes       1:38.791    +15.4   -16.2   0.81   0.90  1.00 A_pre_miami
+  BOR    Audi               Audi           1:38.848    -15.8   -18.5   0.43   0.80  1.00 A_pre_miami
+  SAI    Williams           Mercedes       1:39.094    +37.9    +8.7   0.43   0.96  1.00 A_pre_miami
+  OCO    Haas               Ferrari        1:39.119    +44.3   +24.4   0.88   0.98  1.00 A_pre_miami
+  BEA    Haas               Ferrari        1:39.174     -9.5    +1.7   0.81   0.82  1.00 A_pre_miami
+  HUL    Audi               Audi           1:39.176    +35.3   +20.5   0.89   0.96  0.60 A_pre_miami
+  HAD    Red Bull           RedBullFord    1:39.184    -35.2  +114.7   0.46   0.74  1.00 A_pre_miami
+  GAS    Alpine             Mercedes       1:39.236     +3.8   -18.7   0.51   0.86  1.00 A_pre_miami
+  COL    Alpine             Mercedes       1:39.269    +47.0   +33.6   0.78   0.99  1.00 A_pre_miami
+  LIN    VCARB              RedBullFord    1:39.287    +26.2   +27.9   0.79   0.93  0.60 A_pre_miami
+  ALO    Aston Martin       Honda          1:39.474    -17.7   +12.8   0.73   0.80  1.00 A_pre_miami
+  BOT    Cadillac           Ferrari        1:39.567     -9.2   -20.1   0.71   0.82  0.60 A_pre_miami
+  STR    Aston Martin       Honda          1:39.707    -16.2    -3.4   0.81   0.80  1.00 A_pre_miami
+  PER    Cadillac           Ferrari        1:40.219    -35.0   +62.6   0.57   0.75  1.00 A_pre_miami
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 22 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R02_S.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+python : core           INFO 	Loading data for Japanese Grand Prix - Race [v3.8.2]
+At line:6 char:124
++ ... ,"britain","belgium","hungary")) { python run.py race $c 2>&1 | Out-F ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (core           ...- Race [v3.8.2]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '81', '16', '63', '1', '44', '10', '3', '30', '31', 
+'27', '6', '5', '41', '55', '43', '11', '14', '77', '23', '18', '87']
+core           INFO 	Loading data for Japanese Grand Prix - Race [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '81', '16', '63', '1', '44', '10', '3', '30', '31', 
+'27', '6', '5', '41', '55', '43', '11', '14', '77', '23', '18', '87']
+
+Loading race session for Japan...
+
+------------------------------------------------------------
+  Race Pipeline: Japan  [R — Rd 3 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Japan
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Japanese Grand Prix 2026 — R...
+  Using fastest lap: ANT  0 days 00:01:32.432000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Japan
+═══════════════════════════════════════════════════════
+  Total segments:  25
+  Lap distance:    5755 m
+  Braking zones:   8  (968m total)
+  Straights:       4
+  Superclip zones: 3
+  Corners:         10  (slow 2 / medium 6 / fast 2)
+  Lift/Coast:      0
+
+  Key braking zones:
+    Seg[001] braking      d=629-825m  v=296→155→155 kph  t=3.64s
+    Seg[005] braking      d=1138-1211m  v=221→198→198 kph  t=1.44s
+    Seg[007] braking      d=1443-1546m  v=198→167→167 kph  t=2.28s
+    Seg[011] braking      d=2328-2421m  v=236→148→148 kph  t=2.00s
+    Seg[014] braking      d=2746-2897m  v=244→74→74 kph  t=4.56s
+    Seg[017] braking      d=3684-3764m  v=262→220→220 kph  t=1.48s
+    Seg[019] braking      d=3834-3931m  v=201→163→163 kph  t=2.16s
+    Seg[022] braking      d=5227-5402m  v=263→97→97 kph  t=4.72s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Japanese Grand Prix [R]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   8.260 MJ  (97.2% of limit)
+  Total deployed:    12.201 MJ
+  Battery floor:     0.032 MJ
+  Lap time vs base:  -1.438s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=629–825m  harvest=1.158MJ  (max=1.274MJ)
+    braking      d=1138–1211m  harvest=0.504MJ  (max=0.504MJ)
+    corner       d=1230–1432m  harvest=0.100MJ  (max=0.100MJ)
+    braking      d=1443–1546m  harvest=0.783MJ  (max=0.798MJ)
+    corner       d=2179–2318m  harvest=0.100MJ  (max=0.100MJ)
+    braking      d=2328–2421m  harvest=0.700MJ  (max=0.700MJ)
+    braking      d=2746–2897m  harvest=1.596MJ  (max=1.596MJ)
+    superclip    d=3001–3665m  harvest=0.197MJ  (max=0.295MJ)
+    braking      d=3684–3764m  harvest=0.518MJ  (max=0.518MJ)
+    braking      d=3834–3931m  harvest=0.756MJ  (max=0.756MJ)
+    superclip    d=4057–5215m  harvest=0.197MJ  (max=0.295MJ)
+    braking      d=5227–5402m  harvest=1.652MJ  (max=1.652MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Finishedx17, Lappedx3, Retiredx2
+  Race laps: 53
+  ANT    Mercedes             93.948s  2 stints
+  PIA    McLaren              93.826s  2 stints
+  LEC    Ferrari              93.915s  2 stints
+  RUS    Mercedes             94.031s  2 stints
+  NOR    McLaren              94.161s  2 stints
+  HAM    Ferrari              94.359s  2 stints
+  GAS    Alpine               94.457s  2 stints
+  VER    Red Bull             94.346s  2 stints
+  LAW    VCARB                94.999s  2 stints
+  OCO    Haas                 94.968s  2 stints
+  HUL    Audi                 95.386s  2 stints
+  HAD    Red Bull             95.485s  2 stints
+  BOR    Audi                 95.524s  2 stints
+  LIN    VCARB                95.464s  2 stints
+  SAI    Williams             95.356s  2 stints
+  COL    Alpine               95.624s  2 stints
+  PER    Cadillac             96.621s  2 stints
+  ALO    Aston Martin         97.754s  2 stints
+  BOT    Cadillac             97.369s  2 stints
+  ALB    Williams             96.812s  3 stints
+  STR    DNF — 30/53 laps [Retired]
+  STR    Aston Martin         98.199s  2 stints
+  BEA    DNF — 21/53 laps [Retired]
+  BEA    Haas                 96.624s  2 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: Japan [R]  Rd 3 — 2026
+  Circuit type: high_speed
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  PIA    McLaren            Mercedes       1:33.826     +0.0    +0.0   0.82   0.85  1.00 A_pre_miami
+  LEC    Ferrari            Ferrari        1:33.915     -6.6    +6.8   0.81   0.83  1.00 A_pre_miami
+  ANT    Mercedes           Mercedes       1:33.948     -5.9   +11.3   0.90   0.83  1.00 A_pre_miami
+  RUS    Mercedes           Mercedes       1:34.031    -12.6   -12.6   0.50   0.81  1.00 A_pre_miami
+  NOR    McLaren            Mercedes       1:34.161     -4.0    -0.7   0.84   0.84  1.00 A_pre_miami
+  VER    Red Bull           RedBullFord    1:34.346     -2.4    +2.4   0.89   0.84  1.00 A_pre_miami
+  HAM    Ferrari            Ferrari        1:34.359     -0.8    +1.3   0.87   0.85  1.00 A_pre_miami
+  GAS    Alpine             Mercedes       1:34.457     -4.0    +5.8   0.86   0.84  1.00 A_pre_miami
+  OCO    Haas               Ferrari        1:34.968     -4.4    -2.0   0.86   0.84  1.00 A_pre_miami
+  LAW    VCARB              RedBullFord    1:34.999     -2.8    +0.3   0.79   0.84  1.00 A_pre_miami
+  SAI    Williams           Mercedes       1:35.356     -5.4    +5.5   0.84   0.83  1.00 A_pre_miami
+  HUL    Audi               Audi           1:35.386     -2.2    +1.7   0.80   0.84  1.00 A_pre_miami
+  LIN    VCARB              RedBullFord    1:35.464    -10.7    +9.1   0.85   0.82  1.00 A_pre_miami
+  HAD    Red Bull           RedBullFord    1:35.485     -7.0    +1.4   0.80   0.83  1.00 A_pre_miami
+  BOR    Audi               Audi           1:35.524    -15.5    -9.6   0.72   0.80  1.00 A_pre_miami
+  COL    Alpine             Mercedes       1:35.624     -4.8    -7.4   0.87   0.84  1.00 A_pre_miami
+  PER    Cadillac           Ferrari        1:36.621     -6.2   -11.5   0.79   0.83  1.00 A_pre_miami
+  BEA    Haas               Ferrari        1:36.624    -19.3    +3.8   0.49   0.79  0.60 A_pre_miami
+  ALB    Williams           Mercedes       1:36.812    -10.6    -0.4   0.85   0.82  1.00 A_pre_miami
+  BOT    Cadillac           Ferrari        1:37.369     -7.3   -13.0   0.74   0.83  1.00 A_pre_miami
+  ALO    Aston Martin       Honda          1:37.754    -16.2    -4.3   0.67   0.80  1.00 A_pre_miami
+  STR    Aston Martin       Honda          1:38.199    -13.8   -13.3   0.70   0.81  0.60 A_pre_miami
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 22 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R03_R.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+python : core           INFO 	Loading data for Miami Grand Prix - Race [v3.8.2]
+At line:6 char:124
++ ... ,"britain","belgium","hungary")) { python run.py race $c 2>&1 | Out-F ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (core           ...- Race [v3.8.2]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Driver 12 completed the race distance 00:00.027000 before the recorded end of the session.
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '1', '81', '63', '3', '44', '43', '16', '55', '23', 
+'87', '5', '31', '41', '14', '11', '18', '77', '27', '30', '10', '6']
+core           INFO 	Loading data for Miami Grand Prix - Race [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Driver 12 completed the race distance 00:00.027000 before the recorded end of the session.
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '1', '81', '63', '3', '44', '43', '16', '55', '23', 
+'87', '5', '31', '41', '14', '11', '18', '77', '27', '30', '10', '6']
+
+Loading race session for Miami...
+
+------------------------------------------------------------
+  Race Pipeline: Miami  [R — Rd 4 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Miami
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Miami Grand Prix 2026 — R...
+  Using fastest lap: NOR  0 days 00:01:31.869000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Miami
+═══════════════════════════════════════════════════════
+  Total segments:  22
+  Lap distance:    5328 m
+  Braking zones:   6  (778m total)
+  Straights:       2
+  Superclip zones: 3
+  Corners:         9  (slow 6 / medium 0 / fast 3)
+  Lift/Coast:      2
+
+  Key braking zones:
+    Seg[001] braking      d=245-406m  v=288→93→94 kph  t=4.08s
+    Seg[007] braking      d=1457-1635m  v=213→118→118 kph  t=4.32s
+    Seg[010] braking      d=2946-3112m  v=301→92→92 kph  t=4.24s
+    Seg[014] braking      d=3350-3401m  v=142→95→95 kph  t=1.88s
+    Seg[016] braking      d=3464-3521m  v=99→73→73 kph  t=2.60s
+    Seg[019] braking      d=4689-4853m  v=311→67→68 kph  t=4.68s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Miami Grand Prix [R]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   7.851 MJ  (92.4% of limit)
+  Total deployed:    11.799 MJ
+  Battery floor:     0.052 MJ
+  Lap time vs base:  -1.372s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=245–406m  harvest=0.779MJ  (max=1.428MJ)
+    corner       d=1141–1267m  harvest=0.100MJ  (max=0.100MJ)
+    braking      d=1457–1635m  harvest=1.512MJ  (max=1.512MJ)
+    superclip    d=1730–2918m  harvest=0.285MJ  (max=0.285MJ)
+    braking      d=2946–3112m  harvest=1.484MJ  (max=1.484MJ)
+    corner       d=3240–3340m  harvest=0.100MJ  (max=0.100MJ)
+    braking      d=3350–3401m  harvest=0.658MJ  (max=0.658MJ)
+    braking      d=3464–3521m  harvest=0.910MJ  (max=0.910MJ)
+    corner       d=3528–3606m  harvest=0.100MJ  (max=0.100MJ)
+    superclip    d=3620–4675m  harvest=0.285MJ  (max=0.285MJ)
+    braking      d=4689–4853m  harvest=1.638MJ  (max=1.638MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Finishedx10, Lappedx8, Retiredx4
+  Race laps: 57
+  ANT    Mercedes             92.586s  2 stints
+  NOR    McLaren              92.591s  2 stints
+  PIA    McLaren              92.838s  2 stints
+  RUS    Mercedes             93.423s  2 stints
+  VER    Red Bull             93.582s  1 stints
+  HAM    Ferrari              93.570s  2 stints
+  COL    Alpine               93.859s  2 stints
+  LEC    Ferrari              93.042s  2 stints
+  SAI    Williams             94.241s  2 stints
+  ALB    Williams             94.485s  2 stints
+  BEA    Haas                 94.588s  2 stints
+  BOR    Audi                 94.653s  2 stints
+  OCO    Haas                 94.806s  2 stints
+  LIN    VCARB                95.071s  2 stints
+  ALO    Aston Martin         96.080s  2 stints
+  PER    Cadillac             96.255s  2 stints
+  STR    Aston Martin         95.601s  3 stints
+  BOT    Cadillac             97.707s  3 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: Miami [R]  Rd 4 — 2026
+  Circuit type: power
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  ANT    Mercedes           Mercedes       1:32.586     +0.0    +0.0   0.86   0.85  1.00 B_miami_canada
+  NOR    McLaren            Mercedes       1:32.591     +0.5    +2.3   0.88   0.85  1.00 B_miami_canada
+  PIA    McLaren            Mercedes       1:32.838     -2.4    -5.8   0.83   0.84  1.00 B_miami_canada
+  LEC    Ferrari            Ferrari        1:33.042     -9.5    +5.8   0.85   0.82  1.00 B_miami_canada
+  RUS    Mercedes           Mercedes       1:33.423     -5.3    -2.4   0.84   0.83  1.00 B_miami_canada
+  HAM    Ferrari            Ferrari        1:33.570     -6.9    -5.2   0.77   0.83  1.00 B_miami_canada
+  VER    Red Bull           RedBullFord    1:33.582     -1.4    -9.3   0.86   0.85  1.00 B_miami_canada
+  COL    Alpine             Mercedes       1:33.859     -0.9    -2.1   0.83   0.85  1.00 B_miami_canada
+  SAI    Williams           Mercedes       1:34.241     -0.6    -0.9   0.89   0.85  1.00 B_miami_canada
+  ALB    Williams           Mercedes       1:34.485     -4.7   -13.0   0.84   0.84  1.00 B_miami_canada
+  BEA    Haas               Ferrari        1:34.588     -9.9    -8.1   0.85   0.82  1.00 B_miami_canada
+  BOR    Audi               Audi           1:34.653    -12.2    -1.3   0.82   0.81  1.00 B_miami_canada
+  OCO    Haas               Ferrari        1:34.806     -4.5    -7.0   0.81   0.84  1.00 B_miami_canada
+  LIN    VCARB              RedBullFord    1:35.071     -5.7    -2.4   0.74   0.83  1.00 B_miami_canada
+  STR    Aston Martin       Honda          1:35.601     -7.1    -0.2   0.80   0.83  1.00 B_miami_canada
+  ALO    Aston Martin       Honda          1:36.080     -7.6    -4.7   0.82   0.83  1.00 B_miami_canada
+  PER    Cadillac           Ferrari        1:36.255     -8.3   -19.4   0.63   0.82  1.00 B_miami_canada
+  BOT    Cadillac           Ferrari        1:37.707     -5.1   -23.9   0.55   0.83  1.00 B_miami_canada
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 18 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R04_R.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+core           INFO 	Loading data for Miami Grand Prix - Sprint [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['1', '81', '16', '63', '3', '12', '44', '10', '6', '43', 
+'31', '87', '55', '30', '14', '11', '18', '23', '77', '27', '41', '5']
+core           INFO 	Loading data for Miami Grand Prix - Sprint [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['1', '81', '16', '63', '3', '12', '44', '10', '6', '43', 
+'31', '87', '55', '30', '14', '11', '18', '23', '77', '27', '41', '5']
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+
+  Sprint weekend — also loading S session...
+
+------------------------------------------------------------
+  Race Pipeline: Miami  [S — Rd 4 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Miami
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Miami Grand Prix 2026 — S...
+  Using fastest lap: NOR  0 days 00:01:31.885000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Miami
+═══════════════════════════════════════════════════════
+  Total segments:  21
+  Lap distance:    5319 m
+  Braking zones:   6  (773m total)
+  Straights:       2
+  Superclip zones: 3
+  Corners:         8  (slow 5 / medium 0 / fast 3)
+  Lift/Coast:      2
+
+  Key braking zones:
+    Seg[001] braking      d=238-388m  v=269→97→97 kph  t=3.84s
+    Seg[006] braking      d=1451-1611m  v=215→124→124 kph  t=3.84s
+    Seg[009] braking      d=2947-3132m  v=288→89→108 kph  t=5.16s
+    Seg[012] braking      d=3331-3395m  v=142→93→93 kph  t=2.36s
+    Seg[014] braking      d=3461-3512m  v=102→75→78 kph  t=2.48s
+    Seg[018] braking      d=4680-4843m  v=288→69→70 kph  t=4.72s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Miami Grand Prix [S]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   7.904 MJ  (93.0% of limit)
+  Total deployed:    11.853 MJ
+  Battery floor:     0.051 MJ
+  Lap time vs base:  -1.392s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=238–388m  harvest=0.733MJ  (max=1.344MJ)
+    corner       d=1128–1438m  harvest=0.100MJ  (max=0.100MJ)
+    braking      d=1451–1611m  harvest=1.344MJ  (max=1.344MJ)
+    superclip    d=1726–2927m  harvest=0.285MJ  (max=0.285MJ)
+    braking      d=2947–3132m  harvest=1.806MJ  (max=1.806MJ)
+    corner       d=3223–3319m  harvest=0.100MJ  (max=0.100MJ)
+    braking      d=3331–3395m  harvest=0.826MJ  (max=0.826MJ)
+    braking      d=3461–3512m  harvest=0.868MJ  (max=0.868MJ)
+    superclip    d=3611–4613m  harvest=0.190MJ  (max=0.285MJ)
+    braking      d=4680–4843m  harvest=1.652MJ  (max=1.652MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Finishedx19, Did not startx2, Disqualifiedx1
+  Race laps: 19
+  NOR    McLaren              92.193s  1 stints
+  PIA    McLaren              92.360s  1 stints
+  LEC    Ferrari              92.302s  1 stints
+  RUS    Mercedes             92.641s  1 stints
+  VER    Red Bull             92.572s  1 stints
+  ANT    Mercedes             92.443s  1 stints
+  HAM    Ferrari              93.173s  1 stints
+  GAS    Alpine               93.660s  1 stints
+  HAD    Red Bull             93.573s  1 stints
+  COL    Alpine               93.787s  1 stints
+  OCO    Haas                 94.897s  1 stints
+  BEA    Haas                 94.980s  1 stints
+  SAI    Williams             94.956s  1 stints
+  LAW    VCARB                94.474s  1 stints
+  ALO    Aston Martin         95.622s  1 stints
+  PER    Cadillac             95.908s  1 stints
+  STR    Aston Martin         95.578s  1 stints
+  ALB    Williams             94.052s  2 stints
+  BOT    Cadillac             96.755s  1 stints
+  BOR    DNF — 19/19 laps [Disqualified]
+  BOR    Audi                 94.507s  1 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: Miami [S]  Rd 4 — 2026
+  Circuit type: power
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  NOR    McLaren            Mercedes       1:32.193     +0.0    +0.0   0.83   0.85  1.00 B_miami_canada
+  LEC    Ferrari            Ferrari        1:32.302     -4.8    +9.0   0.81   0.84  1.00 B_miami_canada
+  PIA    McLaren            Mercedes       1:32.360     +0.2    -2.8   0.88   0.85  1.00 B_miami_canada
+  ANT    Mercedes           Mercedes       1:32.443     -3.9    -3.7   0.82   0.84  1.00 B_miami_canada
+  VER    Red Bull           RedBullFord    1:32.572     -0.2    +4.2   0.88   0.85  1.00 B_miami_canada
+  RUS    Mercedes           Mercedes       1:32.641     -5.6    +5.3   0.87   0.83  1.00 B_miami_canada
+  HAM    Ferrari            Ferrari        1:33.173     -9.2    +6.6   0.78   0.82  1.00 B_miami_canada
+  HAD    Red Bull           RedBullFord    1:33.573     -4.4    +4.9   0.78   0.84  1.00 B_miami_canada
+  GAS    Alpine             Mercedes       1:33.660     +1.4    -1.7   0.84   0.85  1.00 B_miami_canada
+  COL    Alpine             Mercedes       1:33.787     -3.2    +6.2   0.82   0.84  1.00 B_miami_canada
+  ALB    Williams           Mercedes       1:34.052     -3.8    -3.5   0.79   0.84  1.00 B_miami_canada
+  LAW    VCARB              RedBullFord    1:34.474     -0.0    -3.3   0.81   0.85  1.00 B_miami_canada
+  BOR    Audi               Audi           1:34.507    -14.9   +11.5   0.78   0.80  0.60 B_miami_canada
+  OCO    Haas               Ferrari        1:34.897     -9.0    -2.5   0.83   0.82  1.00 B_miami_canada
+  SAI    Williams           Mercedes       1:34.956     -4.6    -8.6   0.80   0.84  1.00 B_miami_canada
+  BEA    Haas               Ferrari        1:34.980     -9.2    -9.6   0.73   0.82  1.00 B_miami_canada
+  STR    Aston Martin       Honda          1:35.578    -14.8   -14.4   0.71   0.80  1.00 B_miami_canada
+  ALO    Aston Martin       Honda          1:35.622     -4.9   -12.8   0.73   0.83  1.00 B_miami_canada
+  PER    Cadillac           Ferrari        1:35.908     -9.7   -10.9   0.71   0.82  1.00 B_miami_canada
+  BOT    Cadillac           Ferrari        1:36.755     -9.4    -5.2   0.79   0.82  1.00 B_miami_canada
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 20 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R04_S.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+python : core           INFO 	Loading data for Canadian Grand Prix - Race [v3.8.2]
+At line:6 char:124
++ ... ,"britain","belgium","hungary")) { python run.py race $c 2>&1 | Out-F ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (core           ...- Race [v3.8.2]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '44', '3', '16', '6', '43', '30', '10', '55', '87', 
+'81', '27', '5', '31', '18', '77', '11', '1', '63', '14', '23', '41']
+core           INFO 	Loading data for Canadian Grand Prix - Race [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '44', '3', '16', '6', '43', '30', '10', '55', '87', 
+'81', '27', '5', '31', '18', '77', '11', '1', '63', '14', '23', '41']
+
+Loading race session for Canada...
+
+------------------------------------------------------------
+  Race Pipeline: Canada  [R — Rd 5 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Canada
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Canadian Grand Prix 2026 — R...
+  Using fastest lap: ANT  0 days 00:01:14.210000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Canada
+═══════════════════════════════════════════════════════
+  Total segments:  19
+  Lap distance:    4344 m
+  Braking zones:   6  (787m total)
+  Straights:       4
+  Superclip zones: 3
+  Corners:         6  (slow 3 / medium 3 / fast 0)
+  Lift/Coast:      0
+
+  Key braking zones:
+    Seg[001] braking      d=144-326m  v=256→82→83 kph  t=5.04s
+    Seg[004] braking      d=624-705m  v=216→149→149 kph  t=1.88s
+    Seg[007] braking      d=1122-1237m  v=233→102→102 kph  t=3.04s
+    Seg[010] braking      d=1888-1993m  v=263→136→136 kph  t=2.36s
+    Seg[013] braking      d=2539-2685m  v=267→66→67 kph  t=4.72s
+    Seg[016] braking      d=3729-3887m  v=318→140→140 kph  t=3.00s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Canadian Grand Prix [R]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   6.320 MJ  (74.4% of limit)
+  Total deployed:    10.230 MJ
+  Battery floor:     0.089 MJ
+  Lap time vs base:  -1.409s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=144–326m  harvest=0.481MJ  (max=1.764MJ)
+    braking      d=624–705m  harvest=0.658MJ  (max=0.658MJ)
+    braking      d=1122–1237m  harvest=1.064MJ  (max=1.064MJ)
+    superclip    d=1375–1870m  harvest=0.294MJ  (max=0.294MJ)
+    braking      d=1888–1993m  harvest=0.826MJ  (max=0.826MJ)
+    braking      d=2539–2685m  harvest=1.652MJ  (max=1.652MJ)
+    superclip    d=2746–3711m  harvest=0.294MJ  (max=0.294MJ)
+    braking      d=3729–3887m  harvest=1.050MJ  (max=1.050MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Lappedx12, Retiredx5, Finishedx4, Did not startx1
+  Race laps: 68
+  ANT    Mercedes             75.413s  2 stints
+  HAM    Ferrari              75.650s  2 stints
+  VER    Red Bull             75.690s  2 stints
+  LEC    Ferrari              76.096s  2 stints
+  HAD    Red Bull             76.026s  4 stints
+  COL    Alpine               76.926s  2 stints
+  LAW    VCARB                77.009s  2 stints
+  GAS    Alpine               77.050s  2 stints
+  SAI    Williams             76.984s  2 stints
+  BEA    Haas                 76.912s  2 stints
+  PIA    McLaren              76.780s  3 stints
+  HUL    Audi                 77.389s  2 stints
+  BOR    Audi                 77.356s  2 stints
+  OCO    Haas                 78.264s  3 stints
+  STR    Aston Martin         80.266s  3 stints
+  BOT    Cadillac             79.691s  4 stints
+  PER    DNF — 40/68 laps [Retired]
+  PER    Cadillac             78.590s  3 stints
+  NOR    DNF — 39/68 laps [Retired]
+  NOR    McLaren              77.029s  2 stints
+  RUS    DNF — 30/68 laps [Retired]
+  RUS    Mercedes             76.105s  1 stints
+  ALO    DNF — 24/68 laps [Retired]
+  ALO    Aston Martin         80.381s  2 stints
+  ALB    DNF — 12/68 laps [Retired]
+  ALB    Williams             78.638s  1 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: Canada [R]  Rd 5 — 2026
+  Circuit type: power
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  ANT    Mercedes           Mercedes       1:15.413     +0.0    +0.0   0.91   0.85  1.00 B_miami_canada
+  HAM    Ferrari            Ferrari        1:15.650     +0.6   -14.3   0.85   0.85  1.00 B_miami_canada
+  VER    Red Bull           RedBullFord    1:15.690     +1.7   -19.4   0.85   0.86  1.00 B_miami_canada
+  HAD    Red Bull           RedBullFord    1:16.026     +1.5   -18.5   0.90   0.85  1.00 B_miami_canada
+  LEC    Ferrari            Ferrari        1:16.096     -0.5   -12.0   0.90   0.85  1.00 B_miami_canada
+  RUS    Mercedes           Mercedes       1:16.105     -0.4   -17.6   0.79   0.85  0.60 B_miami_canada
+  PIA    McLaren            Mercedes       1:16.780     +3.8   -34.8   0.61   0.86  1.00 B_miami_canada
+  BEA    Haas               Ferrari        1:16.912     +2.0   -30.7   0.67   0.86  1.00 B_miami_canada
+  COL    Alpine             Mercedes       1:16.926     +5.8   -33.1   0.67   0.87  1.00 B_miami_canada
+  SAI    Williams           Mercedes       1:16.984     +1.4   -31.7   0.74   0.85  1.00 B_miami_canada
+  LAW    VCARB              RedBullFord    1:17.009     +4.9   -32.3   0.69   0.86  1.00 B_miami_canada
+  NOR    McLaren            Mercedes       1:17.029     -3.3   -19.0   0.73   0.84  0.60 B_miami_canada
+  GAS    Alpine             Mercedes       1:17.050     +4.0   -27.7   0.75   0.86  1.00 B_miami_canada
+  BOR    Audi               Audi           1:17.356     -3.4   -27.1   0.71   0.84  1.00 B_miami_canada
+  HUL    Audi               Audi           1:17.389     +1.5   -36.6   0.58   0.85  1.00 B_miami_canada
+  OCO    Haas               Ferrari        1:18.264     -2.1   -29.1   0.70   0.84  1.00 B_miami_canada
+  PER    Cadillac           Ferrari        1:18.590     -6.2   -28.5   0.68   0.83  0.60 B_miami_canada
+  ALB    Williams           Mercedes       1:18.638     -3.1   -35.3   0.67   0.84  0.60 B_miami_canada
+  BOT    Cadillac           Ferrari        1:19.691     -4.9   -41.2   0.61   0.84  1.00 B_miami_canada
+  STR    Aston Martin       Honda          1:20.266     -7.6   -37.8   0.61   0.83  1.00 B_miami_canada
+  ALO    Aston Martin       Honda          1:20.381     -7.2   -40.7   0.57   0.83  0.60 B_miami_canada
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+core           INFO 	Loading data for Canadian Grand Prix - Sprint [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['63', '1', '12', '81', '16', '44', '3', '41', '43', '55', 
+'30', '5', '31', '11', '27', '18', '77', '87', '23', '10', '6', '14']
+core           INFO 	Loading data for Canadian Grand Prix - Sprint [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['63', '1', '12', '81', '16', '44', '3', '41', '43', '55', 
+'30', '5', '31', '11', '27', '18', '77', '87', '23', '10', '6', '14']
+  Saved 21 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R05_R.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+
+  Sprint weekend — also loading S session...
+
+------------------------------------------------------------
+  Race Pipeline: Canada  [S — Rd 5 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Canada
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Canadian Grand Prix 2026 — S...
+  Using fastest lap: ANT  0 days 00:01:14.380000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Canada
+═══════════════════════════════════════════════════════
+  Total segments:  20
+  Lap distance:    4300 m
+  Braking zones:   5  (614m total)
+  Straights:       4
+  Superclip zones: 3
+  Corners:         7  (slow 3 / medium 3 / fast 1)
+  Lift/Coast:      1
+
+  Key braking zones:
+    Seg[005] braking      d=613-708m  v=226→147→147 kph  t=2.16s
+    Seg[008] braking      d=1129-1234m  v=222→103→103 kph  t=3.04s
+    Seg[011] braking      d=1840-1980m  v=289→132→132 kph  t=2.96s
+    Seg[014] braking      d=2522-2671m  v=271→64→66 kph  t=4.56s
+    Seg[017] braking      d=3741-3865m  v=283→138→138 kph  t=2.76s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Canadian Grand Prix [S]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   6.006 MJ  (70.7% of limit)
+  Total deployed:    10.006 MJ
+  Battery floor:     0.000 MJ
+  Lap time vs base:  -1.363s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=613–708m  harvest=0.756MJ  (max=0.756MJ)
+    braking      d=1129–1234m  harvest=1.064MJ  (max=1.064MJ)
+    superclip    d=1375–1820m  harvest=0.294MJ  (max=0.294MJ)
+    braking      d=1840–1980m  harvest=1.036MJ  (max=1.036MJ)
+    braking      d=2522–2671m  harvest=1.596MJ  (max=1.596MJ)
+    superclip    d=2758–3724m  harvest=0.294MJ  (max=0.294MJ)
+    braking      d=3741–3865m  harvest=0.966MJ  (max=0.966MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Finishedx15, Lappedx6, Retiredx1
+  Race laps: 23
+  RUS    Mercedes             74.885s  1 stints
+  NOR    McLaren              74.850s  1 stints
+  ANT    Mercedes             74.836s  1 stints
+  PIA    McLaren              75.112s  1 stints
+  LEC    Ferrari              75.295s  1 stints
+  HAM    Ferrari              75.166s  1 stints
+  VER    Red Bull             75.270s  1 stints
+  LIN    VCARB                75.973s  1 stints
+  COL    Alpine               76.037s  1 stints
+  SAI    Williams             76.346s  1 stints
+  LAW    VCARB                76.971s  1 stints
+  BOR    Audi                 77.133s  1 stints
+  OCO    Haas                 77.196s  1 stints
+  PER    Cadillac             77.381s  1 stints
+  HUL    Audi                 77.000s  1 stints
+  STR    Aston Martin         77.882s  1 stints
+  BOT    Cadillac             78.242s  1 stints
+  BEA    Haas                 77.144s  2 stints
+  ALB    Williams             81.240s  2 stints
+  GAS    Alpine               77.507s  2 stints
+  HAD    Red Bull             81.162s  3 stints
+  ALO    DNF — 16/23 laps [Retired]
+  ALO    Aston Martin         78.246s  1 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: Canada [S]  Rd 5 — 2026
+  Circuit type: power
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  ANT    Mercedes           Mercedes       1:14.836     +0.0    +0.0   0.92   0.85  1.00 B_miami_canada
+  NOR    McLaren            Mercedes       1:14.850     +0.5   -10.3   0.87   0.85  1.00 B_miami_canada
+  RUS    Mercedes           Mercedes       1:14.885     -4.7    +4.6   0.83   0.84  1.00 B_miami_canada
+  PIA    McLaren            Mercedes       1:15.112     -4.0   +24.5   0.86   0.84  1.00 B_miami_canada
+  HAM    Ferrari            Ferrari        1:15.166     -1.4    -8.8   0.86   0.85  1.00 B_miami_canada
+  VER    Red Bull           RedBullFord    1:15.270     -4.5    +0.8   0.93   0.84  1.00 B_miami_canada
+  LEC    Ferrari            Ferrari        1:15.295     +1.3   -12.2   0.74   0.85  1.00 B_miami_canada
+  LIN    VCARB              RedBullFord    1:15.973     -0.4    -1.8   0.90   0.85  1.00 B_miami_canada
+  COL    Alpine             Mercedes       1:16.037     +3.0    -8.4   0.92   0.86  1.00 B_miami_canada
+  SAI    Williams           Mercedes       1:16.346     -2.7    -8.5   0.87   0.84  1.00 B_miami_canada
+  LAW    VCARB              RedBullFord    1:16.971     -0.2   -24.9   0.74   0.85  1.00 B_miami_canada
+  HUL    Audi               Audi           1:17.000     -3.2   -10.0   0.83   0.84  1.00 B_miami_canada
+  BOR    Audi               Audi           1:17.133     -0.8   -18.4   0.70   0.85  1.00 B_miami_canada
+  BEA    Haas               Ferrari        1:17.144     -6.3    -9.7   0.84   0.83  1.00 B_miami_canada
+  OCO    Haas               Ferrari        1:17.196     -7.9    -9.7   0.83   0.83  1.00 B_miami_canada
+  PER    Cadillac           Ferrari        1:17.381     -6.4   -23.1   0.69   0.83  1.00 B_miami_canada
+  GAS    Alpine             Mercedes       1:17.507     -2.3   -23.3   0.76   0.84  1.00 B_miami_canada
+  STR    Aston Martin       Honda          1:17.882    -11.7   -10.2   0.82   0.82  1.00 B_miami_canada
+  BOT    Cadillac           Ferrari        1:18.242     -7.8   -26.3   0.65   0.83  1.00 B_miami_canada
+  ALO    Aston Martin       Honda          1:18.246     -9.7   -20.1   0.74   0.82  0.60 B_miami_canada
+  HAD    Red Bull           RedBullFord    1:21.162    -13.0    +1.8   0.86   0.81  1.00 B_miami_canada
+  ALB    Williams           Mercedes       1:21.240     -9.1    -3.8   0.84   0.82  1.00 B_miami_canada
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 22 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R05_S.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+python : core           INFO 	Loading data for Monaco Grand Prix - Race [v3.8.2]
+At line:6 char:124
++ ... ,"britain","belgium","hungary")) { python run.py race $c 2>&1 | Out-F ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (core           ...- Race [v3.8.2]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '44', '10', '6', '81', '30', '41', '23', '31', '14', 
+'5', '63', '27', '43', '11', '55', '16', '18', '1', '87', '77', '3']
+core           INFO 	Loading data for Monaco Grand Prix - Race [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '44', '10', '6', '81', '30', '41', '23', '31', '14', 
+'5', '63', '27', '43', '11', '55', '16', '18', '1', '87', '77', '3']
+
+Loading race session for Monaco...
+
+------------------------------------------------------------
+  Race Pipeline: Monaco  [R — Rd 6 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Monaco
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Monaco Grand Prix 2026 — R...
+  Using fastest lap: ANT  0 days 00:01:13.481000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Monaco
+═══════════════════════════════════════════════════════
+  Total segments:  25
+  Lap distance:    3255 m
+  Braking zones:   10  (1058m total)
+  Straights:       6
+  Superclip zones: 0
+  Corners:         9  (slow 5 / medium 4 / fast 0)
+  Lift/Coast:      0
+
+  Key braking zones:
+    Seg[001] braking      d=57-184m  v=259→109→109 kph  t=2.96s
+    Seg[004] braking      d=601-743m  v=259→171→171 kph  t=2.68s
+    Seg[008] braking      d=998-1103m  v=209→82→82 kph  t=3.40s
+    Seg[010] braking      d=1149-1311m  v=127→47→98 kph  t=7.96s
+    Seg[011] braking      d=1316-1370m  v=101→85→85 kph  t=2.16s
+    Seg[014] braking      d=1939-2064m  v=256→68→69 kph  t=4.08s
+    Seg[017] braking      d=2242-2309m  v=215→174→174 kph  t=1.48s
+    Seg[019] braking      d=2535-2655m  v=235→133→136 kph  t=2.76s
+    Seg[021] braking      d=2767-2885m  v=188→65→91 kph  t=4.60s
+    Seg[022] braking      d=2893-2930m  v=98→87→87 kph  t=1.68s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Monaco Grand Prix [R]
+═══════════════════════════════════════════════════════
+  Harvest limit:     9.0 MJ
+  Total harvested:   5.579 MJ  (62.0% of limit)
+  Total deployed:    9.543 MJ
+  Battery floor:     0.000 MJ
+  Lap time vs base:  -1.331s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=998–1103m  harvest=0.757MJ  (max=1.190MJ)
+    braking      d=1149–1311m  harvest=0.760MJ  (max=2.786MJ)
+    braking      d=1316–1370m  harvest=0.756MJ  (max=0.756MJ)
+    braking      d=1939–2064m  harvest=1.168MJ  (max=1.428MJ)
+    braking      d=2535–2655m  harvest=0.966MJ  (max=0.966MJ)
+    braking      d=2767–2885m  harvest=1.171MJ  (max=1.610MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Finishedx15, Retiredx7
+  Race laps: 78
+  ANT    Mercedes             76.284s  3 stints
+  HAM    Ferrari              76.689s  3 stints
+  GAS    Alpine               78.178s  3 stints
+  HAD    Red Bull             77.890s  3 stints
+  PIA    McLaren              77.889s  3 stints
+  LAW    VCARB                78.449s  3 stints
+  LIN    VCARB                79.406s  2 stints
+  ALB    Williams             79.319s  3 stints
+  OCO    Haas                 79.445s  3 stints
+  ALO    Aston Martin         79.213s  2 stints
+  BOR    Audi                 79.580s  3 stints
+  RUS    Mercedes             77.891s  3 stints
+  HUL    Audi                 79.399s  3 stints
+  COL    Alpine               79.427s  3 stints
+  PER    Cadillac             79.751s  3 stints
+  SAI    DNF — 71/78 laps [Retired]
+  SAI    Williams             79.446s  2 stints
+  LEC    DNF — 65/78 laps [Retired]
+  LEC    Ferrari              76.955s  2 stints
+  STR    DNF — 57/78 laps [Retired]
+  STR    Aston Martin         79.290s  1 stints
+  NOR    DNF — 44/78 laps [Retired]
+  NOR    McLaren              78.464s  1 stints
+  BEA    DNF — 28/78 laps [Retired]
+  BEA    Haas                 80.485s  1 stints
+  BOT    DNF — 16/78 laps [Retired]
+  BOT    Cadillac             81.293s  1 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: Monaco [R]  Rd 6 — 2026
+  Circuit type: technical
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  ANT    Mercedes           Mercedes       1:16.284     +0.0    +0.0   0.82   0.85  1.00 C_post_monaco
+  HAM    Ferrari            Ferrari        1:16.689     -4.1    +1.1   0.67   0.84  1.00 C_post_monaco
+  LEC    Ferrari            Ferrari        1:16.955     -1.8    +0.3   0.71   0.84  0.60 C_post_monaco
+  PIA    McLaren            Mercedes       1:17.889     +1.1    -2.0   0.74   0.85  1.00 C_post_monaco
+  HAD    Red Bull           RedBullFord    1:17.890     -7.6    +5.1   0.69   0.82  1.00 C_post_monaco
+  RUS    Mercedes           Mercedes       1:17.891     -2.4    -5.4   0.72   0.84  1.00 C_post_monaco
+  GAS    Alpine             Mercedes       1:18.178     -4.3    -3.3   0.72   0.83  1.00 C_post_monaco
+  LAW    VCARB              RedBullFord    1:18.449     -3.2    +2.1   0.72   0.84  1.00 C_post_monaco
+  NOR    McLaren            Mercedes       1:18.464     +3.2    -9.3   0.77   0.86  0.60 C_post_monaco
+  ALO    Aston Martin       Honda          1:19.213     -7.7    -4.1   0.67   0.82  1.00 C_post_monaco
+  STR    Aston Martin       Honda          1:19.290    -12.4    +7.2   0.68   0.80  0.60 C_post_monaco
+  ALB    Williams           Mercedes       1:19.319     -4.8    -5.4   0.72   0.83  1.00 C_post_monaco
+  HUL    Audi               Audi           1:19.399     +2.0    -8.9   0.78   0.86  1.00 C_post_monaco
+  LIN    VCARB              RedBullFord    1:19.406     -9.4    -2.9   0.69   0.82  1.00 C_post_monaco
+  COL    Alpine             Mercedes       1:19.427     -4.4    -1.7   0.73   0.83  1.00 C_post_monaco
+  OCO    Haas               Ferrari        1:19.445     -0.5    -9.1   0.64   0.85  1.00 C_post_monaco
+  SAI    Williams           Mercedes       1:19.446    -12.2    -1.9   0.73   0.81  0.60 C_post_monaco
+  BOR    Audi               Audi           1:19.580     -2.3    -5.3   0.67   0.84  1.00 C_post_monaco
+  PER    Cadillac           Ferrari        1:19.751     +0.7   -21.9   0.69   0.85  1.00 C_post_monaco
+  BEA    Haas               Ferrari        1:20.485     -0.5   -12.8   0.63   0.85  0.60 C_post_monaco
+  BOT    Cadillac           Ferrari        1:21.293    -10.8    -9.9   0.64   0.81  0.60 C_post_monaco
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 21 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R06_R.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+python : core           INFO 	Loading data for Barcelona Grand Prix - Race [v3.8.2]
+At line:6 char:124
++ ... ,"britain","belgium","hungary")) { python run.py race $c 2>&1 | Out-F ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (core           ...- Race [v3.8.2]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Fixed incorrect tyre stint information for driver '87'
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['44', '63', '1', '3', '81', '6', '10', '30', '41', '43', 
+'5', '55', '31', '11', '16', '12', '87', '23', '14', '27', '77', '18']
+core           INFO 	Loading data for Barcelona Grand Prix - Race [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Fixed incorrect tyre stint information for driver '87'
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['44', '63', '1', '3', '81', '6', '10', '30', '41', '43', 
+'5', '55', '31', '11', '16', '12', '87', '23', '14', '27', '77', '18']
+
+Loading race session for Spain...
+
+------------------------------------------------------------
+  Race Pipeline: Spain  [R — Rd 7 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Spain
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Barcelona Grand Prix 2026 — R...
+  Using fastest lap: HAM  0 days 00:01:20.122000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Spain
+═══════════════════════════════════════════════════════
+  Total segments:  29
+  Lap distance:    4633 m
+  Braking zones:   6  (846m total)
+  Straights:       5
+  Superclip zones: 3
+  Corners:         14  (slow 3 / medium 3 / fast 8)
+  Lift/Coast:      1
+
+  Key braking zones:
+    Seg[002] braking      d=663-814m  v=294→161→161 kph  t=2.84s
+    Seg[005] braking      d=1537-1726m  v=267→146→146 kph  t=4.00s
+    Seg[009] braking      d=1982-2106m  v=214→102→102 kph  t=3.48s
+    Seg[012] braking      d=2391-2532m  v=249→143→143 kph  t=3.00s
+    Seg[019] braking      d=3328-3494m  v=278→106→106 kph  t=3.84s
+    Seg[021] braking      d=3654-3729m  v=177→134→134 kph  t=2.00s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Barcelona Grand Prix [R]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   7.285 MJ  (85.7% of limit)
+  Total deployed:    11.224 MJ
+  Battery floor:     0.061 MJ
+  Lap time vs base:  -1.199s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=663–814m  harvest=0.994MJ  (max=0.994MJ)
+    braking      d=1537–1726m  harvest=1.400MJ  (max=1.400MJ)
+    braking      d=1982–2106m  harvest=1.218MJ  (max=1.218MJ)
+    braking      d=2391–2532m  harvest=1.050MJ  (max=1.050MJ)
+    superclip    d=3005–3242m  harvest=0.289MJ  (max=0.289MJ)
+    braking      d=3328–3494m  harvest=1.344MJ  (max=1.344MJ)
+    braking      d=3654–3729m  harvest=0.700MJ  (max=0.700MJ)
+    superclip    d=4421–4633m  harvest=0.289MJ  (max=0.289MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Lappedx10, Retiredx7, Finishedx5
+  Race laps: 66
+  HAM    Ferrari              81.502s  4 stints
+  RUS    Mercedes             82.271s  3 stints
+  NOR    McLaren              82.243s  3 stints
+  VER    Red Bull             82.121s  4 stints
+  PIA    McLaren              82.671s  3 stints
+  HAD    Red Bull             83.064s  4 stints
+  GAS    Alpine               84.096s  3 stints
+  LAW    VCARB                84.251s  3 stints
+  LIN    VCARB                84.347s  3 stints
+  COL    Alpine               84.176s  3 stints
+  BOR    Audi                 84.586s  4 stints
+  SAI    Williams             84.526s  4 stints
+  OCO    Haas                 84.981s  4 stints
+  PER    Cadillac             85.740s  4 stints
+  LEC    DNF — 62/66 laps [Retired]
+  LEC    Ferrari              82.463s  3 stints
+  ANT    DNF — 62/66 laps [Retired]
+  ANT    Mercedes             82.196s  3 stints
+  BEA    DNF — 60/66 laps [Retired]
+  BEA    Haas                 84.737s  3 stints
+  ALB    Williams             85.022s  5 stints
+  ALO    DNF — 38/66 laps [Retired]
+  ALO    Aston Martin         86.644s  2 stints
+  HUL    DNF — 29/66 laps [Retired]
+  HUL    Audi                 84.773s  2 stints
+  BOT    DNF — 15/66 laps [Retired]
+  BOT    Cadillac             87.746s  1 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: Spain [R]  Rd 7 — 2026
+  Circuit type: balanced
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  HAM    Ferrari            Ferrari        1:21.502     +0.0    +0.0   0.87   0.85  1.00 C_post_monaco
+  VER    Red Bull           RedBullFord    1:22.121     -1.0    -3.4   0.94   0.85  1.00 C_post_monaco
+  ANT    Mercedes           Mercedes       1:22.196     +0.4   -10.1   0.88   0.85  0.60 C_post_monaco
+  NOR    McLaren            Mercedes       1:22.243     +0.8    -8.0   0.86   0.85  1.00 C_post_monaco
+  RUS    Mercedes           Mercedes       1:22.271     +0.4    -5.6   0.91   0.85  1.00 C_post_monaco
+  LEC    Ferrari            Ferrari        1:22.463     -3.0    +5.6   0.91   0.84  0.60 C_post_monaco
+  PIA    McLaren            Mercedes       1:22.671     -2.3    -1.8   0.89   0.84  1.00 C_post_monaco
+  HAD    Red Bull           RedBullFord    1:23.064     -1.7    -7.3   0.94   0.84  1.00 C_post_monaco
+  GAS    Alpine             Mercedes       1:24.096     -5.1   -11.7   0.92   0.83  1.00 C_post_monaco
+  COL    Alpine             Mercedes       1:24.176     -4.7    -5.9   0.91   0.84  1.00 C_post_monaco
+  LAW    VCARB              RedBullFord    1:24.251     +1.1   -10.6   0.94   0.85  1.00 C_post_monaco
+  LIN    VCARB              RedBullFord    1:24.347     -4.6   -12.6   0.90   0.84  1.00 C_post_monaco
+  SAI    Williams           Mercedes       1:24.526     -5.0    -5.4   0.94   0.83  1.00 C_post_monaco
+  BOR    Audi               Audi           1:24.586     -7.5   -15.0   0.92   0.83  1.00 C_post_monaco
+  BEA    Haas               Ferrari        1:24.737     -3.9   -19.7   0.82   0.84  0.60 C_post_monaco
+  HUL    Audi               Audi           1:24.773     -5.2   -14.9   0.86   0.83  0.60 C_post_monaco
+  OCO    Haas               Ferrari        1:24.981     -7.0   -16.1   0.88   0.83  1.00 C_post_monaco
+  ALB    Williams           Mercedes       1:25.022     -9.7    -8.1   0.91   0.82  1.00 C_post_monaco
+  PER    Cadillac           Ferrari        1:25.740     -5.4   -17.9   0.75   0.83  1.00 C_post_monaco
+  ALO    Aston Martin       Honda          1:26.644    -11.3   -14.5   0.76   0.82  0.60 C_post_monaco
+  BOT    Cadillac           Ferrari        1:27.746    -10.7   -28.0   0.72   0.82  0.60 C_post_monaco
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 21 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R07_R.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+python : core           INFO 	Loading data for Austrian Grand Prix - Race [v3.8.2]
+At line:6 char:124
++ ... ,"britain","belgium","hungary")) { python run.py race $c 2>&1 | Out-F ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (core           ...- Race [v3.8.2]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Driver 63 completed the race distance 00:00.530000 before the recorded end of the session.
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['63', '3', '12', '81', '44', '6', '1', '16', '30', '41', 
+'5', '27', '10', '87', '43', '31', '23', '14', '18', '55', '11', '77']
+core           INFO 	Loading data for Austrian Grand Prix - Race [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Driver 63 completed the race distance 00:00.530000 before the recorded end of the session.
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['63', '3', '12', '81', '44', '6', '1', '16', '30', '41', 
+'5', '27', '10', '87', '43', '31', '23', '14', '18', '55', '11', '77']
+
+Loading race session for Austria...
+
+------------------------------------------------------------
+  Race Pipeline: Austria  [R — Rd 8 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Austria
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Austrian Grand Prix 2026 — R...
+  Using fastest lap: ANT  0 days 00:01:10.374000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Austria
+═══════════════════════════════════════════════════════
+  Total segments:  21
+  Lap distance:    4284 m
+  Braking zones:   7  (919m total)
+  Straights:       2
+  Superclip zones: 5
+  Corners:         7  (slow 3 / medium 4 / fast 0)
+  Lift/Coast:      0
+
+  Key braking zones:
+    Seg[001] braking      d=120-280m  v=302→121→121 kph  t=3.48s
+    Seg[004] braking      d=1054-1213m  v=295→68→69 kph  t=4.40s
+    Seg[007] braking      d=1846-2030m  v=293→100→100 kph  t=4.44s
+    Seg[010] braking      d=2399-2537m  v=246→166→166 kph  t=2.72s
+    Seg[013] braking      d=2741-2817m  v=212→190→190 kph  t=1.84s
+    Seg[016] braking      d=3447-3573m  v=289→214→214 kph  t=2.20s
+    Seg[018] braking      d=3699-3775m  v=214→171→171 kph  t=1.88s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Austrian Grand Prix [R]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   7.328 MJ  (86.2% of limit)
+  Total deployed:    11.312 MJ
+  Battery floor:     0.015 MJ
+  Lap time vs base:  -1.224s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=120–280m  harvest=0.111MJ  (max=1.218MJ)
+    superclip    d=385–1037m  harvest=0.275MJ  (max=0.275MJ)
+    braking      d=1054–1213m  harvest=1.540MJ  (max=1.540MJ)
+    superclip    d=1330–1826m  harvest=0.275MJ  (max=0.275MJ)
+    braking      d=1846–2030m  harvest=1.554MJ  (max=1.554MJ)
+    braking      d=2399–2537m  harvest=0.952MJ  (max=0.952MJ)
+    braking      d=2741–2817m  harvest=0.644MJ  (max=0.644MJ)
+    superclip    d=2969–3422m  harvest=0.275MJ  (max=0.275MJ)
+    braking      d=3447–3573m  harvest=0.770MJ  (max=0.770MJ)
+    braking      d=3699–3775m  harvest=0.658MJ  (max=0.658MJ)
+    superclip    d=3890–4284m  harvest=0.275MJ  (max=0.275MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Lappedx10, Finishedx8, Retiredx4
+  Race laps: 71
+  RUS    Mercedes             71.706s  3 stints
+  VER    Red Bull             71.606s  3 stints
+  ANT    Mercedes             71.644s  3 stints
+  PIA    McLaren              71.941s  3 stints
+  HAM    Ferrari              71.850s  4 stints
+  HAD    Red Bull             72.187s  3 stints
+  NOR    McLaren              72.078s  3 stints
+  LEC    Ferrari              71.905s  4 stints
+  LAW    VCARB                72.784s  3 stints
+  LIN    VCARB                72.963s  3 stints
+  BOR    Audi                 73.064s  3 stints
+  HUL    Audi                 73.210s  3 stints
+  GAS    Alpine               73.061s  4 stints
+  BEA    Haas                 73.708s  3 stints
+  COL    Alpine               73.599s  3 stints
+  OCO    Haas                 74.012s  3 stints
+  ALB    Williams             74.020s  3 stints
+  ALO    Aston Martin         74.801s  3 stints
+  STR    DNF — 45/71 laps [Retired]
+  STR    Aston Martin         75.246s  2 stints
+  SAI    DNF — 24/71 laps [Retired]
+  SAI    Williams             74.620s  2 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: Austria [R]  Rd 8 — 2026
+  Circuit type: high_speed
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  VER    Red Bull           RedBullFord    1:11.606     +0.0    +0.0   0.87   0.85  1.00 C_post_monaco
+  ANT    Mercedes           Mercedes       1:11.644     -4.9    +2.4   0.75   0.83  1.00 C_post_monaco
+  RUS    Mercedes           Mercedes       1:11.706     -4.6    +1.3   0.76   0.84  1.00 C_post_monaco
+  HAM    Ferrari            Ferrari        1:11.850     -3.6    -4.8   0.86   0.84  1.00 C_post_monaco
+  LEC    Ferrari            Ferrari        1:11.905     -3.7    +1.5   0.83   0.84  1.00 C_post_monaco
+  PIA    McLaren            Mercedes       1:11.941     -2.5   -14.4   0.73   0.84  1.00 C_post_monaco
+  NOR    McLaren            Mercedes       1:12.078     -6.5    -6.7   0.85   0.83  1.00 C_post_monaco
+  HAD    Red Bull           RedBullFord    1:12.187     -1.0    -3.2   0.82   0.85  1.00 C_post_monaco
+  LAW    VCARB              RedBullFord    1:12.784     -2.0   -17.0   0.77   0.84  1.00 C_post_monaco
+  LIN    VCARB              RedBullFord    1:12.963     -0.1   -10.0   0.86   0.85  1.00 C_post_monaco
+  GAS    Alpine             Mercedes       1:13.061     -9.9    -1.0   0.88   0.82  1.00 C_post_monaco
+  BOR    Audi               Audi           1:13.064    -13.3   +15.5   0.77   0.81  1.00 C_post_monaco
+  HUL    Audi               Audi           1:13.210     -5.5    -3.5   0.83   0.83  1.00 C_post_monaco
+  COL    Alpine             Mercedes       1:13.599     -3.4   -16.6   0.77   0.84  1.00 C_post_monaco
+  BEA    Haas               Ferrari        1:13.708    -12.1    +0.2   0.84   0.81  1.00 C_post_monaco
+  OCO    Haas               Ferrari        1:14.012     -8.2    -5.0   0.86   0.82  1.00 C_post_monaco
+  ALB    Williams           Mercedes       1:14.020     -9.0    -9.7   0.80   0.82  1.00 C_post_monaco
+  SAI    Williams           Mercedes       1:14.620     -8.7   -17.6   0.80   0.82  0.60 C_post_monaco
+  ALO    Aston Martin       Honda          1:14.801    -17.9    +5.1   0.68   0.79  1.00 C_post_monaco
+  STR    Aston Martin       Honda          1:15.246    -17.7    -0.2   0.69   0.79  0.60 C_post_monaco
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 20 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R08_R.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+python : core           INFO 	Loading data for British Grand Prix - Race [v3.8.2]
+At line:6 char:124
++ ... ,"britain","belgium","hungary")) { python run.py race $c 2>&1 | Out-F ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (core           ...- Race [v3.8.2]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['16', '63', '44', '1', '6', '30', '41', '5', '43', '10', 
+'81', '87', '31', '11', '12', '77', '55', '14', '18', '3', '23', '27']
+core           INFO 	Loading data for British Grand Prix - Race [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['16', '63', '44', '1', '6', '30', '41', '5', '43', '10', 
+'81', '87', '31', '11', '12', '77', '55', '14', '18', '3', '23', '27']
+
+Loading race session for Britain...
+
+------------------------------------------------------------
+  Race Pipeline: Britain  [R — Rd 9 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Britain
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: British Grand Prix 2026 — R...
+  Using fastest lap: ANT  0 days 00:01:31.777000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Britain
+═══════════════════════════════════════════════════════
+  Total segments:  21
+  Lap distance:    5806 m
+  Braking zones:   7  (894m total)
+  Straights:       2
+  Superclip zones: 5
+  Corners:         7  (slow 3 / medium 1 / fast 3)
+  Lift/Coast:      0
+
+  Key braking zones:
+    Seg[001] braking      d=752-944m  v=263→106→118 kph  t=4.84s
+    Seg[002] braking      d=953-1041m  v=120→83→83 kph  t=3.28s
+    Seg[005] braking      d=1798-2013m  v=285→159→159 kph  t=4.16s
+    Seg[006] braking      d=2059-2159m  v=158→109→109 kph  t=3.80s
+    Seg[012] braking      d=3885-3970m  v=232→203→203 kph  t=1.84s
+    Seg[015] braking      d=4869-4988m  v=282→233→233 kph  t=1.96s
+    Seg[018] braking      d=5377-5472m  v=218→107→107 kph  t=2.72s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: British Grand Prix [R]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   8.414 MJ  (99.0% of limit)
+  Total deployed:    12.353 MJ
+  Battery floor:     0.061 MJ
+  Lap time vs base:  -1.318s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=752–944m  harvest=1.694MJ  (max=1.694MJ)
+    braking      d=953–1041m  harvest=1.148MJ  (max=1.148MJ)
+    superclip    d=1162–1768m  harvest=0.196MJ  (max=0.294MJ)
+    braking      d=1798–2013m  harvest=1.456MJ  (max=1.456MJ)
+    braking      d=2059–2159m  harvest=1.330MJ  (max=1.330MJ)
+    superclip    d=2298–2862m  harvest=0.294MJ  (max=0.294MJ)
+    superclip    d=3119–3569m  harvest=0.294MJ  (max=0.294MJ)
+    braking      d=3885–3970m  harvest=0.644MJ  (max=0.644MJ)
+    superclip    d=4077–4853m  harvest=0.196MJ  (max=0.294MJ)
+    braking      d=4869–4988m  harvest=0.686MJ  (max=0.686MJ)
+    braking      d=5377–5472m  harvest=0.476MJ  (max=0.952MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Finishedx16, Lappedx3, Retiredx3
+  Race laps: 52
+  LEC    Ferrari              93.964s  2 stints
+  RUS    Mercedes             93.895s  3 stints
+  HAM    Ferrari              94.034s  2 stints
+  NOR    McLaren              94.291s  3 stints
+  HAD    Red Bull             94.502s  3 stints
+  LAW    VCARB                95.183s  2 stints
+  LIN    VCARB                95.448s  2 stints
+  BOR    Audi                 95.150s  2 stints
+  COL    Alpine               95.458s  2 stints
+  GAS    Alpine               95.388s  2 stints
+  PIA    McLaren              94.798s  2 stints
+  BEA    Haas                 96.360s  2 stints
+  OCO    Haas                 96.252s  2 stints
+  PER    Cadillac             96.872s  2 stints
+  ANT    Mercedes             95.017s  4 stints
+  BOT    Cadillac             97.500s  2 stints
+  SAI    Williams             96.288s  2 stints
+  ALO    Aston Martin         98.384s  2 stints
+  STR    Aston Martin         98.555s  2 stints
+  VER    DNF — 47/52 laps [Retired]
+  VER    Red Bull             94.028s  3 stints
+  ALB    DNF — 43/52 laps [Retired]
+  ALB    Williams             96.299s  5 stints
+  HUL    DNF — 37/52 laps [Retired]
+  HUL    Audi                 96.607s  3 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: Britain [R]  Rd 9 — 2026
+  Circuit type: high_speed
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  RUS    Mercedes           Mercedes       1:33.895     +0.0    +0.0   0.83   0.85  1.00 C_post_monaco
+  LEC    Ferrari            Ferrari        1:33.964     +1.7    -3.9   0.84   0.86  1.00 C_post_monaco
+  VER    Red Bull           RedBullFord    1:34.028     +7.6    -4.1   0.87   0.87  0.60 C_post_monaco
+  HAM    Ferrari            Ferrari        1:34.034     -9.1   +11.1   0.82   0.82  1.00 C_post_monaco
+  NOR    McLaren            Mercedes       1:34.291     -4.2    +0.5   0.81   0.84  1.00 C_post_monaco
+  HAD    Red Bull           RedBullFord    1:34.502     +0.5    -3.8   0.83   0.85  1.00 C_post_monaco
+  PIA    McLaren            Mercedes       1:34.798     +4.4    -4.8   0.81   0.86  1.00 C_post_monaco
+  ANT    Mercedes           Mercedes       1:35.017     +5.8   -13.5   0.63   0.87  1.00 C_post_monaco
+  BOR    Audi               Audi           1:35.150    +13.3    -1.9   0.85   0.89  1.00 C_post_monaco
+  LAW    VCARB              RedBullFord    1:35.183     -4.5    +0.5   0.82   0.84  1.00 C_post_monaco
+  GAS    Alpine             Mercedes       1:35.388     -7.3    +6.8   0.84   0.83  1.00 C_post_monaco
+  LIN    VCARB              RedBullFord    1:35.448     +5.5    -4.0   0.85   0.87  1.00 C_post_monaco
+  COL    Alpine             Mercedes       1:35.458     -1.9    -2.4   0.87   0.84  1.00 C_post_monaco
+  OCO    Haas               Ferrari        1:36.252     -3.8   -10.5   0.78   0.84  1.00 C_post_monaco
+  SAI    Williams           Mercedes       1:36.288     -2.1   -13.3   0.76   0.84  1.00 C_post_monaco
+  ALB    Williams           Mercedes       1:36.299     -7.8    -3.8   0.77   0.83  0.60 C_post_monaco
+  BEA    Haas               Ferrari        1:36.360     -7.7    -3.4   0.80   0.83  1.00 C_post_monaco
+  HUL    Audi               Audi           1:36.607     -3.8   -10.5   0.80   0.84  0.60 C_post_monaco
+  PER    Cadillac           Ferrari        1:36.872    -13.4    -9.3   0.76   0.81  1.00 C_post_monaco
+  BOT    Cadillac           Ferrari        1:37.500     -4.2   -20.3   0.73   0.84  1.00 C_post_monaco
+  ALO    Aston Martin       Honda          1:38.384     -2.9   -18.8   0.69   0.84  1.00 C_post_monaco
+core           INFO 	Loading data for British Grand Prix - Sprint [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '44', '1', '63', '16', '3', '81', '30', '6', '41', 
+'10', '43', '5', '87', '27', '31', '55', '23', '77', '14', '18', '11']
+core           INFO 	Loading data for British Grand Prix - Sprint [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '44', '1', '63', '16', '3', '81', '30', '6', '41', 
+'10', '43', '5', '87', '27', '31', '55', '23', '77', '14', '18', '11']
+  STR    Aston Martin       Honda          1:38.555    -79.9    -2.7   0.68   0.60  1.00 C_post_monaco
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 22 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R09_R.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+
+  Sprint weekend — also loading S session...
+
+------------------------------------------------------------
+  Race Pipeline: Britain  [S — Rd 9 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Britain
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: British Grand Prix 2026 — S...
+  Using fastest lap: ANT  0 days 00:01:31.607000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Britain
+═══════════════════════════════════════════════════════
+  Total segments:  22
+  Lap distance:    5801 m
+  Braking zones:   6  (677m total)
+  Straights:       2
+  Superclip zones: 5
+  Corners:         9  (slow 4 / medium 3 / fast 2)
+  Lift/Coast:      0
+
+  Key braking zones:
+    Seg[001] braking      d=770-916m  v=253→105→105 kph  t=3.80s
+    Seg[003] braking      d=966-1047m  v=124→82→84 kph  t=3.20s
+    Seg[006] braking      d=1840-1961m  v=276→166→166 kph  t=2.44s
+    Seg[008] braking      d=2051-2158m  v=170→109→109 kph  t=3.40s
+    Seg[016] braking      d=4854-4961m  v=293→230→230 kph  t=1.80s
+    Seg[019] braking      d=5356-5471m  v=239→106→106 kph  t=3.00s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: British Grand Prix [S]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   7.333 MJ  (86.3% of limit)
+  Total deployed:    11.275 MJ
+  Battery floor:     0.058 MJ
+  Lap time vs base:  -1.232s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=770–916m  harvest=1.330MJ  (max=1.330MJ)
+    braking      d=966–1047m  harvest=1.120MJ  (max=1.120MJ)
+    superclip    d=1158–1815m  harvest=0.277MJ  (max=0.294MJ)
+    braking      d=1840–1961m  harvest=0.854MJ  (max=0.854MJ)
+    braking      d=2051–2158m  harvest=1.190MJ  (max=1.190MJ)
+    superclip    d=2298–2884m  harvest=0.294MJ  (max=0.294MJ)
+    superclip    d=3169–3582m  harvest=0.294MJ  (max=0.294MJ)
+    superclip    d=4057–4831m  harvest=0.294MJ  (max=0.294MJ)
+    braking      d=4854–4961m  harvest=0.630MJ  (max=0.630MJ)
+    braking      d=5356–5471m  harvest=1.050MJ  (max=1.050MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Finishedx20, Lappedx2
+  Race laps: 17
+  ANT    Mercedes             92.283s  1 stints
+  HAM    Ferrari              92.387s  1 stints
+  NOR    McLaren              92.563s  1 stints
+  RUS    Mercedes             92.295s  1 stints
+  LEC    Ferrari              92.520s  1 stints
+  VER    Red Bull             92.981s  1 stints
+  PIA    McLaren              92.812s  1 stints
+  LAW    VCARB                93.655s  1 stints
+  HAD    Red Bull             93.415s  1 stints
+  LIN    VCARB                93.903s  1 stints
+  GAS    Alpine               94.355s  1 stints
+  COL    Alpine               94.216s  1 stints
+  BOR    Audi                 94.027s  1 stints
+  BEA    Haas                 94.461s  1 stints
+  HUL    Audi                 93.964s  1 stints
+  OCO    Haas                 94.593s  1 stints
+  SAI    Williams             94.571s  1 stints
+  ALB    Williams             94.427s  1 stints
+  BOT    Cadillac             96.039s  1 stints
+  ALO    Aston Martin         96.988s  1 stints
+  STR    Aston Martin         97.648s  2 stints
+  PER    Cadillac             95.357s  1 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: Britain [S]  Rd 9 — 2026
+  Circuit type: high_speed
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  ANT    Mercedes           Mercedes       1:32.283     +0.0    +0.0   0.84   0.85  1.00 C_post_monaco
+  RUS    Mercedes           Mercedes       1:32.295     -8.7    +6.6   0.83   0.82  1.00 C_post_monaco
+  HAM    Ferrari            Ferrari        1:32.387     -5.6    +2.1   0.87   0.83  1.00 C_post_monaco
+  LEC    Ferrari            Ferrari        1:32.520     -3.6    -2.0   0.78   0.84  1.00 C_post_monaco
+  NOR    McLaren            Mercedes       1:32.563     -4.3    -1.3   0.78   0.84  1.00 C_post_monaco
+  PIA    McLaren            Mercedes       1:32.812     -5.6    +3.7   0.90   0.83  1.00 C_post_monaco
+  VER    Red Bull           RedBullFord    1:32.981     -5.9   +11.6   0.89   0.83  1.00 C_post_monaco
+  HAD    Red Bull           RedBullFord    1:33.415     -7.4   +16.9   0.89   0.83  1.00 C_post_monaco
+  LAW    VCARB              RedBullFord    1:33.655     -2.5    +1.1   0.86   0.84  1.00 C_post_monaco
+  LIN    VCARB              RedBullFord    1:33.903     -2.6    +9.8   0.81   0.84  1.00 C_post_monaco
+  HUL    Audi               Audi           1:33.964    -10.9    -2.9   0.80   0.81  1.00 C_post_monaco
+  BOR    Audi               Audi           1:34.027    -10.7    +2.2   0.83   0.81  1.00 C_post_monaco
+  COL    Alpine             Mercedes       1:34.216     -9.5    +2.1   0.84   0.82  1.00 C_post_monaco
+  GAS    Alpine             Mercedes       1:34.355    -10.7    +8.8   0.86   0.81  1.00 C_post_monaco
+  ALB    Williams           Mercedes       1:34.427    -13.0    -1.5   0.80   0.81  1.00 C_post_monaco
+  BEA    Haas               Ferrari        1:34.461    -17.5    -1.0   0.77   0.79  1.00 C_post_monaco
+  SAI    Williams           Mercedes       1:34.571     -9.9    -9.6   0.76   0.82  1.00 C_post_monaco
+  OCO    Haas               Ferrari        1:34.593    -12.8    -1.5   0.80   0.81  1.00 C_post_monaco
+  PER    Cadillac           Ferrari        1:35.357    -21.9    +7.8   0.84   0.78  1.00 C_post_monaco
+  BOT    Cadillac           Ferrari        1:36.039    -14.6    +0.4   0.83   0.80  1.00 C_post_monaco
+  ALO    Aston Martin       Honda          1:36.988    -13.1    -4.6   0.75   0.81  1.00 C_post_monaco
+  STR    Aston Martin       Honda          1:37.648    -10.8   -15.5   0.74   0.81  1.00 C_post_monaco
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 22 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R09_S.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+python : core           INFO 	Loading data for Belgian Grand Prix - Race [v3.8.2]
+At line:6 char:124
++ ... ,"britain","belgium","hungary")) { python run.py race $c 2>&1 | Out-F ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (core           ...- Race [v3.8.2]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Fixed incorrect tyre stint information for driver '12'
+core        WARNING 	Driver 12 completed the race distance 00:00.045000 before the recorded end of the session.
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '16', '3', '44', '81', '6', '1', '5', '41', '43', 
+'10', '30', '27', '87', '23', '55', '31', '77', '14', '18', '11', '63']
+core           INFO 	Loading data for Belgian Grand Prix - Race [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Fixed incorrect tyre stint information for driver '12'
+core        WARNING 	Driver 12 completed the race distance 00:00.045000 before the recorded end of the session.
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['12', '16', '3', '44', '81', '6', '1', '5', '41', '43', 
+'10', '30', '27', '87', '23', '55', '31', '77', '14', '18', '11', '63']
+
+Loading race session for Belgium...
+
+------------------------------------------------------------
+  Race Pipeline: Belgium  [R — Rd 10 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Belgium
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Belgian Grand Prix 2026 — R...
+  Using fastest lap: NOR  0 days 00:01:48.890000
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Belgium
+═══════════════════════════════════════════════════════
+  Total segments:  23
+  Lap distance:    6904 m
+  Braking zones:   6  (829m total)
+  Straights:       5
+  Superclip zones: 3
+  Corners:         8  (slow 3 / medium 4 / fast 1)
+  Lift/Coast:      1
+
+  Key braking zones:
+    Seg[001] braking      d=245-383m  v=250→74→75 kph  t=4.00s
+    Seg[004] braking      d=2246-2400m  v=306→148→148 kph  t=2.96s
+    Seg[007] braking      d=2873-2988m  v=236→124→124 kph  t=2.76s
+    Seg[014] braking      d=4335-4475m  v=263→156→156 kph  t=2.80s
+    Seg[017] braking      d=4798-4897m  v=215→159→159 kph  t=2.20s
+    Seg[020] braking      d=6545-6729m  v=279→69→70 kph  t=5.76s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Belgian Grand Prix [R]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   6.925 MJ  (81.5% of limit)
+  Total deployed:    10.728 MJ
+  Battery floor:     0.023 MJ
+  Lap time vs base:  -1.302s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=245–383m  harvest=1.018MJ  (max=1.400MJ)
+    superclip    d=494–2229m  harvest=0.283MJ  (max=0.286MJ)
+    braking      d=2246–2400m  harvest=1.036MJ  (max=1.036MJ)
+    braking      d=2873–2988m  harvest=0.966MJ  (max=0.966MJ)
+    corner       d=3038–3233m  harvest=0.100MJ  (max=0.100MJ)
+    superclip    d=3902–4323m  harvest=0.286MJ  (max=0.286MJ)
+    braking      d=4335–4475m  harvest=0.980MJ  (max=0.980MJ)
+    corner       d=4485–4690m  harvest=0.100MJ  (max=0.100MJ)
+    braking      d=4798–4897m  harvest=0.770MJ  (max=0.770MJ)
+    superclip    d=5002–6532m  harvest=0.286MJ  (max=0.286MJ)
+    braking      d=6545–6729m  harvest=1.100MJ  (max=2.016MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Finishedx17, Retiredx3, Lappedx2
+  Race laps: 44
+  ANT    Mercedes             110.073s  2 stints
+  LEC    Ferrari              110.370s  2 stints
+  VER    Red Bull             110.407s  2 stints
+  HAM    Ferrari              110.524s  2 stints
+  PIA    McLaren              110.738s  2 stints
+  HAD    Red Bull             110.452s  2 stints
+  NOR    McLaren              110.428s  2 stints
+  BOR    Audi                 111.396s  2 stints
+  LIN    VCARB                111.241s  2 stints
+  COL    Alpine               111.957s  2 stints
+  GAS    Alpine               111.870s  2 stints
+  LAW    VCARB                111.865s  2 stints
+  HUL    Audi                 111.977s  2 stints
+  BEA    Haas                 112.317s  2 stints
+  ALB    Williams             112.731s  2 stints
+  SAI    Williams             112.386s  2 stints
+  OCO    Haas                 112.487s  2 stints
+  BOT    Cadillac             114.137s  2 stints
+  ALO    Aston Martin         115.780s  3 stints
+  STR    DNF — 25/44 laps [Retired]
+  STR    Aston Martin         115.724s  2 stints
+  PER    DNF — 13/44 laps [Retired]
+  PER    Cadillac             114.506s  1 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: Belgium [R]  Rd 10 — 2026
+  Circuit type: power
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  ANT    Mercedes           Mercedes       1:50.073     +0.0    +0.0   0.87   0.85  1.00 C_post_monaco
+  LEC    Ferrari            Ferrari        1:50.370     -5.6    +8.2   0.80   0.83  1.00 C_post_monaco
+  VER    Red Bull           RedBullFord    1:50.407     -3.4    +4.3   0.86   0.84  1.00 C_post_monaco
+  NOR    McLaren            Mercedes       1:50.428     +3.7    -5.5   0.73   0.86  1.00 C_post_monaco
+  HAD    Red Bull           RedBullFord    1:50.452     -4.5   +10.8   0.85   0.84  1.00 C_post_monaco
+  HAM    Ferrari            Ferrari        1:50.524     -6.5   +21.8   0.76   0.83  1.00 C_post_monaco
+  PIA    McLaren            Mercedes       1:50.738     +4.9   -14.5   0.92   0.87  1.00 C_post_monaco
+  LIN    VCARB              RedBullFord    1:51.241     -4.6    -4.4   0.86   0.84  1.00 C_post_monaco
+  BOR    Audi               Audi           1:51.396     -4.3    +2.2   0.83   0.84  1.00 C_post_monaco
+  LAW    VCARB              RedBullFord    1:51.865     -4.7    -3.2   0.82   0.84  1.00 C_post_monaco
+  GAS    Alpine             Mercedes       1:51.870     +8.4   -23.7   0.79   0.88  1.00 C_post_monaco
+  COL    Alpine             Mercedes       1:51.957     -0.6   -11.4   0.87   0.85  1.00 C_post_monaco
+  HUL    Audi               Audi           1:51.977     -4.9    +2.3   0.82   0.83  1.00 C_post_monaco
+  BEA    Haas               Ferrari        1:52.317     -6.5    +6.7   0.77   0.83  1.00 C_post_monaco
+  SAI    Williams           Mercedes       1:52.386     +2.1    -8.0   0.90   0.86  1.00 C_post_monaco
+  OCO    Haas               Ferrari        1:52.487     -4.9    -2.8   0.82   0.84  1.00 C_post_monaco
+  ALB    Williams           Mercedes       1:52.731     +2.5    -8.6   0.90   0.86  1.00 C_post_monaco
+  BOT    Cadillac           Ferrari        1:54.137    -13.5    +4.5   0.80   0.81  1.00 C_post_monaco
+  PER    Cadillac           Ferrari        1:54.506     -9.9    -6.3   0.79   0.82  0.60 C_post_monaco
+  STR    Aston Martin       Honda          1:55.724    -11.1   -13.5   0.81   0.82  0.60 C_post_monaco
+  ALO    Aston Martin       Honda          1:55.780     -8.7   -12.2   0.64   0.82  1.00 C_post_monaco
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 21 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R10_R.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars
+
+  Sprint weekend — also loading S session...
+
+------------------------------------------------------------
+  Race Pipeline: Belgium  [S — Rd 10 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Belgium
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Belgian Grand Prix 2026 — S...
+  FastF1 failed: ValueError: Session type 'S' does not exist for this event
+  Synthetic fallback for Belgium: 1400 points, ~100.3s — replace with FastF1 data ASAP
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Belgium
+═══════════════════════════════════════════════════════
+  Total segments:  1
+  Lap distance:    7004 m
+  Braking zones:   0  (0m total)
+  Straights:       0
+  Superclip zones: 0
+  Corners:         1  (slow 0 / medium 0 / fast 1)
+  Lift/Coast:      0
+
+  Key braking zones:
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Belgian Grand Prix [S]
+═══════════════════════════════════════════════════════
+  Harvest limit:     8.5 MJ
+  Total harvested:   0.000 MJ  (0.0% of limit)
+  Total deployed:    2.872 MJ
+  Battery floor:     1.128 MJ
+  Lap time vs base:  -0.287s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Could not load full session: Session type 'S' does not exist for this event
+  No valid driver data — cannot fingerprint
+python : core           INFO 	Loading data for Hungarian Grand Prix - Race [v3.8.2]
+At line:6 char:124
++ ... ,"britain","belgium","hungary")) { python run.py race $c 2>&1 | Out-F ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (core           ...- Race [v3.8.2]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Fixed incorrect tyre stint information for driver '11'
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['1', '3', '12', '16', '44', '6', '63', '30', '27', '41', 
+'5', '10', '18', '14', '43', '31', '23', '55', '87', '81', '11', '77']
+core           INFO 	Loading data for Hungarian Grand Prix - Race [v3.8.2]
+req            INFO 	Using cached data for session_info
+req            INFO 	Using cached data for driver_info
+req            INFO 	Using cached data for session_status_data
+req            INFO 	Using cached data for lap_count
+req            INFO 	Using cached data for track_status_data
+req            INFO 	Using cached data for _extended_timing_data
+req            INFO 	Using cached data for timing_app_data
+core           INFO 	Processing timing data...
+core        WARNING 	Fixed incorrect tyre stint information for driver '11'
+req            INFO 	Using cached data for car_data
+req            INFO 	Using cached data for position_data
+req            INFO 	Using cached data for race_control_messages
+core           INFO 	Finished loading data for 22 drivers: ['1', '3', '12', '16', '44', '6', '63', '30', '27', '41', 
+'5', '10', '18', '14', '43', '31', '23', '55', '87', '81', '11', '77']
+
+Loading race session for Hungary...
+
+------------------------------------------------------------
+  Race Pipeline: Hungary  [R — Rd 11 — 2026]
+------------------------------------------------------------
+
+[1/5] Loading telemetry...
+
+──────────────────────────────────────────────────
+Loading telemetry: Hungary
+──────────────────────────────────────────────────
+  Cache dir: D:\cache
+  Loading session: Hungarian Grand Prix 2026 — R...
+  Using fastest lap: LEC  0 days 00:01:22
+
+[2/5] Segmenting track...
+
+═══════════════════════════════════════════════════════
+  Track Model: Hungary
+═══════════════════════════════════════════════════════
+  Total segments:  27
+  Lap distance:    4089 m
+  Braking zones:   14  (2073m total)
+  Straights:       4
+  Superclip zones: 0
+  Corners:         8  (slow 2 / medium 4 / fast 2)
+  Lift/Coast:      1
+
+  Key braking zones:
+    Seg[001] braking      d=48-124m  v=171→171→185 kph  t=1.68s
+    Seg[003] braking      d=399-694m  v=226→115→115 kph  t=7.04s
+    Seg[005] braking      d=835-930m  v=139→139→156 kph  t=2.40s
+    Seg[007] braking      d=1068-1284m  v=189→148→148 kph  t=4.92s
+    Seg[009] braking      d=1438-1489m  v=165→157→157 kph  t=1.36s
+    Seg[011] braking      d=1565-1630m  v=148→147→152 kph  t=1.96s
+    Seg[013] braking      d=1786-1927m  v=182→182→219 kph  t=2.72s
+    Seg[015] braking      d=2232-2380m  v=254→224→224 kph  t=2.52s
+    Seg[017] braking      d=2495-2564m  v=215→215→215 kph  t=1.56s
+    Seg[019] braking      d=2666-2740m  v=222→222→222 kph  t=1.64s
+    Seg[021] braking      d=2948-3080m  v=270→270→283 kph  t=2.04s
+    Seg[022] braking      d=3102-3529m  v=284→109→109 kph  t=9.00s
+    Seg[023] braking      d=3538-3603m  v=109→109→121 kph  t=2.40s
+    Seg[026] braking      d=3870-4089m  v=205→123→123 kph  t=5.40s
+═══════════════════════════════════════════════════════
+
+
+[3/5] Computing theoretical optimal strategy...
+
+═══════════════════════════════════════════════════════
+  Optimal Strategy: Hungarian Grand Prix [R]
+═══════════════════════════════════════════════════════
+  Harvest limit:     9.0 MJ
+  Total harvested:   4.206 MJ  (46.7% of limit)
+  Total deployed:    7.972 MJ
+  Battery floor:     0.171 MJ
+  Lap time vs base:  -1.062s
+───────────────────────────────────────────────────────
+  Key harvest zones:
+    braking      d=399–694m  harvest=0.672MJ  (max=2.464MJ)
+    braking      d=1068–1284m  harvest=0.157MJ  (max=1.722MJ)
+    braking      d=1438–1489m  harvest=0.476MJ  (max=0.476MJ)
+    braking      d=1565–1630m  harvest=0.588MJ  (max=0.686MJ)
+    braking      d=2232–2380m  harvest=0.882MJ  (max=0.882MJ)
+    braking      d=3102–3529m  harvest=1.432MJ  (max=3.150MJ)
+═══════════════════════════════════════════════════════
+
+
+[4/5] Fingerprinting cars...
+  Session loaded — 22 drivers
+  Classified results extracted for 22 drivers
+  Result statuses: Lappedx12, Finishedx7, Retiredx3
+  Race laps: 70
+  NOR    McLaren              84.349s  4 stints
+  VER    Red Bull             84.965s  3 stints
+  ANT    Mercedes             84.709s  3 stints
+  LEC    Ferrari              84.693s  4 stints
+  HAM    Ferrari              84.665s  4 stints
+  HAD    Red Bull             85.133s  3 stints
+  RUS    Mercedes             85.150s  3 stints
+  LAW    VCARB                86.113s  3 stints
+  HUL    Audi                 86.089s  3 stints
+  LIN    VCARB                86.715s  2 stints
+  BOR    Audi                 86.888s  2 stints
+  GAS    Alpine               86.043s  4 stints
+  STR    Aston Martin         86.397s  3 stints
+  ALO    Aston Martin         86.557s  3 stints
+  COL    Alpine               86.926s  3 stints
+  OCO    Haas                 87.112s  3 stints
+  ALB    Williams             87.666s  3 stints
+  SAI    Williams             87.484s  4 stints
+  BEA    Haas                 87.642s  3 stints
+  PIA    DNF — 56/70 laps [Retired]
+  PIA    McLaren              84.957s  3 stints
+  PER    DNF — 48/70 laps [Retired]
+  PER    Cadillac             88.629s  2 stints
+  BOT    DNF — 14/70 laps [Retired]
+  BOT    Cadillac             88.935s  1 stints
+
+══════════════════════════════════════════════════════════════════════
+  Fingerprints: Hungary [R]  Rd 11 — 2026
+  Circuit type: technical
+──────────────────────────────────────────────────────────────────────
+  Driver Team               PU                  Lap    Str Δ   Brk Δ    Hrv    Dep  Conf Epoch
+  ────── ────────────────── ────────────── ────────  ─────── ─────── ────── ────── ───── ──────────────
+  NOR    McLaren            Mercedes       1:24.349     +0.0    +0.0   0.77   0.85  1.00 C_post_monaco
+  HAM    Ferrari            Ferrari        1:24.665    +48.8   +60.7   0.52   1.03  1.00 C_post_monaco
+  LEC    Ferrari            Ferrari        1:24.693    +48.8   +40.6   0.50   1.03  1.00 C_post_monaco
+  ANT    Mercedes           Mercedes       1:24.709    +33.0    -0.7   0.60   0.97  1.00 C_post_monaco
+  PIA    McLaren            Mercedes       1:24.957    +25.0   +10.2   0.59   0.94  0.60 C_post_monaco
+  VER    Red Bull           RedBullFord    1:24.965    +62.4   +36.6   0.40   1.05  1.00 C_post_monaco
+  HAD    Red Bull           RedBullFord    1:25.133     +4.1   +32.7   0.50   0.86  1.00 C_post_monaco
+  RUS    Mercedes           Mercedes       1:25.150    +19.2   +58.5   0.50   0.92  1.00 C_post_monaco
+  GAS    Alpine             Mercedes       1:26.043    +69.0   +38.2   0.40   1.05  1.00 C_post_monaco
+  HUL    Audi               Audi           1:26.089    +45.0   +18.3   0.52   1.01  1.00 C_post_monaco
+  LAW    VCARB              RedBullFord    1:26.113    +76.3   +43.2   0.51   1.05  1.00 C_post_monaco
+  STR    Aston Martin       Honda          1:26.397   -108.7   -81.9   0.40   0.46  1.00 C_post_monaco
+  ALO    Aston Martin       Honda          1:26.557    -39.9   +14.9   0.40   0.71  1.00 C_post_monaco
+  LIN    VCARB              RedBullFord    1:26.715    +46.6   +40.5   0.50   1.02  1.00 C_post_monaco
+  BOR    Audi               Audi           1:26.888    +51.3    +8.3   0.50   1.03  1.00 C_post_monaco
+  COL    Alpine             Mercedes       1:26.926    +27.9    +5.1   0.63   0.95  1.00 C_post_monaco
+  OCO    Haas               Ferrari        1:27.112     +8.4   +58.2   0.51   0.88  1.00 C_post_monaco
+  SAI    Williams           Mercedes       1:27.484    +40.0  +104.7   0.50   0.99  1.00 C_post_monaco
+  BEA    Haas               Ferrari        1:27.642    +15.2   +50.1   0.45   0.90  1.00 C_post_monaco
+  ALB    Williams           Mercedes       1:27.666     -3.6   +10.5   0.43   0.84  1.00 C_post_monaco
+  PER    Cadillac           Ferrari        1:28.629    +24.5    +2.2   0.43   0.94  0.60 C_post_monaco
+  BOT    Cadillac           Ferrari        1:28.935     -6.2   +20.0   0.50   0.83  0.60 C_post_monaco
+══════════════════════════════════════════════════════════════════════
+
+
+[5/5] Saving to race store...
+  Saved 22 fingerprints → D:\ERS_v2\pipeline\..\data\..\store\2026_R11_R.json
+
+  Race Store — 30 sessions saved:
+    2026_R01_Q           Australia                      19 cars
+    2026_R01_R           Australia                      20 cars
+    2026_R02_Q           China                          22 cars
+    2026_R02_R           China                          18 cars
+    2026_R02_S           China                          22 cars
+    2026_R02_SQ          China                          21 cars
+    2026_R03_Q           Japan                          22 cars
+    2026_R03_R           Japan                          22 cars
+    2026_R04_Q           Miami                          22 cars
+    2026_R04_R           Miami                          18 cars
+    2026_R04_S           Miami                          20 cars
+    2026_R04_SQ          Miami                          21 cars
+    2026_R05_Q           Canada                         22 cars
+    2026_R05_R           Canada                         21 cars
+    2026_R05_S           Canada                         22 cars
+    2026_R05_SQ          Canada                         20 cars
+    2026_R06_Q           Monaco                         22 cars
+    2026_R06_R           Monaco                         21 cars
+    2026_R07_Q           Spain                          22 cars
+    2026_R07_R           Spain                          21 cars
+    2026_R08_Q           Austria                        22 cars
+    2026_R08_R           Austria                        20 cars
+    2026_R09_Q           Britain                        22 cars
+    2026_R09_R           Britain                        22 cars
+    2026_R09_S           Britain                        22 cars
+    2026_R09_SQ          Britain                        22 cars
+    2026_R10_Q           Belgium                        22 cars
+    2026_R10_R           Belgium                        21 cars
+    2026_R11_Q           Hungary                        22 cars
+    2026_R11_R           Hungary                        22 cars

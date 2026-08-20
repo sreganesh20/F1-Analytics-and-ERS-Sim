@@ -31,7 +31,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 1,
+      "grid_position": 1,
+      "positions_gained": 0,
+      "result_status": "Finished",
+      "sector_1_s": 31.676,
+      "sector_2_s": 34.921,
+      "sector_3_s": 25.596,
+      "best_sector_1_s": 31.461,
+      "best_sector_2_s": 34.285,
+      "best_sector_3_s": 25.467,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 91.885,
+      "fastest_lap_number": 10,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "LEC",
@@ -59,7 +79,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 3,
+      "grid_position": 4,
+      "positions_gained": 1,
+      "result_status": "Finished",
+      "sector_1_s": 31.793,
+      "sector_2_s": 35.013,
+      "sector_3_s": 25.496,
+      "best_sector_1_s": 31.673000000000002,
+      "best_sector_2_s": 34.744,
+      "best_sector_3_s": 25.349,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 91.964,
+      "fastest_lap_number": 11,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "PIA",
@@ -87,7 +127,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 2,
+      "grid_position": 3,
+      "positions_gained": 1,
+      "result_status": "Finished",
+      "sector_1_s": 31.621,
+      "sector_2_s": 35.228,
+      "sector_3_s": 25.511,
+      "best_sector_1_s": 31.47,
+      "best_sector_2_s": 34.57,
+      "best_sector_3_s": 25.511,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 92.079,
+      "fastest_lap_number": 16,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "ANT",
@@ -115,7 +175,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 6,
+      "grid_position": 2,
+      "positions_gained": -4,
+      "result_status": "Finished",
+      "sector_1_s": 31.713,
+      "sector_2_s": 34.954,
+      "sector_3_s": 25.776,
+      "best_sector_1_s": 31.412,
+      "best_sector_2_s": 34.835,
+      "best_sector_3_s": 25.384,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 91.932,
+      "fastest_lap_number": 11,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "VER",
@@ -143,7 +223,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 5,
+      "grid_position": 5,
+      "positions_gained": 0,
+      "result_status": "Finished",
+      "sector_1_s": 31.775,
+      "sector_2_s": 35.119,
+      "sector_3_s": 25.678,
+      "best_sector_1_s": 31.627,
+      "best_sector_2_s": 34.762,
+      "best_sector_3_s": 25.176,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 92.201,
+      "fastest_lap_number": 19,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "RUS",
@@ -171,7 +271,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 4,
+      "grid_position": 6,
+      "positions_gained": 2,
+      "result_status": "Finished",
+      "sector_1_s": 32.184,
+      "sector_2_s": 34.982,
+      "sector_3_s": 25.475,
+      "best_sector_1_s": 31.638,
+      "best_sector_2_s": 34.76,
+      "best_sector_3_s": 25.33,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 92.387,
+      "fastest_lap_number": 10,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "HAM",
@@ -199,7 +319,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 7,
+      "grid_position": 7,
+      "positions_gained": 0,
+      "result_status": "Finished",
+      "sector_1_s": 31.979,
+      "sector_2_s": 35.48,
+      "sector_3_s": 25.714,
+      "best_sector_1_s": 31.883,
+      "best_sector_2_s": 34.79,
+      "best_sector_3_s": 25.357,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 92.448,
+      "fastest_lap_number": 6,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "HAD",
@@ -227,7 +367,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 9,
+      "grid_position": 9,
+      "positions_gained": 0,
+      "result_status": "Finished",
+      "sector_1_s": 32.378,
+      "sector_2_s": 35.392,
+      "sector_3_s": 25.803,
+      "best_sector_1_s": 31.848,
+      "best_sector_2_s": 34.969,
+      "best_sector_3_s": 25.771,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 93.119,
+      "fastest_lap_number": 10,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "GAS",
@@ -255,7 +415,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 8,
+      "grid_position": 10,
+      "positions_gained": 2,
+      "result_status": "Finished",
+      "sector_1_s": 32.382,
+      "sector_2_s": 35.581,
+      "sector_3_s": 25.697,
+      "best_sector_1_s": 31.999,
+      "best_sector_2_s": 34.891,
+      "best_sector_3_s": 25.697,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 93.072,
+      "fastest_lap_number": 10,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "COL",
@@ -283,7 +463,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 10,
+      "grid_position": 8,
+      "positions_gained": -2,
+      "result_status": "Finished",
+      "sector_1_s": 32.148,
+      "sector_2_s": 35.6,
+      "sector_3_s": 26.039,
+      "best_sector_1_s": 32.072,
+      "best_sector_2_s": 34.915,
+      "best_sector_3_s": 25.714,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 93.139,
+      "fastest_lap_number": 6,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "ALB",
@@ -311,7 +511,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 18,
+      "grid_position": 18,
+      "positions_gained": 0,
+      "result_status": "Finished",
+      "sector_1_s": 33.023,
+      "sector_2_s": 35.276,
+      "sector_3_s": 25.753,
+      "best_sector_1_s": 32.303,
+      "best_sector_2_s": 35.019,
+      "best_sector_3_s": 25.662,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": 40.63,
+      "fastest_lap_s": 93.473,
+      "fastest_lap_number": 18,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "LAW",
@@ -339,7 +559,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 14,
+      "grid_position": 15,
+      "positions_gained": 1,
+      "result_status": "Finished",
+      "sector_1_s": 32.46,
+      "sector_2_s": 36.166,
+      "sector_3_s": 25.848,
+      "best_sector_1_s": 32.428,
+      "best_sector_2_s": 35.491,
+      "best_sector_3_s": 25.774,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 94.204,
+      "fastest_lap_number": 10,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "BOR",
@@ -363,11 +603,31 @@
       "time_lost_braking_s": 0.4012701251252839,
       "time_lost_corners_s": 0.47117997710325193,
       "time_lost_total_s": 1.3924447625878968,
-      "completed_race": true,
+      "completed_race": false,
       "laps_completed": 19,
       "source": "FastF1",
-      "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "confidence": 0.6,
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 22,
+      "grid_position": 11,
+      "positions_gained": -11,
+      "result_status": "Disqualified",
+      "sector_1_s": 32.719,
+      "sector_2_s": 35.36,
+      "sector_3_s": 26.428,
+      "best_sector_1_s": 32.498,
+      "best_sector_2_s": 35.126,
+      "best_sector_3_s": 26.101,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 94.174,
+      "fastest_lap_number": 8,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "OCO",
@@ -395,7 +655,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 11,
+      "grid_position": 16,
+      "positions_gained": 5,
+      "result_status": "Finished",
+      "sector_1_s": 32.887,
+      "sector_2_s": 35.945,
+      "sector_3_s": 26.065,
+      "best_sector_1_s": 32.861,
+      "best_sector_2_s": 35.442,
+      "best_sector_3_s": 25.71,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 94.409,
+      "fastest_lap_number": 6,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "SAI",
@@ -423,7 +703,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 13,
+      "grid_position": 14,
+      "positions_gained": 1,
+      "result_status": "Finished",
+      "sector_1_s": 33.618,
+      "sector_2_s": 35.537,
+      "sector_3_s": 25.801,
+      "best_sector_1_s": 32.752,
+      "best_sector_2_s": 35.24,
+      "best_sector_3_s": 25.684,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 94.008,
+      "fastest_lap_number": 5,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "BEA",
@@ -451,7 +751,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 12,
+      "grid_position": 13,
+      "positions_gained": 1,
+      "result_status": "Finished",
+      "sector_1_s": 33.242,
+      "sector_2_s": 35.841,
+      "sector_3_s": 25.897,
+      "best_sector_1_s": 32.97,
+      "best_sector_2_s": 35.253,
+      "best_sector_3_s": 25.723,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "MEDIUM"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 94.524,
+      "fastest_lap_number": 6,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "STR",
@@ -479,7 +799,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 17,
+      "grid_position": 21,
+      "positions_gained": 4,
+      "result_status": "Finished",
+      "sector_1_s": 33.35,
+      "sector_2_s": 35.973,
+      "sector_3_s": 26.255,
+      "best_sector_1_s": 33.205,
+      "best_sector_2_s": 35.474,
+      "best_sector_3_s": 26.163,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "SOFT"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 95.009,
+      "fastest_lap_number": 10,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "ALO",
@@ -507,7 +847,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 15,
+      "grid_position": 20,
+      "positions_gained": 5,
+      "result_status": "Finished",
+      "sector_1_s": 33.272,
+      "sector_2_s": 36.16,
+      "sector_3_s": 26.19,
+      "best_sector_1_s": 32.55,
+      "best_sector_2_s": 35.678,
+      "best_sector_3_s": 25.564,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "SOFT"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 94.72,
+      "fastest_lap_number": 11,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "PER",
@@ -535,7 +895,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 16,
+      "grid_position": 17,
+      "positions_gained": 1,
+      "result_status": "Finished",
+      "sector_1_s": 33.237,
+      "sector_2_s": 36.462,
+      "sector_3_s": 26.209,
+      "best_sector_1_s": 32.927,
+      "best_sector_2_s": 35.649,
+      "best_sector_3_s": 25.875,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "HARD"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 95.015,
+      "fastest_lap_number": 6,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     },
     {
       "driver_code": "BOT",
@@ -563,7 +943,27 @@
       "laps_completed": 19,
       "source": "FastF1",
       "confidence": 1.0,
-      "regulation_epoch": "B_miami_canada"
+      "regulation_epoch": "B_miami_canada",
+      "finishing_position": 19,
+      "grid_position": 19,
+      "positions_gained": 0,
+      "result_status": "Finished",
+      "sector_1_s": 33.924,
+      "sector_2_s": 36.59,
+      "sector_3_s": 26.241,
+      "best_sector_1_s": 33.27,
+      "best_sector_2_s": 35.942,
+      "best_sector_3_s": 26.036,
+      "pit_stops": 0,
+      "tyre_compounds": [
+        "HARD"
+      ],
+      "pit_lane_time_s": null,
+      "fastest_lap_s": 95.856,
+      "fastest_lap_number": 10,
+      "corner_slow_delta_kph": null,
+      "corner_medium_delta_kph": null,
+      "corner_fast_delta_kph": null
     }
   ],
   "stint_data": {

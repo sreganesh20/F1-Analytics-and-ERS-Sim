@@ -5,7 +5,7 @@
     "race_round": 1,
     "year": 2026,
     "session_type": "Q",
-    "n_fingerprints": 17,
+    "n_fingerprints": 19,
     "path": "2026_R01_Q.json"
   },
   "2026_R02_Q": {
@@ -14,7 +14,7 @@
     "race_round": 2,
     "year": 2026,
     "session_type": "Q",
-    "n_fingerprints": 20,
+    "n_fingerprints": 22,
     "path": "2026_R02_Q.json"
   },
   "2026_R03_Q": {
@@ -41,7 +41,7 @@
     "race_round": 1,
     "year": 2026,
     "session_type": "R",
-    "n_fingerprints": 19,
+    "n_fingerprints": 20,
     "path": "2026_R01_R.json"
   },
   "2026_R02_R": {
@@ -50,7 +50,7 @@
     "race_round": 2,
     "year": 2026,
     "session_type": "R",
-    "n_fingerprints": 16,
+    "n_fingerprints": 18,
     "path": "2026_R02_R.json"
   },
   "2026_R02_S": {
@@ -59,7 +59,7 @@
     "race_round": 2,
     "year": 2026,
     "session_type": "S",
-    "n_fingerprints": 12,
+    "n_fingerprints": 22,
     "path": "2026_R02_S.json"
   },
   "2026_R03_R": {

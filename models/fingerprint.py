@@ -56,6 +56,37 @@ class CarFingerprint:
     # that predate this field. Derive via regulation_epoch_for_round(race_round).
     regulation_epoch: str = "A_pre_miami"
 
+    # ── WAVE 1: Race result fields (race sessions only; None for quali) ──
+    finishing_position: int | None   = None   # classified finishing position
+    grid_position:      int | None   = None   # starting grid slot
+    positions_gained:   int | None   = None   # grid - finish (+ve = gained places)
+    result_status:      str          = ""     # "Finished" | "+1 Lap" | "Retired" | "DSQ" ...
+
+    # ── WAVE 1: Sector times of the representative/fastest lap ──
+    sector_1_s:  float | None = None
+    sector_2_s:  float | None = None
+    sector_3_s:  float | None = None
+
+    # ── WAVE 3: PERSONAL BEST sector across the whole session ──
+    # Distinct from the above: sector_N_s are the splits of ONE lap, so the
+    # fastest driver sweeps all three. These are each driver's best individual
+    # sector from any lap — what "fastest sector" actually means.
+    best_sector_1_s: float | None = None
+    best_sector_2_s: float | None = None
+    best_sector_3_s: float | None = None
+
+    # ── WAVE 1: Race operations ──
+    pit_stops:          int          = 0      # tyre changes (compound changes)
+    tyre_compounds:     list          = field(default_factory=list)  # e.g. ["MEDIUM","HARD","SOFT"]
+    pit_lane_time_s:    float | None = None   # BEST pit lane transit (in->out), NOT stationary
+    fastest_lap_s:      float | None = None   # driver's outright fastest lap of session
+    fastest_lap_number: int | None   = None
+
+    # ── WAVE 1: Corner speed deltas split by corner type (kph vs reference) ──
+    corner_slow_delta_kph:   float | None = None
+    corner_medium_delta_kph: float | None = None
+    corner_fast_delta_kph:   float | None = None
+
 
 @dataclass
 class RaceFingerprints:
@@ -82,11 +113,15 @@ def compute_speed_deltas(
     segments: list[TrackSegment],
 ) -> dict:
     deltas = {
-        "straight":   [],
-        "superclip":  [],
-        "braking":    [],
-        "corner":     [],
-        "lift_coast": [],
+        "straight":      [],
+        "superclip":     [],
+        "braking":       [],
+        "corner":        [],
+        "lift_coast":    [],
+        # WAVE 1: corner deltas split by apex-speed class
+        "corner_slow":   [],
+        "corner_medium": [],
+        "corner_fast":   [],
     }
 
     for seg in segments:
@@ -100,6 +135,10 @@ def compute_speed_deltas(
             if ref_time > 0:
                 delta = -(car_time - ref_time) / ref_time * seg.speed_mean
                 deltas["corner"].append(delta)
+                # Also bucket by corner speed class
+                sc = getattr(seg, "speed_class", "")
+                if sc in ("slow", "medium", "fast"):
+                    deltas[f"corner_{sc}"].append(delta)
             continue
 
         car_mask = (car_df["Distance"] >= seg.d_start) & (car_df["Distance"] < seg.d_end)
@@ -115,7 +154,14 @@ def compute_speed_deltas(
         seg_key = seg.seg_type if seg.seg_type in deltas else "corner"
         deltas[seg_key].append(delta)
 
-    return {k: float(np.mean(v)) if v else 0.0 for k, v in deltas.items()}
+    out = {}
+    for k, v in deltas.items():
+        if k.startswith("corner_") and k != "corner":
+            # None when this circuit has no corners of that class
+            out[k] = float(np.mean(v)) if v else None
+        else:
+            out[k] = float(np.mean(v)) if v else 0.0
+    return out
 
 
 def compute_harvest_ratios(
@@ -224,7 +270,10 @@ def fingerprint_car(
     completed_race:   bool  = True,
     laps_completed:   int   = 1,
     lap_time_gap_pct: float = 0.0,
+    result_data:      dict  = None,   # WAVE 1: race result / sector / pit data
 ) -> CarFingerprint:
+    rd           = result_data or {}
+    session_is_quali = circuit_cfg.get("fastf1_session", "Q") in ("Q", "SQ")
     car_info     = CARS.get(driver_code, {"team": "Unknown", "pu": "Unknown"})
     circuit_type = circuit_cfg.get("circuit_type", "balanced")
     race_round   = circuit_cfg.get("round", 0)
@@ -244,11 +293,16 @@ def fingerprint_car(
     if not completed_race:
         confidence *= 0.6
 
-    CORRUPT_DELTA = 80.0   # only catches genuinely broken telemetry
-    if abs(speed_deltas.get("straight", 0)) > CORRUPT_DELTA or \
-        abs(speed_deltas.get("braking",  0)) > CORRUPT_DELTA:
-        confidence = min(confidence, 0.25)   # penalised but not auto-excluded
-        print(f"  {driver_code} flagged — extreme speed delta, verify telemetry")
+    # Corrupted telemetry detection — only flags physically impossible data.
+    # Large speed deltas vs reference are EXPECTED for midfield/backmarker cars
+    # and must never trigger exclusion. A legitimate Aston Martin at Austria Q
+    # will be 50+ kph off the reference Ferrari in braking zones. That is data.
+    _spd = car_df["Speed"]
+    _dst = car_df["Distance"]
+    if _spd.isnull().any() or (_spd < 0).any() or _dst.isnull().any() \
+            or car_df["Throttle"].isnull().any():
+        confidence = 0.1
+        print(f"  {driver_code} flagged — corrupted telemetry (NaN/negative speed)")
 
     return CarFingerprint(
         driver_code               = driver_code,
@@ -277,6 +331,28 @@ def fingerprint_car(
         source                    = str(car_df["Source"].iloc[0]),
         confidence                = confidence,
         regulation_epoch          = epoch,
+        # ── WAVE 1 fields ──
+        finishing_position        = rd.get("finishing_position"),
+        grid_position             = rd.get("grid_position"),
+        positions_gained          = rd.get("positions_gained"),
+        result_status             = rd.get("result_status", ""),
+        sector_1_s                = rd.get("sector_1_s"),
+        sector_2_s                = rd.get("sector_2_s"),
+        sector_3_s                = rd.get("sector_3_s"),
+        best_sector_1_s           = rd.get("best_sector_1_s"),
+        best_sector_2_s           = rd.get("best_sector_2_s"),
+        best_sector_3_s           = rd.get("best_sector_3_s"),
+        pit_stops                 = rd.get("pit_stops", 0),
+        tyre_compounds            = rd.get("tyre_compounds", []) or [],
+        pit_lane_time_s           = rd.get("pit_lane_time_s"),
+        fastest_lap_s             = rd.get("fastest_lap_s"),
+        fastest_lap_number        = rd.get("fastest_lap_number"),
+        # Corner-class deltas: QUALIFYING ONLY. Race laps re-segment differently
+        # (fuel, lift-and-coast shift braking points), so per-class comparison
+        # across sessions is invalid. Circuit corner profile = quali profile.
+        corner_slow_delta_kph     = speed_deltas.get("corner_slow")   if session_is_quali else None,
+        corner_medium_delta_kph   = speed_deltas.get("corner_medium") if session_is_quali else None,
+        corner_fast_delta_kph     = speed_deltas.get("corner_fast")   if session_is_quali else None,
     )
 
 
@@ -289,9 +365,11 @@ def fingerprint_race(
     circuit_cfg:        dict,
     retirements:        list[str] = None,
     laps_completed_map: dict      = None,
+    result_map:         dict      = None,   # WAVE 1: driver_code -> result dict
 ) -> RaceFingerprints:
     retirements        = retirements        or []
     laps_completed_map = laps_completed_map or {}
+    result_map         = result_map         or {}
 
     if not lap_times:
         raise ValueError("No lap times provided")
@@ -333,10 +411,11 @@ def fingerprint_race(
             lap_time_rank    = rank,
             completed_race   = not retired,
             laps_completed   = laps_done,
+            result_data      = result_map.get(driver, {}),
         )
 
-        if fp.confidence < 0.15:
-            print(f"  {fp.driver_code} excluded — corrupted lap (confidence {fp.confidence:.2f})")
+        if fp.confidence < 0.12:
+            print(f"  {fp.driver_code} excluded — corrupted telemetry (confidence {fp.confidence:.2f})")
             continue
         result.fingerprints.append(fp)
 

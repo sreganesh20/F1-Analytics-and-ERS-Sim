@@ -1,4 +1,4 @@
-"""pages/3_Teams_and_Drivers.py — Driver stats, team comparison, PU analysis."""
+"""pages/3_Teams_and_Drivers.py — PitWall · Driver, team and PU analysis."""
 
 import os, sys
 import streamlit as st
@@ -10,15 +10,19 @@ if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
 from app.data_loader import (get_fingerprints, get_circuits_with_data,
-                             PU_COLOURS, TEAM_COLOURS, PU_ORDER, FACTORY_TEAMS,
-                             get_teammate, teammate_stats)
+                             driver_name, driver_badge, get_teammate,
+                             teammate_stats, driver_season_stats,
+                             qualifying_ranking, teammate_ranking,
+                             PU_COLOURS, TEAM_COLOURS, PU_ORDER, FACTORY_TEAMS)
 from app.charts import (fingerprint_radar_chart, harvest_bars_chart,
                         pace_trend_chart, teammate_gap_chart,
                         straight_vs_corner_scatter, corner_profile_ranking,
-                        pu_straight_speed_chart)
+                        pu_straight_speed_chart, corner_class_ranking,
+                        finish_history_chart, qualifying_ranking_chart,
+                        teammate_hierarchy_chart)
 from config import CARS
 
-st.set_page_config(page_title="Teams & Drivers — ERS_v2", page_icon="🏎️", layout="wide")
+st.set_page_config(page_title="Teams & Drivers — PitWall", page_icon="🏎️", layout="wide")
 st.markdown('<div style="height:3px;background:linear-gradient(90deg,#FF1E00,#FF6B35);'
             'border-radius:2px;margin-bottom:1rem;"></div>', unsafe_allow_html=True)
 st.title("🏎️ Teams & Drivers")
@@ -29,213 +33,204 @@ if not all_fps:
     st.stop()
 
 circuit_map = get_circuits_with_data()
-tab1, tab2, tab3 = st.tabs(["👤 Drivers", "🏗️ Teams", "⚡ PU Analysis"])
+tab1, tab2, tab3 = st.tabs(["👤 Drivers", "🏗️ Teams", "⚡ Power Units"])
 
-# ─────────────────────────────────────────────────────────
-# TAB 1: DRIVERS
-# ─────────────────────────────────────────────────────────
+# ══════════════════════════════════════════════════════════
+# DRIVERS
+# ══════════════════════════════════════════════════════════
 with tab1:
-    all_drivers = sorted({fp.driver_code for fp in all_fps})
-    default_idx = all_drivers.index("ANT") if "ANT" in all_drivers else 0
-    driver      = st.selectbox("Driver", all_drivers, index=default_idx)
+    drivers = sorted({fp.driver_code for fp in all_fps})
+    idx = drivers.index("ANT") if "ANT" in drivers else 0
+    driver = st.selectbox("Driver", drivers, index=idx,
+                          format_func=lambda d: f"{driver_name(d)}  ({d})")
 
-    car_info = CARS.get(driver, {})
-    team     = car_info.get("team", "—")
-    pu       = car_info.get("pu", "—")
+    info     = CARS.get(driver, {})
+    team     = info.get("team", "—")
     team_col = TEAM_COLOURS.get(team, "#888")
-    pu_col   = PU_COLOURS.get(pu, "#888")
+    pu_col   = PU_COLOURS.get(info.get("pu", ""), "#888")
     teammate = get_teammate(driver)
+    stats    = driver_season_stats(all_fps, driver)
 
-    # Driver card + stats
-    col_left, col_right = st.columns([1, 3])
-    with col_left:
+    left, right = st.columns([1, 2.4])
+    with left:
         st.markdown(f"""
-        <div style="padding:14px 16px;background:#1A1A1A;border-radius:10px;
-                    border-left:4px solid {team_col};margin-bottom:12px;">
-            <div style="font-size:1.5rem;font-weight:bold;color:{team_col};
-                       font-family:monospace;">{driver}</div>
-            <div style="color:{team_col};font-family:monospace;font-size:0.9rem;">{team}</div>
-            <div style="color:{pu_col};font-family:monospace;font-size:0.8rem;">{pu} PU</div>
-            {'<div style="color:#888;font-family:monospace;font-size:0.75rem;margin-top:4px;">Teammate: ' + teammate + '</div>' if teammate else ''}
-        </div>
-        """, unsafe_allow_html=True)
+        <div style="padding:16px 18px;background:#1A1A1A;border-radius:10px;
+                    border-left:5px solid {team_col};margin-bottom:14px;">
+            <div style="font-family:monospace;font-size:2rem;font-weight:bold;
+                        color:{team_col};line-height:1;">#{info.get('number','')}</div>
+            <div style="font-family:monospace;font-size:1.05rem;color:#E0E0E0;
+                        margin-top:6px;">{driver_name(driver)}</div>
+            <div style="color:{team_col};font-family:monospace;font-size:0.85rem;">{team}</div>
+            <div style="color:{pu_col};font-family:monospace;font-size:0.75rem;">
+                {info.get('pu','—')} PU</div>
+            {'<div style="color:#777;font-family:monospace;font-size:0.72rem;margin-top:6px;">vs ' + driver_name(teammate) + '</div>' if teammate else ''}
+        </div>""", unsafe_allow_html=True)
 
-        d_fps_q = [fp for fp in all_fps if fp.driver_code == driver and fp.session_type in ("Q","SQ")]
-        d_fps_r = [fp for fp in all_fps if fp.driver_code == driver and fp.session_type in ("R","S")]
+        a, b = st.columns(2)
+        a.metric("Wins", stats["wins"])
+        b.metric("Podiums", stats["podiums"])
+        a.metric("Poles", stats["poles"])
+        b.metric("DNFs", stats["dnfs"])
+        avg = stats["avg_finish"]
+        st.metric("Avg Finish", f"P{avg:.1f}" if avg else "—",
+                  help="Classified finishes only — DNF and NC excluded, since a "
+                       "retirement says nothing about finishing pace.")
+        st.metric("Best Finish", f"P{stats['best_finish']}" if stats["best_finish"] else "—")
+        if stats["avg_q_gap"] is not None:
+            st.metric("Avg Q Gap", f"{stats['avg_q_gap']:.3f}%",
+                      help="Average gap to pole across all qualifying sessions.")
+        st.caption(f"{stats['classified']} classified · {stats['dnfs']} DNF"
+                   + (f" · {stats['ncs']} NC" if stats["ncs"] else ""))
 
-        if d_fps_q:
-            best = min(d_fps_q, key=lambda f: f.lap_time_gap_pct)
-            st.metric("Avg Q Gap", f"{np.mean([f.lap_time_gap_pct for f in d_fps_q]):.3f}%")
-            st.metric("Best Q", f"R{best.race_round} {circuit_map.get(best.race_round,'')}", f"{best.lap_time_gap_pct:.3f}%")
-        if d_fps_r:
-            st.metric("Avg Race Gap", f"{np.mean([f.lap_time_gap_pct for f in d_fps_r]):.3f}%")
-            st.metric("Avg Harvest", f"{np.mean([f.braking_harvest_ratio for f in d_fps_r]):.3f}")
-        st.metric("Rounds (Q)", len(d_fps_q))
+    with right:
+        st.plotly_chart(pace_trend_chart(all_fps, driver), use_container_width=True)
+        if stats["finish_history"]:
+            st.plotly_chart(
+                finish_history_chart(stats["finish_history"], driver, team_col),
+                use_container_width=True)
 
-    with col_right:
-        fig = pace_trend_chart(all_fps, driver)
-        st.plotly_chart(fig, use_container_width=True)
-
-    # ── Teammate comparison ────────────────────────────────
+    # ── Teammate comparison ───────────────────────────────
     st.markdown("---")
-    st.subheader(f"🤝 vs Teammate")
-
+    st.subheader("🤝 Teammate Comparison")
     if not teammate:
-        st.info("No teammate found for this driver.")
+        st.info("No teammate on record.")
     else:
-        stats = teammate_stats(all_fps, driver, teammate)
-
-        if stats["total"] == 0:
-            st.info(f"No common qualifying rounds found between {driver} and {teammate}.")
+        ts = teammate_stats(all_fps, driver, teammate)
+        if ts["total"] == 0:
+            st.info(f"No common qualifying rounds with {driver_name(teammate)}.")
         else:
-            # Summary header
-            wins_str    = f"{stats['d1_wins']}/{stats['total']} rounds faster"
-            avg_gap_s   = stats['avg_gap_s']
-            avg_gap_pct = stats['avg_gap_pct']
-            faster_str  = f"avg {avg_gap_s:+.3f}s ({avg_gap_pct:+.3f}%)"
-            indicator   = "✅ FASTER" if avg_gap_s < 0 else "❌ SLOWER"
-            ind_colour  = "#00C851" if avg_gap_s < 0 else "#FF4444"
-
+            faster   = ts["avg_gap_s"] < 0
+            col_ind  = "#00C851" if faster else "#FF4444"
             st.markdown(f"""
             <div style="padding:14px 18px;background:#1A1A1A;border-radius:10px;
-                        border-left:4px solid {team_col};margin-bottom:12px;">
-                <div style="font-family:monospace;font-size:0.8rem;color:#888;">
-                    {driver} vs {teammate} · Qualifying
-                </div>
-                <div style="font-family:monospace;font-size:1.2rem;font-weight:bold;
-                            color:{team_col};margin:4px 0;">{wins_str}</div>
-                <div style="font-family:monospace;font-size:0.9rem;">
-                    <span style="color:{ind_colour};">{indicator}</span>
-                    &nbsp;{faster_str} on average
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+                        border-left:5px solid {team_col};margin-bottom:12px;">
+              <div style="font-family:monospace;font-size:0.78rem;color:#888;">
+                {driver_name(driver)} vs {driver_name(teammate)} · Qualifying</div>
+              <div style="font-family:monospace;font-size:1.35rem;font-weight:bold;
+                          color:{team_col};margin:5px 0;">
+                {ts['d1_wins']}/{ts['total']} rounds faster</div>
+              <div style="font-family:monospace;font-size:0.92rem;">
+                <span style="color:{col_ind};font-weight:bold;">
+                  {'FASTER' if faster else 'SLOWER'}</span>
+                &nbsp;by {abs(ts['avg_gap_s']):.3f}s ({abs(ts['avg_gap_pct']):.3f}%) on average
+              </div>
+            </div>""", unsafe_allow_html=True)
+            st.plotly_chart(
+                teammate_gap_chart(all_fps, driver, teammate, circuit_map, team_col),
+                use_container_width=True)
 
-            fig = teammate_gap_chart(all_fps, driver, teammate, circuit_map, team_col)
-            st.plotly_chart(fig, use_container_width=True)
+    # ── Season qualifying ranking ─────────────────────────
+    st.markdown("---")
+    st.subheader("⏱️ Season Qualifying Ranking")
+    st.caption("Every driver ranked by average gap to pole across all qualifying sessions.")
+    st.plotly_chart(qualifying_ranking_chart(qualifying_ranking(all_fps)),
+                    use_container_width=True)
 
-            st.caption(f"Negative bars = {driver} faster. Positive = {teammate} faster. "
-                       "Bars show lap time difference in seconds; hover for % equivalent.")
-
-
-# ─────────────────────────────────────────────────────────
-# TAB 2: TEAMS
-# ─────────────────────────────────────────────────────────
+# ══════════════════════════════════════════════════════════
+# TEAMS
+# ══════════════════════════════════════════════════════════
 with tab2:
-    st.subheader("📍 Team Performance Map: Straight vs Corner")
-    st.caption("All 11 teams. X = straight-line speed advantage, Y = corner speed advantage. "
-               "Coloured by PU supplier. Dot size = rounds of data.")
     fps_q = [fp for fp in all_fps if fp.session_type in ("Q", "SQ")]
-    fig = straight_vs_corner_scatter(fps_q)
-    st.plotly_chart(fig, use_container_width=True)
+
+    st.subheader("📍 Performance Profile: Straight vs Corner")
+    st.caption("All 11 teams · dot size = rounds of data · colour = team")
+    st.plotly_chart(straight_vs_corner_scatter(fps_q), use_container_width=True)
 
     st.markdown("---")
+    st.subheader("🔄 Corner Performance by Speed Class")
+    fig_cc, suppressed = corner_class_ranking(all_fps)
+    if suppressed:
+        names = {"slow": "slow (<130 kph)", "medium": "medium (130–210)",
+                 "fast": "fast (>210)"}
+        st.warning(
+            f"**{', '.join(names[s] for s in suppressed)}** corners are not shown — "
+            "too few detected across the season for a reliable ranking. Corner detection "
+            "is throttle/brake based, so flat-out corners are invisible to it and fast "
+            "corners are systematically under-sampled."
+        )
+    if fig_cc.data:
+        st.plotly_chart(fig_cc, use_container_width=True)
+        st.caption("Season aggregate across all qualifying sessions — not per-circuit "
+                   "counts, which would be unreliable for the reason above.")
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("🏁 Corner Performance Ranking")
-        fig = corner_profile_ranking(fps_q)
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col2:
-        st.subheader("📊 Overall Pace Ranking (Q — All Teams)")
-        team_pace = {}
+    st.markdown("---")
+    c1, c2 = st.columns(2)
+    with c1:
+        st.subheader("🏁 Corner Ranking (Overall)")
+        st.plotly_chart(corner_profile_ranking(fps_q), use_container_width=True)
+    with c2:
+        st.subheader("📊 Overall Pace Ranking")
+        pace = {}
         for fp in fps_q:
             if fp.confidence < 0.5:
                 continue
-            if fp.team not in team_pace:
-                team_pace[fp.team] = {"gaps": [], "pu": fp.pu_name}
-            team_pace[fp.team]["gaps"].append(fp.lap_time_gap_pct)
-
-        rows = []
-        for i, (team, d) in enumerate(sorted(team_pace.items(),
-                                              key=lambda x: np.mean(x[1]["gaps"])), 1):
-            rows.append({
-                "Pos": i,
-                "Team": team,
-                "PU": d["pu"],
-                "Avg Gap %": round(np.mean(d["gaps"]), 3),
-                "Best %": round(min(d["gaps"]), 3),
-                "Worst %": round(max(d["gaps"]), 3),
-                "Rounds": len(d["gaps"]),
-            })
+            pace.setdefault(fp.team, {"gaps": [], "pu": fp.pu_name})["gaps"].append(
+                fp.lap_time_gap_pct)
+        rows = [{"Pos": i, "Team": t, "PU": d["pu"],
+                 "Avg Gap %": round(np.mean(d["gaps"]), 3),
+                 "Best %": round(min(d["gaps"]), 3),
+                 "Rounds": len(d["gaps"])}
+                for i, (t, d) in enumerate(
+                    sorted(pace.items(), key=lambda x: np.mean(x[1]["gaps"])), 1)]
         st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
     st.markdown("---")
-
-    # Intra-team comparison table
     st.subheader("🤝 Intra-Team Qualifying Battle")
-    st.caption("Who's winning the teammate battle in qualifying across all rounds.")
-    rows = []
-    seen = set()
-    for fp in fps_q:
-        if fp.confidence < 0.5:
-            continue
-        drv = fp.driver_code
-        tmt = get_teammate(drv)
-        if not tmt or (drv, tmt) in seen or (tmt, drv) in seen:
-            continue
-        seen.add((drv, tmt))
-        stats = teammate_stats(all_fps, drv, tmt)
-        if stats["total"] == 0:
-            continue
-        rows.append({
-            "Team": fp.team,
-            "Driver 1": drv,
-            "Driver 2": tmt,
-            f"D1 faster": f"{stats['d1_wins']}/{stats['total']}",
-            "Avg gap s": f"{stats['avg_gap_s']:+.3f}",
-            "Avg gap %": f"{stats['avg_gap_pct']:+.3f}",
-        })
-    if rows:
-        st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+    st.caption("Ranked by margin — widest intra-team gap at the top. "
+               "Gap is the primary measure; head-to-head record shown on hover.")
+    tr = teammate_ranking(all_fps)
+    if tr:
+        st.plotly_chart(teammate_hierarchy_chart(tr), use_container_width=True)
+        st.dataframe(pd.DataFrame([{
+            "Team": r["team"],
+            "Faster": f"{r['faster']} ({driver_name(r['faster'])})",
+            "Margin": f"{r['gap_s']:.3f}s",
+            "Margin %": f"{r['gap_pct']:.3f}%",
+            "H2H": f"{r['faster_wins']}–{r['slower_wins']}",
+            "Rounds": r["rounds"],
+        } for r in tr]), use_container_width=True, hide_index=True)
 
-
-# ─────────────────────────────────────────────────────────
-# TAB 3: PU ANALYSIS
-# ─────────────────────────────────────────────────────────
+# ══════════════════════════════════════════════════════════
+# POWER UNITS
+# ══════════════════════════════════════════════════════════
 with tab3:
     st.markdown("### ⚡ Power Unit Analysis")
-    st.caption("Factory teams only. Signals = combined PU output + chassis effect — not ICE-only.")
+    st.caption("Factory teams only. These signals combine PU output with chassis "
+               "effects — they are **not** ICE-only measurements.")
 
     fps_r  = [fp for fp in all_fps if fp.session_type == "R"]
-    fps_qh = [fp for fp in all_fps if fp.session_type in ("Q", "SQ")]  # qualifying only for harvest comparison
-    fps_q = [fp for fp in all_fps if fp.session_type in ("Q", "SQ")]
+    fps_qh = [fp for fp in all_fps if fp.session_type in ("Q", "SQ")]
 
-    # PU straight-line speed
-    st.markdown("**Straight-Line Speed Delta — Factory Teams (Qualifying)**")
-    fig = pu_straight_speed_chart(fps_q)
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(pu_straight_speed_chart(fps_qh), use_container_width=True)
 
     st.markdown("---")
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown("**ERS Fingerprint**")
+        st.plotly_chart(fingerprint_radar_chart(fps_r), use_container_width=True)
+    with c2:
+        st.markdown("**Braking Harvest Efficiency**")
+        st.caption("Qualifying only — race harvest ratios are unreliable because "
+                   "each driver's reference lap comes from different conditions.")
+        st.plotly_chart(harvest_bars_chart(fps_qh, sessions=["Q", "SQ"]),
+                        use_container_width=True)
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("**ERS Fingerprint Radar**")
-        fig = fingerprint_radar_chart(fps_r)
-        st.plotly_chart(fig, use_container_width=True)
-    with col2:
-        st.markdown("**Braking Harvest Efficiency (Qualifying)**")
-        st.caption("Race session harvest ratios are unreliable — different fuel/tyre per driver. Qualifying = controlled conditions.")
-        fig = harvest_bars_chart(fps_qh, sessions=["Q", "SQ"])
-        st.plotly_chart(fig, use_container_width=True)
-
-    # ADUO context table
     st.markdown("---")
-    st.markdown("**ADUO ICE Performance Index (Confirmed Monaco R6)**")
-    st.caption("ADUO measures ICE performance only — not ERS/electrical side. "
-               "Straight-line chart above reflects combined PU+chassis.")
-    aduo_rows = [
-        {"Rank": 1, "PU": "RedBullFord", "ADUO Band": "Benchmark (0%)",
-         "2026 Upgrades": "0 (no deficit)", "Note": "Best ICE on grid. Chassis limits results."},
-        {"Rank": 2, "PU": "Mercedes",    "ADUO Band": ">2% deficit",
-         "2026 Upgrades": "1",            "Note": "8 race wins from ERS/electrical advantage."},
-        {"Rank": "3-5*", "PU": "Ferrari", "ADUO Band": ">4% deficit",
-         "2026 Upgrades": "2",            "Note": "2 wins. Exact rank vs Honda/Audi unknown."},
-        {"Rank": "3-5*", "PU": "Honda",   "ADUO Band": ">4% deficit",
-         "2026 Upgrades": "2",            "Note": "Worst PU + weak chassis = large field gap."},
-        {"Rank": "3-5*", "PU": "Audi",    "ADUO Band": ">4% deficit",
-         "2026 Upgrades": "2",            "Note": "Debut season. Broadest dev runway."},
-    ]
-    st.dataframe(pd.DataFrame(aduo_rows), use_container_width=True, hide_index=True)
-    st.caption("*FIA only confirmed 2% and 4% bands — exact rank within the >4% group is not public.")
+    st.markdown("**ADUO ICE Performance Index** — confirmed Monaco (R6)")
+    st.caption("ADUO rates the **internal combustion engine only**. It does not measure "
+               "the battery, energy recovery, or deployment — which is roughly half of "
+               "2026 power output. A manufacturer can rank poorly here and still win races.")
+    st.dataframe(pd.DataFrame([
+        {"Rank": "1", "PU": "RedBullFord", "ADUO Band": "Benchmark (0%)",
+         "Upgrades": 0, "Note": "Best ICE on the grid; chassis limits results."},
+        {"Rank": "2", "PU": "Mercedes", "ADUO Band": ">2% deficit",
+         "Upgrades": 1, "Note": "8 wins — advantage is on the electrical side."},
+        {"Rank": "3–5*", "PU": "Ferrari", "ADUO Band": ">4% deficit",
+         "Upgrades": 2, "Note": "2 wins. ADUO 1 deployed Austria (R8)."},
+        {"Rank": "3–5*", "PU": "Honda", "ADUO Band": ">4% deficit",
+         "Upgrades": 2, "Note": "Weakest package; upgrade due R12–R13."},
+        {"Rank": "3–5*", "PU": "Audi", "ADUO Band": ">4% deficit",
+         "Upgrades": 2, "Note": "Debut season, broadest development runway."},
+    ]), use_container_width=True, hide_index=True)
+    st.caption("*The FIA published only the 2% and 4% bands. Exact ordering within "
+               "the >4% group was never made public, so it is not claimed here.")

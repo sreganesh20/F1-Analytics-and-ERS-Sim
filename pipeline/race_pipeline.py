@@ -102,6 +102,177 @@ def _get_representative_race_lap(drv_laps: pd.DataFrame, total_race_laps: int):
 #  Main pipeline
 # ─────────────────────────────────────────────────────────
 
+# ─────────────────────────────────────────────────────────
+#  WAVE 1: Result / sector / pit-stop extraction
+# ─────────────────────────────────────────────────────────
+
+def _extract_session_results(full_session) -> dict:
+    """
+    Pull classified race results from FastF1 -> {driver_code: {...}}.
+    Returns {} for sessions with no results (some quali sessions).
+    """
+    out = {}
+    try:
+        res = full_session.results
+        if res is None or res.empty:
+            return {}
+        for _, row in res.iterrows():
+            code = row.get("Abbreviation")
+            if not code:
+                continue
+            pos  = row.get("Position")
+            grid = row.get("GridPosition")
+            pos_i  = int(pos)  if pd.notna(pos)  else None
+            grid_i = int(grid) if pd.notna(grid) else None
+            gained = (grid_i - pos_i) if (pos_i is not None and grid_i is not None) else None
+            out[code] = {
+                "finishing_position": pos_i,
+                "grid_position":      grid_i,
+                "positions_gained":   gained,
+                "result_status":      str(row.get("Status", "")) or "",
+            }
+    except Exception as e:
+        print(f"  Could not extract session results: {e}")
+    return out
+
+
+# Status strings that mean the car COMPLETED the race (classified finisher).
+# FastF1 / Ergast use several forms for "finished, possibly a lap down".
+FINISHER_STATUSES = {"finished", "lapped", "classified"}
+
+
+def _is_dnf_from_status(status: str) -> bool:
+    """
+    Authoritative DNF determination from FastF1's classified result status.
+
+    FINISHER statuses:  "Finished", "Lapped", "+1 Lap", "+2 Laps"
+    DNF statuses:       "Retired", "Accident", "Collision", "Engine",
+                        "Power Unit", "Gearbox", "Hydraulics", "Disqualified",
+                        "Withdrew", "Spun off", ...
+
+    History:
+      v1 used a lap-count heuristic (laps < 30% of distance) — caught only very
+      early retirements. Monaco 2026 had 7 DNFs; it flagged 1.
+      v2 whitelisted only "Finished"/"+N Lap" — misclassified every LAPPED
+      finisher as a DNF (Hungary 2026 flagged 9 lapped runners as retirements).
+      v3 (this) whitelists the full finisher set incl. "Lapped".
+    """
+    if not status:
+        return False
+    s = str(status).strip().lower()
+    if s in FINISHER_STATUSES:
+        return False
+    if s.startswith("finished"):
+        return False
+    if s.startswith("+"):          # "+1 Lap", "+2 Laps"
+        return False
+    return True                    # everything else = did not finish
+
+
+def _extract_lap_extras(drv_laps: pd.DataFrame, rep_lap) -> dict:
+    """
+    Sector times from the representative/fastest lap, plus pit + fastest-lap
+    stats across the driver's whole session.
+
+    NOTE ON PIT DATA: FastF1 exposes PitInTime / PitOutTime only, which gives
+    PIT LANE TRANSIT time (entry loop -> exit loop, includes the 60kph drive
+    through). It does NOT expose STATIONARY time (the ~2s DHL 'fastest pit
+    stop' figure). Stationary times must come from an external source.
+    """
+    extras = {
+        "sector_1_s": None, "sector_2_s": None, "sector_3_s": None,
+        "best_sector_1_s": None, "best_sector_2_s": None, "best_sector_3_s": None,
+        "pit_stops": 0, "pit_lane_time_s": None, "tyre_compounds": [],
+        "fastest_lap_s": None, "fastest_lap_number": None,
+    }
+
+    # PERSONAL BEST sector across every lap of the session.
+    # The rep-lap sectors above all belong to one lap, so the fastest driver
+    # sweeps all three — useless as a "fastest sector" stat. These are real
+    # per-driver bests, taken independently per sector from any lap.
+    try:
+        for i, col in enumerate(["Sector1Time", "Sector2Time", "Sector3Time"], start=1):
+            if col in drv_laps.columns:
+                vals = drv_laps[col].dropna()
+                if not vals.empty:
+                    extras[f"best_sector_{i}_s"] = float(vals.min().total_seconds())
+    except Exception:
+        pass
+
+    # Sector times from the representative lap
+    try:
+        for i, key in enumerate(["Sector1Time", "Sector2Time", "Sector3Time"], start=1):
+            val = rep_lap.get(key) if hasattr(rep_lap, "get") else None
+            if val is not None and pd.notna(val):
+                extras[f"sector_{i}_s"] = float(val.total_seconds())
+    except Exception:
+        pass
+
+    # Pit stops = COMPOUND CHANGES, after merging consecutive same-compound stints.
+    #
+    # Why not PitInTime, and why not raw stint count? Both count pit LANE ENTRIES,
+    # which include safety-car and red-flag entries where no tyre change happens.
+    # Verified against Monaco 2026 raw data:
+    #     HUL stints: MEDIUM(12) HARD(46) HARD(1) HARD(6) HARD(2) SOFT(1) SOFT(10)
+    # Three consecutive HARD stints and a one-lap SOFT stint are not pit stops —
+    # they are the field being cycled through the pit lane during a race event.
+    # Both ANT and HUL had boundaries clustered in laps 59-69, the same window.
+    #
+    # Merging consecutive identical compounds gives ANT and HUL 2 stops each,
+    # which matches a real Monaco race.
+    #
+    # Known trade-off: a genuine stop onto a FRESH SET OF THE SAME COMPOUND is
+    # merged away and undercounted. That is rarer than the safety-car over-count
+    # and errs conservative, which is the right direction for a published stat.
+    try:
+        if "Stint" in drv_laps.columns and "Compound" in drv_laps.columns:
+            seq = (drv_laps.sort_values("LapNumber")
+                           .groupby("Stint")["Compound"]
+                           .first()
+                           .sort_index()
+                           .tolist())
+            merged = [c for i, c in enumerate(seq) if i == 0 or c != seq[i - 1]]
+            extras["pit_stops"]       = max(0, len(merged) - 1)
+            extras["tyre_compounds"]  = merged          # e.g. ["MEDIUM","HARD","SOFT"]
+    except Exception:
+        pass
+
+    # Best pit lane transit (separate from stop count)
+    try:
+        if "PitInTime" in drv_laps.columns:
+            pit_in_laps = drv_laps[drv_laps["PitInTime"].notna()]
+            transits = []
+            for _, in_lap in pit_in_laps.iterrows():
+                lap_no  = in_lap.get("LapNumber")
+                out_lap = drv_laps[(drv_laps["LapNumber"] == (lap_no + 1))
+                                   & (drv_laps["PitOutTime"].notna())]
+                if out_lap.empty:
+                    continue
+                t_in  = in_lap["PitInTime"]
+                t_out = out_lap.iloc[0]["PitOutTime"]
+                if pd.notna(t_in) and pd.notna(t_out):
+                    dt = (t_out - t_in).total_seconds()
+                    if 10.0 < dt < 90.0:   # sanity band for a pit lane transit
+                        transits.append(dt)
+            if transits:
+                extras["pit_lane_time_s"] = float(min(transits))
+    except Exception:
+        pass
+
+    # Outright fastest lap of the session for this driver
+    try:
+        valid = drv_laps[drv_laps["LapTime"].notna()]
+        if not valid.empty:
+            best = valid.loc[valid["LapTime"].idxmin()]
+            extras["fastest_lap_s"] = float(best["LapTime"].total_seconds())
+            if pd.notna(best.get("LapNumber")):
+                extras["fastest_lap_number"] = int(best["LapNumber"])
+    except Exception:
+        pass
+
+    return extras
+
+
 def run_race_pipeline(
     circuit_name:         str,
     force_synthetic:      bool = False,
@@ -150,6 +321,7 @@ def run_race_pipeline(
     retirements         = []
     driver_laps_compl   = {}   # driver_code → laps completed
     driver_stint_data   = {}   # driver_code → list of stint dicts (race sessions only)
+    driver_result_map   = {}   # WAVE 1: driver_code → result/sector/pit dict
 
     try:
         import fastf1
@@ -164,9 +336,30 @@ def run_race_pipeline(
         )
         full_session.load(telemetry=True, weather=False)
         print(f"  Session loaded — {len(full_session.drivers)} drivers")
+        session_results = _extract_session_results(full_session)
+        if session_results:
+            print(f"  Classified results extracted for {len(session_results)} drivers")
+            # Surface the status distribution so any UNKNOWN status is visible
+            from collections import Counter
+            _statuses = Counter(r.get("result_status", "") for r in session_results.values())
+            _summary = ", ".join(f"{k or '(blank)'}x{v}" for k, v in _statuses.most_common())
+            print(f"  Result statuses: {_summary}")
+            _unknown = [k for k in _statuses
+                        if k and _is_dnf_from_status(k)
+                        and k.strip().lower() not in
+                        {"retired","accident","collision","engine","gearbox","power unit",
+                         "hydraulics","disqualified","withdrew","spun off","transmission",
+                         "brakes","suspension","electrical","overheating","mechanical",
+                         "puncture","wheel","water leak","oil leak","fuel pressure",
+                         "did not start","electronics","clutch","driveshaft","differential",
+                         "steering","exhaust","tyre","radiator","battery","turbo","ers",
+                         "cooling system","seat","damage","illness","fuel system"}]
+            if _unknown:
+                print(f"  NOTE: unrecognised status(es) treated as DNF: {_unknown}")
     except Exception as e:
         print(f"  Could not load full session: {e}")
         full_session = None
+        session_results = {}
 
     if full_session is not None:
 
@@ -201,9 +394,17 @@ def run_race_pipeline(
 
                     lap_time_s = lt.total_seconds()
 
+                    # AUTHORITATIVE DNF: use classified result status when available,
+                    # fall back to the lap-count heuristic only if results are missing.
+                    _res = session_results.get(drv_code, {})
+                    _status = _res.get("result_status", "")
+                    if _status:
+                        is_dnf = _is_dnf_from_status(_status)
+
                     if is_dnf:
                         retirements.append(drv_code)
-                        print(f"  {drv_code:<6} DNF — {laps_completed}/{total_race_laps} laps")
+                        _reason = f" [{_status}]" if _status else ""
+                        print(f"  {drv_code:<6} DNF — {laps_completed}/{total_race_laps} laps{_reason}")
 
                     try:
                         tel = rep_lap.get_car_data().add_distance()
@@ -212,6 +413,7 @@ def run_race_pipeline(
                         continue
 
                     driver_stint_data[drv_code] = stint_data
+                    _extras = _extract_lap_extras(drv_laps, rep_lap)
 
                 else:
                     # Qualifying / SQ: pick fastest lap
@@ -250,6 +452,7 @@ def run_race_pipeline(
                         continue
 
                     stint_data = []
+                    _extras = _extract_lap_extras(drv_laps, fastest)
 
                 # ── Build car DataFrame (same for both paths) ──
                 car_df = pd.DataFrame({
@@ -271,6 +474,10 @@ def run_race_pipeline(
                 driver_telemetry[drv_code]  = car_df
                 lap_times[drv_code]         = lap_time_s
                 driver_laps_compl[drv_code] = laps_completed
+                driver_result_map[drv_code] = {
+                    **session_results.get(drv_code, {}),
+                    **_extras,
+                }
 
                 pace_note = f"{len(stint_data)} stints" if is_race_session else "FastF1"
                 print(f"  {drv_code:<6} {car_info['team']:<20} {lap_time_s:.3f}s  {pace_note}")
@@ -290,6 +497,7 @@ def run_race_pipeline(
             circuit_cfg       = circuit_cfg,
             retirements       = retirements,
             laps_completed_map = driver_laps_compl,
+            result_map        = driver_result_map,
         )
         print_race_fingerprints(race_fingerprints)
     else:
