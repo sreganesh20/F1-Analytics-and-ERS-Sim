@@ -107,6 +107,34 @@ st.divider()
 st.subheader("📖 Race Commentary")
 commentary = get_commentary()
 
+# Auto-generate a recap for a round that has results but no written entry.
+# Supplements the hand-written entries; clearly labelled, never overwrites them.
+from analysis.llm import available as ai_available, generate_race_commentary
+from app.data_loader import get_fingerprints
+from config import CIRCUITS
+
+if ai_available():
+    written_rounds = {e["round"] for e in commentary}
+    raced_rounds   = sorted({f.race_round for f in get_fingerprints()
+                             if f.session_type == "R"})
+    missing = [r for r in raced_rounds if r not in written_rounds]
+    if missing:
+        with st.expander(f"Auto-generate a recap "
+                         f"({len(missing)} round{'s' if len(missing) != 1 else ''} "
+                         f"without a written entry)"):
+            rnd = st.selectbox("Round", missing,
+                               format_func=lambda r: f"Round {r}")
+            if st.button("Generate recap"):
+                with st.spinner("Reading the classification…"):
+                    entry, err = generate_race_commentary(rnd)
+                if err:
+                    st.info(err)
+                else:
+                    st.markdown(f"**{entry['headline']}**")
+                    st.markdown(entry["body"])
+                    st.caption("Auto-generated from the finishing order. "
+                               "To keep it, paste into data/commentary.json.")
+
 if not commentary:
     st.info("No commentary yet. Edit `data/commentary.json` to add race summaries.")
 else:

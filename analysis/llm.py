@@ -64,11 +64,18 @@ def available():
     return bool(_api_key())
 
 
-def ask(user_content, system=STRICT_RAG_SYSTEM, temperature=0.3, max_tokens=700):
+def ask(user_content, system=STRICT_RAG_SYSTEM, temperature=0.3,
+        max_tokens=1200, reasoning_effort="low"):
     """
     Single completion. Returns (text, error): exactly one is non-None.
 
     error is a short, user-safe string — never a raw exception or stack.
+
+    gpt-oss-120b is a reasoning model: it spends tokens on a hidden reasoning
+    pass before writing visible content, and max_tokens caps the TOTAL. A tight
+    cap can therefore return an empty answer with finish_reason 'length'. So the
+    default ceiling is generous and reasoning_effort defaults to 'low' — these
+    are short, grounded answers that don't need deep deliberation.
     """
     key = _api_key()
     if not key:
@@ -80,9 +87,10 @@ def ask(user_content, system=STRICT_RAG_SYSTEM, temperature=0.3, max_tokens=700)
             headers={"Authorization": f"Bearer {key}",
                      "Content-Type": "application/json"},
             json={
-                "model":       GROQ_MODEL,
-                "temperature": temperature,
-                "max_tokens":  max_tokens,
+                "model":            GROQ_MODEL,
+                "temperature":      temperature,
+                "max_tokens":       max_tokens,
+                "reasoning_effort": reasoning_effort,
                 "messages": [
                     {"role": "system", "content": system},
                     {"role": "user",   "content": user_content},
@@ -163,7 +171,7 @@ def explain_prediction(pred, driver_code):
         f"confidence, and any relevant regulation note. If a note says an "
         f"upgrade is incoming, add that the prediction may understate them."
     )
-    return ask(prompt, max_tokens=350)
+    return ask(prompt, max_tokens=900)
 
 
 # =============================================================
@@ -290,3 +298,216 @@ def load_season_digest():
     except Exception:
         return ("No season digest has been generated yet. "
                 "Run `python run.py build-digest` and commit store/season_digest.txt.")
+
+
+# =============================================================
+#  Feature: auto-generated race commentary
+# =============================================================
+#
+#  Supplements the hand-written data/commentary.json. Reads the real finishing
+#  order from the stored race session and asks for a short recap in the same
+#  voice. The result is clearly labelled auto-generated on the page — it is a
+#  convenience for rounds nobody has written up yet, not a replacement for the
+#  editorial entries.
+
+def _race_result_context(race_round):
+    """Assemble the real finishing order for one round from the store."""
+    import glob
+    from app.data_loader import get_fingerprints, driver_name
+
+    fps = [f for f in get_fingerprints()
+           if f.race_round == race_round and f.session_type == "R"]
+    if not fps:
+        return None, None
+
+    def sort_key(f):
+        # DNF/NC sink to the bottom; finishers by position
+        pos = getattr(f, "finishing_position", None)
+        return (pos is None, pos if pos is not None else 999)
+
+    fps.sort(key=sort_key)
+    circuit = fps[0].circuit_name if hasattr(fps[0], "circuit_name") else f"Round {race_round}"
+
+    lines = []
+    for f in fps:
+        pos    = getattr(f, "finishing_position", None)
+        grid   = getattr(f, "grid_position", None)
+        status = getattr(f, "result_status", "") or ""
+        gained = getattr(f, "positions_gained", None)
+        posstr = f"P{pos}" if pos else status or "DNF"
+        extra  = ""
+        if grid and pos:
+            move = grid - pos
+            if move > 0:   extra = f" (+{move} from P{grid})"
+            elif move < 0: extra = f" ({move} from P{grid})"
+            else:          extra = f" (held P{grid})"
+        elif status and status != "Finished":
+            extra = f" ({status})"
+        lines.append(f"  {posstr} {f.driver_code} ({f.team}){extra}")
+
+    return circuit, lines
+
+
+def generate_race_commentary(race_round):
+    """
+    Draft a race recap for one round from stored results. Returns (dict, error)
+    where dict matches the commentary.json schema so it can slot straight in.
+    """
+    circuit, lines = _race_result_context(race_round)
+    if not lines:
+        return None, f"No race result stored for round {race_round}."
+
+    prompt = (
+        f"DATA — final classification, {circuit} 2026 (round {race_round}):\n"
+        + "\n".join(lines) + "\n\n"
+        "Write a race recap in this exact style: one punchy headline (max 12 "
+        "words), then a 3-4 sentence body. Factual, race-engineer tone, like a "
+        "post-race note. Mention the winner, the podium, and the biggest mover "
+        "or notable retirement. Use ONLY the classification above — invent no "
+        "lap times, no quotes, no incidents not implied by the data.\n\n"
+        "Return exactly this format, nothing else:\n"
+        "HEADLINE: <the headline>\n"
+        "BODY: <the body>"
+    )
+
+    text, err = ask(prompt, max_tokens=1400, temperature=0.5)
+    if err:
+        return None, err
+
+    headline, body = "", text
+    for line in text.splitlines():
+        if line.upper().startswith("HEADLINE:"):
+            headline = line.split(":", 1)[1].strip()
+        elif line.upper().startswith("BODY:"):
+            body = line.split(":", 1)[1].strip()
+    # if the model ran the body across multiple lines after BODY:
+    if "BODY:" in text:
+        body = text.split("BODY:", 1)[1].strip()
+
+    return {
+        "round":    race_round,
+        "circuit":  circuit,
+        "headline": headline or f"{circuit} race recap",
+        "body":     body,
+        "tags":     ["auto-generated"],
+        "auto":     True,
+    }, None
+
+
+# =============================================================
+#  Feature: Ask the F1 Engineer  (whole-season RAG)
+# =============================================================
+#
+#  The season digest gives the model a whole-season overview on every
+#  question. On top of that, a lightweight retrieval step scans the question
+#  for driver codes, driver surnames, team names and circuits, and appends the
+#  specific fingerprint rows for whatever it finds. The model then sees the
+#  overview plus the exact rows relevant to the question — never the whole raw
+#  dataset, which would be tens of thousands of tokens.
+
+def _entity_index():
+    """Build lookup tables once: code->driver, surname->code, team set, circuit set."""
+    from config import CARS, CIRCUITS
+    codes    = {c: v for c, v in CARS.items()}
+    surnames = {}
+    for code, v in CARS.items():
+        last = v["name"].split()[-1].lower()
+        surnames[last] = code
+    teams    = {c["team"] for c in CARS.values()}
+    circuits = set(CIRCUITS.keys())
+    # People say the track, not our config key. Map common venue and country
+    # names back to the circuit key so "Zandvoort" or "Monza" resolve.
+    aliases = {
+        "zandvoort": "Netherlands", "dutch": "Netherlands",
+        "monza": "Italy", "italian": "Italy",
+        "silverstone": "Britain", "british": "Britain",
+        "spa": "Belgium", "belgian": "Belgium",
+        "monaco": "Monaco", "monte carlo": "Monaco",
+        "montreal": "Canada", "canadian": "Canada",
+        "shanghai": "China", "chinese": "China",
+        "suzuka": "Japan", "japanese": "Japan",
+        "barcelona": "Spain", "spanish": "Spain",
+        "red bull ring": "Austria", "austrian": "Austria",
+        "hungaroring": "Hungary", "hungarian": "Hungary",
+        "miami": "Miami", "imola": "Imola",
+        "singapore": "Singapore", "marina bay": "Singapore",
+        "interlagos": "Brazil", "brazilian": "Brazil", "sao paulo": "Brazil",
+        "las vegas": "LasVegas", "vegas": "LasVegas",
+        "abu dhabi": "AbuDhabi", "yas marina": "AbuDhabi",
+        "baku": "Azerbaijan", "azerbaijan": "Azerbaijan",
+        "melbourne": "Australia", "australian": "Australia",
+        "mexico": "Mexico", "mexican": "Mexico", "austin": "Austin", "cota": "Austin",
+    }
+    return codes, surnames, teams, circuits, aliases
+
+
+def _retrieve_rows(question, max_rows=60):
+    """
+    Pull fingerprint rows for entities named in the question.
+    Returns a formatted context string (possibly empty).
+    """
+    from app.data_loader import get_fingerprints
+    codes, surnames, teams, circuits, aliases = _entity_index()
+    q = question.lower()
+
+    want_codes = {c for c in codes if c.lower() in q.split()
+                  or c.lower() in q.replace(",", " ").split()}
+    for surname, code in surnames.items():
+        if surname in q:
+            want_codes.add(code)
+    want_teams = {t for t in teams if t.lower() in q}
+    want_circuits = {c for c in circuits if c.lower() in q}
+    for alias, circuit in aliases.items():
+        if alias in q and circuit in circuits:
+            want_circuits.add(circuit)
+
+    if not (want_codes or want_teams or want_circuits):
+        return ""
+
+    fps = get_fingerprints()
+    rows = []
+    for f in fps:
+        if f.session_type not in ("Q", "SQ", "R", "S"):
+            continue
+        hit = (f.driver_code in want_codes
+               or f.team in want_teams
+               or (hasattr(f, "circuit_name") and f.circuit_name in want_circuits))
+        if not hit:
+            continue
+        gap = getattr(f, "lap_time_gap_pct", None)
+        pos = getattr(f, "finishing_position", None)
+        if f.session_type in ("Q", "SQ") and gap is not None:
+            detail = f"gap {gap:+.3f}% to session-fastest"
+        elif f.session_type in ("R", "S") and pos is not None:
+            status = getattr(f, "result_status", "") or ""
+            detail = f"finished P{pos}" + (f" ({status})" if status and status != "Finished" else "")
+        else:
+            detail = "no comparable result"
+        rows.append(
+            f"  R{f.race_round} {f.session_type} {f.driver_code} ({f.team}): {detail}")
+        if len(rows) >= max_rows:
+            break
+
+    if not rows:
+        return ""
+    return "RELEVANT SESSION ROWS:\n" + "\n".join(rows)
+
+
+def ask_engineer(question):
+    """
+    Answer a free-text question about the season under strict RAG.
+    Returns (text, error).
+    """
+    digest = load_season_digest()
+    rows   = _retrieve_rows(question)
+
+    context = digest
+    if rows:
+        context += "\n\n" + rows
+
+    prompt = (
+        "DATA:\n" + context + "\n\n"
+        f"QUESTION: {question}\n\n"
+        "Answer from the DATA only. If the data doesn't cover it, say so."
+    )
+    return ask(prompt, max_tokens=1400, temperature=0.3)
