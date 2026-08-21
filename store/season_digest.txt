@@ -1,0 +1,95 @@
+PITWALL 2026 SEASON DIGEST
+(Model-derived summary. All figures come from stored session data.)
+
+CONSTRUCTOR STANDINGS:
+  P1 Mercedes: 379 pts, 8 wins
+  P2 Ferrari: 307 pts, 2 wins
+  P3 McLaren: 220 pts, 1 wins
+  P4 Red Bull: 177 pts, 0 wins
+  P5 RB F1 Team: 66 pts, 0 wins
+  P6 Alpine F1 Team: 61 pts, 0 wins
+  P7 Haas F1 Team: 21 pts, 0 wins
+  P8 Audi: 12 pts, 0 wins
+  P9 Williams: 11 pts, 0 wins
+  P10 Aston Martin: 1 pts, 0 wins
+  P11 Cadillac F1 Team: 0 pts, 0 wins
+
+DRIVER STANDINGS (top 12):
+  P1 Andrea Kimi Antonelli (Mercedes): 219 pts
+  P2 Lewis Hamilton (Ferrari): 169 pts
+  P3 George Russell (Mercedes): 160 pts
+  P4 Charles Leclerc (Ferrari): 138 pts
+  P5 Lando Norris (McLaren): 128 pts
+  P6 Max Verstappen (Red Bull): 109 pts
+  P7 Oscar Piastri (McLaren): 92 pts
+  P8 Isack Hadjar (Red Bull): 68 pts
+  P9 Liam Lawson (RB F1 Team): 43 pts
+  P10 Pierre Gasly (Alpine F1 Team): 42 pts
+  P11 Arvid Lindblad (RB F1 Team): 23 pts
+  P12 Franco Colapinto (Alpine F1 Team): 19 pts
+
+QUALIFYING PACE (median % off session-fastest, lower = quicker):
+  Mercedes: 0.167%
+  Ferrari: 0.434%
+  McLaren: 0.569%
+  Red Bull: 0.739%
+  VCARB: 1.817%
+  Audi: 1.963%
+  Alpine: 1.985%
+  Haas: 2.591%
+  Williams: 2.676%
+  Cadillac: 4.162%
+  Aston Martin: 4.825%
+
+TEAMMATE QUALIFYING RECORDS (median gap, head-to-head):
+  Alpine: GAS ahead of COL by 0.484s, H2H 10-5 over 15 sessions
+  Aston Martin: ALO ahead of STR by 0.421s, H2H 11-2 over 13 sessions
+  Audi: HUL ahead of BOR by 0.032s, H2H 8-7 over 15 sessions
+  Cadillac: PER ahead of BOT by 0.168s, H2H 9-5 over 14 sessions
+  Ferrari: HAM ahead of LEC by 0.013s, H2H 8-7 over 15 sessions
+  Haas: BEA ahead of OCO by 0.294s, H2H 11-4 over 15 sessions
+  McLaren: NOR ahead of PIA by 0.052s, H2H 11-4 over 15 sessions
+  Mercedes: ANT ahead of RUS by 0.281s, H2H 9-6 over 15 sessions
+  Red Bull: VER ahead of HAD by 0.134s, H2H 12-2 over 14 sessions
+  VCARB: LAW ahead of LIN by 0.012s, H2H 8-6 over 14 sessions
+  Williams: SAI ahead of ALB by 0.257s, H2H 11-2 over 13 sessions
+
+POWER UNITS AND ADUO UPGRADE STATE:
+  Audi (supplies Audi): ADUO upgrade deployed at round 7
+  Ferrari (supplies Cadillac, Ferrari, Haas): ADUO upgrade deployed at round 8
+  Honda (supplies Aston Martin): ADUO upgrade deployed at round 12
+  Mercedes (supplies Alpine, McLaren, Mercedes, Williams): ADUO allocated but NOT yet deployed
+  RedBullFord (supplies Red Bull, VCARB): benchmark PU, no ADUO allocation
+
+CONFIRMED UPGRADE TIMELINE:
+  R4 Alpine: front corner update, nose camera mounts, rear suspension reprofiled, additional element to rear impact structure
+  R4 Audi: reworked front suspension, floor edge, diffuser
+  R4 Cadillac: 9 upgrades targeting performance and ride height sensitivities
+  R4 Ferrari: 11 parts — largest single package on the grid
+  R4 McLaren: 7 parts: floor, front aero overhaul
+  R4 Red Bull: 7 parts including a new rotating rear wing
+  R4 VCARB: 6 enhancements: sidepods, engine cover, mid-section, both wings
+  R4 Williams: first major 2026 package: floor, bodywork, front wing, rear suspension, exhaust blowing, weight reduction
+  R5 Alpine: 'noticeably bigger package than Miami.'
+  R5 Haas: first significant 2026 package
+  R5 Mercedes: 8-part package (front wing, front corner, rear corner, floor)
+  R5 VCARB: larger package than Miami: floor update, rear corner devices reprofiled, beam wing modifications
+  R5 Williams: FBD geometry (brake cooling), suspension cladding, tailpipe repositioning, enhanced Miami exhaust upgrade
+  R6 Red Bull: front brake duct exits, engine cover + sidepod cooling, rear wing extensions
+  R6 VCARB: front suspension tweak, rear wing flap and central winglet
+  R7 Alpine: front corner update, sidepod cooling louvres (upper surface), SLM actuator fairing on rear wing
+  R7 Audi: sidepod cooling louvres, rear wing SLM actuator fairing
+  R7 Audi [Audi PU]: ADUO upgrade 1 deployed at Barcelona (R7), 2 allocated (>4% deficit)
+  R8 Cadillac [Ferrari PU]: ADUO upgrade 1 deployed at Austria (R8), 2 allocated (>4% deficit)
+  R8 Ferrari [Ferrari PU]: ADUO upgrade 1 deployed at Austria (R8), 2 allocated (>4% deficit)
+  R8 Haas: cooling louvres (2 apertures, upper sidepod surface), front brake duct revision
+  R8 Haas [Ferrari PU]: ADUO upgrade 1 deployed at Austria (R8), 2 allocated (>4% deficit)
+  R8 Mercedes: front wing endplate top-edge camber, rear drum winglets, Spa-specific rear wing
+  R9 Ferrari: rear corner: cooling inlet/outlet, lower deflector, rearward winglet cluster
+  R9 McLaren: led all teams on updates
+  R9 Williams: Vowles confirmed to Sky Sports Germany: updates coming for British GP following Austria struggle
+  R10 Cadillac: front wing footplate revision, added horizontal endplate vane
+  R10 Haas: 4 upgrades, 2 of them not circuit-specific
+  R11 Aston Martin: 16-part B-spec overhaul — effectively a new car
+  R11 McLaren: floor body + rear wing endplate
+  R12 Williams: weight reduction package
