@@ -14,6 +14,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
+from analysis.llm import available as ai_available, explain_prediction
 from app.data_loader import (list_available_predictions, get_prediction_data,
                              conf_badge, TEAM_COLOURS)
 from config import CIRCUITS, DRIVER_SUBSTITUTIONS
@@ -274,6 +275,28 @@ def render_grid(pred, pred_type):
             "• Harvest is observed braking energy recovery divided by the "
             "theoretical maximum, taken from qualifying laps only."
         )
+
+    # Explain this prediction — only shown when a Groq key is configured, so
+    # the feature vanishes cleanly rather than erroring when it isn't.
+    if ai_available():
+        with st.expander("Explain a driver's prediction"):
+            codes = [p["driver_code"] for p in predictions]
+            c1, c2 = st.columns([2, 1])
+            with c1:
+                pick = st.selectbox("Driver", codes,
+                                    key=f"explain_{pred_type}", label_visibility="collapsed")
+            with c2:
+                go = st.button("Explain", key=f"explain_btn_{pred_type}",
+                               use_container_width=True)
+            if go:
+                with st.spinner("Reading the model…"):
+                    text, err = explain_prediction(pred, pick)
+                if err:
+                    st.info(err)
+                else:
+                    st.markdown(text)
+                    st.caption("Generated from the model's own numbers by an LLM. "
+                               "It can misread — the data above is the source of truth.")
 
 
 # ── Tabs, in the order the weekend runs ───────────────────

@@ -147,6 +147,30 @@ def cmd_extract_telemetry(args):
               "before committing this.")
 
 
+def cmd_build_digest(args):
+    """
+    Write the season digest that the AI features read as RAG context.
+
+    Regenerate this each weekend alongside `predict`, then commit
+    store/season_digest.txt so the deployed site sees current data.
+
+        python run.py build-digest
+    """
+    from analysis.llm import build_season_digest, DIGEST_PATH
+    print("\n  Building season digest...")
+    text = build_season_digest()
+    os.makedirs(os.path.dirname(DIGEST_PATH), exist_ok=True)
+    with open(DIGEST_PATH, "w", encoding="utf-8") as f:
+        f.write(text)
+    kb = len(text.encode("utf-8")) / 1024
+    print(f"  Wrote {DIGEST_PATH}")
+    print(f"  {len(text)} chars (~{len(text)//4} tokens), {kb:.1f} KB")
+    if "STANDINGS" not in text:
+        print("  NOTE: standings were empty — the standings API may have been "
+              "unreachable. The digest still has pace, teammate and upgrade data.")
+    print("  Commit store/season_digest.txt and push.")
+
+
 def cmd_store(args):
     from data.race_store import print_store_summary
     print_store_summary()
@@ -229,6 +253,8 @@ COMMANDS = {
     "viz":      cmd_viz,
     "extract-telemetry": cmd_extract_telemetry,
     "extract_telemetry": cmd_extract_telemetry,   # alias, both spellings work
+    "build-digest": cmd_build_digest,
+    "build_digest": cmd_build_digest,
 }
 
 if __name__ == "__main__":
