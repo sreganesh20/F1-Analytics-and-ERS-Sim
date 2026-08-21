@@ -15,7 +15,9 @@ Design constraints, all deliberate:
     an environment variable for local CLI use (build-digest runs outside
     Streamlit, where st.secrets does not exist).
 
-  * Strict RAG. The system prompt forbids outside knowledge. The model answers
+  * Strict RAG. The system prompt forbids outside knowledge. The model angit add pages/1_Predictions.py run.py
+git commit -m "Wave 5 feature 1: LLM client, explain-prediction, build-digest command"
+git pushswers
     from the context block or says it doesn't have the data. This is enforced
     by instruction, not code — so the caller must still treat output as
     advisory, and the UI says so.
