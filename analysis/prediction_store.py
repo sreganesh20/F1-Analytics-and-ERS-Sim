@@ -1,7 +1,7 @@
 """
 analysis/prediction_store.py
 Saves and loads race predictions for post-race comparison.
-Supports pred_type: "quali" | "race"
+Supports pred_type: "quali" | "race" | "sprint_quali" | "sprint_race"
 """
 
 import json

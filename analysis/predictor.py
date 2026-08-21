@@ -191,39 +191,69 @@ def get_upcoming_upgrade_notes(driver: str, target_round: int) -> list[str]:
 def get_regulation_notes(pu_name: str, target_round: int) -> list[str]:
     notes = []
 
-    # ADUO allocations (announced Monaco race day, R6)
-    # RedBullFord is the benchmark: no upgrade.
-    # First upgrades expected to materialise around R9-R10 (post summer break).
+    # ADUO allocations — announced to teams on Monaco race day (R6), based on
+    # the FIA's first ICE Performance Index assessment (window closed after
+    # Canada, R5). RedBullFord is the benchmark and receives nothing.
+    #
+    # Bands published by the FIA: Mercedes 2-4% adrift (1 upgrade in 2026,
+    # 1 in 2027); Ferrari, Audi and Honda 4%+ adrift (2 and 2). The ordering
+    # WITHIN the >4% group was never published and must not be claimed.
+    #
+    # Deployment rounds below are verified against reporting, not assumed.
+    # They were previously all hardcoded to round 9, which was a placeholder
+    # written before any manufacturer had actually deployed. Every one of the
+    # four was wrong, and at R12 that placeholder credited Mercedes with an
+    # upgrade it has not used.
     aduo_upgrades = {
-        "Mercedes": {
-            "round": 9,
-            "note":  "ADUO upgrade (1 allocated, >2% behind RBF benchmark ICE) — "
-                     "targeting RedBullFord on pure ICE output",
+        "Audi": {
+            "round": 7,          # Barcelona R7 — first manufacturer to deploy
+            "note":  "ADUO upgrade 1 deployed at Barcelona (R7), 2 allocated (>4% deficit). "
+                     "Introduced without announcement; reported as driveability and throttle "
+                     "response work around the large turbocharger rather than an outright "
+                     "power step. Debut-season PU with the broadest development runway.",
         },
         "Ferrari": {
-            "round": 9,
-            "note":  "ADUO upgrade (2 allocated, >4% deficit) — significant ICE work targeting "
-                     "both performance and reliability",
+            "round": 8,          # Austria R8
+            "second_round": 13,  # Monza R13 — redesigned turbocharger
+            "note":  "ADUO upgrade 1 deployed at Austria (R8), 2 allocated (>4% deficit). "
+                     "Roughly 4-5hp from ICE changes plus 2-3hp from a new Shell fuel "
+                     "compound, about a tenth per lap at the Red Bull Ring. Ferrari itself "
+                     "said it would not change the competitive order.",
         },
         "Honda": {
-            "round": 9,
-            "note":  "ADUO upgrade (2 allocated, >4% deficit) — confirmed targeting ICE friction "
-                     "and energy recovery consistency; battery vibration ongoing",
+            "round": 12,         # Netherlands R12
+            "note":  "ADUO upgrade 1 deployed at Zandvoort (R12), 2 allocated (>4% deficit). "
+                     "Updated RA626H targeting raw ICE power, Honda's stated main weakness, "
+                     "plus minor battery changes. Honda has said it will use only ONE of its "
+                     "two 2026 tokens. Effect is unproven — Zandvoort is a sprint weekend, "
+                     "so there is a single practice session to evaluate it.",
         },
-        "Audi": {
-            "round": 9,
-            "note":  "ADUO upgrade (2 allocated, >4% deficit) — debut-season PU, "
-                     "broadest development runway",
+        "Mercedes": {
+            "round": None,       # allocated but NOT deployed
+            "note":  "ADUO upgrade allocated (1, 2-4% behind benchmark ICE) but NOT yet used. "
+                     "The fresh ICEs, turbochargers, batteries and control electronics fitted "
+                     "at Austria were reliability measures, not a performance homologation.",
         },
         # RedBullFord intentionally absent — benchmark, no ADUO
     }
 
     if pu_name in aduo_upgrades:
-        upg = aduo_upgrades[pu_name]
-        if target_round >= upg["round"]:
+        upg   = aduo_upgrades[pu_name]
+        rnd   = upg.get("round")
+        if rnd is None:
+            notes.append(f"ADUO allocated, not deployed: {upg['note']}")
+        elif target_round > rnd:
             notes.append(f"Post-ADUO: {upg['note']}")
+        elif target_round == rnd:
+            notes.append(f"ADUO DEPLOYING THIS ROUND: {upg['note']} "
+                         "Historical fingerprints predate it, so this prediction "
+                         "understates any gain.")
         else:
-            notes.append(f"Pre-ADUO: upgrade expected ~R{upg['round']}")
+            notes.append(f"Pre-ADUO: upgrade expected ~R{rnd}. {upg['note']}")
+
+        second = upg.get("second_round")
+        if second and target_round < second:
+            notes.append(f"Second ADUO upgrade expected ~R{second}.")
 
     # RedBullFord note
     if pu_name == "RedBullFord":
@@ -255,10 +285,17 @@ def _predict_for_sessions(
     year:           int = 2026,
     drivers:        list[str] = None,
     source_label:   str = "qualifying",
+    session_weights: dict[str, float] = None,
 ) -> RacePrediction | None:
     """
     Core prediction logic. Loads fingerprints from the specified session types
     and produces a RacePrediction.
+
+    session_weights optionally scales each session type's contribution, e.g.
+    {"SQ": 1.0, "Q": 0.85} to favour sprint qualifying when predicting a
+    sprint qualifying session while still using the far larger GP qualifying
+    sample. Omitted types default to 1.0.
+
     Returns None if no data is available.
     """
     if target_circuit not in CIRCUITS:
@@ -294,6 +331,11 @@ def _predict_for_sessions(
         "Secondary signal: braking_harvest_ratio (hrv_adj applied)",
         "Epoch weighting applied — earlier regulation regimes down-weighted",
     ]
+    if session_weights:
+        prediction.methodology_notes.append(
+            "Session-type weighting: "
+            + ", ".join(f"{k}x{v:g}" for k, v in session_weights.items())
+        )
 
     driver_predictions = []
 
@@ -315,7 +357,8 @@ def _predict_for_sessions(
             recency = recency_weight(fp.race_round, target_round)
             ep_w    = epoch_weight(fp.regulation_epoch, target_round)
             upg_w   = team_upgrade_weight(driver, fp.race_round, target_round)
-            weight  = sim * recency * ep_w * upg_w * fp.confidence
+            sess_w  = (session_weights or {}).get(fp.session_type, 1.0)
+            weight  = sim * recency * ep_w * upg_w * sess_w * fp.confidence
             if weight < 0.05:
                 continue
             weighted_gaps.append((fp.lap_time_gap_pct,        weight))
@@ -426,6 +469,49 @@ def predict_race_pace(
     """Predict based on R + S fingerprints only."""
     return _predict_for_sessions(
         target_circuit, ["R", "S"], year, drivers, source_label="race"
+    )
+
+
+# ── Sprint weekends ───────────────────────────────────────
+#
+# Pooled, not SQ-only. Measured on the four 2026 sprint weekends so far
+# (China, Miami, Canada, Britain), GP qualifying predicts sprint qualifying
+# at the SAME weekend with spearman +0.906 — better than one GP qualifying
+# predicts the NEXT one (+0.876). So GP quali is not a weak stand-in for
+# sprint quali; it is a stronger signal than sprint quali from a different
+# weekend. Filtering to ["SQ"] alone would cut the sample from 15 sessions
+# to 4 and discard the better-correlated data.
+#
+# The matching session type still gets a mild preference, because the
+# correlation is high but not perfect (mean absolute difference 0.745
+# percentage points). Raise CROSS_SESSION_WEIGHT to 1.0 for pure pooling,
+# or lower it to lean harder on sprint-specific history.
+CROSS_SESSION_WEIGHT = 0.85
+
+
+def predict_sprint_qualifying(
+    target_circuit: str,
+    year:           int        = 2026,
+    drivers:        list[str]  = None,
+) -> RacePrediction | None:
+    """Predict sprint qualifying. Pooled SQ + Q, SQ weighted higher."""
+    return _predict_for_sessions(
+        target_circuit, ["SQ", "Q"], year, drivers,
+        source_label    = "sprint qualifying",
+        session_weights = {"SQ": 1.0, "Q": CROSS_SESSION_WEIGHT},
+    )
+
+
+def predict_sprint_race(
+    target_circuit: str,
+    year:           int        = 2026,
+    drivers:        list[str]  = None,
+) -> RacePrediction | None:
+    """Predict the sprint race. Pooled S + R, S weighted higher."""
+    return _predict_for_sessions(
+        target_circuit, ["S", "R"], year, drivers,
+        source_label    = "sprint race",
+        session_weights = {"S": 1.0, "R": CROSS_SESSION_WEIGHT},
     )
 
 

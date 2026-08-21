@@ -731,9 +731,9 @@ TEAM_UPGRADES = {
 KNOWN_UPCOMING_UPGRADES = {
     "Aston Martin": [
         {"at_round": 12, "significance": "major",
-         "note": "Netherlands R12 — second major chassis package confirmed. "
-                 "Honda PU ADUO upgrade also due within 2 races of Belgium (R10): "
-                 "expect at R12 or R13. Source: GPblog, Honda Orihara quote."},
+         "note": "Netherlands R12 — second major chassis package, following the "
+                 "major AMR26 update introduced at Hungary (R11). PU side is "
+                 "covered by the Honda ADUO note; not repeated here."},
     ],
     "McLaren": [
         {"at_round": 12, "significance": "medium",
@@ -743,9 +743,10 @@ KNOWN_UPCOMING_UPGRADES = {
     ],
     "Honda": [
         {"at_round": 12, "significance": "major",
-         "note": "PU ADUO upgrade expected at R12 Netherlands or R13 Italy. "
-                 "Honda trackside GM Orihara: 'two more races' from Belgium (R10). "
-                 "Source: GPblog confirmed."},
+         "note": "ADUO upgrade 1 CONFIRMED for Zandvoort (R12) — updated RA626H "
+                 "targeting raw ICE power, plus minor battery changes. Honda will "
+                 "use only ONE of its two 2026 tokens. Sprint weekend gives a "
+                 "single practice session to evaluate it."},
     ],
     "Williams": [
         {"at_round": 12, "significance": "medium",

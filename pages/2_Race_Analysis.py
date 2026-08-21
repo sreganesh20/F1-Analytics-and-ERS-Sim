@@ -11,7 +11,8 @@ if ROOT not in sys.path:
 from app.data_loader import (get_fingerprints, get_circuits_with_data,
                              get_sessions_for_round, race_highlights,
                              driver_name, driver_badge, fmt_laptime,
-                             classification_threshold, is_classified)
+                             classification_threshold, is_classified,
+                             safe_delta)
 from config import CARS
 
 st.set_page_config(page_title="Race Analysis — PitWall", page_icon="📊", layout="wide")
@@ -155,8 +156,10 @@ for tab, session in zip(tabs, available):
                                  else ("NC" if not classified else ""))
                 row["Reason"] = fp.result_status if not fp.completed_race else ""
             else:
-                row["Straight Δ"] = round(fp.straight_speed_delta_kph, 1)
-                row["Corner Δ"]   = round(fp.corner_speed_delta_kph, 1)
+                # safe_delta blanks values the fixed-distance-window method
+                # can't support, rather than printing "+318 kph" at a reader.
+                row["Straight Δ"] = safe_delta(fp.straight_speed_delta_kph)
+                row["Corner Δ"]   = safe_delta(fp.corner_speed_delta_kph)
                 row["Harvest"]    = round(fp.braking_harvest_ratio, 3)
             rows.append(row)
 

@@ -99,7 +99,7 @@ with tab1:
         if ts["total"] == 0:
             st.info(f"No common qualifying rounds with {driver_name(teammate)}.")
         else:
-            faster   = ts["avg_gap_s"] < 0
+            faster   = ts["med_gap_s"] < 0
             col_ind  = "#00C851" if faster else "#FF4444"
             st.markdown(f"""
             <div style="padding:14px 18px;background:#1A1A1A;border-radius:10px;
@@ -112,7 +112,7 @@ with tab1:
               <div style="font-family:monospace;font-size:0.92rem;">
                 <span style="color:{col_ind};font-weight:bold;">
                   {'FASTER' if faster else 'SLOWER'}</span>
-                &nbsp;by {abs(ts['avg_gap_s']):.3f}s ({abs(ts['avg_gap_pct']):.3f}%) on average
+                &nbsp;by {abs(ts['med_gap_s']):.3f}s ({abs(ts['med_gap_pct']):.3f}%) median
               </div>
             </div>""", unsafe_allow_html=True)
             st.plotly_chart(

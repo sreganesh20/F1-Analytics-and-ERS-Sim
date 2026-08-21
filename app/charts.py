@@ -270,8 +270,11 @@ def straight_vs_corner_scatter(fps):
         return go.Figure()
 
     teams   = list(team_data.keys())
-    str_avg = [np.mean(team_data[t]["str"]) if team_data[t]["str"] else 0 for t in teams]
-    cor_avg = [np.mean(team_data[t]["cor"]) if team_data[t]["cor"] else 0 for t in teams]
+    # Median, not mean. On the current store, mean gives rho=+0.600 against
+    # overall pace and puts Audi (7th-fastest car) top of the corner ranking;
+    # median gives rho=+0.927 and a defensible order.
+    str_avg = [np.median(team_data[t]["str"]) if team_data[t]["str"] else 0 for t in teams]
+    cor_avg = [np.median(team_data[t]["cor"]) if team_data[t]["cor"] else 0 for t in teams]
     colours = [TEAM_COLOURS.get(t, PU_COLOURS.get(team_data[t]["pu"], "#888")) for t in teams]
     n_rdns  = [len(team_data[t]["str"]) for t in teams]
 
@@ -340,10 +343,11 @@ def corner_profile_ranking(fps):
         team_data[fp.team]["cor"].append(fp.corner_speed_delta_kph)
         team_data[fp.team]["pu"] = fp.pu_name
 
+    # Median across sessions — see straight_vs_corner_scatter for why.
     sorted_t = sorted(team_data.items(),
-                      key=lambda x: -np.mean(x[1]["cor"]) if x[1]["cor"] else 0)
+                      key=lambda x: -np.median(x[1]["cor"]) if x[1]["cor"] else 0)
     teams   = [t for t, _ in sorted_t]
-    cors    = [np.mean(v["cor"]) if v["cor"] else 0 for _, v in sorted_t]
+    cors    = [np.median(v["cor"]) if v["cor"] else 0 for _, v in sorted_t]
     colours = [PU_COLOURS.get(v["pu"], "#888") for _, v in sorted_t]
     ns      = [len(v["cor"]) for _, v in sorted_t]
 
@@ -358,9 +362,13 @@ def corner_profile_ranking(fps):
         **DARK,
         title=dict(text="Corner Performance Ranking — All Teams (Qualifying)<br>"
                         "<sup style='color:#888'>Baseline: session-fastest car = 0. "
-                        "Less negative = closer to reference pace in corners.</sup>",
+                        "Less negative = closer to reference pace in corners. "
+                        "Median across sessions.<br>"
+                        "Corners are fixed distance windows taken from the session's "
+                        "fastest lap, so cars braking at materially different points "
+                        "are compared imperfectly.</sup>",
                    font=dict(size=14)),
-        xaxis=dict(**_ax(), title="Corner speed vs session-fastest car (kph)"),
+        xaxis=dict(**_ax(), title="Corner speed vs session-fastest car (kph, median)"),
         yaxis=dict(**_ax(), autorange="reversed"),
         height=420,
     )
@@ -630,15 +638,18 @@ def corner_class_ranking(fps):
     class_labels  = {"slow": "Slow (<130 kph)", "medium": "Medium (130–210)", "fast": "Fast (>210)"}
     class_colours = {"slow": "#FF4444", "medium": "#FFD700", "fast": "#00C851"}
 
-    # Order teams by slow-corner performance (or first shown class)
+    # Order teams by slow-corner performance (or first shown class).
+    # Median across sessions: class buckets hold fewer corners per lap than
+    # the aggregate, so a single mis-segmented corner distorts a mean badly
+    # (slow-corner deltas reach +318 kph on individual laps).
     order_cls = shown[0]
     team_order = sorted(class_team_vals[order_cls].keys(),
-                        key=lambda t: -np.mean(class_team_vals[order_cls][t]))
+                        key=lambda t: -np.median(class_team_vals[order_cls][t]))
 
     for cls in shown:
         vals   = class_team_vals[cls]
         teams  = [t for t in team_order if t in vals]
-        means  = [np.mean(vals[t]) for t in teams]
+        means  = [np.median(vals[t]) for t in teams]
         ns     = [len(vals[t]) for t in teams]
         fig.add_trace(go.Bar(
             y=teams, x=means, orientation="h",
@@ -646,7 +657,7 @@ def corner_class_ranking(fps):
             marker_color=class_colours[cls], opacity=0.85,
             customdata=list(zip([f"{m:+.1f} kph" for m in means], ns)),
             hovertemplate="<b>%{y}</b> — " + class_labels[cls] +
-                          "<br>Avg delta: %{customdata[0]}<br>"
+                          "<br>Median delta: %{customdata[0]}<br>"
                           "Corners sampled: %{customdata[1]}<extra></extra>",
         ))
 
@@ -655,9 +666,13 @@ def corner_class_ranking(fps):
         title=dict(
             text="Corner Performance by Speed Class — Season Aggregate<br>"
                  "<sup style='color:#888'>Baseline: session-fastest car = 0 · Qualifying only · "
-                 "Detection is throttle/brake-based — flat-out corners not captured.</sup>",
+                 "Median across sessions<br>"
+                 "Detection is throttle/brake-based — flat-out corners not captured, so the "
+                 "fast bucket skews negative for the whole field.<br>"
+                 "Corners are fixed distance windows from the session's fastest lap; cars "
+                 "braking at different points are compared imperfectly.</sup>",
             font=dict(size=14)),
-        xaxis=dict(**_ax(), title="Corner speed vs session-fastest car (kph)"),
+        xaxis=dict(**_ax(), title="Corner speed vs session-fastest car (kph, median)"),
         yaxis=dict(**_ax(), autorange="reversed"),
         barmode="group",
         height=max(450, len(team_order) * 38 + 140),
@@ -755,7 +770,7 @@ def teammate_hierarchy_chart(ranking):
         title=dict(text="Intra-Team Qualifying Battle — Margin of Dominance<br>"
                         "<sup style='color:#888'>Widest gap at top · faster driver named first</sup>",
                    font=dict(size=14)),
-        xaxis=dict(**_ax(), title="Average qualifying gap between teammates (s)"),
+        xaxis=dict(**_ax(), title="Median qualifying gap between teammates (s)"),
         yaxis=dict(**_ax(), autorange="reversed"),
         height=max(400, len(labels) * 42 + 130),
     )

@@ -231,6 +231,46 @@ def upgrade_card(upg):
         <div style="font-size:0.83rem;color:#C0C0C0;">{upg['note']}</div>
     </div>"""
 
+# ── Display guard for per-driver speed deltas ─────────────
+
+DELTA_DISPLAY_LIMIT_KPH = 40.0
+
+
+def safe_delta(value, limit: float = DELTA_DISPLAY_LIMIT_KPH):
+    """
+    Round a per-driver speed delta for display, or return None if it is
+    outside the range the measurement can support.
+
+    WHY: segments are fixed distance windows detected on the session's
+    fastest lap. A car that brakes 20 m earlier is therefore measured in
+    the wrong window, and short slow-corner windows are the most sensitive
+    to that. 16 of 323 quali driver-sessions land beyond +/-25 kph, topping
+    out at +114 kph overall and +318 kph in the slow-corner bucket, which
+    are artefacts rather than measurements.
+
+    Team-level charts survive this because they aggregate ~30 sessions with
+    a median. A single cell in a per-driver table does not — it just reads
+    as nonsense and discredits every honest number next to it.
+
+    Deliberately NOT applied to chart aggregation. Large deltas are genuine
+    and expected for backmarkers; filtering them there would repeat the
+    MAX_DELTA = 25 mistake from Wave 1, which excluded half the grid.
+
+    Fixing this properly needs corner detection from X/Y curvature so every
+    car is measured on the same corner rather than the same distance window.
+    That is the v2 trackmap work.
+    """
+    if value is None:
+        return None
+    try:
+        v = float(value)
+    except (TypeError, ValueError):
+        return None
+    if not np.isfinite(v) or abs(v) > limit:
+        return None
+    return round(v, 1)
+
+
 # ── Teammate lookup ───────────────────────────────────────
 
 def get_teammate(driver_code: str) -> str | None:
@@ -248,18 +288,18 @@ def get_teammate(driver_code: str) -> str | None:
 def teammate_stats(fps, driver1: str, driver2: str) -> dict:
     """
     Return head-to-head qualifying stats between two teammates.
-    Returns dict with: d1_wins, d2_wins, total, avg_gap_s, avg_gap_pct
+    Returns dict with: d1_wins, d2_wins, total, med_gap_s, med_gap_pct
     Positive gap = driver1 is slower than driver2.
     """
-    d1_fps = {fp.race_round: fp for fp in fps
+    d1_fps = {(fp.race_round, fp.session_type): fp for fp in fps
               if fp.driver_code == driver1 and fp.session_type in ("Q", "SQ")}
-    d2_fps = {fp.race_round: fp for fp in fps
+    d2_fps = {(fp.race_round, fp.session_type): fp for fp in fps
               if fp.driver_code == driver2 and fp.session_type in ("Q", "SQ")}
     common = sorted(set(d1_fps) & set(d2_fps))
 
     if not common:
         return {"d1_wins": 0, "d2_wins": 0, "total": 0,
-                "avg_gap_s": 0.0, "avg_gap_pct": 0.0}
+                "med_gap_s": 0.0, "med_gap_pct": 0.0}
 
     gaps_s   = [d1_fps[r].lap_time_s - d2_fps[r].lap_time_s for r in common]
     gaps_pct = [d1_fps[r].lap_time_gap_pct - d2_fps[r].lap_time_gap_pct for r in common]
@@ -268,8 +308,9 @@ def teammate_stats(fps, driver1: str, driver2: str) -> dict:
         "d1_wins":    sum(1 for g in gaps_s if g < 0),
         "d2_wins":    sum(1 for g in gaps_s if g > 0),
         "total":      len(common),
-        "avg_gap_s":  float(np.mean(gaps_s)),
-        "avg_gap_pct": float(np.mean(gaps_pct)),
+        # Median, not mean: one binned session should not define a season.
+        "med_gap_s":   float(np.median(gaps_s)),
+        "med_gap_pct": float(np.median(gaps_pct)),
     }
 
 
@@ -511,13 +552,13 @@ def teammate_ranking(fps) -> list[dict]:
         if s["total"] == 0:
             continue
         # Orient so the FASTER driver is always listed first
-        if s["avg_gap_s"] <= 0:
+        if s["med_gap_s"] <= 0:
             faster, slower = d1, d2
-            gap_s, gap_pct = abs(s["avg_gap_s"]), abs(s["avg_gap_pct"])
+            gap_s, gap_pct = abs(s["med_gap_s"]), abs(s["med_gap_pct"])
             f_wins, s_wins = s["d1_wins"], s["d2_wins"]
         else:
             faster, slower = d2, d1
-            gap_s, gap_pct = s["avg_gap_s"], s["avg_gap_pct"]
+            gap_s, gap_pct = s["med_gap_s"], s["med_gap_pct"]
             f_wins, s_wins = s["d2_wins"], s["d1_wins"]
         out.append({
             "team": f.team, "faster": faster, "slower": slower,

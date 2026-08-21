@@ -47,24 +47,40 @@ def cmd_race(args):
 
 
 def cmd_predict(args):
-    from analysis.predictor import predict_qualifying, predict_race_pace, print_prediction
+    from analysis.predictor import (predict_qualifying, predict_race_pace,
+                                    predict_sprint_qualifying, predict_sprint_race,
+                                    print_prediction)
     from analysis.prediction_store import save_prediction
+    from config import CIRCUITS
     circuit = args[0].title() if args else "Netherlands"
     print(f"\nGenerating predictions for {circuit}...\n")
 
-    qual_pred = predict_qualifying(circuit)
-    if qual_pred:
-        print_prediction(qual_pred)
-        save_prediction(qual_pred, pred_type="quali")
-    else:
-        print("  No qualifying data available.\n")
+    cfg         = CIRCUITS.get(circuit, {})
+    is_sprint   = bool(cfg.get("has_sprint"))
 
-    race_pred = predict_race_pace(circuit)
-    if race_pred:
-        print_prediction(race_pred)
-        save_prediction(race_pred, pred_type="race")
-    else:
-        print("  No race pace data available.\n")
+    # Order matters on a sprint weekend: SQ (Fri) -> S (Sat) -> Q (Sat) -> R (Sun)
+    jobs = []
+    if is_sprint:
+        print(f"  {circuit} is a SPRINT weekend — generating 4 predictions.\n")
+        jobs += [("sprint_quali", predict_sprint_qualifying, "sprint qualifying"),
+                 ("sprint_race",  predict_sprint_race,       "sprint race")]
+    jobs += [("quali", predict_qualifying, "qualifying"),
+             ("race",  predict_race_pace,  "race pace")]
+
+    written = []
+    for pred_type, fn, label in jobs:
+        pred = fn(circuit)
+        if pred:
+            print_prediction(pred)
+            save_prediction(pred, pred_type=pred_type)
+            written.append(pred_type)
+        else:
+            print(f"  No {label} data available.\n")
+
+    print(f"\n  Wrote {len(written)} prediction file(s): {', '.join(written) or 'none'}")
+    if is_sprint and len(written) < 4:
+        print("  WARNING: sprint weekend expected 4 files. Check that S/SQ "
+              "sessions exist in store/ for previous sprint rounds.")
 
 
 def cmd_store(args):
