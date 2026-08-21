@@ -1,0 +1,333 @@
+{
+  "circuit_name": "Miami",
+  "circuit_type": "power",
+  "race_round": 4,
+  "year": 2026,
+  "source": "blended",
+  "overall_confidence": 0.8520641139811044,
+  "n_historical_races": 8,
+  "methodology_notes": [
+    "Blended: qualifying 30% / race pace 70%",
+    "Qualifying sessions: 4",
+    "Race sessions: 4",
+    "Primary signal: lap_time_gap_pct"
+  ],
+  "predictions": [
+    {
+      "driver_code": "ANT",
+      "team": "Mercedes",
+      "pu_name": "Mercedes",
+      "predicted_delta_s": 0.0,
+      "delta_range_low": -0.06750106096045831,
+      "delta_range_high": 0.0675010609604583,
+      "predicted_straight_gap_kph": -0.3779329667759507,
+      "predicted_harvest_ratio": 0.9619427823432746,
+      "confidence": 0.899999999,
+      "n_races_used": 8,
+      "regulation_notes": []
+    },
+    {
+      "driver_code": "RUS",
+      "team": "Mercedes",
+      "pu_name": "Mercedes",
+      "predicted_delta_s": 0.046908233598930794,
+      "delta_range_low": -0.03349791098220638,
+      "delta_range_high": 0.12731437818006797,
+      "predicted_straight_gap_kph": -3.0928977827613036,
+      "predicted_harvest_ratio": 1.0,
+      "confidence": 0.8656069354154834,
+      "n_races_used": 7,
+      "regulation_notes": []
+    },
+    {
+      "driver_code": "LEC",
+      "team": "Ferrari",
+      "pu_name": "Ferrari",
+      "predicted_delta_s": 0.3693511828162873,
+      "delta_range_low": 0.16603716577951086,
+      "delta_range_high": 0.5726651998530637,
+      "predicted_straight_gap_kph": -4.587340451320587,
+      "predicted_harvest_ratio": 0.8605416376910575,
+      "confidence": 0.899999999,
+      "n_races_used": 8,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7"
+      ]
+    },
+    {
+      "driver_code": "NOR",
+      "team": "McLaren",
+      "pu_name": "Mercedes",
+      "predicted_delta_s": 0.4263379439434249,
+      "delta_range_low": 0.26067577516511986,
+      "delta_range_high": 0.5920001127217298,
+      "predicted_straight_gap_kph": 0.7960334813005802,
+      "predicted_harvest_ratio": 0.9061128595888466,
+      "confidence": 0.7710526305644044,
+      "n_races_used": 6,
+      "regulation_notes": []
+    },
+    {
+      "driver_code": "PIA",
+      "team": "McLaren",
+      "pu_name": "Mercedes",
+      "predicted_delta_s": 0.4740795665616414,
+      "delta_range_low": 0.14139038799934356,
+      "delta_range_high": 0.8067687451239394,
+      "predicted_straight_gap_kph": 1.466760643139696,
+      "predicted_harvest_ratio": 0.917878787878788,
+      "confidence": 0.7710526305644044,
+      "n_races_used": 6,
+      "regulation_notes": []
+    },
+    {
+      "driver_code": "HAM",
+      "team": "Ferrari",
+      "pu_name": "Ferrari",
+      "predicted_delta_s": 0.4863897381542988,
+      "delta_range_low": 0.29268876065580585,
+      "delta_range_high": 0.6800907156527914,
+      "predicted_straight_gap_kph": -0.5072112717726487,
+      "predicted_harvest_ratio": 0.8816134689421716,
+      "confidence": 0.899999999,
+      "n_races_used": 8,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7"
+      ]
+    },
+    {
+      "driver_code": "VER",
+      "team": "Red Bull",
+      "pu_name": "RedBullFord",
+      "predicted_delta_s": 1.0599736435158829,
+      "delta_range_low": 0.6421265708349816,
+      "delta_range_high": 1.477820716196784,
+      "predicted_straight_gap_kph": 1.6306681992241183,
+      "predicted_harvest_ratio": 0.6384526266803133,
+      "confidence": 0.8855932193383128,
+      "n_races_used": 7,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7"
+      ]
+    },
+    {
+      "driver_code": "HAD",
+      "team": "Red Bull",
+      "pu_name": "RedBullFord",
+      "predicted_delta_s": 1.3928835436890585,
+      "delta_range_low": 1.075432218541178,
+      "delta_range_high": 1.710334868836939,
+      "predicted_straight_gap_kph": 0.09722024296858549,
+      "predicted_harvest_ratio": 0.9261705767350928,
+      "confidence": 0.8656069354154834,
+      "n_races_used": 7,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7"
+      ]
+    },
+    {
+      "driver_code": "HUL",
+      "team": "Audi",
+      "pu_name": "Audi",
+      "predicted_delta_s": 1.4011974405203191,
+      "delta_range_low": 1.2174296708850367,
+      "delta_range_high": 1.5849652101556018,
+      "predicted_straight_gap_kph": 0.7060570837682028,
+      "predicted_harvest_ratio": 0.9066537217001661,
+      "confidence": 0.7710526305644044,
+      "n_races_used": 6,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7"
+      ]
+    },
+    {
+      "driver_code": "GAS",
+      "team": "Alpine",
+      "pu_name": "Mercedes",
+      "predicted_delta_s": 1.427072186572013,
+      "delta_range_low": 0.784683891067634,
+      "delta_range_high": 2.069460482076391,
+      "predicted_straight_gap_kph": 1.2630915230901716,
+      "predicted_harvest_ratio": 0.9540285834564148,
+      "confidence": 0.8656069354154834,
+      "n_races_used": 7,
+      "regulation_notes": []
+    },
+    {
+      "driver_code": "OCO",
+      "team": "Haas",
+      "pu_name": "Ferrari",
+      "predicted_delta_s": 1.4414180946773252,
+      "delta_range_low": 1.0990478561233372,
+      "delta_range_high": 1.7837883332313134,
+      "predicted_straight_gap_kph": -0.23574881328927585,
+      "predicted_harvest_ratio": 0.9219107816142802,
+      "confidence": 0.8656069354154834,
+      "n_races_used": 7,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7"
+      ]
+    },
+    {
+      "driver_code": "LAW",
+      "team": "VCARB",
+      "pu_name": "RedBullFord",
+      "predicted_delta_s": 1.4509214547556517,
+      "delta_range_low": 1.1598821050603412,
+      "delta_range_high": 1.7419608044509622,
+      "predicted_straight_gap_kph": 0.5167810855785139,
+      "predicted_harvest_ratio": 0.9487300007373,
+      "confidence": 0.8656069354154834,
+      "n_races_used": 7,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7"
+      ]
+    },
+    {
+      "driver_code": "LIN",
+      "team": "VCARB",
+      "pu_name": "RedBullFord",
+      "predicted_delta_s": 1.5520103284717233,
+      "delta_range_low": 1.32362140191751,
+      "delta_range_high": 1.780399255025937,
+      "predicted_straight_gap_kph": -1.0799292692342166,
+      "predicted_harvest_ratio": 0.9292438251124382,
+      "confidence": 0.8656069354154834,
+      "n_races_used": 7,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7"
+      ]
+    },
+    {
+      "driver_code": "BOR",
+      "team": "Audi",
+      "pu_name": "Audi",
+      "predicted_delta_s": 1.5720326094851456,
+      "delta_range_low": 1.3118845586015793,
+      "delta_range_high": 1.8321806603687116,
+      "predicted_straight_gap_kph": -10.858931526208055,
+      "predicted_harvest_ratio": 0.92380800707808,
+      "confidence": 0.8656069354154834,
+      "n_races_used": 7,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7"
+      ]
+    },
+    {
+      "driver_code": "BEA",
+      "team": "Haas",
+      "pu_name": "Ferrari",
+      "predicted_delta_s": 1.63074283531443,
+      "delta_range_low": 1.1432866309612895,
+      "delta_range_high": 2.11819903966757,
+      "predicted_straight_gap_kph": -0.6270613586380124,
+      "predicted_harvest_ratio": 0.8822953885452121,
+      "confidence": 0.899999999,
+      "n_races_used": 8,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7"
+      ]
+    },
+    {
+      "driver_code": "COL",
+      "team": "Alpine",
+      "pu_name": "Mercedes",
+      "predicted_delta_s": 1.7225577998546802,
+      "delta_range_low": 1.2657599133493256,
+      "delta_range_high": 2.1793556863600343,
+      "predicted_straight_gap_kph": -2.263620435574213,
+      "predicted_harvest_ratio": 0.912710050416066,
+      "confidence": 0.8656069354154834,
+      "n_races_used": 7,
+      "regulation_notes": []
+    },
+    {
+      "driver_code": "SAI",
+      "team": "Williams",
+      "pu_name": "Mercedes",
+      "predicted_delta_s": 1.883936509299139,
+      "delta_range_low": 1.36927408265141,
+      "delta_range_high": 2.3985989359468673,
+      "predicted_straight_gap_kph": -2.2547888043719277,
+      "predicted_harvest_ratio": 0.918239598647762,
+      "confidence": 0.7513422808706816,
+      "n_races_used": 5,
+      "regulation_notes": []
+    },
+    {
+      "driver_code": "ALB",
+      "team": "Williams",
+      "pu_name": "Mercedes",
+      "predicted_delta_s": 2.230243121350322,
+      "delta_range_low": 1.8882191708254537,
+      "delta_range_high": 2.5722670718751908,
+      "predicted_straight_gap_kph": 3.2866384690817623,
+      "predicted_harvest_ratio": 0.9436447669496374,
+      "confidence": 0.849999999,
+      "n_races_used": 6,
+      "regulation_notes": []
+    },
+    {
+      "driver_code": "BOT",
+      "team": "Cadillac",
+      "pu_name": "Ferrari",
+      "predicted_delta_s": 2.9981058736436954,
+      "delta_range_low": 2.5520522564152777,
+      "delta_range_high": 3.444159490872113,
+      "predicted_straight_gap_kph": -8.770863217583525,
+      "predicted_harvest_ratio": 0.4235435725184641,
+      "confidence": 0.849999999,
+      "n_races_used": 6,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7"
+      ]
+    },
+    {
+      "driver_code": "PER",
+      "team": "Cadillac",
+      "pu_name": "Ferrari",
+      "predicted_delta_s": 3.028163640766031,
+      "delta_range_low": 2.4547242079965237,
+      "delta_range_high": 3.6016030735355393,
+      "predicted_straight_gap_kph": -4.427433636407693,
+      "predicted_harvest_ratio": 0.7734966751033814,
+      "confidence": 0.7848684200199099,
+      "n_races_used": 4,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7"
+      ]
+    },
+    {
+      "driver_code": "ALO",
+      "team": "Aston Martin",
+      "pu_name": "Honda",
+      "predicted_delta_s": 5.581200175145888,
+      "delta_range_low": 3.1205445513713843,
+      "delta_range_high": 8.041855798920393,
+      "predicted_straight_gap_kph": -9.648892101739573,
+      "predicted_harvest_ratio": 0.8794234010492952,
+      "confidence": 0.899999999,
+      "n_races_used": 8,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7",
+        "CAUTION: Honda vibration issues unresolved \u2014 retirement risk high"
+      ]
+    },
+    {
+      "driver_code": "STR",
+      "team": "Aston Martin",
+      "pu_name": "Honda",
+      "predicted_delta_s": 5.908672374987584,
+      "delta_range_low": 3.3929174724101983,
+      "delta_range_high": 8.424427277564972,
+      "predicted_straight_gap_kph": -12.220753170528017,
+      "predicted_harvest_ratio": 0.8180003342919553,
+      "confidence": 0.8855932193383128,
+      "n_races_used": 7,
+      "regulation_notes": [
+        "Pre-ADUO: upgrade expected from round 7",
+        "CAUTION: Honda vibration issues unresolved \u2014 retirement risk high"
+      ]
+    }
+  ]
+}

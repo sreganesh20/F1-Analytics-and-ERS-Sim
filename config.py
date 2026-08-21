@@ -274,7 +274,7 @@ CIRCUITS = {
         "harvest_limit_quali_mj":7.0,  # Confirmed: f1livepulse "reduced from planned 8MJ to 7MJ"
         "full_throttle_pct":     0.64,
         "top_speed_kph":         335,  "key_straights": 2,
-        "heavy_braking_zones":   3,    "has_sprint": True,
+        "heavy_braking_zones":   3,    "has_sprint": False,
         "straight_weight":       0.50, "braking_weight": 0.28, "corner_weight": 0.22,
         "altitude_m":  400,  "avg_temp_c": 15,
         "telemetry_available": False,
@@ -304,7 +304,7 @@ CIRCUITS = {
         "harvest_limit_quali_mj":7.5,  # The Race energy rankings
         "full_throttle_pct":     0.58,
         "top_speed_kph":         305,  "key_straights": 1,
-        "heavy_braking_zones":   3,    "has_sprint": False,
+        "heavy_braking_zones":   3,    "has_sprint": True,
         "straight_weight":       0.33, "braking_weight": 0.30, "corner_weight": 0.37,
         "altitude_m":  5,    "avg_temp_c": 18,
         "telemetry_available": False,

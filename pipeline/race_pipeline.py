@@ -8,7 +8,7 @@ import pandas as pd
 import numpy as np
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from fetcher import load_telemetry, generate_synthetic_telemetry
+from fetcher import load_telemetry, generate_synthetic_telemetry, lap_telemetry
 from models.track import segment_lap, print_track_summary
 from models.optimizer import optimise, print_strategy_summary
 from models.fingerprint import fingerprint_race, print_race_fingerprints
@@ -407,7 +407,7 @@ def run_race_pipeline(
                         print(f"  {drv_code:<6} DNF — {laps_completed}/{total_race_laps} laps{_reason}")
 
                     try:
-                        tel = rep_lap.get_car_data().add_distance()
+                        tel = lap_telemetry(rep_lap)
                     except Exception as e:
                         print(f"  {drv_code} telemetry error: {e}")
                         continue
@@ -446,7 +446,7 @@ def run_race_pipeline(
                             continue
 
                     try:
-                        tel = fastest.get_car_data().add_distance()
+                        tel = lap_telemetry(fastest)
                     except Exception as e:
                         print(f"  {drv_code} telemetry error: {e}")
                         continue
@@ -463,8 +463,8 @@ def run_race_pipeline(
                     "Gear":      tel["nGear"].values,
                     "RPM":       tel["RPM"].values,
                     "DeltaTime": tel["Time"].diff().dt.total_seconds().fillna(0).values,
-                    "X":         np.nan,
-                    "Y":         np.nan,
+                    "X":         tel["X"].values if "X" in tel.columns else np.nan,
+                    "Y":         tel["Y"].values if "Y" in tel.columns else np.nan,
                 })
                 car_df["Source"]  = "FastF1"
                 car_df["Driver"]  = drv_code

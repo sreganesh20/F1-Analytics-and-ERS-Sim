@@ -1,0 +1,272 @@
+{
+  "2026_R01_Q": {
+    "circuit_name": "Australia",
+    "circuit_type": "balanced",
+    "race_round": 1,
+    "year": 2026,
+    "session_type": "Q",
+    "n_fingerprints": 19,
+    "path": "2026_R01_Q.json"
+  },
+  "2026_R02_Q": {
+    "circuit_name": "China",
+    "circuit_type": "power",
+    "race_round": 2,
+    "year": 2026,
+    "session_type": "Q",
+    "n_fingerprints": 22,
+    "path": "2026_R02_Q.json"
+  },
+  "2026_R03_Q": {
+    "circuit_name": "Japan",
+    "circuit_type": "high_speed",
+    "race_round": 3,
+    "year": 2026,
+    "session_type": "Q",
+    "n_fingerprints": 22,
+    "path": "2026_R03_Q.json"
+  },
+  "2026_R02_SQ": {
+    "circuit_name": "China",
+    "circuit_type": "power",
+    "race_round": 2,
+    "year": 2026,
+    "session_type": "SQ",
+    "n_fingerprints": 21,
+    "path": "2026_R02_SQ.json"
+  },
+  "2026_R01_R": {
+    "circuit_name": "Australia",
+    "circuit_type": "balanced",
+    "race_round": 1,
+    "year": 2026,
+    "session_type": "R",
+    "n_fingerprints": 20,
+    "path": "2026_R01_R.json"
+  },
+  "2026_R02_R": {
+    "circuit_name": "China",
+    "circuit_type": "power",
+    "race_round": 2,
+    "year": 2026,
+    "session_type": "R",
+    "n_fingerprints": 18,
+    "path": "2026_R02_R.json"
+  },
+  "2026_R02_S": {
+    "circuit_name": "China",
+    "circuit_type": "power",
+    "race_round": 2,
+    "year": 2026,
+    "session_type": "S",
+    "n_fingerprints": 22,
+    "path": "2026_R02_S.json"
+  },
+  "2026_R03_R": {
+    "circuit_name": "Japan",
+    "circuit_type": "high_speed",
+    "race_round": 3,
+    "year": 2026,
+    "session_type": "R",
+    "n_fingerprints": 22,
+    "path": "2026_R03_R.json"
+  },
+  "2026_R04_Q": {
+    "circuit_name": "Miami",
+    "circuit_type": "power",
+    "race_round": 4,
+    "year": 2026,
+    "session_type": "Q",
+    "n_fingerprints": 22,
+    "path": "2026_R04_Q.json"
+  },
+  "2026_R04_SQ": {
+    "circuit_name": "Miami",
+    "circuit_type": "power",
+    "race_round": 4,
+    "year": 2026,
+    "session_type": "SQ",
+    "n_fingerprints": 21,
+    "path": "2026_R04_SQ.json"
+  },
+  "2026_R04_R": {
+    "circuit_name": "Miami",
+    "circuit_type": "power",
+    "race_round": 4,
+    "year": 2026,
+    "session_type": "R",
+    "n_fingerprints": 18,
+    "path": "2026_R04_R.json"
+  },
+  "2026_R04_S": {
+    "circuit_name": "Miami",
+    "circuit_type": "power",
+    "race_round": 4,
+    "year": 2026,
+    "session_type": "S",
+    "n_fingerprints": 20,
+    "path": "2026_R04_S.json"
+  },
+  "2026_R05_Q": {
+    "circuit_name": "Canada",
+    "circuit_type": "power",
+    "race_round": 5,
+    "year": 2026,
+    "session_type": "Q",
+    "n_fingerprints": 22,
+    "path": "2026_R05_Q.json"
+  },
+  "2026_R05_SQ": {
+    "circuit_name": "Canada",
+    "circuit_type": "power",
+    "race_round": 5,
+    "year": 2026,
+    "session_type": "SQ",
+    "n_fingerprints": 20,
+    "path": "2026_R05_SQ.json"
+  },
+  "2026_R06_Q": {
+    "circuit_name": "Monaco",
+    "circuit_type": "technical",
+    "race_round": 6,
+    "year": 2026,
+    "session_type": "Q",
+    "n_fingerprints": 22,
+    "path": "2026_R06_Q.json"
+  },
+  "2026_R08_Q": {
+    "circuit_name": "Austria",
+    "circuit_type": "high_speed",
+    "race_round": 8,
+    "year": 2026,
+    "session_type": "Q",
+    "n_fingerprints": 22,
+    "path": "2026_R08_Q.json"
+  },
+  "2026_R09_Q": {
+    "circuit_name": "Britain",
+    "circuit_type": "high_speed",
+    "race_round": 9,
+    "year": 2026,
+    "session_type": "Q",
+    "n_fingerprints": 22,
+    "path": "2026_R09_Q.json"
+  },
+  "2026_R09_SQ": {
+    "circuit_name": "Britain",
+    "circuit_type": "high_speed",
+    "race_round": 9,
+    "year": 2026,
+    "session_type": "SQ",
+    "n_fingerprints": 22,
+    "path": "2026_R09_SQ.json"
+  },
+  "2026_R10_Q": {
+    "circuit_name": "Belgium",
+    "circuit_type": "power",
+    "race_round": 10,
+    "year": 2026,
+    "session_type": "Q",
+    "n_fingerprints": 22,
+    "path": "2026_R10_Q.json"
+  },
+  "2026_R11_Q": {
+    "circuit_name": "Hungary",
+    "circuit_type": "technical",
+    "race_round": 11,
+    "year": 2026,
+    "session_type": "Q",
+    "n_fingerprints": 22,
+    "path": "2026_R11_Q.json"
+  },
+  "2026_R05_R": {
+    "circuit_name": "Canada",
+    "circuit_type": "power",
+    "race_round": 5,
+    "year": 2026,
+    "session_type": "R",
+    "n_fingerprints": 21,
+    "path": "2026_R05_R.json"
+  },
+  "2026_R05_S": {
+    "circuit_name": "Canada",
+    "circuit_type": "power",
+    "race_round": 5,
+    "year": 2026,
+    "session_type": "S",
+    "n_fingerprints": 22,
+    "path": "2026_R05_S.json"
+  },
+  "2026_R06_R": {
+    "circuit_name": "Monaco",
+    "circuit_type": "technical",
+    "race_round": 6,
+    "year": 2026,
+    "session_type": "R",
+    "n_fingerprints": 21,
+    "path": "2026_R06_R.json"
+  },
+  "2026_R08_R": {
+    "circuit_name": "Austria",
+    "circuit_type": "high_speed",
+    "race_round": 8,
+    "year": 2026,
+    "session_type": "R",
+    "n_fingerprints": 20,
+    "path": "2026_R08_R.json"
+  },
+  "2026_R09_R": {
+    "circuit_name": "Britain",
+    "circuit_type": "high_speed",
+    "race_round": 9,
+    "year": 2026,
+    "session_type": "R",
+    "n_fingerprints": 22,
+    "path": "2026_R09_R.json"
+  },
+  "2026_R09_S": {
+    "circuit_name": "Britain",
+    "circuit_type": "high_speed",
+    "race_round": 9,
+    "year": 2026,
+    "session_type": "S",
+    "n_fingerprints": 22,
+    "path": "2026_R09_S.json"
+  },
+  "2026_R10_R": {
+    "circuit_name": "Belgium",
+    "circuit_type": "power",
+    "race_round": 10,
+    "year": 2026,
+    "session_type": "R",
+    "n_fingerprints": 21,
+    "path": "2026_R10_R.json"
+  },
+  "2026_R11_R": {
+    "circuit_name": "Hungary",
+    "circuit_type": "technical",
+    "race_round": 11,
+    "year": 2026,
+    "session_type": "R",
+    "n_fingerprints": 22,
+    "path": "2026_R11_R.json"
+  },
+  "2026_R07_Q": {
+    "circuit_name": "Spain",
+    "circuit_type": "balanced",
+    "race_round": 7,
+    "year": 2026,
+    "session_type": "Q",
+    "n_fingerprints": 22,
+    "path": "2026_R07_Q.json"
+  },
+  "2026_R07_R": {
+    "circuit_name": "Spain",
+    "circuit_type": "balanced",
+    "race_round": 7,
+    "year": 2026,
+    "session_type": "R",
+    "n_fingerprints": 21,
+    "path": "2026_R07_R.json"
+  }
+}

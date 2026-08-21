@@ -17,6 +17,44 @@ warnings.filterwarnings("ignore")
 from config import CIRCUITS
 
 # ─────────────────────────────────────────────
+#  Single-lap telemetry — track-accurate Distance
+# ─────────────────────────────────────────────
+
+def lap_telemetry(lap):
+    """
+    Return telemetry for one lap with a Distance axis anchored to the true
+    lap boundary.
+
+    WHY THIS EXISTS
+    ---------------
+    The pipeline previously used get_car_data().add_distance(). That slices
+    the lap by snapping to whole telemetry samples, so each driver's Distance
+    zero sits at a slightly different physical point on track — measured at
+    up to 56 m apart across the field at Silverstone SQ.
+
+    Because track segments are fixed distance windows, that misalignment
+    meant a "corner" window measured a different piece of tarmac for every
+    car. It was the dominant source of corrupt corner deltas: Britain SQ had
+    11 of 22 cars beyond +/-25 kph and a field median of -25.29 kph, which is
+    not something a real field does.
+
+    get_telemetry() pads the slice on both sides and interpolates an exact
+    sample at each lap edge, which fixes the zero point. Subtracting
+    Distance.iloc[0] then removes the residual pad offset so every lap starts
+    at exactly 0.
+
+    Falls back to the old method on failure rather than dropping the driver
+    from the session entirely.
+    """
+    try:
+        tel = lap.get_telemetry().copy()
+    except Exception:
+        tel = lap.get_car_data().add_distance().copy()
+    tel["Distance"] = tel["Distance"] - tel["Distance"].iloc[0]
+    return tel
+
+
+# ─────────────────────────────────────────────
 #  Real FastF1 fetch
 # ─────────────────────────────────────────────
 
@@ -49,7 +87,7 @@ def fetch_real_telemetry(circuit_cfg: dict, driver: str = None):
         drv_code = lap["Driver"]
         print(f"  Using fastest lap: {drv_code}  {lap['LapTime']}")
 
-        tel = lap.get_car_data().add_distance()
+        tel = lap_telemetry(lap)
 
         # Normalise column names
         df = pd.DataFrame({
@@ -62,16 +100,11 @@ def fetch_real_telemetry(circuit_cfg: dict, driver: str = None):
             "DeltaTime": tel["Time"].diff().dt.total_seconds().fillna(0).values,
         })
 
-        # Try to attach GPS
-        try:
-            pos = lap.get_pos_data()
-            pos_interp = np.interp(df["Distance"], np.linspace(0, df["Distance"].max(), len(pos)), pos["X"])
-            df["X"] = pos_interp
-            pos_interp_y = np.interp(df["Distance"], np.linspace(0, df["Distance"].max(), len(pos)), pos["Y"])
-            df["Y"] = pos_interp_y
-        except Exception:
-            df["X"] = np.nan
-            df["Y"] = np.nan
+        # GPS comes straight from the merged telemetry now. The previous
+        # np.interp approach assumed position samples were evenly spaced in
+        # distance, which they are not, so those X/Y values were wrong.
+        df["X"] = tel["X"].values if "X" in tel.columns else np.nan
+        df["Y"] = tel["Y"].values if "Y" in tel.columns else np.nan
 
         df["Source"] = "FastF1"
         df["Driver"] = drv_code

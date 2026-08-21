@@ -132,8 +132,16 @@ def compute_speed_deltas(
                        if car_df.loc[car_mask].shape[0] > 0 else 0
             ref_time = float(np.sum(ref_df.loc[ref_mask, "DeltaTime"].values)) \
                        if ref_df.loc[ref_mask].shape[0] > 0 else 0
-            if ref_time > 0:
-                delta = -(car_time - ref_time) / ref_time * seg.speed_mean
+            # Exact mean speed through a fixed distance window:
+            #   v = distance / time,  *3.6 to convert m/s -> kph
+            # The previous form was  -(car_time - ref_time)/ref_time * speed_mean,
+            # a first-order approximation that put ref_time in the denominator
+            # where the exact form needs car_time. It exaggerated slow cars,
+            # was unbounded, and imported the reference lap's time-weighted
+            # sample average (speed_mean) into a distance-domain calculation.
+            if ref_time > 0 and car_time > 0:
+                seg_len = seg.d_end - seg.d_start
+                delta = 3.6 * seg_len / car_time - 3.6 * seg_len / ref_time
                 deltas["corner"].append(delta)
                 # Also bucket by corner speed class
                 sc = getattr(seg, "speed_class", "")
@@ -154,13 +162,17 @@ def compute_speed_deltas(
         seg_key = seg.seg_type if seg.seg_type in deltas else "corner"
         deltas[seg_key].append(delta)
 
+    # Median, not mean, across segments within a lap. A single mis-segmented
+    # or compromised corner can otherwise define the whole lap: at Britain SQ
+    # Piastri's mean across 8 corners was +24.48 kph while his median was
+    # +2.69 — one segment was producing the entire number.
     out = {}
     for k, v in deltas.items():
         if k.startswith("corner_") and k != "corner":
             # None when this circuit has no corners of that class
-            out[k] = float(np.mean(v)) if v else None
+            out[k] = float(np.median(v)) if v else None
         else:
-            out[k] = float(np.mean(v)) if v else 0.0
+            out[k] = float(np.median(v)) if v else 0.0
     return out
 
 
