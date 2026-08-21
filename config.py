@@ -608,126 +608,251 @@ CURRENT_YEAR = datetime.now().year
 #           The Race, Sky Sports, motorsport.com (confirmed per round).
 # ─────────────────────────────────────────────────────────
 
+# Confirmed upgrades, split into headline / detail / source rather than one
+# paragraph. The old single "note" string forced the page to either print a
+# dense block or regex it apart at render time; regexing prose is fragile the
+# moment a new entry is written in a different shape. The round prefix that
+# used to open every note ("Canada R5 —") is gone: the card already shows it.
 TEAM_UPGRADES = {
-    # ── Top teams ──────────────────────────────────────────
     "Mercedes": [
-        {"from_round": 5,  "significance": "major",
-         "note": "Canada R5 — 8-part package (front wing, front corner, rear corner, floor). "
-                 "First major upgrade of 2026, deliberately held back from Miami. "
-                 "Source: Crash.net, F1.com confirmed parts list."},
-        {"from_round": 8,  "significance": "minor",
-         "note": "Austria R8 — front wing endplate top-edge camber, rear drum winglets, "
-                 "Spa-specific rear wing. Source: F1.com upgrade tracker."},
+        {"from_round": 5, "significance": "major",
+         "headline": "8-part package (front wing, front corner, rear corner, floor)",
+         "detail":   "First major upgrade of 2026, deliberately held back from Miami.",
+         "source":   "Crash.net, F1.com confirmed parts list"},
+        {"from_round": 8, "significance": "minor",
+         "headline": "front wing endplate top-edge camber, rear drum winglets, "
+                     "Spa-specific rear wing",
+         "detail":   "",
+         "source":   "F1.com upgrade tracker"},
     ],
     "Ferrari": [
-        {"from_round": 4,  "significance": "major",
-         "note": "Miami R4 — 11 parts (largest single package on grid): front wing endplate, "
-                 "front deflector, front suspension fairings, floor, sidepods. "
-                 "Source: RacingNews365, F1.com."},
-        {"from_round": 9,  "significance": "minor",
-         "note": "Silverstone R9 — rear corner: cooling inlet/outlet, lower deflector, "
-                 "rearward winglet cluster. Source: F1.com upgrade tracker."},
+        {"from_round": 4, "significance": "major",
+         "headline": "11 parts — largest single package on the grid",
+         "detail":   "Front wing endplate, front deflector, front suspension fairings, "
+                     "floor, sidepods.",
+         "source":   "RacingNews365, F1.com"},
+        {"from_round": 9, "significance": "minor",
+         "headline": "rear corner: cooling inlet/outlet, lower deflector, rearward winglet "
+                     "cluster",
+         "detail":   "",
+         "source":   "F1.com upgrade tracker"},
     ],
     "McLaren": [
-        {"from_round": 4,  "significance": "major",
-         "note": "Miami R4 — 7 parts: floor, front aero overhaul. NOR sprint pole — "
-                 "first non-Mercedes pole of 2026. Car was 2-3 months behind rivals before this. "
-                 "Source: Sky Sports, F1.com."},
-        {"from_round": 9,  "significance": "major",
-         "note": "Silverstone R9 — led all teams on updates. NOR won race. "
-                 "Stella confirmed further upgrades planned for Hungary. Source: F1.com, Crash.net."},
+        {"from_round": 4, "significance": "major",
+         "headline": "7 parts: floor, front aero overhaul",
+         "detail":   "NOR sprint pole — first non-Mercedes pole of 2026. Car was 2-3 "
+                     "months behind rivals before this.",
+         "source":   "Sky Sports, F1.com"},
+        {"from_round": 9, "significance": "major",
+         "headline": "led all teams on updates",
+         "detail":   "NOR won race. Stella confirmed further upgrades planned for Hungary.",
+         "source":   "F1.com, Crash.net"},
         {"from_round": 11, "significance": "medium",
-         "note": "Hungary R11 — floor body + rear wing endplate. Part 1 of confirmed "
-                 "2-part package. Part 2 lands Netherlands R12. Source: motorsport.com."},
+         "headline": "floor body + rear wing endplate",
+         "detail":   "Part 1 of confirmed 2-part package. Part 2 lands Netherlands R12.",
+         "source":   "motorsport.com"},
     ],
     "Red Bull": [
-        {"from_round": 4,  "significance": "major",
-         "note": "Miami R4 — 7 parts: new rotating rear wing, floor architecture reset, "
-                 "revised suspension geometries targeting tyre graining and rear instability. "
-                 "Source: Sky Sports, RacingNews365."},
-        {"from_round": 6,  "significance": "minor",
-         "note": "Monaco R6 — front brake duct exits, engine cover + sidepod cooling, "
-                 "rear wing extensions. Source: The Race, F1.com."},
+        {"from_round": 4, "significance": "major",
+         "headline": "7 parts including a new rotating rear wing",
+         "detail":   "Floor architecture reset and revised suspension geometries targeting "
+                     "tyre graining and rear instability.",
+         "source":   "Sky Sports, RacingNews365"},
+        {"from_round": 6, "significance": "minor",
+         "headline": "front brake duct exits, engine cover + sidepod cooling, rear wing "
+                     "extensions",
+         "detail":   "",
+         "source":   "The Race, F1.com"},
     ],
     "Aston Martin": [
         {"from_round": 11, "significance": "new_car",
-         "note": "Hungary R11 — 16-part B-spec overhaul: new nose + front wing package, "
-                 "front brake duct shaping, ALL permitted floor surfaces + leading edge vanes "
-                 "+ floor edge, rear wing. R1-R10 fingerprints are from a different car. "
-                 "Source: The Race (confirmed), GPblog."},
+         "headline": "16-part B-spec overhaul — effectively a new car",
+         "detail":   "New nose and front wing package, front brake duct shaping, and every "
+                     "aero surface revised. R1-R10 fingerprints are from a different car.",
+         "source":   "The Race (confirmed), GPblog"},
     ],
-    # ── Midfield teams ─────────────────────────────────────
     "VCARB": [
-        {"from_round": 4,  "significance": "medium",
-         "note": "Miami R4 — 6 enhancements: sidepods, engine cover, mid-section, both wings. "
-                 "First significant development wave for the VCARB03. "
-                 "Source: RacingNews365."},
-        {"from_round": 5,  "significance": "medium",
-         "note": "Canada R5 — larger package than Miami: floor update, rear corner devices "
-                 "reprofiled, beam wing modifications. Source: F1.com confirmed parts list."},
-        {"from_round": 6,  "significance": "minor",
-         "note": "Monaco R6 — front suspension tweak, rear wing flap and central winglet. "
-                 "Source: The Race."},
+        {"from_round": 4, "significance": "medium",
+         "headline": "6 enhancements: sidepods, engine cover, mid-section, both wings",
+         "detail":   "First significant development wave for the VCARB03.",
+         "source":   "RacingNews365"},
+        {"from_round": 5, "significance": "medium",
+         "headline": "larger package than Miami: floor update, rear corner devices "
+                     "reprofiled, beam wing modifications",
+         "detail":   "",
+         "source":   "F1.com confirmed parts list"},
+        {"from_round": 6, "significance": "minor",
+         "headline": "front suspension tweak, rear wing flap and central winglet",
+         "detail":   "",
+         "source":   "The Race"},
     ],
     "Haas": [
-        {"from_round": 5,  "significance": "medium",
-         "note": "Canada R5 — first significant 2026 package. Team split it between Bearman "
-                 "and Ocon across the sprint weekend. Bearman: 'chasing our tails all weekend.' "
-                 "Source: Crash.net, Pit Debrief."},
-        {"from_round": 8,  "significance": "minor",
-         "note": "Austria R8 — cooling louvres (2 apertures, upper sidepod surface), "
-                 "front brake duct revision. Circuit-specific. Source: F1.com."},
+        {"from_round": 5, "significance": "medium",
+         "headline": "first significant 2026 package",
+         "detail":   "Team split it between Bearman and Ocon across the sprint weekend. "
+                     "Bearman: 'chasing our tails all weekend.'",
+         "source":   "Crash.net, Pit Debrief"},
+        {"from_round": 8, "significance": "minor",
+         "headline": "cooling louvres (2 apertures, upper sidepod surface), front brake "
+                     "duct revision",
+         "detail":   "Circuit-specific.",
+         "source":   "F1.com"},
         {"from_round": 10, "significance": "major",
-         "note": "Belgium R10 — 4 upgrades, 2 non-circuit-specific: heavily revised front wing "
-                 "(new endplates, pylon geometry, distinctive J-shaped nose assembly), "
-                 "lower-drag rear wing. Described by The Race as 'unique development.' "
-                 "Source: The Race, fervogear.com."},
+         "headline": "4 upgrades, 2 of them not circuit-specific",
+         "detail":   "Heavily revised front wing with new endplates and pylon geometry. "
+                     "Described by The Race as unique development.",
+         "source":   "The Race, fervogear.com"},
     ],
     "Alpine": [
-        {"from_round": 4,  "significance": "minor",
-         "note": "Miami R4 — front corner update, nose camera mounts, rear suspension reprofiled, "
-                 "additional element to rear impact structure. GAS: new rear wing. "
-                 "COL: new chassis. Source: RacingNews365."},
-        {"from_round": 5,  "significance": "minor",
-         "note": "Canada R5 — 'noticeably bigger package than Miami.' Source: carhp.in."},
-        {"from_round": 7,  "significance": "minor",
-         "note": "Barcelona R7 — front corner update, sidepod cooling louvres (upper surface), "
-                 "SLM actuator fairing on rear wing. Source: F1.com confirmed parts list."},
+        {"from_round": 4, "significance": "minor",
+         "headline": "front corner update, nose camera mounts, rear suspension reprofiled, "
+                     "additional element to rear impact structure",
+         "detail":   "GAS: new rear wing. COL: new chassis.",
+         "source":   "RacingNews365"},
+        {"from_round": 5, "significance": "minor",
+         "headline": "'noticeably bigger package than Miami.'",
+         "detail":   "",
+         "source":   "carhp.in"},
+        {"from_round": 7, "significance": "minor",
+         "headline": "front corner update, sidepod cooling louvres (upper surface), SLM "
+                     "actuator fairing on rear wing",
+         "detail":   "",
+         "source":   "F1.com confirmed parts list"},
     ],
     "Williams": [
-        {"from_round": 4,  "significance": "major",
-         "note": "Miami R4 — first major 2026 package: floor, bodywork, front wing, rear "
-                 "suspension, exhaust blowing, weight reduction. Immediate double-points finish. "
-                 "Vowles: 'more performance coming for Montreal.' Source: Crash.net, Vowles quotes."},
-        {"from_round": 5,  "significance": "medium",
-         "note": "Canada R5 — FBD geometry (brake cooling), suspension cladding, "
-                 "tailpipe repositioning, enhanced Miami exhaust upgrade. Source: F1.com."},
-        {"from_round": 9,  "significance": "medium",
-         "note": "Silverstone R9 — Vowles confirmed to Sky Sports Germany: "
-                 "updates coming for British GP following Austria struggle. Source: Crash.net."},
+        {"from_round": 4, "significance": "major",
+         "headline": "first major 2026 package: floor, bodywork, front wing, rear "
+                     "suspension, exhaust blowing, weight reduction",
+         "detail":   "Immediate double-points finish. Vowles: 'more performance coming for "
+                     "Montreal.'",
+         "source":   "Crash.net, Vowles quotes"},
+        {"from_round": 5, "significance": "medium",
+         "headline": "FBD geometry (brake cooling), suspension cladding, tailpipe "
+                     "repositioning, enhanced Miami exhaust upgrade",
+         "detail":   "",
+         "source":   "F1.com"},
+        {"from_round": 9, "significance": "medium",
+         "headline": "Vowles confirmed to Sky Sports Germany: updates coming for British "
+                     "GP following Austria struggle",
+         "detail":   "",
+         "source":   "Crash.net"},
         {"from_round": 12, "significance": "medium",
-         "note": "Netherlands R12 — weight reduction package. Vowles: 'almost a completely "
-                 "new car' by Baku. Source: Crash.net interview."},
+         "headline": "weight reduction package",
+         "detail":   "Vowles: 'almost a completely new car' by Baku.",
+         "source":   "Crash.net interview"},
     ],
     "Audi": [
-        {"from_round": 4,  "significance": "medium",
-         "note": "Miami R4 — reworked front suspension, floor edge, diffuser. "
-                 "Debut team's first significant development step. Source: RacingNews365."},
-        {"from_round": 7,  "significance": "minor",
-         "note": "Barcelona R7 — sidepod cooling louvres, rear wing SLM actuator fairing. "
-                 "Source: F1.com confirmed parts list."},
+        {"from_round": 4, "significance": "medium",
+         "headline": "reworked front suspension, floor edge, diffuser",
+         "detail":   "Debut team's first significant development step.",
+         "source":   "RacingNews365"},
+        {"from_round": 7, "significance": "minor",
+         "headline": "sidepod cooling louvres, rear wing SLM actuator fairing",
+         "detail":   "",
+         "source":   "F1.com confirmed parts list"},
     ],
     "Cadillac": [
-        {"from_round": 4,  "significance": "major",
-         "note": "Miami R4 — 9 upgrades targeting performance and ride height sensitivities. "
-                 "Debut team's first comprehensive development push. Source: RacingNews365."},
+        {"from_round": 4, "significance": "major",
+         "headline": "9 upgrades targeting performance and ride height sensitivities",
+         "detail":   "Debut team's first comprehensive development push.",
+         "source":   "RacingNews365"},
         {"from_round": 10, "significance": "minor",
-         "note": "Belgium R10 — front wing footplate revision, added horizontal endplate vane. "
-                 "Source: The Race confirmed parts list."},
+         "headline": "front wing footplate revision, added horizontal endplate vane",
+         "detail":   "",
+         "source":   "The Race confirmed parts list"},
     ],
 }
 
 # Known upgrades arriving AT a specific future round.
+# ─────────────────────────────────────────────
+#  ADUO — Additional Development Upgrade Opportunity
+#
+#  Allocated on Monaco race day (R6) from the FIA's first ICE Performance
+#  Index assessment. RedBullFord is the benchmark and receives nothing.
+#  Bands published by the FIA: Mercedes 2-4% adrift (1 upgrade in 2026);
+#  Ferrari, Audi and Honda 4%+ adrift (2 each). The ordering WITHIN the >4%
+#  group was never published and must not be claimed.
+#
+#  This is the single source of truth. analysis/predictor.py imports it —
+#  it used to carry its own copy with every round hardcoded to 9, which was
+#  a placeholder written before any manufacturer had deployed, and was wrong
+#  for all four.
+# ─────────────────────────────────────────────
+
+# ─────────────────────────────────────────────
+#  Driver substitutions
+#
+#  Keyed by round, so an entry expires by itself once the weekend passes and
+#  no code change is needed when the regular driver returns.
+#
+#  These matter to predictions specifically: the model predicts a DRIVER from
+#  that driver's own history. A stand-in with no history cannot be predicted
+#  at all, and a driver who changes team carries pace earned in a different
+#  car. Neither is something re-running the predictor can fix, so the page
+#  marks the affected rows instead of silently showing a driver who is not
+#  in the car.
+# ─────────────────────────────────────────────
+
+DRIVER_SUBSTITUTIONS = {
+    12: {
+        "banner": (
+            "Isack Hadjar misses the Dutch Grand Prix with a wrist injury sustained "
+            "during the summer shutdown. Liam Lawson steps up from Racing Bulls to "
+            "partner Verstappen, and reserve driver Yuki Tsunoda takes Lawson's seat "
+            "alongside Lindblad. Zandvoort is where Lawson made his F1 debut in 2023, "
+            "also deputising for a driver with a wrist injury."
+        ),
+        # driver_code -> why they are out
+        "unavailable": {
+            "HAD": "Wrist injury — not racing at Zandvoort",
+        },
+        # driver_code -> team they are driving for this round
+        "moved": {
+            "LAW": "Red Bull",
+        },
+        # drivers with no fingerprints, so no prediction is possible
+        "added": [
+            {"code": "TSU", "name": "Yuki Tsunoda", "team": "VCARB",
+             "reason": "Reserve driver — no 2026 race data, so no prediction"},
+        ],
+    },
+}
+
+
+PU_ADUO_UPGRADES = {
+    "Audi": {
+        "round": 7,          # Barcelona R7 — first manufacturer to deploy
+        "note":  "ADUO upgrade 1 deployed at Barcelona (R7), 2 allocated (>4% deficit). "
+                 "Introduced without announcement; reported as driveability and throttle "
+                 "response work around the large turbocharger rather than an outright "
+                 "power step. Debut-season PU with the broadest development runway.",
+    },
+    "Ferrari": {
+        "round": 8,          # Austria R8
+        "second_round": 13,  # Monza R13 — redesigned turbocharger
+        "note":  "ADUO upgrade 1 deployed at Austria (R8), 2 allocated (>4% deficit). "
+                 "Roughly 4-5hp from ICE changes plus 2-3hp from a new Shell fuel "
+                 "compound, about a tenth per lap at the Red Bull Ring. Ferrari itself "
+                 "said it would not change the competitive order.",
+    },
+    "Honda": {
+        "round": 12,         # Netherlands R12
+        "note":  "ADUO upgrade 1 deployed at Zandvoort (R12), 2 allocated (>4% deficit). "
+                 "Updated RA626H targeting raw ICE power, Honda's stated main weakness, "
+                 "plus minor battery changes. Honda has said it will use only ONE of its "
+                 "two 2026 tokens. Effect is unproven — Zandvoort is a sprint weekend, "
+                 "so there is a single practice session to evaluate it.",
+    },
+    "Mercedes": {
+        "round": None,       # allocated but NOT deployed
+        "note":  "ADUO upgrade allocated (1, 2-4% behind benchmark ICE) but NOT yet used. "
+                 "The fresh ICEs, turbochargers, batteries and control electronics fitted "
+                 "at Austria were reliability measures, not a performance homologation.",
+    },
+    # RedBullFord intentionally absent — benchmark, no ADUO
+}
+
+
 KNOWN_UPCOMING_UPGRADES = {
     "Aston Martin": [
         {"at_round": 12, "significance": "major",
@@ -740,13 +865,6 @@ KNOWN_UPCOMING_UPGRADES = {
          "note": "Netherlands R12 — part 2 of Hungary 2-part development package. "
                  "Stella: 'next upgrades in Hungary and then after the shutdown.' "
                  "Source: motorsport.com."},
-    ],
-    "Honda": [
-        {"at_round": 12, "significance": "major",
-         "note": "ADUO upgrade 1 CONFIRMED for Zandvoort (R12) — updated RA626H "
-                 "targeting raw ICE power, plus minor battery changes. Honda will "
-                 "use only ONE of its two 2026 tokens. Sprint weekend gives a "
-                 "single practice session to evaluate it."},
     ],
     "Williams": [
         {"at_round": 12, "significance": "medium",

@@ -10,44 +10,53 @@ if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
 from app.data_loader import (get_upgrade_timeline, get_commentary,
-                              upgrade_card, SIG_COLOURS)
+                              upgrade_card, upgrade_group_card,
+                              team_display_order, SIG_COLOURS, TEAM_COLOURS)
 from app.charts import upgrade_timeline_chart
-from app.data_loader import TEAM_COLOURS
+from config import CARS
 
-st.set_page_config(page_title="Upgrades & News — ERS_v2", page_icon="📰", layout="wide")
+st.set_page_config(page_title="Upgrades & News — PitWall", page_icon="📰", layout="wide")
 ACCENT = '<div style="height:3px;background:linear-gradient(90deg,#FF1E00,#FF6B35);border-radius:2px;margin-bottom:1rem;"></div>'
 st.markdown(ACCENT, unsafe_allow_html=True)
 st.title("📰 Upgrades & News")
+st.caption("Chassis and power unit developments across the 2026 season, with sources. Upcoming entries are announced but not yet raced.")
 
 # ── Filters ───────────────────────────────────────────────
-all_teams = sorted({"Mercedes", "Ferrari", "McLaren", "Red Bull", "Aston Martin",
-                    "VCARB", "Haas", "Alpine", "Williams", "Audi", "Cadillac",
-                    "Honda"})
-
-col1, col2 = st.columns([2, 3])
-with col1:
-    show_incoming = st.checkbox("Show upcoming upgrades ⚠️", value=True)
-with col2:
-    team_filter = st.multiselect("Filter teams", all_teams, default=all_teams)
+#
+# Team list comes from CARS, not a hardcoded set. The old list included
+# "Honda", which is a power unit manufacturer rather than a team — it put a
+# twelfth row on a chart of eleven and made a PU upgrade look like a team's
+# own development.
+ALL_TEAMS = sorted({c["team"] for c in CARS.values()})
 
 upgrades = get_upgrade_timeline()
+
+col1, col2 = st.columns([3, 2])
+with col1:
+    # Single dropdown rather than a multiselect pre-filled with every team,
+    # which rendered eleven chips and pushed the chart below the fold.
+    team_choice = st.selectbox("Team", ["All teams"] + ALL_TEAMS, index=0)
+with col2:
+    show_incoming = st.checkbox("Include upcoming upgrades", value=True)
+
 filtered = [u for u in upgrades
-            if u["team"] in team_filter
+            if (team_choice == "All teams" or u["team"] == team_choice)
             and (show_incoming or not u["incoming"])]
 
 # ── Timeline chart ────────────────────────────────────────
 st.subheader("📅 Upgrade Timeline")
-ALL_TEAMS = sorted({"Mercedes","Ferrari","McLaren","Red Bull","Aston Martin",
-                    "VCARB","Haas","Alpine","Williams","Audi","Cadillac"})
-fig = upgrade_timeline_chart(filtered, all_teams=ALL_TEAMS)
+chart_teams = ALL_TEAMS if team_choice == "All teams" else [team_choice]
+fig = upgrade_timeline_chart(filtered, all_teams=chart_teams)
 st.plotly_chart(fig, use_container_width=True)
 
 st.caption(
-    "● Confirmed upgrade  ◆ Upcoming upgrade  |  "
+    "● Confirmed  ◆ Upcoming  |  "
     + "  ".join(
-        f'<span style="color:{c};">■ {s.replace("_"," ").title()}</span>'
-        for s, c in SIG_COLOURS.items()
-    ),
+        f'<span style="color:{c};">■ {sig.replace("_"," ").title()}</span>'
+        for sig, c in SIG_COLOURS.items()
+    )
+    + "  |  Power unit upgrades appear on every customer team, so one "
+      "manufacturer homologation can show on three rows.",
     unsafe_allow_html=True,
 )
 
@@ -56,20 +65,41 @@ st.divider()
 # ── Upgrade details ───────────────────────────────────────
 st.subheader("🔧 Upgrade Details")
 
-# Upcoming first
-upcoming = [u for u in reversed(filtered) if u["incoming"]]
-confirmed = [u for u in reversed(filtered) if not u["incoming"]]
+upcoming  = [u for u in reversed(filtered) if u["incoming"]]
+confirmed = [u for u in filtered if not u["incoming"]]
 
+# Upcoming stays a flat list — there are only a handful and they are the
+# thing people came to read.
 if upcoming:
     st.markdown("**Upcoming**")
     for u in upcoming:
         st.markdown(upgrade_card(u), unsafe_allow_html=True)
     st.markdown("")
 
+# Confirmed is grouped per team in two columns. As one flat list it was 27
+# stacked cards — several screens of scrolling with no way to see what any
+# one team had done across the season.
 if confirmed:
-    st.markdown("**Confirmed (latest first)**")
+    st.markdown("**Confirmed** — newest first within each team")
+
+    by_team = {}
     for u in confirmed:
-        st.markdown(upgrade_card(u), unsafe_allow_html=True)
+        by_team.setdefault(u["team"], []).append(u)
+
+    ordered = team_display_order(by_team.keys())
+    cols    = st.columns(2)
+
+    for i, team in enumerate(ordered):
+        rows    = by_team[team]
+        chassis = sorted([r for r in rows if not r.get("pu")],
+                         key=lambda r: -r["round"])
+        power   = sorted([r for r in rows if r.get("pu")],
+                         key=lambda r: -r["round"])
+        with cols[i % 2]:
+            st.markdown(
+                upgrade_group_card(team, chassis, power,
+                                   colour=TEAM_COLOURS.get(team, "#888")),
+                unsafe_allow_html=True)
 
 st.divider()
 

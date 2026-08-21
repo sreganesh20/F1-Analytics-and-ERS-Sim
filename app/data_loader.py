@@ -17,7 +17,12 @@ if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
 from data.race_store import load_all_fingerprints as _load_all, load_index
-from config import CARS, CIRCUITS, TEAM_UPGRADES, KNOWN_UPCOMING_UPGRADES
+from config import (CARS, CIRCUITS, TEAM_UPGRADES, KNOWN_UPCOMING_UPGRADES,
+                    PU_ADUO_UPGRADES)
+
+# Latest round with stored session data. Anything at or before this has
+# happened; anything after is still incoming.
+CURRENT_ROUND = 11
 
 # ── Colour palettes ──────────────────────────────────────
 
@@ -46,6 +51,9 @@ TEAM_COLOURS = {
 PU_ORDER = ["Mercedes", "Ferrari", "RedBullFord", "Audi", "Honda"]
 
 SIG_COLOURS = {
+    # power_unit sits apart from the chassis significance scale — a PU
+    # homologation is a different kind of change from an aero package.
+    "power_unit": "#00B7FF",
     "new_car": "#FF1E00",
     "major":   "#FF8000",
     "medium":  "#FFD700",
@@ -196,7 +204,11 @@ def get_upgrade_timeline():
                 "round":        upg["from_round"],
                 "circuit":      round_to_circuit.get(upg["from_round"], f"R{upg['from_round']}"),
                 "significance": upg["significance"],
-                "note":         upg["note"],
+                "headline":     upg["headline"],
+                "detail":       upg.get("detail", ""),
+                "source":       upg.get("source", ""),
+                # note kept for anything still reading the old flat field
+                "note":         " ".join(x for x in (upg["headline"], upg.get("detail", "")) if x),
                 "incoming":     False,
             })
     for entity, upgrades in KNOWN_UPCOMING_UPGRADES.items():
@@ -206,9 +218,52 @@ def get_upgrade_timeline():
                 "round":        upg["at_round"],
                 "circuit":      round_to_circuit.get(upg["at_round"], f"R{upg['at_round']}"),
                 "significance": upg["significance"],
+                "headline":     upg["note"],
+                "detail":       "",
+                "source":       "",
                 "note":         upg["note"],
                 "incoming":     True,
+                "pu":           None,
             })
+
+    # Power unit upgrades, expanded to every customer team.
+    #
+    # A PU manufacturer is not a team. Honda used to sit in the upcoming list
+    # as if it were one, which put a twelfth row on a chart of eleven teams
+    # and left Ferrari's R8 and Audi's R7 ADUO upgrades off the timeline
+    # entirely — they existed only inside the predictor. Expanding by customer
+    # also means a Ferrari PU upgrade correctly shows on Haas and Cadillac.
+    pu_customers = {}
+    for car in CARS.values():
+        pu = car.get("pu") or car.get("pu_name")
+        if pu:
+            pu_customers.setdefault(pu, set()).add(car["team"])
+
+    for pu, upg in PU_ADUO_UPGRADES.items():
+        rnd = upg.get("round")
+        if rnd is None:          # allocated but never used — nothing to place
+            continue
+        for team in sorted(pu_customers.get(pu, [])):
+            events.append({
+                "team":         team,
+                "round":        rnd,
+                "circuit":      round_to_circuit.get(rnd, f"R{rnd}"),
+                "significance": "power_unit",
+                # No "{pu} power unit —" prefix here: the card already tags
+                # the manufacturer beside the team name.
+                "headline":     upg["note"].split(". ")[0],
+                "detail":       " ".join(upg["note"].split(". ")[1:]),
+                "source":       "",
+                "note":         upg["note"],
+                "incoming":     rnd > CURRENT_ROUND,
+                "pu":           pu,
+            })
+
+    for e in events:
+        e.setdefault("pu", None)
+        e.setdefault("headline", e.get("note", ""))
+        e.setdefault("detail", "")
+        e.setdefault("source", "")
     return sorted(events, key=lambda x: (x["round"], x["team"]))
 
 # ── HTML helpers ─────────────────────────────────────────
@@ -231,15 +286,128 @@ def sig_badge(sig):
 def upgrade_card(upg):
     c = SIG_COLOURS.get(upg["significance"], "#888")
     prefix = "⚠️ UPCOMING" if upg["incoming"] else f"R{upg['round']} · {upg['circuit']}"
+    # A PU upgrade is the manufacturer's, not the team's — say whose it is,
+    # otherwise Haas appears to have developed a Ferrari engine.
+    pu_tag = (f' <span style="font-weight:normal;font-size:0.75rem;color:#00B7FF;">'
+              f'· {upg["pu"]} power unit</span>') if upg.get("pu") else ""
     return f"""
     <div style="border-left:3px solid {c};padding:8px 14px;margin:8px 0;
                 background:{c}11;border-radius:0 6px 6px 0;">
         <div style="font-family:monospace;font-size:0.7rem;color:{c};margin-bottom:3px;">
             {prefix} · {upg['significance'].replace('_',' ').upper()}
         </div>
-        <div style="font-weight:bold;margin-bottom:4px;">{upg['team']}</div>
+        <div style="font-weight:bold;margin-bottom:4px;">{upg['team']}{pu_tag}</div>
         <div style="font-size:0.83rem;color:#C0C0C0;">{upg['note']}</div>
     </div>"""
+
+def team_display_order(teams):
+    """
+    Championship order, falling back to qualifying pace, then alphabetical.
+
+    Constructor standings come from a live API that returns [] when it is
+    unreachable, so this must degrade rather than raise — the Upgrades page
+    should still render on a train.
+    """
+    teams = list(teams)
+    try:
+        standings = get_constructor_standings()
+    except Exception:
+        standings = []
+
+    if standings:
+        rank = {row["team"]: row["pos"] for row in standings}
+        # Constructor names from the API may not match our team keys exactly
+        # (e.g. "RB" vs "VCARB"), so match loosely before giving up on one.
+        def pos(t):
+            if t in rank:
+                return rank[t]
+            for name, p in rank.items():
+                if name.lower().startswith(t.lower()[:4]) or t.lower().startswith(name.lower()[:4]):
+                    return p
+            return 99
+        if sum(1 for t in teams if pos(t) < 99) >= len(teams) // 2:
+            return sorted(teams, key=lambda t: (pos(t), t))
+
+    try:
+        fps  = get_fingerprints()
+        gaps = {}
+        for fp in fps:
+            if fp.session_type in ("Q", "SQ") and fp.lap_time_gap_pct is not None:
+                gaps.setdefault(fp.team, []).append(fp.lap_time_gap_pct)
+        if gaps:
+            med = {t: float(np.median(v)) for t, v in gaps.items()}
+            return sorted(teams, key=lambda t: (med.get(t, 99), t))
+    except Exception:
+        pass
+
+    return sorted(teams)
+
+
+def upgrade_group_card(team, chassis, power, colour="#888"):
+    """One team's confirmed upgrades as a single box, newest first."""
+    def entry(e, mono_width="66px"):
+        sig = e["significance"]
+        c   = SIG_COLOURS.get(sig, "#888")
+        pill = ("" if sig == "power_unit" else
+                f'<span style="background:{c}22;color:{c};border:1px solid {c}55;'
+                f'font-size:0.62rem;padding:0 5px;border-radius:3px;'
+                f'font-family:monospace;">{sig.replace("_"," ")}</span>')
+        detail = (f'<div style="font-size:0.76rem;color:#8A8A8A;line-height:1.45;">'
+                  f'{e["detail"]}</div>') if e["detail"] else ""
+        source = (f'<div style="font-size:0.68rem;color:#5E5E5E;margin-top:2px;">'
+                  f'{e["source"]}</div>') if e["source"] else ""
+        return (
+            f'<div style="margin-bottom:11px;">'
+            f'<div style="display:flex;align-items:baseline;gap:7px;margin-bottom:1px;">'
+            f'<span style="font-family:monospace;font-size:0.66rem;color:#6E6E6E;'
+            f'min-width:{mono_width};">R{e["round"]} {e["circuit"][:9]}</span>{pill}</div>'
+            f'<div style="font-size:0.82rem;color:#DADADA;line-height:1.45;">{e["headline"]}</div>'
+            f'{detail}{source}</div>')
+
+    last = max([e["round"] for e in chassis + power], default=0)
+    n    = len(chassis) + len(power)
+    head = (
+        f'<div style="display:flex;align-items:baseline;justify-content:space-between;'
+        f'border-bottom:1px solid #2A2A2A;padding-bottom:6px;margin-bottom:9px;">'
+        f'<span style="font-weight:bold;font-size:0.95rem;color:{colour};">{team}</span>'
+        f'<span style="font-size:0.7rem;color:#6E6E6E;">{n} upgrade{"s" if n != 1 else ""}'
+        f' · last R{last}</span></div>')
+
+    # A manufacturer holding its ADUO token has no round, so it can't sit in
+    # a round-sorted list — but "allocated and deliberately unused" is real
+    # information, and without it Mercedes shows no power unit section at all.
+    def _held_token():
+        pu = next((c.get("pu") or c.get("pu_name")
+                   for c in CARS.values() if c["team"] == team), None)
+        upg = PU_ADUO_UPGRADES.get(pu) if pu else None
+        if upg and upg.get("round") is None:
+            return pu, upg["note"]
+        return None, None
+    pu_block = ""
+    if power:
+        pu_name = power[0].get("pu") or ""
+        pu_block = (
+            f'<div style="border-top:1px solid #2A2A2A;padding-top:9px;margin-top:2px;">'
+            f'<div style="font-size:0.68rem;color:#00B7FF;margin-bottom:5px;'
+            f'font-family:monospace;">POWER UNIT · {pu_name}</div>'
+            + "".join(entry(e) for e in power) + '</div>')
+    else:
+        held_pu, held_note = _held_token()
+        if held_pu:
+            pu_block = (
+                f'<div style="border-top:1px solid #2A2A2A;padding-top:9px;margin-top:2px;">'
+                f'<div style="font-size:0.68rem;color:#6E6E6E;margin-bottom:4px;'
+                f'font-family:monospace;">POWER UNIT · {held_pu}</div>'
+                f'<div style="font-size:0.76rem;color:#8A8A8A;line-height:1.45;">'
+                f'ADUO allocated, not yet used.</div></div>')
+    body = "".join(entry(e) for e in chassis) or (
+        '<div style="font-size:0.78rem;color:#6E6E6E;margin-bottom:11px;">'
+        'No chassis upgrades recorded.</div>')
+
+    return (f'<div style="background:#141414;border:1px solid #262626;'
+            f'border-left:3px solid {colour};border-radius:0 8px 8px 0;'
+            f'padding:12px 16px;margin-bottom:12px;">{head}{body}{pu_block}</div>')
+
 
 # ── Display guard for per-driver speed deltas ─────────────
 

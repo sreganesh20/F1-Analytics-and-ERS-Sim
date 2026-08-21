@@ -16,7 +16,7 @@ if ROOT not in sys.path:
 
 from app.data_loader import (list_available_predictions, get_prediction_data,
                              conf_badge, TEAM_COLOURS)
-from config import CIRCUITS
+from config import CIRCUITS, DRIVER_SUBSTITUTIONS
 
 st.set_page_config(page_title="Weekend Predictions — PitWall",
                    page_icon="🔮", layout="wide")
@@ -97,6 +97,14 @@ m1.metric("Round", ref.get("race_round", "—"))
 m2.metric("Circuit type", str(ref.get("circuit_type", "—")).replace("_", " ").title())
 m3.metric("Format", "Sprint weekend" if is_sprint else "Standard weekend")
 
+# ── Driver substitutions ──────────────────────────────────
+# Predictions are generated per driver from that driver's own history. When a
+# lineup changes after generation, re-running does not help — a stand-in has
+# no history to predict from — so the grid is annotated instead.
+SUBS = DRIVER_SUBSTITUTIONS.get(ref.get("race_round"), {})
+if SUBS.get("banner"):
+    st.warning(f"**Driver lineup change for this round.** {SUBS['banner']}")
+
 st.divider()
 
 
@@ -173,38 +181,76 @@ def render_grid(pred, pred_type):
         '<div style="width:54px;text-align:right;">Notes</div>'
         '</div>', unsafe_allow_html=True)
 
+    unavailable = SUBS.get("unavailable", {})
+    moved       = SUBS.get("moved", {})
+
     for i, p in enumerate(predictions, 1):
+        code  = p["driver_code"]
         delta = p["predicted_delta_s"]
+        out   = code in unavailable
 
-        if i == 1:
-            gap_str = "FASTEST" if is_race_type else "POLE"
-        elif is_race_type and est_laps:
-            gap_str = f"+{delta * est_laps:.1f}s"
+        # Lawson keeps his predicted pace but shows the car he is actually in.
+        # That pace was earned in a VCARB, so it is flagged rather than trusted.
+        team      = moved.get(code, p["team"])
+        team_col  = TEAM_COLOURS.get(team, "#888")
+
+        if out:
+            gap_str, rng, hrv_str = unavailable[code], "", "—"
         else:
-            gap_str = f"+{delta:.3f}s"
+            if i == 1:
+                gap_str = "FASTEST" if is_race_type else "POLE"
+            elif is_race_type and est_laps:
+                gap_str = f"+{delta * est_laps:.1f}s"
+            else:
+                gap_str = f"+{delta:.3f}s"
+            rng     = f"[{p['delta_range_low']:+.2f} / {p['delta_range_high']:+.2f}]"
+            hrv     = p.get("predicted_harvest_ratio", 0)
+            hrv_str = f"{hrv:.3f}" if hrv and hrv < 1.5 else "—"
 
-        rng       = f"{p['delta_range_low']:+.2f} / {p['delta_range_high']:+.2f}"
-        hrv       = p.get("predicted_harvest_ratio", 0)
-        hrv_str   = f"{hrv:.3f}" if hrv and hrv < 1.5 else "—"
-        team_col  = TEAM_COLOURS.get(p["team"], "#888")
-        gap_style = "font-weight:bold;color:#FFD700;" if i == 1 else "color:#E0E0E0;"
+        gap_style = "font-weight:bold;color:#FFD700;" if (i == 1 and not out) else "color:#E0E0E0;"
 
-        nums  = markers.get(p["driver_code"], [])
+        nums  = markers.get(code, [])
         marks = (f'<span style="color:#FF6B35;font-size:0.68rem;">'
                  f'{",".join(str(n) for n in nums)}</span>' if nums else "")
 
+        team_label = team
+        if code in moved:
+            team_label = (f'{team} <span style="color:#FF6B35;font-size:0.68rem;">'
+                          f'· substitute, pace from {p["team"]}</span>')
+
+        if out:
+            row_bg, dim, pos_txt = "#141414", "opacity:0.45;", f'<s>P{i}</s>'
+            gap_style = "color:#8A8A8A;font-size:0.72rem;"
+        else:
+            row_bg, dim, pos_txt = "#1A1A1A", "", f"P{i}"
+
         st.markdown(f"""
         <div style="display:flex;align-items:center;padding:6px 10px;margin:3px 0;
-                    background:#1A1A1A;border-radius:6px;border-left:3px solid {team_col};
-                    font-family:monospace;">
-            <div style="width:32px;font-size:1rem;font-weight:bold;color:#555;">P{i}</div>
-            <div style="width:56px;font-size:1rem;font-weight:bold;color:{team_col};">{p['driver_code']}</div>
-            <div style="flex:1;font-size:0.82rem;color:#aaa;">{p['team']}</div>
-            <div style="width:110px;text-align:right;{gap_style}font-size:0.92rem;">{gap_str}</div>
-            <div style="width:120px;text-align:right;font-size:0.72rem;color:#666;">[{rng}]</div>
+                    background:{row_bg};border-radius:6px;border-left:3px solid {team_col};
+                    font-family:monospace;{dim}">
+            <div style="width:32px;font-size:1rem;font-weight:bold;color:#555;">{pos_txt}</div>
+            <div style="width:56px;font-size:1rem;font-weight:bold;color:{team_col};">{code}</div>
+            <div style="flex:1;font-size:0.82rem;color:#aaa;">{team_label}</div>
+            <div style="width:110px;text-align:right;{gap_style}">{gap_str}</div>
+            <div style="width:120px;text-align:right;font-size:0.72rem;color:#666;">{rng}</div>
             <div style="width:56px;text-align:right;font-size:0.75rem;color:#888;">{hrv_str}</div>
-            <div style="width:86px;text-align:right;">{conf_badge(p['confidence'])}</div>
+            <div style="width:86px;text-align:right;">{"" if out else conf_badge(p['confidence'])}</div>
             <div style="width:54px;text-align:right;">{marks}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Stand-ins with no fingerprints. They cannot be ranked, so they sit below
+    # the ordered grid with no position rather than being given a fake one.
+    for extra in SUBS.get("added", []):
+        col = TEAM_COLOURS.get(extra["team"], "#888")
+        st.markdown(f"""
+        <div style="display:flex;align-items:center;padding:6px 10px;margin:3px 0;
+                    background:#141414;border-radius:6px;border-left:3px dashed {col};
+                    font-family:monospace;">
+            <div style="width:32px;font-size:1rem;font-weight:bold;color:#555;">—</div>
+            <div style="width:56px;font-size:1rem;font-weight:bold;color:{col};">{extra['code']}</div>
+            <div style="flex:1;font-size:0.82rem;color:#aaa;">{extra['team']}</div>
+            <div style="flex:1;text-align:right;font-size:0.72rem;color:#8A8A8A;">{extra['reason']}</div>
         </div>
         """, unsafe_allow_html=True)
 

@@ -6,7 +6,7 @@ import numpy as np
 from dataclasses import dataclass, field
 from models.fingerprint import CarFingerprint
 from data.race_store import load_all_fingerprints
-from config import CIRCUITS, CIRCUIT_TYPES, PU_GROUPS
+from config import CIRCUITS, CIRCUIT_TYPES, PU_GROUPS, PU_ADUO_UPGRADES
 
 # Harvest ratio adjustment scale: seconds of lap time per unit deviation from 1.0
 # Kept conservative — lap_time_gap_pct remains the dominant signal.
@@ -191,51 +191,9 @@ def get_upcoming_upgrade_notes(driver: str, target_round: int) -> list[str]:
 def get_regulation_notes(pu_name: str, target_round: int) -> list[str]:
     notes = []
 
-    # ADUO allocations — announced to teams on Monaco race day (R6), based on
-    # the FIA's first ICE Performance Index assessment (window closed after
-    # Canada, R5). RedBullFord is the benchmark and receives nothing.
-    #
-    # Bands published by the FIA: Mercedes 2-4% adrift (1 upgrade in 2026,
-    # 1 in 2027); Ferrari, Audi and Honda 4%+ adrift (2 and 2). The ordering
-    # WITHIN the >4% group was never published and must not be claimed.
-    #
-    # Deployment rounds below are verified against reporting, not assumed.
-    # They were previously all hardcoded to round 9, which was a placeholder
-    # written before any manufacturer had actually deployed. Every one of the
-    # four was wrong, and at R12 that placeholder credited Mercedes with an
-    # upgrade it has not used.
-    aduo_upgrades = {
-        "Audi": {
-            "round": 7,          # Barcelona R7 — first manufacturer to deploy
-            "note":  "ADUO upgrade 1 deployed at Barcelona (R7), 2 allocated (>4% deficit). "
-                     "Introduced without announcement; reported as driveability and throttle "
-                     "response work around the large turbocharger rather than an outright "
-                     "power step. Debut-season PU with the broadest development runway.",
-        },
-        "Ferrari": {
-            "round": 8,          # Austria R8
-            "second_round": 13,  # Monza R13 — redesigned turbocharger
-            "note":  "ADUO upgrade 1 deployed at Austria (R8), 2 allocated (>4% deficit). "
-                     "Roughly 4-5hp from ICE changes plus 2-3hp from a new Shell fuel "
-                     "compound, about a tenth per lap at the Red Bull Ring. Ferrari itself "
-                     "said it would not change the competitive order.",
-        },
-        "Honda": {
-            "round": 12,         # Netherlands R12
-            "note":  "ADUO upgrade 1 deployed at Zandvoort (R12), 2 allocated (>4% deficit). "
-                     "Updated RA626H targeting raw ICE power, Honda's stated main weakness, "
-                     "plus minor battery changes. Honda has said it will use only ONE of its "
-                     "two 2026 tokens. Effect is unproven — Zandvoort is a sprint weekend, "
-                     "so there is a single practice session to evaluate it.",
-        },
-        "Mercedes": {
-            "round": None,       # allocated but NOT deployed
-            "note":  "ADUO upgrade allocated (1, 2-4% behind benchmark ICE) but NOT yet used. "
-                     "The fresh ICEs, turbochargers, batteries and control electronics fitted "
-                     "at Austria were reliability measures, not a performance homologation.",
-        },
-        # RedBullFord intentionally absent — benchmark, no ADUO
-    }
+    # ADUO table lives in config.PU_ADUO_UPGRADES — single source of truth,
+    # shared with the Upgrades page so the two can never disagree.
+    aduo_upgrades = PU_ADUO_UPGRADES
 
     if pu_name in aduo_upgrades:
         upg   = aduo_upgrades[pu_name]
