@@ -144,7 +144,10 @@ def get_commentary():
 
 @st.cache_data(ttl=60)
 def get_prediction_data(circuit_name, pred_type="quali"):
-    """Load stored prediction. pred_type: 'quali' | 'race'"""
+    """Load stored prediction.
+
+    pred_type: 'quali' | 'race' | 'sprint_quali' | 'sprint_race'
+    """
     pred_dir = os.path.join(ROOT, "store", "predictions")
     # New format: 2026_Netherlands_quali_prediction.json
     path = os.path.join(pred_dir,
@@ -168,8 +171,15 @@ def list_available_predictions():
         if "_prediction.json" not in f or not f.startswith("2026_"):
             continue
         name = f.replace("2026_", "")
-        for suffix in ("_quali_prediction.json", "_race_prediction.json", "_prediction.json"):
-            name = name.replace(suffix, "")
+        # Longest first, and strip only ONE suffix. Chained .replace() turned
+        # "Netherlands_sprint_quali_prediction.json" into "Netherlands_sprint",
+        # which showed up in the circuit dropdown as a separate circuit.
+        for suffix in ("_sprint_quali_prediction.json", "_sprint_race_prediction.json",
+                       "_quali_prediction.json", "_race_prediction.json",
+                       "_prediction.json"):
+            if name.endswith(suffix):
+                name = name[:-len(suffix)]
+                break
         circuits.add(name.replace("_", " "))
     return sorted(circuits)
 

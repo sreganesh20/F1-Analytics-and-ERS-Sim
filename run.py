@@ -83,6 +83,70 @@ def cmd_predict(args):
               "sessions exist in store/ for previous sprint rounds.")
 
 
+def cmd_extract_telemetry(args):
+    """
+    Write committed-size telemetry extracts for every session already in the
+    store, so the deployed site has real data instead of the synthetic model.
+
+    Reads from the local FastF1 cache, which is why this has to run on your
+    machine rather than in CI. Output lands in store/telemetry/ and is small
+    enough to commit.
+
+        python run.py extract-telemetry            # every stored session
+        python run.py extract-telemetry britain    # one circuit
+    """
+    import glob
+    import json as _json
+    from fetcher import (fetch_real_telemetry, save_telemetry_extract,
+                         EXTRACT_DIR, EXTRACT_RESOLUTION_M)
+    from config import CIRCUITS
+
+    only = args[0].title() if args else None
+    round_to_circuit = {cfg["round"]: name for name, cfg in CIRCUITS.items()}
+
+    # Session list comes from the store: if it was fingerprinted, the cache has it.
+    store_dir = os.path.join(os.path.dirname(__file__), "store")
+    targets   = []
+    for path in sorted(glob.glob(os.path.join(store_dir, "2026_R*_*.json"))):
+        stem = os.path.basename(path).replace(".json", "")
+        _, rnd_s, session = stem.split("_")
+        circuit = round_to_circuit.get(int(rnd_s[1:]))
+        if circuit and (only is None or circuit == only):
+            targets.append((circuit, session))
+
+    if not targets:
+        print(f"  No stored sessions found{' for ' + only if only else ''}.")
+        return
+
+    print(f"\n  Extracting {len(targets)} session(s) at "
+          f"{EXTRACT_RESOLUTION_M:g}m resolution -> {EXTRACT_DIR}\n")
+
+    ok, failed, total_bytes = 0, [], 0
+    for circuit, session in targets:
+        try:
+            cfg = {**CIRCUITS[circuit], "fastf1_session": session}
+            df  = fetch_real_telemetry(cfg)
+            if df is None or df["Source"].iloc[0] != "FastF1":
+                failed.append(f"{circuit} {session} (no real telemetry)")
+                continue
+            path, size = save_telemetry_extract(df, circuit, session)
+            total_bytes += size
+            ok += 1
+            print(f"  OK   {circuit:<14}{session:<3} {size/1024:6.1f} KB  "
+                  f"{os.path.basename(path)}")
+        except Exception as e:
+            failed.append(f"{circuit} {session} ({type(e).__name__}: {e})")
+
+    print(f"\n  Wrote {ok} extract(s), {total_bytes/1024/1024:.2f} MB total.")
+    if failed:
+        print(f"  Skipped {len(failed)}:")
+        for f in failed:
+            print(f"    - {f}")
+    if total_bytes > 50 * 1024 * 1024:
+        print("  WARNING: over 50 MB. Raise EXTRACT_RESOLUTION_M in fetcher.py "
+              "before committing this.")
+
+
 def cmd_store(args):
     from data.race_store import print_store_summary
     print_store_summary()
@@ -163,6 +227,8 @@ COMMANDS = {
     "compare":  cmd_compare,
     "test":     cmd_test,
     "viz":      cmd_viz,
+    "extract-telemetry": cmd_extract_telemetry,
+    "extract_telemetry": cmd_extract_telemetry,   # alias, both spellings work
 }
 
 if __name__ == "__main__":

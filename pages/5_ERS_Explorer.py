@@ -83,19 +83,31 @@ with col_result:
             from models.track import segment_lap
             from models.optimizer import optimise
 
-            # Try FastF1 cache first, fall back to synthetic
-            data_source = "Synthetic (no local cache)"
-            try:
-                from fetcher import fetch_real_telemetry
-                cfg_local = {**cfg, "fastf1_session": session}
-                df = fetch_real_telemetry(cfg_local)
-                if df is not None and df["Source"].iloc[0] == "FastF1":
-                    data_source = "FastF1 (local cache)"
-                else:
-                    raise ValueError("No real telemetry")
-            except Exception:
-                from fetcher import generate_synthetic_telemetry
+            # Order matters:
+            #   1. committed extract  — real data, works on the deployed site
+            #   2. local FastF1 cache — real data, only on a dev machine
+            #   3. synthetic model    — invented, clearly labelled
+            from fetcher import (load_telemetry_extract, fetch_real_telemetry,
+                                 generate_synthetic_telemetry)
+
+            df, data_source = None, None
+
+            df = load_telemetry_extract(circuit, session)
+            if df is not None:
+                data_source = "Real telemetry (committed extract)"
+
+            if df is None:
+                try:
+                    cfg_local = {**cfg, "fastf1_session": session}
+                    cached = fetch_real_telemetry(cfg_local)
+                    if cached is not None and cached["Source"].iloc[0] == "FastF1":
+                        df, data_source = cached, "Real telemetry (local FastF1 cache)"
+                except Exception:
+                    pass
+
+            if df is None:
                 df = generate_synthetic_telemetry(circuit)
+                data_source = "Synthetic model — not measured data"
 
             cfg_override = {
                 **cfg,
@@ -116,7 +128,7 @@ with col_result:
             st.stop()
 
     # Source badge
-    badge_col = "#00C851" if "FastF1" in data_source else "#FFD700"
+    badge_col = "#00C851" if "Real telemetry" in data_source else "#FFD700"
     st.markdown(
         f'<span style="background:{badge_col}22;color:{badge_col};border:1px solid {badge_col};'
         f'border-radius:4px;padding:2px 8px;font-family:monospace;font-size:0.75rem;">'
@@ -125,8 +137,11 @@ with col_result:
     )
     if "Synthetic" in data_source:
         st.caption(
-            "⚠️ Using synthetic telemetry — results are indicative. "
-            "Run `python run.py pipeline` locally to cache real FastF1 data."
+            "This circuit has no telemetry yet, so the lap below is a model "
+            "built from the circuit's published length, top speed and braking-zone "
+            "count — not a recorded lap. The optimizer output is a demonstration "
+            "of the method, not a result. Circuits with a green badge use a real "
+            "representative lap."
         )
 
     st.markdown("")

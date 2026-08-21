@@ -457,42 +457,63 @@ def pace_trend_chart(fps, driver_code):
 # ── ERS Strategy charts ───────────────────────────────────
 
 def strategy_chart(optimal):
-    segs = optimal.segments
-    fig = go.Figure()
+    """
+    Harvest/deploy per segment with the SoC trace overlaid.
+
+    The x axis MUST be numeric. It used to be strings ("325m"), which made
+    Plotly treat the axis as categorical — and a categorical axis orders its
+    categories by first appearance across traces. The harvest trace only
+    contains harvesting segments and the deploy trace only deploying ones, so
+    the axis came out as "all harvest distances, then all deploy distances,
+    then the leftovers": 325m, 505m, 1230m ... 365m ... 0m. The SoC line then
+    zig-zagged across it, which looked like an optimizer fault and was not.
+    """
+    segs = sorted(optimal.segments, key=lambda s: s.d_start)
+    fig  = go.Figure()
 
     h_segs = [s for s in segs if s.optimal_harvest > 0.001]
     d_segs = [s for s in segs if s.optimal_deploy  > 0.001]
 
+    def _centres(ss):  return [(s.d_start + s.d_end) / 2 for s in ss]
+    def _widths(ss):   return [max(s.d_end - s.d_start, 1.0) for s in ss]
+
     if h_segs:
         fig.add_trace(go.Bar(
             name="Harvest (MJ)",
-            x=[f"{s.d_start:.0f}m" for s in h_segs],
+            x=_centres(h_segs), width=_widths(h_segs),
             y=[s.optimal_harvest for s in h_segs],
             marker_color="#00C851", opacity=0.85,
-            customdata=[(s.seg_type, s.max_harvest) for s in h_segs],
-            hovertemplate="<b>%{x}</b> (%{customdata[0]})<br>Harvest: %{y:.3f} MJ (max: %{customdata[1]:.3f})<extra></extra>",
+            customdata=[(s.seg_type, s.max_harvest, s.d_start, s.d_end) for s in h_segs],
+            hovertemplate="<b>%{customdata[2]:.0f}-%{customdata[3]:.0f}m</b> "
+                          "(%{customdata[0]})<br>"
+                          "Harvest: %{y:.3f} MJ (max %{customdata[1]:.3f})<extra></extra>",
         ))
     if d_segs:
         fig.add_trace(go.Bar(
             name="Deploy (MJ)",
-            x=[f"{s.d_start:.0f}m" for s in d_segs],
+            x=_centres(d_segs), width=_widths(d_segs),
             y=[-s.optimal_deploy for s in d_segs],
             marker_color="#FF4444", opacity=0.85,
-            customdata=[(s.seg_type, s.max_deploy) for s in d_segs],
-            hovertemplate="<b>%{x}</b> (%{customdata[0]})<br>Deploy: %{y:.3f} MJ (max: %{customdata[1]:.3f})<extra></extra>",
+            customdata=[(s.seg_type, s.max_deploy, s.d_start, s.d_end) for s in d_segs],
+            hovertemplate="<b>%{customdata[2]:.0f}-%{customdata[3]:.0f}m</b> "
+                          "(%{customdata[0]})<br>"
+                          "Deploy: %{y:.3f} MJ (max %{customdata[1]:.3f})<extra></extra>",
         ))
 
-    soc_x = [f"{s.d_start:.0f}m" for s in segs]
-    soc_y = [s.soc_entry for s in segs]
-    if segs:
-        soc_x.append(f"{segs[-1].d_end:.0f}m")
-        soc_y.append(segs[-1].soc_exit)
+    # SoC is a state, so it steps at segment boundaries: hold the entry value
+    # across the segment, then step to the exit value at the boundary.
+    soc_x, soc_y = [], []
+    for s in segs:
+        soc_x += [s.d_start, s.d_end]
+        soc_y += [s.soc_entry, s.soc_exit]
     fig.add_trace(go.Scatter(
         x=soc_x, y=soc_y, name="Battery SoC",
         line=dict(color="#FFD700", width=2, dash="dot"),
         yaxis="y2",
-        hovertemplate="SoC: %{y:.3f} MJ<extra></extra>",
+        hovertemplate="%{x:.0f}m<br>SoC: %{y:.3f} MJ<extra></extra>",
     ))
+
+    lap_end = segs[-1].d_end if segs else 0
 
     fig.update_layout(
         **DARK,
@@ -501,8 +522,13 @@ def strategy_chart(optimal):
                  f"· Harvest limit: {optimal.harvest_limit_mj:.1f} MJ",
             font=dict(size=13)
         ),
-        xaxis=dict(**_ax(), title="Lap distance"),
-        yaxis=dict(**_ax(), title="Energy (MJ)", zeroline=True, zerolinecolor="#555"),
+        xaxis=dict(**_ax(), title="Lap distance (m)", type="linear",
+                   range=[0, lap_end], ticksuffix="m"),
+        # {**_ax(), ...} not dict(**_ax(), ...): _ax() already supplies
+        # zerolinecolor, and dict() raises TypeError on a duplicate key
+        # while a dict literal simply overrides it.
+        yaxis={**_ax(), "title": "Energy (MJ)",
+               "zeroline": True, "zerolinecolor": "#555"},
         yaxis2=dict(title="Battery SoC (MJ)", overlaying="y", side="right",
                     range=[-0.1, 4.3], gridcolor="#2A2A2A", color="#FFD700"),
         barmode="overlay", height=400,
@@ -511,7 +537,11 @@ def strategy_chart(optimal):
 
 
 def soc_flow_chart(optimal):
-    segs = optimal.segments
+    # Sort by distance before drawing. The optimizer preserves segment order
+    # today, so this is insurance rather than a fix — but an unsorted list
+    # makes the SoC trace double back on itself, which reads as a data fault
+    # rather than a plotting one.
+    segs = sorted(optimal.segments, key=lambda s: s.d_start)
     x, y = [], []
     for s in segs:
         x += [s.d_start, s.d_end]
