@@ -29,7 +29,7 @@ import json
 import requests
 
 GROQ_URL   = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_MODEL = "gpt-oss-120b"
+GROQ_MODEL = "openai/gpt-oss-120b"
 TIMEOUT_S  = 30
 
 STRICT_RAG_SYSTEM = (
