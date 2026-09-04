@@ -48,7 +48,7 @@ with st.expander("What this can answer"):
         "**It won't answer** — not in the data:\n"
         "- Wet-weather pace, tyre strategy, or lap-by-lap detail (not tracked)\n"
         "- Races that haven't happened yet\n"
-        "- Real-world F1 results — this is the model's own 2026, not the real season"
+        "- "
     )
 
 EXAMPLES = [
