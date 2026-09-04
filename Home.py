@@ -12,6 +12,7 @@ from app.data_loader import (get_fingerprints, get_driver_standings,
                              list_available_predictions, get_prediction_data,
                              driver_badge, driver_name, TEAM_COLOURS)
 from app.charts import season_evolution_chart
+from config import CIRCUITS
 
 st.set_page_config(page_title="PitWall — F1 2026 Analytics",
                    page_icon="🏁", layout="wide",
@@ -149,7 +150,11 @@ st.divider()
 st.subheader("🔮 Latest Prediction")
 preds = list_available_predictions()
 if preds:
-    circuit = preds[-1]
+    # Pick by ROUND, not alphabetically. list_available_predictions returns a
+    # sorted set, so preds[-1] gave "Netherlands" over "Italy" — the older race
+    # simply because N sorts after I. Circuits missing from CIRCUITS sort last
+    # rather than crashing.
+    circuit = max(preds, key=lambda c: CIRCUITS.get(c, {}).get("round", -1))
     pred = get_prediction_data(circuit, pred_type="quali")
     if pred:
         st.markdown(f"**{circuit}** · {pred.get('circuit_type','').replace('_',' ').title()} "
