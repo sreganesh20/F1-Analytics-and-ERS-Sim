@@ -7,7 +7,7 @@ import pandas as pd
 from dataclasses import dataclass, field
 from models.track import TrackSegment, segment_lap
 from models.optimizer import OptimalStrategy, OptimalSegment, max_harvestable_mj
-from config import CARS, CIRCUIT_TYPES, REGS, regulation_epoch_for_round
+from config import CARS, CIRCUIT_TYPES, REGS, regulation_epoch_for_round, lineup_for_round
 
 
 @dataclass
@@ -286,9 +286,14 @@ def fingerprint_car(
 ) -> CarFingerprint:
     rd           = result_data or {}
     session_is_quali = circuit_cfg.get("fastf1_session", "Q") in ("Q", "SQ")
-    car_info     = CARS.get(driver_code, {"team": "Unknown", "pu": "Unknown"})
     circuit_type = circuit_cfg.get("circuit_type", "balanced")
     race_round   = circuit_cfg.get("round", 0)
+    # Round-aware lineup, not the flat CARS dict. This is the field that ends up
+    # in the stored fingerprint, so reading CARS here meant a substitute driver
+    # was filed under the wrong team (Lawson's Red Bull laps tagged VCARB) or,
+    # for a reserve absent from CARS entirely, "Unknown".
+    car_info     = lineup_for_round(race_round).get(
+        driver_code, {"team": "Unknown", "pu": "Unknown"})
     epoch        = regulation_epoch_for_round(race_round)
 
     speed_deltas   = compute_speed_deltas(car_df, ref_df, segments)

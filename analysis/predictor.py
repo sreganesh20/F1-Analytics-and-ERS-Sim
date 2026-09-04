@@ -355,10 +355,13 @@ def _predict_for_sessions(
         uncertainty     = (gap_std / 100) * ref_lap_s
         uncertainty     = max(uncertainty, 0.30 / max(1, len(weights) ** 0.5))
 
-        reg_notes = get_regulation_notes(driver_fps[0].pu_name, target_round)
+        # Same reasoning as the team label below: use the driver's current PU,
+        # not the one they started the season with.
+        current_pu = max(driver_fps, key=lambda f: f.race_round).pu_name
+        reg_notes  = get_regulation_notes(current_pu, target_round)
 
         # Honda retirement risk: inflate gap uncertainty pre-ADUO
-        if driver_fps[0].pu_name == "Honda" and target_round <= 6:
+        if current_pu == "Honda" and target_round <= 6:
             uncertainty += 1.5
 
         # Upcoming upgrade warnings
@@ -373,10 +376,16 @@ def _predict_for_sessions(
         variance_conf = 1.0 / (1.0 + gap_std * 2.0)   # gap_std in % units
         conf          = min(0.85, 0.5 * data_conf + 0.5 * variance_conf)
 
+        # Most recent fingerprint, not the earliest. driver_fps is in round
+        # order, so [0] is R1 — which mislabels anyone who changed team
+        # mid-season (Lawson's R1 fingerprint says VCARB, but from R12 he is
+        # in the Red Bull). Team and PU should reflect where they are now.
+        latest_fp = max(driver_fps, key=lambda f: f.race_round)
+
         dp = DriverPrediction(
             driver_code                = driver,
-            team                       = driver_fps[0].team,
-            pu_name                    = driver_fps[0].pu_name,
+            team                       = latest_fp.team,
+            pu_name                    = latest_fp.pu_name,
             predicted_delta_s          = predicted_delta,
             delta_range_low            = predicted_delta - uncertainty,
             delta_range_high           = predicted_delta + uncertainty,

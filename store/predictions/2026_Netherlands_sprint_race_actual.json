@@ -1,0 +1,156 @@
+[
+  {
+    "driver": "RUS",
+    "pos": 1,
+    "gap_s": 0.0,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "LEC",
+    "pos": 2,
+    "gap_s": 1.3599999999999999,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "NOR",
+    "pos": 3,
+    "gap_s": 5.196,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "ANT",
+    "pos": 4,
+    "gap_s": 5.5809999999999995,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "PIA",
+    "pos": 5,
+    "gap_s": 10.185,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "VER",
+    "pos": 6,
+    "gap_s": 10.529,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "HAM",
+    "pos": 7,
+    "gap_s": 12.188,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "GAS",
+    "pos": 8,
+    "gap_s": 42.51,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "BOR",
+    "pos": 9,
+    "gap_s": 44.437,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "LIN",
+    "pos": 10,
+    "gap_s": 44.971,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "LAW",
+    "pos": 11,
+    "gap_s": 47.471,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "COL",
+    "pos": 12,
+    "gap_s": 54.466,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "TSU",
+    "pos": 13,
+    "gap_s": 56.483,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "OCO",
+    "pos": 14,
+    "gap_s": 66.098,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "BEA",
+    "pos": 15,
+    "gap_s": 66.588,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "ALB",
+    "pos": 16,
+    "gap_s": 74.632,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "STR",
+    "pos": 17,
+    "gap_s": 74.65,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "ALO",
+    "pos": 18,
+    "gap_s": 75.284,
+    "laps_down": 0,
+    "status": "Finished"
+  },
+  {
+    "driver": "BOT",
+    "pos": 19,
+    "gap_s": null,
+    "laps_down": 1,
+    "status": "Lapped"
+  },
+  {
+    "driver": "SAI",
+    "pos": 20,
+    "gap_s": null,
+    "laps_down": 1,
+    "status": "Lapped"
+  },
+  {
+    "driver": "PER",
+    "pos": 21,
+    "gap_s": null,
+    "laps_down": 3,
+    "status": "Lapped"
+  },
+  {
+    "driver": "HUL",
+    "pos": 22,
+    "gap_s": null,
+    "laps_down": 17,
+    "status": "Lapped"
+  }
+]

@@ -39,11 +39,16 @@ STRICT_RAG_SYSTEM = (
     "2. If the data does not contain what's needed to answer, say so plainly — "
     "e.g. 'The model doesn't track that.' Never invent lap times, positions, "
     "quotes, or events.\n"
-    "3. Do not use knowledge of real-world F1 results from your training. This "
-    "is an alternate 2026 season; only the DATA block is real here.\n"
-    "4. Be concise and specific. Cite the numbers from the data. No preamble, "
+    "3. This is the REAL 2026 Formula 1 season, but it happened after your "
+    "training data ends — so you do not know its results. Anything you think "
+    "you remember about 2026 is unreliable. Never fill a gap from memory: if a "
+    "name, result or figure is not in the DATA block, say you don't have it.\n"
+    "4. Driver codes are three letters. Expand a code to a full name ONLY if "
+    "the roster in the DATA block gives that name. Never guess a driver's name "
+    "from their code.\n"
+    "5. Be concise and specific. Cite the numbers from the data. No preamble, "
     "no 'as an AI'.\n"
-    "5. Never present a prediction as a certainty. It's a model output with an "
+    "6. Never present a prediction as a certainty. It's a model output with an "
     "uncertainty range."
 )
 
@@ -207,8 +212,18 @@ def build_season_digest():
 
     fps = get_fingerprints()
     out = ["PITWALL 2026 SEASON DIGEST",
-           "(Model-derived summary. All figures come from stored session data.)",
+           "(Real 2026 Formula 1 session data from FastF1. Figures are measured, "
+           "except where marked as predictions.)",
            ""]
+
+    # ---- Driver roster ----
+    # Without this the model has only three-letter codes and invents full names
+    # for them: STR became "Stoffel Vandoorne", BOR became "Börje Rikardsson",
+    # SAI became "Said Al-Saadi". The numbers were right; the names were fiction.
+    out.append("DRIVER ROSTER (code — name — team):")
+    for code, car in sorted(CARS.items(), key=lambda kv: kv[1]["team"]):
+        out.append(f"  {code} — {car['name']} — {car['team']}")
+    out.append("")
 
     # ---- Constructor standings ----
     cons = get_constructor_standings()
@@ -255,7 +270,9 @@ def build_season_digest():
         faster = ds[0] if ts["med_gap_s"] <= 0 else ds[1]
         slower = ds[1] if faster == ds[0] else ds[0]
         w = (ts["d1_wins"], ts["d2_wins"]) if faster == ds[0] else (ts["d2_wins"], ts["d1_wins"])
-        out.append(f"  {team}: {faster} ahead of {slower} by "
+        f_name = CARS.get(faster, {}).get("name", faster)
+        s_name = CARS.get(slower, {}).get("name", slower)
+        out.append(f"  {team}: {faster} ({f_name}) ahead of {slower} ({s_name}) by "
                    f"{abs(ts['med_gap_s']):.3f}s, H2H {w[0]}-{w[1]} over {ts['total']} sessions")
     out.append("")
 
@@ -508,6 +525,11 @@ def ask_engineer(question):
     prompt = (
         "DATA:\n" + context + "\n\n"
         f"QUESTION: {question}\n\n"
-        "Answer from the DATA only. If the data doesn't cover it, say so."
+        "Answer from the DATA only. If the data doesn't cover it, say so.\n"
+        "Formatting: when listing several drivers or teams, use a markdown "
+        "bulleted list with one item per line — never a run-on paragraph of "
+        "dash-separated entries. Use full driver names from the roster, with "
+        "the code in brackets on first mention. Keep it under 200 words unless "
+        "the question needs more."
     )
     return ask(prompt, max_tokens=1400, temperature=0.3)

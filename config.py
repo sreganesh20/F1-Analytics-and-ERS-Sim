@@ -793,27 +793,133 @@ TEAM_UPGRADES = {
 #  in the car.
 # ─────────────────────────────────────────────
 
+ROUND_LINEUP_OVERRIDES = {
+    # Round-specific driver/team assignments, applied when PULLING session data.
+    #
+    # WHY THIS EXISTS
+    # ---------------
+    # CARS is a flat dict: one team per driver, no round awareness. The pipeline
+    # reads team, PU and name from it, so a mid-season substitution had to be
+    # patched into CARS by hand before a pull and reverted afterwards. Forget
+    # the edit and Lawson's Red Bull laps get filed under VCARB and Tsunoda is
+    # dropped entirely (the pipeline skips any driver not in CARS). Forget the
+    # revert and every later round is wrong instead. Both happened.
+    #
+    # Keyed by round, this expires by itself: R14 has no entry, so the lineup
+    # reverts automatically with no edit and nothing to remember.
+    #
+    # Entries for drivers already in CARS need only the changed fields.
+    # Entries for drivers NOT in CARS (a reserve called up) need the full set.
+    12: {  # Zandvoort — Hadjar out with a wrist fracture
+        "LAW": {"team": "Red Bull"},
+        "TSU": {"team": "VCARB", "pu": "RedBullFord", "fastf1_code": "TSU",
+                "name": "Yuki Tsunoda", "number": 22},
+    },
+    13: {  # Monza — Hadjar out for a second race
+        "LAW": {"team": "Red Bull"},
+        "TSU": {"team": "VCARB", "pu": "RedBullFord", "fastf1_code": "TSU",
+                "name": "Yuki Tsunoda", "number": 22},
+    },
+}
+
+
+def lineup_for_round(round_num: int) -> dict:
+    """
+    CARS as it stood for a given round, with any substitutions applied.
+
+    Always use this in the pipeline instead of CARS directly, so pulled data
+    reflects who actually drove rather than who normally drives.
+    """
+    merged = {code: dict(car) for code, car in CARS.items()}
+    for code, override in ROUND_LINEUP_OVERRIDES.get(round_num, {}).items():
+        merged.setdefault(code, {}).update(override)
+    return merged
+
+
+GRID_PENALTIES = {
+    # Grid penalties, keyed by round. Display only — these deliberately do NOT
+    # reorder the prediction.
+    #
+    # WHY NOT REORDER
+    # ---------------
+    # The model predicts PACE, and a power-unit penalty doesn't slow the car.
+    # Antonelli may well be quickest at Monza; he just starts last regardless.
+    # So the qualifying prediction stands as a pace statement, and the race
+    # prediction is annotated rather than adjusted — the model has no concept
+    # of overtaking difficulty, so demoting him would be a different wrong
+    # answer. Antonelli himself is targeting a top-five recovery, not last.
+    13: {
+        "ANT": {
+            "penalty": "Starts from the back",
+            "note": (
+                "Mercedes are fitting a complete new power unit — Antonelli's "
+                "fifth of the season after reliability trouble including the "
+                "Barcelona retirement — which carries an automatic back-of-grid "
+                "start. Toto Wolff: \"With Kimi we are taking the full thing. "
+                "Our calculations say that's the best track to take it. "
+                "Obviously, algorithms don't consider their nationality.\" "
+                "Monza is chosen because overtaking is comparatively easy, "
+                "though Wolff notes it is also an energy-poor circuit where "
+                "there are few chances to recharge the battery. Antonelli "
+                "leads the championship by 59 points and is targeting a "
+                "top-five recovery at his home race."
+            ),
+        },
+    },
+}
+
+
 DRIVER_SUBSTITUTIONS = {
     12: {
+        # Zandvoort has been run — written in past tense.
         "banner": (
-            "Isack Hadjar misses the Dutch Grand Prix with a wrist injury sustained "
-            "during the summer shutdown. Liam Lawson steps up from Racing Bulls to "
-            "partner Verstappen, and reserve driver Yuki Tsunoda takes Lawson's seat "
-            "alongside Lindblad. Zandvoort is where Lawson made his F1 debut in 2023, "
-            "also deputising for a driver with a wrist injury."
+            "Isack Hadjar missed the Dutch Grand Prix with a wrist fracture sustained "
+            "in a boxing session during the summer break. Liam Lawson stepped up from "
+            "Racing Bulls to partner Verstappen and finished seventh, having qualified "
+            "a tenth off him; reserve driver Yuki Tsunoda took Lawson's seat alongside "
+            "Lindblad and came home eleventh, ahead of his full-time team-mate. "
+            "Zandvoort is also where Lawson made his F1 debut in 2023, deputising for "
+            "a driver with a hand injury."
         ),
         # driver_code -> why they are out
         "unavailable": {
-            "HAD": "Wrist injury — not racing at Zandvoort",
+            "HAD": "Wrist injury — did not race at Zandvoort",
         },
-        # driver_code -> team they are driving for this round
+        # driver_code -> team they drove for this round
         "moved": {
             "LAW": "Red Bull",
         },
-        # drivers with no fingerprints, so no prediction is possible
+        # Stand-ins with no fingerprints at the time the prediction was made.
+        # The page skips any of these who now have real data.
         "added": [
             {"code": "TSU", "name": "Yuki Tsunoda", "team": "VCARB",
              "reason": "Reserve driver — no 2026 race data, so no prediction"},
+        ],
+    },
+    13: {
+        # Confirmed by Red Bull on Wednesday 2 September. Same lineup as R12.
+        "banner": (
+            "Isack Hadjar misses a second consecutive race at Monza as his wrist "
+            "continues to heal. Red Bull left the decision until Wednesday afternoon "
+            "to give him every chance, but medical staff ruled him out and the team "
+            "says it will take no unnecessary risks; they hope to have him back for "
+            "Madrid next weekend. Liam Lawson stays alongside Verstappen at Red Bull, "
+            "and Yuki Tsunoda keeps Lawson's Racing Bulls seat beside Lindblad. Unlike "
+            "Zandvoort this is not a cold start — Lawson now has a full sprint weekend "
+            "of RB22 running behind him, and the model has his Red Bull pace to work "
+            "from rather than extrapolating VCARB form."
+        ),
+        "unavailable": {
+            "HAD": "Wrist injury — not racing at Monza",
+        },
+        "moved": {
+            "LAW": "Red Bull",
+        },
+        # Tsunoda now HAS R12 fingerprints, so he is predicted normally and the
+        # page skips this entry. Kept so the lineup is documented in one place.
+        "added": [
+            {"code": "TSU", "name": "Yuki Tsunoda", "team": "VCARB",
+             "reason": "Reserve driver standing in for Lawson"},
         ],
     },
 }

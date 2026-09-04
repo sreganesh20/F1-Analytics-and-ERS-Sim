@@ -1,58 +1,80 @@
 PITWALL 2026 SEASON DIGEST
-(Model-derived summary. All figures come from stored session data.)
+(Real 2026 Formula 1 session data from FastF1. Figures are measured, except where marked as predictions.)
+
+DRIVER ROSTER (code — name — team):
+  GAS — Pierre Gasly — Alpine
+  COL — Franco Colapinto — Alpine
+  ALO — Fernando Alonso — Aston Martin
+  STR — Lance Stroll — Aston Martin
+  HUL — Nico Hulkenberg — Audi
+  BOR — Gabriel Bortoleto — Audi
+  PER — Sergio Perez — Cadillac
+  BOT — Valtteri Bottas — Cadillac
+  LEC — Charles Leclerc — Ferrari
+  HAM — Lewis Hamilton — Ferrari
+  BEA — Oliver Bearman — Haas
+  OCO — Esteban Ocon — Haas
+  NOR — Lando Norris — McLaren
+  PIA — Oscar Piastri — McLaren
+  RUS — George Russell — Mercedes
+  ANT — Andrea Kimi Antonelli — Mercedes
+  VER — Max Verstappen — Red Bull
+  HAD — Isack Hadjar — Red Bull
+  LIN — Arvid Lindblad — VCARB
+  LAW — Liam Lawson — VCARB
+  ALB — Alexander Albon — Williams
+  SAI — Carlos Sainz — Williams
 
 CONSTRUCTOR STANDINGS:
-  P1 Mercedes: 379 pts, 8 wins
-  P2 Ferrari: 307 pts, 2 wins
-  P3 McLaren: 220 pts, 1 wins
-  P4 Red Bull: 177 pts, 0 wins
+  P1 Mercedes: 425 pts, 8 wins
+  P2 Ferrari: 338 pts, 2 wins
+  P3 McLaren: 263 pts, 2 wins
+  P4 Red Bull: 186 pts, 0 wins
   P5 RB F1 Team: 66 pts, 0 wins
-  P6 Alpine F1 Team: 61 pts, 0 wins
+  P6 Alpine F1 Team: 63 pts, 0 wins
   P7 Haas F1 Team: 21 pts, 0 wins
-  P8 Audi: 12 pts, 0 wins
+  P8 Audi: 16 pts, 0 wins
   P9 Williams: 11 pts, 0 wins
-  P10 Aston Martin: 1 pts, 0 wins
+  P10 Aston Martin: 3 pts, 0 wins
   P11 Cadillac F1 Team: 0 pts, 0 wins
 
 DRIVER STANDINGS (top 12):
-  P1 Andrea Kimi Antonelli (Mercedes): 219 pts
-  P2 Lewis Hamilton (Ferrari): 169 pts
-  P3 George Russell (Mercedes): 160 pts
-  P4 Charles Leclerc (Ferrari): 138 pts
-  P5 Lando Norris (McLaren): 128 pts
-  P6 Max Verstappen (Red Bull): 109 pts
-  P7 Oscar Piastri (McLaren): 92 pts
+  P1 Andrea Kimi Antonelli (Mercedes): 242 pts
+  P2 George Russell (Mercedes): 183 pts
+  P3 Lewis Hamilton (Ferrari): 183 pts
+  P4 Lando Norris (McLaren): 159 pts
+  P5 Charles Leclerc (Ferrari): 155 pts
+  P6 Max Verstappen (Red Bull): 112 pts
+  P7 Oscar Piastri (McLaren): 104 pts
   P8 Isack Hadjar (Red Bull): 68 pts
-  P9 Liam Lawson (RB F1 Team): 43 pts
-  P10 Pierre Gasly (Alpine F1 Team): 42 pts
+  P9 Liam Lawson (RB F1 Team): 49 pts
+  P10 Pierre Gasly (Alpine F1 Team): 44 pts
   P11 Arvid Lindblad (RB F1 Team): 23 pts
   P12 Franco Colapinto (Alpine F1 Team): 19 pts
 
 QUALIFYING PACE (median % off session-fastest, lower = quicker):
-  Mercedes: 0.167%
-  Ferrari: 0.434%
-  McLaren: 0.569%
+  Mercedes: 0.165%
+  Ferrari: 0.456%
+  McLaren: 0.493%
   Red Bull: 0.739%
   VCARB: 1.817%
   Audi: 1.963%
-  Alpine: 1.985%
-  Haas: 2.591%
-  Williams: 2.676%
-  Cadillac: 4.162%
+  Alpine: 2.033%
+  Haas: 2.701%
+  Williams: 2.809%
+  Cadillac: 4.363%
   Aston Martin: 4.825%
 
 TEAMMATE QUALIFYING RECORDS (median gap, head-to-head):
-  Alpine: GAS ahead of COL by 0.484s, H2H 10-5 over 15 sessions
-  Aston Martin: ALO ahead of STR by 0.421s, H2H 11-2 over 13 sessions
-  Audi: HUL ahead of BOR by 0.032s, H2H 8-7 over 15 sessions
-  Cadillac: PER ahead of BOT by 0.168s, H2H 9-5 over 14 sessions
-  Ferrari: HAM ahead of LEC by 0.013s, H2H 8-7 over 15 sessions
-  Haas: BEA ahead of OCO by 0.294s, H2H 11-4 over 15 sessions
-  McLaren: NOR ahead of PIA by 0.052s, H2H 11-4 over 15 sessions
-  Mercedes: ANT ahead of RUS by 0.281s, H2H 9-6 over 15 sessions
-  Red Bull: VER ahead of HAD by 0.134s, H2H 12-2 over 14 sessions
-  VCARB: LAW ahead of LIN by 0.012s, H2H 8-6 over 14 sessions
-  Williams: SAI ahead of ALB by 0.257s, H2H 11-2 over 13 sessions
+  Alpine: GAS (Pierre Gasly) ahead of COL (Franco Colapinto) by 0.484s, H2H 12-5 over 17 sessions
+  Aston Martin: ALO (Fernando Alonso) ahead of STR (Lance Stroll) by 0.274s, H2H 12-3 over 15 sessions
+  Audi: BOR (Gabriel Bortoleto) ahead of HUL (Nico Hulkenberg) by 0.025s, H2H 9-8 over 17 sessions
+  Cadillac: PER (Sergio Perez) ahead of BOT (Valtteri Bottas) by 0.105s, H2H 9-7 over 16 sessions
+  Ferrari: HAM (Lewis Hamilton) ahead of LEC (Charles Leclerc) by 0.013s, H2H 9-8 over 17 sessions
+  Haas: BEA (Oliver Bearman) ahead of OCO (Esteban Ocon) by 0.230s, H2H 11-6 over 17 sessions
+  McLaren: NOR (Lando Norris) ahead of PIA (Oscar Piastri) by 0.058s, H2H 13-4 over 17 sessions
+  Mercedes: ANT (Andrea Kimi Antonelli) ahead of RUS (George Russell) by 0.222s, H2H 9-8 over 17 sessions
+  Williams: SAI (Carlos Sainz) ahead of ALB (Alexander Albon) by 0.180s, H2H 11-4 over 15 sessions
 
 POWER UNITS AND ADUO UPGRADE STATE:
   Audi (supplies Audi): ADUO upgrade deployed at round 7

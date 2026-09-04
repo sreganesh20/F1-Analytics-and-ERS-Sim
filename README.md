@@ -4,7 +4,7 @@ A telemetry-driven Formula 1 analytics platform built on FastF1. It fingerprints
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://f1-analytics-and-ers-sim-qvp7tgfjxrwmbz4zs9nxr7.streamlit.app/)
 
-This is an **alternate 2026 season** — the data models a hypothetical championship, not real-world results.
+All data is **real 2026 Formula 1 session data**, pulled from FastF1's FIA timing feed — actual lap times, telemetry, and results. The predictions are the model's own output; everything they are built from is measured.
 
 ---
 

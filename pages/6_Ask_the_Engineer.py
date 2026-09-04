@@ -76,11 +76,15 @@ if st.button("Ask", type="primary") and question.strip():
     if err:
         st.info(err)
     else:
+        # st.markdown does NOT parse markdown inside injected HTML, so wrapping
+        # the answer in a styled <div> left literal ** and - characters on
+        # screen. Style a container instead and let Streamlit render the text.
         st.markdown(
-            f'<div style="background:#141414;border-left:3px solid #FF6B35;'
-            f'border-radius:0 8px 8px 0;padding:14px 18px;margin:10px 0;">'
-            f'<div style="font-size:0.86rem;color:#E0E0E0;line-height:1.6;">{answer}</div>'
-            f'</div>', unsafe_allow_html=True)
+            '<div style="border-left:3px solid #FF6B35;padding-left:14px;'
+            'margin:10px 0 4px;"><span style="font-size:0.7rem;color:#FF6B35;'
+            'font-family:monospace;">PITWALL</span></div>',
+            unsafe_allow_html=True)
+        st.markdown(answer)
         st.caption("Answered from PitWall's stored season data by an LLM under "
                    "strict grounding. It can still misread — treat it as a "
                    "reading of the numbers, not an oracle.")

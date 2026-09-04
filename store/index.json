@@ -268,5 +268,41 @@
     "session_type": "R",
     "n_fingerprints": 21,
     "path": "2026_R07_R.json"
+  },
+  "2026_R12_Q": {
+    "circuit_name": "Netherlands",
+    "circuit_type": "high_speed",
+    "race_round": 12,
+    "year": 2026,
+    "session_type": "Q",
+    "n_fingerprints": 22,
+    "path": "2026_R12_Q.json"
+  },
+  "2026_R12_SQ": {
+    "circuit_name": "Netherlands",
+    "circuit_type": "high_speed",
+    "race_round": 12,
+    "year": 2026,
+    "session_type": "SQ",
+    "n_fingerprints": 22,
+    "path": "2026_R12_SQ.json"
+  },
+  "2026_R12_R": {
+    "circuit_name": "Netherlands",
+    "circuit_type": "high_speed",
+    "race_round": 12,
+    "year": 2026,
+    "session_type": "R",
+    "n_fingerprints": 20,
+    "path": "2026_R12_R.json"
+  },
+  "2026_R12_S": {
+    "circuit_name": "Netherlands",
+    "circuit_type": "high_speed",
+    "race_round": 12,
+    "year": 2026,
+    "session_type": "S",
+    "n_fingerprints": 21,
+    "path": "2026_R12_S.json"
   }
 }

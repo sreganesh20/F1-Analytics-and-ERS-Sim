@@ -22,7 +22,7 @@ from config import (CARS, CIRCUITS, TEAM_UPGRADES, KNOWN_UPCOMING_UPGRADES,
 
 # Latest round with stored session data. Anything at or before this has
 # happened; anything after is still incoming.
-CURRENT_ROUND = 11
+CURRENT_ROUND = 12
 
 # ── Colour palettes ──────────────────────────────────────
 

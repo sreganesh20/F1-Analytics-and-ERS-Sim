@@ -13,7 +13,7 @@ from models.track import segment_lap, print_track_summary
 from models.optimizer import optimise, print_strategy_summary
 from models.fingerprint import fingerprint_race, print_race_fingerprints
 from data.race_store import save_fingerprints, print_store_summary
-from config import CIRCUITS, CARS
+from config import CIRCUITS, CARS, lineup_for_round
 
 
 # ─────────────────────────────────────────────────────────
@@ -286,6 +286,9 @@ def run_race_pipeline(
         raise ValueError(f"Unknown circuit: {circuit_name}. Check config.CIRCUITS.")
 
     session_type    = circuit_cfg.get("fastf1_session", "Q")
+    # Who actually drove this round, not who normally drives. Reverts
+    # automatically for any round without an override entry.
+    cars            = lineup_for_round(circuit_cfg["round"])
     is_race_session = session_type in ("R", "S")
 
     print(f"\n{'-'*60}")
@@ -385,7 +388,7 @@ def run_race_pipeline(
 
                     rep_lap = drv_laps.loc[rep_idx]         
                     drv_code = rep_lap["Driver"]
-                    if drv_code not in CARS:
+                    if drv_code not in cars:
                         continue
 
                     lt = rep_lap["LapTime"]
@@ -422,7 +425,7 @@ def run_race_pipeline(
                         continue
 
                     drv_code = fastest["Driver"]
-                    if drv_code not in CARS:
+                    if drv_code not in cars:
                         continue
 
                     lt = fastest["LapTime"]
@@ -470,7 +473,7 @@ def run_race_pipeline(
                 car_df["Driver"]  = drv_code
                 car_df["LapTime"] = lap_time_s
 
-                car_info = CARS[drv_code]
+                car_info = cars[drv_code]
                 driver_telemetry[drv_code]  = car_df
                 lap_times[drv_code]         = lap_time_s
                 driver_laps_compl[drv_code] = laps_completed

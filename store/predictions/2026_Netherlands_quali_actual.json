@@ -1,0 +1,134 @@
+[
+  {
+    "driver": "NOR",
+    "pos": 1,
+    "gap_s": 0.0,
+    "status": ""
+  },
+  {
+    "driver": "RUS",
+    "pos": 2,
+    "gap_s": 0.10200000000000387,
+    "status": ""
+  },
+  {
+    "driver": "ANT",
+    "pos": 3,
+    "gap_s": 0.13300000000000978,
+    "status": ""
+  },
+  {
+    "driver": "PIA",
+    "pos": 4,
+    "gap_s": 0.14200000000001012,
+    "status": ""
+  },
+  {
+    "driver": "HAM",
+    "pos": 5,
+    "gap_s": 0.33100000000000307,
+    "status": ""
+  },
+  {
+    "driver": "LEC",
+    "pos": 6,
+    "gap_s": 0.39500000000001023,
+    "status": ""
+  },
+  {
+    "driver": "VER",
+    "pos": 7,
+    "gap_s": 0.4549999999999983,
+    "status": ""
+  },
+  {
+    "driver": "LAW",
+    "pos": 8,
+    "gap_s": 0.5700000000000074,
+    "status": ""
+  },
+  {
+    "driver": "BOR",
+    "pos": 9,
+    "gap_s": 0.9159999999999968,
+    "status": ""
+  },
+  {
+    "driver": "LIN",
+    "pos": 10,
+    "gap_s": 1.0220000000000056,
+    "status": ""
+  },
+  {
+    "driver": "GAS",
+    "pos": 11,
+    "gap_s": 1.453000000000003,
+    "status": ""
+  },
+  {
+    "driver": "TSU",
+    "pos": 12,
+    "gap_s": 1.4639999999999986,
+    "status": ""
+  },
+  {
+    "driver": "HUL",
+    "pos": 13,
+    "gap_s": 1.6340000000000003,
+    "status": ""
+  },
+  {
+    "driver": "COL",
+    "pos": 14,
+    "gap_s": 1.6370000000000005,
+    "status": ""
+  },
+  {
+    "driver": "OCO",
+    "pos": 15,
+    "gap_s": 1.9740000000000038,
+    "status": ""
+  },
+  {
+    "driver": "ALB",
+    "pos": 16,
+    "gap_s": 2.0190000000000055,
+    "status": ""
+  },
+  {
+    "driver": "SAI",
+    "pos": 17,
+    "gap_s": 2.4110000000000014,
+    "status": ""
+  },
+  {
+    "driver": "ALO",
+    "pos": 18,
+    "gap_s": 2.487000000000009,
+    "status": ""
+  },
+  {
+    "driver": "STR",
+    "pos": 19,
+    "gap_s": 2.655000000000001,
+    "status": ""
+  },
+  {
+    "driver": "BEA",
+    "pos": 20,
+    "gap_s": 2.6629999999999967,
+    "status": ""
+  },
+  {
+    "driver": "BOT",
+    "pos": 21,
+    "gap_s": 3.2079999999999984,
+    "status": ""
+  },
+  {
+    "driver": "PER",
+    "pos": 22,
+    "gap_s": 3.4369999999999976,
+    "status": ""
+  }
+]
