@@ -1,161 +1,485 @@
-"""
-pages/4_Upgrades_and_News.py — Team upgrade timeline + race commentary
-"""
+"""pages/4_Upgrades_and_News.py — LatentLap · Upgrades & Development."""
 
-import os, sys
+from __future__ import annotations
+
+import os
+import sys
+from collections import defaultdict
+
+import pandas as pd
+import plotly.graph_objects as go
 import streamlit as st
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
-from app.data_loader import (get_upgrade_timeline, get_commentary,
-                              upgrade_card, upgrade_group_card,
-                              team_display_order, SIG_COLOURS, TEAM_COLOURS)
-from app.charts import upgrade_timeline_chart
-from config import CARS
+from app.data_loader import (
+    TEAM_COLOURS,
+    current_round,
+    get_upgrade_timeline,
+)
+from app.ui import inject_global_css, page_header, section_header
 
-st.set_page_config(page_title="Upgrades & News — PitWall", page_icon="📰", layout="wide")
-ACCENT = '<div style="height:3px;background:linear-gradient(90deg,#FF1E00,#FF6B35);border-radius:2px;margin-bottom:1rem;"></div>'
-st.markdown(ACCENT, unsafe_allow_html=True)
-st.title("📰 Upgrades & News")
-st.caption("Chassis and power unit developments across the 2026 season, with sources. Upcoming entries are announced but not yet raced.")
 
-# ── Filters ───────────────────────────────────────────────
-#
-# Team list comes from CARS, not a hardcoded set. The old list included
-# "Honda", which is a power unit manufacturer rather than a team — it put a
-# twelfth row on a chart of eleven and made a PU upgrade look like a team's
-# own development.
-ALL_TEAMS = sorted({c["team"] for c in CARS.values()})
+st.set_page_config(
+    page_title="Upgrades & Development — LatentLap",
+    page_icon="🛠️",
+    layout="wide",
+)
+inject_global_css()
 
-upgrades = get_upgrade_timeline()
 
-col1, col2 = st.columns([3, 2])
-with col1:
-    # Single dropdown rather than a multiselect pre-filled with every team,
-    # which rendered eleven chips and pushed the chart below the fold.
-    team_choice = st.selectbox("Team", ["All teams"] + ALL_TEAMS, index=0)
-with col2:
-    show_incoming = st.checkbox("Include upcoming upgrades", value=True)
+CATEGORY_LABELS = {
+    "persistent": "Persistent development",
+    "circuit_specific": "Circuit-specific",
+    "reliability": "Reliability",
+    "power_unit": "PU / ADUO",
+}
 
-filtered = [u for u in upgrades
-            if (team_choice == "All teams" or u["team"] == team_choice)
-            and (show_incoming or not u["incoming"])]
+CATEGORY_HELP = {
+    "persistent": (
+        "A lasting chassis or aero change carried forward beyond one event."
+    ),
+    "circuit_specific": (
+        "A track-range, cooling or aero configuration chosen for one circuit."
+    ),
+    "reliability": (
+        "Cooling, structural or reliability work without a defensible persistent pace step."
+    ),
+    "power_unit": (
+        "Power-unit homologation / ADUO context, kept separate from chassis-aero development."
+    ),
+}
 
-# ── Timeline chart ────────────────────────────────────────
-st.subheader("📅 Upgrade Timeline")
-chart_teams = ALL_TEAMS if team_choice == "All teams" else [team_choice]
-fig = upgrade_timeline_chart(filtered, all_teams=chart_teams)
-st.plotly_chart(fig, use_container_width=True)
+SIGNIFICANCE_ORDER = {
+    "power_unit": 4,
+    "new_car": 4,
+    "major": 3,
+    "medium": 2,
+    "moderate": 2,
+    "minor": 1,
+}
 
-st.caption(
-    "● Confirmed  ◆ Upcoming  |  "
-    + "  ".join(
-        f'<span style="color:{c};">■ {sig.replace("_"," ").title()}</span>'
-        for sig, c in SIG_COLOURS.items()
+SIGNIFICANCE_LABELS = {
+    "power_unit": "PU",
+    "new_car": "New car",
+    "major": "Major",
+    "medium": "Moderate",
+    "moderate": "Moderate",
+    "minor": "Minor",
+}
+
+
+def _event_category(event: dict) -> str:
+    if event.get("pu"):
+        return "power_unit"
+    return event.get("category", "persistent")
+
+
+def _meaningful(event: dict) -> bool:
+    category = _event_category(event)
+    significance = event.get("significance", "minor")
+    if category == "power_unit":
+        return True
+    if category != "persistent":
+        return False
+    return SIGNIFICANCE_ORDER.get(significance, 1) >= 2
+
+
+def _source_label(event: dict) -> str:
+    source = (event.get("source") or "").strip()
+    if source:
+        return source
+    if event.get("pu"):
+        return "LatentLap canonical PU / ADUO configuration"
+    return "LatentLap canonical upgrade inventory"
+
+
+def _team_order(events: list[dict]) -> list[str]:
+    teams = sorted({event["team"] for event in events})
+    return sorted(
+        teams,
+        key=lambda team: (
+            -max(
+                (
+                    SIGNIFICANCE_ORDER.get(event.get("significance", "minor"), 1)
+                    for event in events
+                    if event["team"] == team
+                ),
+                default=0,
+            ),
+            team,
+        ),
     )
-    + "  |  Power unit upgrades appear on every customer team, so one "
-      "manufacturer homologation can show on three rows.",
-    unsafe_allow_html=True,
+
+
+def _timeline_figure(events: list[dict]):
+    if not events:
+        return None
+
+    teams = _team_order(events)
+    team_to_y = {team: idx for idx, team in enumerate(teams)}
+
+    fig = go.Figure()
+
+    for event in events:
+        team = event["team"]
+        category = _event_category(event)
+        significance = event.get("significance", "minor")
+        size = {
+            4: 18,
+            3: 15,
+            2: 12,
+            1: 9,
+        }.get(SIGNIFICANCE_ORDER.get(significance, 1), 9)
+
+        colour = TEAM_COLOURS.get(team, "#8d98a8")
+        symbol = {
+            "persistent": "circle",
+            "circuit_specific": "diamond-open",
+            "reliability": "square-open",
+            "power_unit": "star",
+        }.get(category, "circle")
+
+        fig.add_trace(
+            go.Scatter(
+                x=[event["round"]],
+                y=[team],
+                mode="markers",
+                marker=dict(
+                    size=size,
+                    color=colour,
+                    symbol=symbol,
+                    line=dict(
+                        color="#d7dde6",
+                        width=0.7,
+                    ),
+                    opacity=0.95 if not event.get("incoming") else 0.5,
+                ),
+                customdata=[[
+                    CATEGORY_LABELS.get(category, category),
+                    event.get("headline", ""),
+                    event.get("detail", ""),
+                    SIGNIFICANCE_LABELS.get(significance, significance.title()),
+                    event.get("circuit", ""),
+                ]],
+                hovertemplate=(
+                    "<b>%{y}</b> · R%{x} · %{customdata[4]}"
+                    "<br>%{customdata[0]} · %{customdata[3]}"
+                    "<br>%{customdata[1]}"
+                    "<br>%{customdata[2]}"
+                    "<extra></extra>"
+                ),
+                showlegend=False,
+            )
+        )
+
+    fig.update_layout(
+        height=max(480, 44 * len(teams) + 90),
+        margin=dict(l=10, r=25, t=10, b=45),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#d9b2b5", size=14),
+        xaxis=dict(
+            title="Round",
+            dtick=1,
+            gridcolor="rgba(255,255,255,0.06)",
+            zeroline=False,
+        ),
+        yaxis=dict(
+            title=None,
+            categoryorder="array",
+            categoryarray=list(reversed(teams)),
+            gridcolor="rgba(255,255,255,0.035)",
+        ),
+    )
+    return fig
+
+
+def _event_table(events: list[dict]) -> pd.DataFrame:
+    rows = []
+    for event in events:
+        category = _event_category(event)
+        significance = event.get("significance", "minor")
+        rows.append(
+            {
+                "Round": f"R{event['round']}",
+                "Circuit": event.get("circuit", "—"),
+                "Team": event["team"],
+                "Type": CATEGORY_LABELS.get(category, category),
+                "Significance": SIGNIFICANCE_LABELS.get(
+                    significance,
+                    significance.replace("_", " ").title(),
+                ),
+                "Change": event.get("headline", ""),
+                "Status": "Upcoming" if event.get("incoming") else "Confirmed",
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def _source_groups(events: list[dict]):
+    groups = defaultdict(list)
+    for event in events:
+        source = _source_label(event)
+        label = (
+            f"R{event['round']} · {event['team']} · "
+            f"{event.get('headline', '')}"
+        )
+        groups[source].append(label)
+    return groups
+
+
+page_header(
+    "Car development",
+    "Upgrades & Development",
+    "Follow how the 2026 cars have changed, while keeping lasting development separate from circuit-specific, reliability and power-unit work.",
 )
 
-st.divider()
+events = get_upgrade_timeline()
+if not events:
+    st.warning("No upgrade history is available.")
+    st.stop()
 
-# ── Upgrade details ───────────────────────────────────────
-st.subheader("🔧 Upgrade Details")
+now_round = current_round()
+confirmed = [event for event in events if not event.get("incoming")]
+incoming = [event for event in events if event.get("incoming")]
+meaningful = [event for event in confirmed if _meaningful(event)]
+persistent = [
+    event
+    for event in confirmed
+    if _event_category(event) == "persistent"
+]
+power_unit = [
+    event
+    for event in confirmed
+    if _event_category(event) == "power_unit"
+]
 
-upcoming  = [u for u in reversed(filtered) if u["incoming"]]
-confirmed = [u for u in filtered if not u["incoming"]]
+m1, m2, m3, m4 = st.columns(4, gap="medium")
+m1.metric("Analysed through", f"R{now_round}")
+m2.metric("Confirmed changes", len(confirmed))
+m3.metric("Persistent development", len(persistent))
+m4.metric("PU / ADUO events", len(power_unit))
 
-# Upcoming stays a flat list — there are only a handful and they are the
-# thing people came to read.
-if upcoming:
-    st.markdown("**Upcoming**")
-    for u in upcoming:
-        st.markdown(upgrade_card(u), unsafe_allow_html=True)
-    st.markdown("")
+section_header(
+    "How to read it",
+    "Not every new part means the car permanently got faster",
+    "LatentLap keeps four kinds of technical change separate so a one-race configuration is not mistaken for a lasting development step.",
+)
 
-# Confirmed is grouped per team in two columns. As one flat list it was 27
-# stacked cards — several screens of scrolling with no way to see what any
-# one team had done across the season.
-if confirmed:
-    st.markdown("**Confirmed** — newest first within each team")
+c1, c2, c3, c4 = st.columns(4, gap="medium")
+for column, category in zip(
+    (c1, c2, c3, c4),
+    ("persistent", "circuit_specific", "reliability", "power_unit"),
+):
+    with column:
+        with st.container(border=True):
+            st.markdown(f"**{CATEGORY_LABELS[category]}**")
+            st.write(CATEGORY_HELP[category])
 
-    by_team = {}
-    for u in confirmed:
-        by_team.setdefault(u["team"], []).append(u)
+timeline_tab, team_tab, sources_tab = st.tabs(
+    ["Season timeline", "Team drill-down", "Sources"]
+)
 
-    ordered = team_display_order(by_team.keys())
-    cols    = st.columns(2)
+# ============================================================
+# SEASON TIMELINE
+# ============================================================
+with timeline_tab:
+    section_header(
+        "Season view",
+        "What changed, and when?",
+        "The default view shows meaningful persistent development plus power-unit steps. Open the full inventory to see every declared circuit-specific and reliability change.",
+    )
 
-    for i, team in enumerate(ordered):
-        rows    = by_team[team]
-        chassis = sorted([r for r in rows if not r.get("pu")],
-                         key=lambda r: -r["round"])
-        power   = sorted([r for r in rows if r.get("pu")],
-                         key=lambda r: -r["round"])
-        with cols[i % 2]:
-            st.markdown(
-                upgrade_group_card(team, chassis, power,
-                                   colour=TEAM_COLOURS.get(team, "#888")),
-                unsafe_allow_html=True)
+    show_full = st.toggle(
+        "Show full declared inventory",
+        value=False,
+        help=(
+            "Off = moderate/major persistent development + PU/ADUO. "
+            "On = every confirmed circuit-specific, reliability and minor change too."
+        ),
+    )
 
-st.divider()
+    timeline_events = confirmed if show_full else meaningful
 
-# ── Commentary ─────────────────────────────────────────────
-st.subheader("📖 Race Commentary")
-commentary = get_commentary()
-
-# Auto-generate a recap for a round that has results but no written entry.
-# Supplements the hand-written entries; clearly labelled, never overwrites them.
-from analysis.llm import available as ai_available, generate_race_commentary
-from app.data_loader import get_fingerprints
-from config import CIRCUITS
-
-if ai_available():
-    written_rounds = {e["round"] for e in commentary}
-    raced_rounds   = sorted({f.race_round for f in get_fingerprints()
-                             if f.session_type == "R"})
-    missing = [r for r in raced_rounds if r not in written_rounds]
-    if missing:
-        with st.expander(f"Auto-generate a recap "
-                         f"({len(missing)} round{'s' if len(missing) != 1 else ''} "
-                         f"without a written entry)"):
-            rnd = st.selectbox("Round", missing,
-                               format_func=lambda r: f"Round {r}")
-            if st.button("Generate recap"):
-                with st.spinner("Reading the classification…"):
-                    entry, err = generate_race_commentary(rnd)
-                if err:
-                    st.info(err)
-                else:
-                    st.markdown(f"**{entry['headline']}**")
-                    st.markdown(entry["body"])
-                    st.caption("Auto-generated from the finishing order. "
-                               "To keep it, paste into data/commentary.json.")
-
-if not commentary:
-    st.info("No commentary yet. Edit `data/commentary.json` to add race summaries.")
-else:
-    tag_options = sorted({tag for entry in commentary for tag in entry.get("tags", [])})
-    tag_filter  = st.multiselect("Filter by tag", tag_options, default=[])
-
-    for entry in reversed(commentary):
-        tags = entry.get("tags", [])
-        if tag_filter and not any(t in tags for t in tag_filter):
-            continue
-
-        tag_html = " ".join(
-            f'<code style="font-size:0.7rem;color:#888;background:#1A1A1A;'
-            f'padding:1px 5px;border-radius:3px;">{t}</code>'
-            for t in tags
+    fig = _timeline_figure(timeline_events)
+    if fig is not None:
+        st.plotly_chart(
+            fig,
+            use_container_width=True,
+            config={"displayModeBar": False},
         )
+
+    st.caption(
+        "Circle = persistent development · open diamond = circuit-specific · "
+        "open square = reliability · star = PU / ADUO. Marker size reflects reviewed significance."
+    )
+
+    st.dataframe(
+        _event_table(
+            sorted(
+                timeline_events,
+                key=lambda event: (
+                    -event["round"],
+                    event["team"],
+                ),
+            )
+        ),
+        use_container_width=True,
+        hide_index=True,
+        height=min(660, 36 * len(timeline_events) + 40),
+    )
+
+    if incoming:
         with st.expander(
-            f"R{entry['round']} {entry['circuit']} · {entry['headline']}",
-            expanded=False
+            f"Upcoming / planned items ({len(incoming)})"
         ):
-            st.markdown(entry.get("body", ""))
-            if tag_html:
-                st.markdown(tag_html, unsafe_allow_html=True)
-            st.caption(entry.get("date", ""))
+            st.dataframe(
+                _event_table(incoming),
+                use_container_width=True,
+                hide_index=True,
+            )
+
+# ============================================================
+# TEAM DRILL-DOWN
+# ============================================================
+with team_tab:
+    teams = sorted({event["team"] for event in events})
+    selected_team = st.selectbox(
+        "Team",
+        teams,
+        key="upgrade_team",
+    )
+
+    team_events = [
+        event
+        for event in events
+        if event["team"] == selected_team
+    ]
+    team_confirmed = [
+        event
+        for event in team_events
+        if not event.get("incoming")
+    ]
+
+    st.markdown(f"## {selected_team}")
+
+    counts = defaultdict(int)
+    for event in team_confirmed:
+        counts[_event_category(event)] += 1
+
+    t1, t2, t3, t4 = st.columns(4, gap="medium")
+    t1.metric("Persistent", counts["persistent"])
+    t2.metric("Circuit-specific", counts["circuit_specific"])
+    t3.metric("Reliability", counts["reliability"])
+    t4.metric("PU / ADUO", counts["power_unit"])
+
+    important = sorted(
+        [
+            event
+            for event in team_confirmed
+            if _meaningful(event)
+        ],
+        key=lambda event: (
+            -event["round"],
+            -SIGNIFICANCE_ORDER.get(
+                event.get("significance", "minor"),
+                1,
+            ),
+        ),
+    )
+
+    section_header(
+        "Key development",
+        "Meaningful changes first",
+        "These are the persistent chassis/aero steps rated moderate or major, plus PU / ADUO events. This ordering is for readability, not a claim of measured lap-time gain.",
+    )
+
+    if important:
+        for event in important:
+            category = _event_category(event)
+            significance = event.get("significance", "minor")
+            with st.container(border=True):
+                head_a, head_b = st.columns([4, 1])
+                with head_a:
+                    st.markdown(
+                        f"### R{event['round']} · {event.get('circuit', '')}"
+                    )
+                    st.markdown(f"**{event.get('headline', '')}**")
+                with head_b:
+                    st.markdown(
+                        f"**{SIGNIFICANCE_LABELS.get(significance, significance.title())}**"
+                    )
+                    st.caption(
+                        CATEGORY_LABELS.get(category, category)
+                    )
+
+                detail = event.get("detail", "")
+                if detail:
+                    st.write(detail)
+
+                st.caption(
+                    f"Source · {_source_label(event)}"
+                )
+    else:
+        st.info(
+            "No moderate/major persistent or PU development event is stored for this team yet."
+        )
+
+    with st.expander("Full team inventory"):
+        st.dataframe(
+            _event_table(
+                sorted(
+                    team_events,
+                    key=lambda event: -event["round"],
+                )
+            ),
+            use_container_width=True,
+            hide_index=True,
+        )
+
+    st.markdown(
+        """
+<div class="ll-ai-hook">
+    <div>
+        <strong>Ask what an upgrade actually changed</strong>
+        <span>Ask the Engineer can explain the declared package, the timing and the performance context without inventing a lap-time gain.</span>
+    </div>
+    <a class="ll-cta ll-cta-primary" href="/Ask_the_Engineer" target="_self">Ask the Engineer</a>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+# ============================================================
+# SOURCES
+# ============================================================
+with sources_tab:
+    section_header(
+        "Provenance",
+        "Where the upgrade inventory comes from",
+        "Official F1/FIA-style weekend declarations are the inventory backbone. Technical reporting adds context and significance where useful.",
+    )
+
+    source_groups = _source_groups(confirmed)
+
+    st.metric(
+        "Distinct source labels",
+        len(source_groups),
+    )
+
+    for source, labels in sorted(
+        source_groups.items(),
+        key=lambda item: item[0].lower(),
+    ):
+        with st.expander(
+            f"{source} · {len(labels)} item{'s' if len(labels) != 1 else ''}"
+        ):
+            for label in labels:
+                st.markdown(f"- {label}")
+
+    st.caption(
+        "Power-unit / ADUO events are sourced from LatentLap's canonical PU configuration and are kept separate from chassis/aero declarations."
+    )

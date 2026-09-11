@@ -181,103 +181,41 @@ def _row_line(row, pos):
 
 
 def explain_prediction(pred, driver_code):
-    from app.data_loader import driver_name
-
     rows = pred.get("predictions", [])
-    idx = next(
-        (
-            i
-            for i, row in enumerate(rows)
-            if row["driver_code"] == driver_code
-        ),
-        None,
-    )
+    idx = next((i for i, row in enumerate(rows) if row["driver_code"] == driver_code), None)
     if idx is None:
         return None, "That driver isn't in this prediction."
 
     me = rows[idx]
     pos = idx + 1
-    round_num = pred.get("race_round")
-    pred_type = pred.get("pred_type", "quali")
-    is_race_type = pred_type in ("race", "sprint_race")
-
-    near = [
-        (rows[j], j + 1)
-        for j in (idx - 1, idx + 1)
-        if 0 <= j < len(rows)
-    ]
-
-    context_rows = [(me, pos), (rows[0], 1)] + near
-    seen = set()
-    identities = []
-    for row, row_pos in context_rows:
-        code = row["driver_code"]
-        if code in seen:
-            continue
-        seen.add(code)
-        identities.append(
-            f"{code} = {driver_name(code, round_num)} | "
-            f"team={row['team']} | predicted pace position=P{row_pos}"
-        )
-
+    near = [(rows[j], j + 1) for j in (idx - 1, idx + 1) if 0 <= j < len(rows)]
     ctx_lines = [
         f"SESSION: {pred.get('circuit_name')} 2026, "
-        f"{pred_type} prediction (round {round_num}).",
+        f"{pred.get('pred_type', 'quali')} prediction (round {pred.get('race_round')}).",
         f"Circuit type: {pred.get('circuit_type')}.",
-        (
-            "IMPORTANT: every P-number below is a PREDICTED PACE RANK, "
-            "not a predicted finishing position."
-            if is_race_type
-            else "P-numbers below are predicted qualifying pace ranks."
-        ),
+        "Method: " + " | ".join(pred.get("methodology_notes", [])),
         "",
-        "CANONICAL IDENTITY MAP — use these identities exactly; do not guess or merge names:",
-        *identities,
-        "",
-        "THE SELECTED DRIVER:",
+        "THE DRIVER IN QUESTION:",
         _row_line(me, pos),
         "",
-        "THE FASTEST PREDICTED PACE:",
+        "FOR CONTEXT, THE FASTEST CAR:",
         _row_line(rows[0], 1),
     ]
-
     if near:
         ctx_lines.append("")
-        ctx_lines.append("CARS DIRECTLY AROUND THE SELECTED DRIVER:")
-        ctx_lines.extend(
-            _row_line(row, row_pos)
-            for row, row_pos in near
-        )
-
-    selected_name = driver_name(driver_code, round_num)
-    rank_phrase = (
-        f"P{pos} in expected race pace"
-        if is_race_type
-        else f"P{pos} in expected qualifying pace"
-    )
+        ctx_lines.append("CARS DIRECTLY AROUND THEM:")
+        ctx_lines.extend(_row_line(row, p) for row, p in near)
 
     prompt = (
         "DATA:\n"
         + "\n".join(ctx_lines)
         + "\n\n"
-        + "TASK RULES:\n"
-        + f"- Explain ONLY {driver_code} = {selected_name}.\n"
-        + f"- Describe the model rank as {rank_phrase}; never call it a finishing-position prediction.\n"
-        + "- Use canonical names only from the identity map above. Never substitute another driver name.\n"
-        + "- Keep every regulation/upgrade status exactly as written in the selected driver's row. "
-          "Do not turn deployed into incoming, allocated into deployed, or vice versa.\n"
-        + "- Reference the selected driver's gap, uncertainty/range, confidence and history sample only when useful.\n"
-        + "- Do not invent causes or additional technical context.\n"
-        + "- Answer in 2 short paragraphs maximum.\n"
-        + f"\nExplain why LatentLap places {driver_code} at {rank_phrase}."
+        + f"Explain in 2-4 sentences why the model places {me['driver_code']} "
+        + f"at P{pos} for this session. Reference the specific gap, the "
+        + "confidence, and any relevant regulation note. If a note says an "
+        + "upgrade is incoming, add that the prediction may understate them."
     )
-
-    return ask(
-        prompt,
-        max_tokens=700,
-        temperature=0.2,
-    )
-
+    return ask(prompt, max_tokens=900)
 
 
 # =============================================================
@@ -621,7 +559,7 @@ def _matched_entities(question):
 
 
 def _retrieve_rows(question, max_rows=36):
-    """Compact raw evidence fallback for named entities, newest evidence first."""
+    """Compact raw evidence fallback for named entities."""
     from app.data_loader import get_fingerprints
 
     matched = _matched_entities(question)
@@ -632,53 +570,25 @@ def _retrieve_rows(question, max_rows=36):
     if not (want_codes or want_teams or want_circuits):
         return ""
 
-    session_order = {"Q": 0, "SQ": 1, "S": 2, "R": 3}
-    candidates = []
+    rows = []
     for f in get_fingerprints():
         if f.session_type not in ("Q", "SQ", "R", "S"):
             continue
-        if (
+        if not (
             f.driver_code in want_codes
             or f.team in want_teams
             or getattr(f, "circuit_name", None) in want_circuits
         ):
-            candidates.append(f)
+            continue
 
-    candidates.sort(
-        key=lambda f: (
-            getattr(f, "race_round", 0),
-            session_order.get(getattr(f, "session_type", ""), 99),
-        ),
-        reverse=True,
-    )
-    selected = candidates[:max_rows]
-
-    selected.sort(
-        key=lambda f: (
-            getattr(f, "race_round", 0),
-            session_order.get(getattr(f, "session_type", ""), 99),
-        )
-    )
-
-    rows = []
-    for f in selected:
         gap = getattr(f, "lap_time_gap_pct", None)
         pos = getattr(f, "finishing_position", None)
-
         if f.session_type in ("Q", "SQ") and gap is not None:
             detail = f"pace gap {gap:+.3f}% to that session's fastest reference"
         elif f.session_type in ("R", "S"):
-            pace = (
-                f"representative pace gap {gap:+.3f}%"
-                if gap is not None
-                else "pace unavailable"
-            )
+            pace = f"representative pace gap {gap:+.3f}%" if gap is not None else "pace unavailable"
             status = getattr(f, "result_status", "") or ""
-            result = (
-                f"finished P{pos}"
-                if pos is not None
-                else (status or "no classified finish")
-            )
+            result = f"finished P{pos}" if pos is not None else (status or "no classified finish")
             detail = f"{pace}; {result}"
         else:
             detail = "no comparable result"
@@ -686,16 +596,14 @@ def _retrieve_rows(question, max_rows=36):
         rows.append(
             f"  R{f.race_round} {f.session_type} {f.driver_code} ({f.team}): {detail}"
         )
+        if len(rows) >= max_rows:
+            break
 
     return "" if not rows else "RELEVANT SESSION ROWS:\n" + "\n".join(rows)
 
 
-
 def _recent_deterministic_analytics(question):
-    """Recent GP Q and GP R pace summaries for named entities; no LLM arithmetic.
-
-    Q and R remain separate because their reference and operating contexts differ.
-    """
+    """Small Python-computed trend summaries for named entities; no LLM arithmetic."""
     import numpy as np
     from collections import defaultdict
     from app.data_loader import get_fingerprints
@@ -704,73 +612,42 @@ def _recent_deterministic_analytics(question):
     fps = get_fingerprints()
     out = []
 
-    def _team_round_trend(team, session_type, label):
+    # GP Qualifying trend: Q only, last five rounds.
+    for team in sorted(matched["teams"]):
         by_round = defaultdict(list)
         for fp in fps:
             if (
                 fp.team == team
-                and fp.session_type == session_type
+                and fp.session_type == "Q"
                 and fp.confidence >= 0.5
                 and fp.lap_time_gap_pct is not None
             ):
-                by_round[fp.race_round].append(float(fp.lap_time_gap_pct))
-
+                by_round[fp.race_round].append(fp.lap_time_gap_pct)
         recent = sorted(by_round)[-5:]
-        if not recent:
-            return None
+        if recent:
+            vals = [(r, float(np.median(by_round[r]))) for r in recent]
+            trend = ", ".join(f"R{r} {v:.3f}%" for r, v in vals)
+            out.append(f"  {team} recent GP Q team-median gap: {trend}")
 
-        vals = [(r, float(np.median(by_round[r]))) for r in recent]
-        trend = ", ".join(f"R{r} {v:.3f}%" for r, v in vals)
-        return f"  {team} recent {label} team-median gap: {trend}"
-
-    def _driver_trend(code, session_type, label):
-        rows = sorted(
+    for code in sorted(matched["codes"]):
+        qs = sorted(
             [
-                fp
-                for fp in fps
+                fp for fp in fps
                 if fp.driver_code == code
-                and fp.session_type == session_type
+                and fp.session_type == "Q"
                 and fp.confidence >= 0.5
                 and fp.lap_time_gap_pct is not None
             ],
             key=lambda fp: fp.race_round,
         )[-5:]
+        if qs:
+            trend = ", ".join(
+                f"R{fp.race_round} {fp.lap_time_gap_pct:.3f}%"
+                for fp in qs
+            )
+            out.append(f"  {code} recent GP Q gap: {trend}")
 
-        if not rows:
-            return None
-
-        trend = ", ".join(
-            f"R{fp.race_round} {fp.lap_time_gap_pct:.3f}%"
-            for fp in rows
-        )
-        return f"  {code} recent {label} gap: {trend}"
-
-    for team in sorted(matched["teams"]):
-        q_line = _team_round_trend(team, "Q", "GP Q")
-        r_line = _team_round_trend(team, "R", "GP R representative-pace")
-        if q_line:
-            out.append(q_line)
-        if r_line:
-            out.append(r_line)
-
-    for code in sorted(matched["codes"]):
-        q_line = _driver_trend(code, "Q", "GP Q")
-        r_line = _driver_trend(code, "R", "GP R representative-pace")
-        if q_line:
-            out.append(q_line)
-        if r_line:
-            out.append(r_line)
-
-    if not out:
-        return ""
-
-    return (
-        "PRECOMPUTED RECENT TRENDS — LATEST FIVE GP ROUNDS WHERE AVAILABLE:\n"
-        "Q and R are separate contexts; never subtract them from one another. "
-        "GP R values are representative race-pace gaps, not finishing order.\n"
-        + "\n".join(out)
-    )
-
+    return "" if not out else "PRECOMPUTED RECENT TRENDS (GP Q only):\n" + "\n".join(out)
 
 
 def _season_team_trend_snapshot():
@@ -1204,19 +1081,6 @@ def suggest_followups(question, limit=3):
 
 def _query_flags(question):
     q = question.lower()
-
-    recent_intent = any(
-        phrase in q
-        for phrase in (
-            "recent", "recently", "latest",
-            "last few", "past few",
-            "last couple", "past couple",
-            "last five", "past five", "last 5", "past 5",
-            "last races", "recent races",
-            "last rounds", "recent rounds",
-        )
-    )
-
     season_story = any(
         phrase in q
         for phrase in (
@@ -1240,41 +1104,17 @@ def _query_flags(question):
             "what happened in the race", "what happened at", "tell me about the race",
         )
     )
-    trend = recent_intent or any(
-        w in q
-        for w in (
-            "trend", "improv", "declin", "changed",
-            "change over", "season", "trajectory",
-        )
-    )
-
     return {
-        "upgrade": any(
-            w in q
-            for w in (
-                "upgrade", "development", "floor", "wing",
-                "technical package", "aduo",
-            )
-        ),
+        "upgrade": any(w in q for w in ("upgrade", "development", "floor", "wing", "technical package", "aduo")),
         "race_recap": race_recap,
-        "trend": trend,
-        "raw_metric": any(
-            w in q
-            for w in (
-                "telemetry", "fingerprint", "exact gap", "gap %",
-                "gap percentage", "harvest ratio", "corner delta",
-                "straight delta", "braking delta",
-            )
-        ),
+        "trend": any(w in q for w in ("trend", "recent", "improv", "declin", "changed", "change over", "season", "trajectory")),
+        "raw_metric": any(w in q for w in ("telemetry", "fingerprint", "exact gap", "gap %", "gap percentage", "harvest ratio", "corner delta", "straight delta", "braking delta")),
         "method": bool(method_topics) or generic_method,
         "method_topics": method_topics,
         "season_story": season_story,
-        "race_by_race": any(
-            phrase in q for phrase in ("race by race", "round by round")
-        ),
-        "global_team_trend": any(
-            w in q for w in ("improv", "declin", "trend", "trajectory")
-        ) and not _matched_entities(question)["teams"],
+        "race_by_race": any(phrase in q for phrase in ("race by race", "round by round")),
+        "global_team_trend": any(w in q for w in ("improv", "declin", "trend", "trajectory")) and not _matched_entities(question)["teams"],
+        # Only explicit requests for exhaustive detail should unlock long inventory-style answers.
         "exhaustive": any(
             phrase in q
             for phrase in (
@@ -1284,7 +1124,6 @@ def _query_flags(question):
             )
         ),
     }
-
 
 def ask_engineer(question):
     flags = _query_flags(question)
@@ -1357,14 +1196,6 @@ def ask_engineer(question):
             "Use current standings and upgrade history only as context after the pace trend is established. "
             "Do not infer that a team improved because it has more points/upgrades, and never claim it "
             "started as the benchmark unless the early-window trend data explicitly shows that. "
-        )
-    elif flags["trend"] and (matched["teams"] or matched["codes"]):
-        answer_style = (
-            "This is a recent-pace question about a named team/driver. Prioritise the "
-            "PRECOMPUTED RECENT TRENDS and the newest RELEVANT SESSION ROWS. Answer from "
-            "the latest rounds first; do not lead with early-season evidence unless the "
-            "user explicitly asks for a season comparison. Keep GP qualifying pace and GP "
-            "race representative pace separate because their reference contexts differ. "
         )
     elif flags["method"]:
         answer_style = (

@@ -1,13 +1,11 @@
-"""pages/1_Predictions.py — PitWall · Weekend Predictions.
+"""pages/1_Predictions.py — LatentLap · expected pace forecasts."""
 
-Shows every predicted session for a weekend. Standard weekends have two
-(qualifying, race); sprint weekends have four, presented in the order they
-actually run: sprint qualifying Friday, sprint Saturday morning, qualifying
-Saturday afternoon, grand prix Sunday.
-"""
+from __future__ import annotations
 
-import math
-import os, sys
+import os
+import sys
+
+import pandas as pd
 import streamlit as st
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -15,338 +13,380 @@ if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
 from analysis.llm import available as ai_available, explain_prediction
-from app.data_loader import (list_available_predictions, get_prediction_data,
-                             conf_badge, TEAM_COLOURS)
+from app.data_loader import (
+    TEAM_COLOURS,
+    get_prediction_data,
+    list_available_predictions,
+)
+from app.ui import inject_global_css, page_header, section_header
 from config import CIRCUITS, DRIVER_SUBSTITUTIONS, GRID_PENALTIES
 
-st.set_page_config(page_title="Weekend Predictions — PitWall",
-                   page_icon="🔮", layout="wide")
 
-ACCENT = ('<div style="height:3px;background:linear-gradient(90deg,#FF1E00,#FF6B35);'
-          'border-radius:2px;margin-bottom:1rem;"></div>')
+st.set_page_config(
+    page_title="Predictions — LatentLap",
+    page_icon="🔮",
+    layout="wide",
+)
+inject_global_css()
 
-# Grand prix and sprint distances, used to turn a per-lap pace delta into a
-# gap a reader can picture. A sprint is 100 km, not 305 — using the grand prix
-# figure for a sprint overstated the gap roughly threefold.
-#
-# Lap count uses ceil, not round: both distances are defined as the smallest
-# number of laps EXCEEDING the target. round() gave Zandvoort a 23-lap sprint,
-# which is 97.96 km and therefore not a sprint.
-#
-# Monaco is the known exception — its grand prix is shortened by regulation, so
-# the estimate runs long there. The caption shows the arithmetic so the reader
-# can see it is an estimate.
-GP_DISTANCE_KM     = 305.0
-SPRINT_DISTANCE_KM = 100.0
 
-# Session order = the order the weekend runs, not the order files were written.
 SESSION_TABS = {
-    "sprint_quali": ("Sprint Qualifying", "Friday · sets the sprint grid"),
-    "sprint_race":  ("Sprint",            "Saturday morning · 100 km, no mandatory stop"),
-    "quali":        ("Qualifying",        "Saturday afternoon · sets the grand prix grid"),
-    "race":         ("Race",              "Sunday · grand prix pace"),
+    "sprint_quali": ("Sprint Qualifying", "Friday · expected one-lap pace"),
+    "sprint_race": ("Sprint", "Saturday · expected sprint pace"),
+    "quali": ("Qualifying", "Expected one-lap pace"),
+    "race": ("Race", "Expected grand prix pace"),
 }
 SPRINT_ORDER = ["sprint_quali", "sprint_race", "quali", "race"]
 NORMAL_ORDER = ["quali", "race"]
 
-# A pooled-session prediction should say so on the page, not only inside the
-# methodology expander.
 SPRINT_PROVENANCE = (
-    "Built from sprint sessions **and** grand prix sessions, with the sprint "
-    "type weighted higher. Across the four 2026 sprint weekends so far, grand "
-    "prix qualifying predicted sprint qualifying at the same event more closely "
-    "than one grand prix qualifying predicts the next — so the wider sample is "
-    "the stronger signal, not a fallback."
+    "Sprint forecasts pool sprint-session evidence with Grand Prix-session evidence, "
+    "while weighting the matching sprint session type more heavily. This is deliberate "
+    "rather than a fallback: sprint-only history is still sparse."
 )
 
-st.markdown(ACCENT, unsafe_allow_html=True)
-st.title("🔮 Weekend Predictions")
 
-circuits = list_available_predictions()
-if not circuits:
-    st.warning("No predictions stored yet. Run `python run.py predict <circuit>` "
-               "locally, then push the files in `store/predictions/`.")
-    st.stop()
-
-circuit = st.selectbox("Circuit", circuits, index=len(circuits) - 1)
-
-cfg       = CIRCUITS.get(circuit, {})
-lap_km    = cfg.get("lap_length_km")
-is_sprint = bool(cfg.get("has_sprint"))
-order     = SPRINT_ORDER if is_sprint else NORMAL_ORDER
-
-preds = {pt: get_prediction_data(circuit, pred_type=pt) for pt in order}
-preds = {pt: p for pt, p in preds.items() if p}
-
-if not preds:
-    st.error(f"No prediction data found for {circuit}. "
-             f"Run `python run.py predict {circuit.lower()}` and push the result.")
-    st.stop()
-
-if is_sprint and len(preds) < 4:
-    missing = [SESSION_TABS[pt][0] for pt in order if pt not in preds]
-    st.info(f"{circuit} is a sprint weekend, but these sessions have no stored "
-            f"prediction: {', '.join(missing)}. "
-            f"Re-run `python run.py predict {circuit.lower()}`.")
+def _confidence_label(value: float) -> str:
+    if value >= 0.70:
+        return "High"
+    if value >= 0.55:
+        return "Medium"
+    return "Low"
 
 
-# ── Header ────────────────────────────────────────────────
+def _collect_footnotes(predictions):
+    order_seen = []
+    by_text = {}
 
-ref = next(iter(preds.values()))
-m1, m2, m3 = st.columns(3)
-m1.metric("Round", ref.get("race_round", "—"))
-m2.metric("Circuit type", str(ref.get("circuit_type", "—")).replace("_", " ").title())
-m3.metric("Format", "Sprint weekend" if is_sprint else "Standard weekend")
-
-# ── Driver substitutions ──────────────────────────────────
-# Predictions are generated per driver from that driver's own history. When a
-# lineup changes after generation, re-running does not help — a stand-in has
-# no history to predict from — so the grid is annotated instead.
-SUBS = DRIVER_SUBSTITUTIONS.get(ref.get("race_round"), {})
-if SUBS.get("banner"):
-    st.warning(f"**Driver lineup change for this round.** {SUBS['banner']}")
-
-# Grid penalties. Annotated, never applied to the order — the model predicts
-# pace, and a penalty doesn't slow the car. See GRID_PENALTIES in config.
-PENALTIES = GRID_PENALTIES.get(ref.get("race_round"), {})
-for _code, _pen in PENALTIES.items():
-    st.warning(f"**Grid penalty — {_code}: {_pen['penalty']}.** {_pen['note']}  \n\n"
-               f"*The pace prediction below is unchanged, because the penalty "
-               f"affects where {_code} starts, not how fast the car is.*")
-
-st.divider()
-
-
-# ── Footnotes ─────────────────────────────────────────────
-
-def collect_footnotes(predictions):
-    """
-    Turn per-driver regulation notes into one numbered list.
-
-    Notes are shared — every Honda driver carries the same ADUO paragraph — so
-    per-driver expanders repeated the same text up to 22 times per grid. Here
-    each distinct note appears once, numbered, listing the drivers it covers.
-
-    Returns (footnotes, marker_map):
-      footnotes  [(number, text, is_upgrade_warning, [driver codes])]
-      marker_map {driver_code: [numbers]}
-    """
-    order_seen, by_text = [], {}
-    for p in predictions:
-        for note in p.get("regulation_notes", []):
+    for row in predictions:
+        for note in row.get("regulation_notes", []):
             warn = note.startswith("⚠")
             text = note.lstrip("⚠").strip()
+
             if text not in by_text:
-                by_text[text] = {"warn": warn, "drivers": []}
+                by_text[text] = {
+                    "warn": warn,
+                    "drivers": [],
+                }
                 order_seen.append(text)
-            by_text[text]["drivers"].append(p["driver_code"])
+
+            by_text[text]["drivers"].append(row["driver_code"])
             by_text[text]["warn"] = by_text[text]["warn"] or warn
 
-    footnotes, marker_map = [], {}
-    for i, text in enumerate(order_seen, 1):
-        entry = by_text[text]
-        footnotes.append((i, text, entry["warn"], entry["drivers"]))
-        for d in entry["drivers"]:
-            marker_map.setdefault(d, []).append(i)
-    return footnotes, marker_map
+    return [
+        {
+            "text": text,
+            "warn": by_text[text]["warn"],
+            "drivers": by_text[text]["drivers"],
+        }
+        for text in order_seen
+    ]
 
 
-# ── Grid ──────────────────────────────────────────────────
+def _weekend_note_summary(subs: dict, penalties: dict) -> str:
+    parts = []
+    if penalties:
+        parts.append(
+            f"{len(penalties)} grid/pit-lane "
+            + ("penalty" if len(penalties) == 1 else "penalties")
+        )
+    if subs.get("banner"):
+        parts.append("1 lineup change")
+    return " · ".join(parts) if parts else "No special weekend notes"
 
-def render_grid(pred, pred_type):
+
+def _display_team(code: str, row: dict, subs: dict) -> str:
+    moved = subs.get("moved", {})
+    return moved.get(code, row.get("team", "—"))
+
+
+def _prediction_rows(pred: dict, subs: dict, pred_type: str):
+    unavailable = subs.get("unavailable", {})
+    rows = []
+    pos = 0
+
+    for row in pred.get("predictions", []):
+        code = row["driver_code"]
+        if code in unavailable:
+            out_row = {
+                "Pos": "OUT",
+                "Driver": code,
+                "Team": _display_team(code, row, subs),
+                "Expected pace": unavailable[code],
+                "Uncertainty": "—",
+                "Confidence": "—",
+                "History": row.get("n_races_used", "—"),
+            }
+            if pred_type in ("quali", "sprint_quali"):
+                out_row["Harvest signal"] = "—"
+            rows.append(out_row)
+            continue
+
+        pos += 1
+        delta = float(row.get("predicted_delta_s", 0.0) or 0.0)
+        low = float(row.get("delta_range_low", delta) or delta)
+        high = float(row.get("delta_range_high", delta) or delta)
+        uncertainty = max(abs(delta - low), abs(high - delta))
+        conf = float(row.get("confidence", 0.0) or 0.0)
+
+        out_row = {
+            "Pos": f"P{pos}",
+            "Driver": code,
+            "Team": _display_team(code, row, subs),
+            "Expected pace": (
+                "0.000s"
+                if pos == 1
+                else f"+{delta:.3f}s"
+            ),
+            "Uncertainty": f"±{uncertainty:.3f}s",
+            "Confidence": f"{_confidence_label(conf)} · {conf:.0%}",
+            "History": row.get("n_races_used", "—"),
+        }
+
+        if pred_type in ("quali", "sprint_quali"):
+            harvest = row.get("predicted_harvest_ratio")
+            out_row["Harvest signal"] = (
+                f"{float(harvest):.3f}"
+                if harvest is not None and float(harvest) < 1.5
+                else "—"
+            )
+
+        rows.append(out_row)
+
+    predicted_codes = {
+        row["driver_code"]
+        for row in pred.get("predictions", [])
+    }
+    for extra in subs.get("added", []):
+        if extra["code"] in predicted_codes:
+            continue
+        extra_row = {
+            "Pos": "—",
+            "Driver": extra["code"],
+            "Team": extra["team"],
+            "Expected pace": "No model history",
+            "Uncertainty": "—",
+            "Confidence": "—",
+            "History": 0,
+        }
+        if pred_type in ("quali", "sprint_quali"):
+            extra_row["Harvest signal"] = "—"
+        rows.append(extra_row)
+
+    return rows
+
+
+def _render_weekend_notes(subs: dict, penalties: dict):
+    summary = _weekend_note_summary(subs, penalties)
+
+    with st.expander(f"Weekend notes · {summary}"):
+        if subs.get("banner"):
+            st.markdown(f"**Lineup:** {subs['banner']}")
+
+        if penalties:
+            for code, pen in penalties.items():
+                timing = (
+                    "Known when forecast was saved"
+                    if pen.get("known_at_prediction_time")
+                    else "Later weekend update"
+                )
+                st.markdown(
+                    f"**{code} · {pen.get('penalty', 'Penalty')}**  \n"
+                    f"{pen.get('note', '')}  \n"
+                    f"*{timing}. Penalties affect the start, not the pace ranking.*"
+                )
+
+        if not subs.get("banner") and not penalties:
+            st.write("No lineup or penalty notes are stored for this round.")
+
+
+def _render_prediction(pred: dict, pred_type: str, subs: dict):
     predictions = pred.get("predictions", [])
     if not predictions:
-        st.info("This session has no prediction rows.")
+        st.info("This session has no stored prediction rows.")
         return
 
-    is_race_type = pred_type in ("race", "sprint_race")
-    distance_km  = SPRINT_DISTANCE_KM if pred_type == "sprint_race" else GP_DISTANCE_KM
-    est_laps     = math.ceil(distance_km / lap_km) if lap_km else None
+    label, subtitle = SESSION_TABS[pred_type]
+    overall = float(pred.get("overall_confidence", 0.0) or 0.0)
+    history = pred.get("n_historical_races", 0)
 
-    footnotes, markers = collect_footnotes(predictions)
-
-    n_sess = pred.get("n_historical_races", 0)
-    conf   = pred.get("overall_confidence", 0)
-    st.markdown(f"**{n_sess} sessions of history** · overall confidence {conf:.0%}")
+    st.markdown(f"## {label}")
+    st.caption(subtitle)
 
     if pred_type.startswith("sprint_"):
         st.caption(SPRINT_PROVENANCE)
 
-    if is_race_type and est_laps:
-        st.caption(f"Gap shown as total time lost over ~{est_laps} laps "
-                   f"({distance_km:.0f} km ÷ {lap_km:.3f} km lap).")
+    c1, c2, c3 = st.columns(3, gap="medium")
+    c1.metric(
+        "Model confidence",
+        f"{_confidence_label(overall)} · {overall:.0%}",
+    )
+    c2.metric(
+        "Historical sessions",
+        history,
+        "after weighting/filtering",
+    )
+    c3.metric(
+        "Prediction type",
+        "Expected pace",
+        "not finishing order",
+    )
 
-    # Compact explainer, pinned above the grid on the right. Only rendered when
-    # a Groq key is configured, so the box disappears cleanly with no key.
-    if ai_available():
-        spacer, box = st.columns([2, 1])
-        with box:
-            codes = [p["driver_code"] for p in predictions]
-            pick  = st.selectbox("Explain a driver", codes,
-                                 key=f"explain_{pred_type}")
-            if st.button("Why here?", key=f"explain_btn_{pred_type}",
-                         use_container_width=True):
-                st.session_state[f"explain_show_{pred_type}"] = pick
-        target = st.session_state.get(f"explain_show_{pred_type}")
-        if target:
-            with st.spinner("Reading the model…"):
-                text, err = explain_prediction(pred, target)
-            if err:
-                st.info(err)
-            else:
-                # Header is styled HTML; the answer itself goes through
-                # st.markdown so its bold and lists actually render. Streamlit
-                # does not parse markdown inside injected HTML, so
-                # interpolating the answer into a <div> left literal ** on screen.
-                st.markdown(
-                    f'<div style="border-left:3px solid #FF6B35;padding-left:12px;'
-                    f'margin:6px 0 2px;"><span style="font-size:0.7rem;color:#FF6B35;'
-                    f'font-family:monospace;">WHY {target} IS HERE</span></div>',
-                    unsafe_allow_html=True)
-                st.markdown(text)
-                st.caption("Generated by an LLM from the model's own numbers, "
-                           "so it can misread. The grid below is the source of truth.")
+    rows = _prediction_rows(pred, subs, pred_type)
+    st.dataframe(
+        pd.DataFrame(rows),
+        use_container_width=True,
+        hide_index=True,
+        height=min(760, 36 * len(rows) + 40),
+    )
 
-    st.markdown(
-        '<div style="display:flex;align-items:center;padding:2px 10px;'
-        'font-family:monospace;font-size:0.68rem;color:#666;'
-        'letter-spacing:0.05em;text-transform:uppercase;">'
-        '<div style="width:32px;">Pos</div>'
-        '<div style="width:56px;">Driver</div>'
-        '<div style="flex:1;">Team</div>'
-        '<div style="width:110px;text-align:right;">Gap</div>'
-        '<div style="width:120px;text-align:right;">Range</div>'
-        '<div style="width:56px;text-align:right;">Harvest</div>'
-        '<div style="width:86px;text-align:right;">Confidence</div>'
-        '<div style="width:54px;text-align:right;">Notes</div>'
-        '</div>', unsafe_allow_html=True)
+    st.caption(
+        "Position is the model's expected pace order. Uncertainty is shown in seconds around the expected delta. "
+        "Incidents, safety cars, strategy calls and reliability are not part of the pace forecast."
+    )
 
-    unavailable = SUBS.get("unavailable", {})
-    moved       = SUBS.get("moved", {})
-
-    # Position numbers count only drivers who are actually racing. Hadjar was
-    # occupying P8 while sitting out, which pushed every car behind him down a
-    # place — Lindblad showed P9 when he is really P8 of the cars on track.
-    # The prediction ORDER is unchanged; only the labels are corrected.
-    grid_pos = 0
-
-    for p in predictions:
-        code  = p["driver_code"]
-        delta = p["predicted_delta_s"]
-        out   = code in unavailable
-
-        if not out:
-            grid_pos += 1
-
-        # Lawson keeps his predicted pace but shows the car he is actually in.
-        # That pace was earned in a VCARB, so it is flagged rather than trusted.
-        team      = moved.get(code, p["team"])
-        team_col  = TEAM_COLOURS.get(team, "#888")
-
-        if out:
-            gap_str, rng, hrv_str = unavailable[code], "", "—"
-        else:
-            if grid_pos == 1:
-                gap_str = "FASTEST" if is_race_type else "POLE"
-            elif is_race_type and est_laps:
-                gap_str = f"+{delta * est_laps:.1f}s"
-            else:
-                gap_str = f"+{delta:.3f}s"
-            rng     = f"[{p['delta_range_low']:+.2f} / {p['delta_range_high']:+.2f}]"
-            hrv     = p.get("predicted_harvest_ratio", 0)
-            hrv_str = (
-                "—"
-                if is_race_type
-                else (f"{hrv:.3f}" if hrv and hrv < 1.5 else "—")
-)
-
-        gap_style = ("font-weight:bold;color:#FFD700;"
-                     if (grid_pos == 1 and not out) else "color:#E0E0E0;")
-
-        nums  = markers.get(code, [])
-        marks = (f'<span style="color:#FF6B35;font-size:0.68rem;">'
-                 f'{",".join(str(n) for n in nums)}</span>' if nums else "")
-
-        team_label = team
-        if code in PENALTIES:
-            team_label = (f'{team} <span style="color:#FFD700;font-size:0.68rem;">'
-                          f'· {PENALTIES[code]["penalty"]}</span>')
-        if code in moved:
-            team_label = (f'{team} <span style="color:#FF6B35;font-size:0.68rem;">'
-                          f'· substitute, pace from {p["team"]}</span>')
-
-        if out:
-            # No position at all — he is not on the grid, so a number would lie.
-            row_bg, dim, pos_txt = "#141414", "opacity:0.45;", "OUT"
-            gap_style = "color:#8A8A8A;font-size:0.72rem;"
-        else:
-            row_bg, dim, pos_txt = "#1A1A1A", "", f"P{grid_pos}"
-
-        st.markdown(f"""
-        <div style="display:flex;align-items:center;padding:6px 10px;margin:3px 0;
-                    background:{row_bg};border-radius:6px;border-left:3px solid {team_col};
-                    font-family:monospace;{dim}">
-            <div style="width:32px;font-size:1rem;font-weight:bold;color:#555;">{pos_txt}</div>
-            <div style="width:56px;font-size:1rem;font-weight:bold;color:{team_col};">{code}</div>
-            <div style="flex:1;font-size:0.82rem;color:#aaa;">{team_label}</div>
-            <div style="width:110px;text-align:right;{gap_style}">{gap_str}</div>
-            <div style="width:120px;text-align:right;font-size:0.72rem;color:#666;">{rng}</div>
-            <div style="width:56px;text-align:right;font-size:0.75rem;color:#888;">{hrv_str}</div>
-            <div style="width:86px;text-align:right;">{"" if out else conf_badge(p['confidence'])}</div>
-            <div style="width:54px;text-align:right;">{marks}</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    # Stand-ins with no fingerprints. They cannot be ranked, so they sit below
-    # the ordered grid with no position rather than being given a fake one.
-    # An "added" driver is a stand-in with no fingerprints, so no prediction is
-    # possible. Once they have actually raced, they DO get predicted — Tsunoda
-    # gained R12 data at Zandvoort — and would then appear twice: once in the
-    # ranked grid and again here. Skip anyone already in the grid.
-    already_predicted = {p["driver_code"] for p in predictions}
-    for extra in SUBS.get("added", []):
-        if extra["code"] in already_predicted:
-            continue
-        col = TEAM_COLOURS.get(extra["team"], "#888")
-        st.markdown(f"""
-        <div style="display:flex;align-items:center;padding:6px 10px;margin:3px 0;
-                    background:#141414;border-radius:6px;border-left:3px dashed {col};
-                    font-family:monospace;">
-            <div style="width:32px;font-size:1rem;font-weight:bold;color:#555;">—</div>
-            <div style="width:56px;font-size:1rem;font-weight:bold;color:{col};">{extra['code']}</div>
-            <div style="flex:1;font-size:0.82rem;color:#aaa;">{extra['team']}</div>
-            <div style="flex:1;text-align:right;font-size:0.72rem;color:#8A8A8A;">{extra['reason']}</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    if footnotes:
-        st.markdown("")
-        st.markdown("**Notes**")
-        for num, text, warn, drivers in footnotes:
-            who = ", ".join(sorted(set(drivers)))
-            if warn:
-                st.warning(f"**{num}. Incoming upgrade — prediction may understate.** "
-                           f"{text}  \n*Applies to: {who}*")
-            else:
-                st.info(f"**{num}.** {text}  \n*Applies to: {who}*")
-
-    with st.expander("How this prediction was built"):
-        for note in pred.get("methodology_notes", []):
-            st.markdown(f"• {note}")
-        st.markdown(
-            "• Gap is measured against the fastest predicted car, which sits at 0.  \n"
-            "• Range is the uncertainty band, not a best or worst case.  \n"
-            "• Harvest is observed braking energy recovery divided by the "
-            "theoretical maximum, taken from qualifying laps only."
+    if pred_type in ("quali", "sprint_quali"):
+        st.caption(
+            "Harvest signal is an inferred qualifying braking-energy behaviour input used by the model. "
+            "It is not measured recovered energy, battery state or electrical efficiency."
         )
 
+    if ai_available():
+        section_header(
+            "Explain",
+            "Why does LatentLap think this?",
+            "Pick one driver. The explanation uses this saved forecast and its own model evidence; it does not change the ranking.",
+        )
 
-# ── Tabs, in the order the weekend runs ───────────────────
+        codes = [
+            row["driver_code"]
+            for row in predictions
+            if row["driver_code"] not in subs.get("unavailable", {})
+        ]
+        if codes:
+            a, b = st.columns([1.2, 1], gap="large")
+            with a:
+                target = st.selectbox(
+                    "Driver",
+                    codes,
+                    key=f"pred_explain_driver_{pred_type}",
+                )
+            with b:
+                st.write("")
+                st.write("")
+                clicked = st.button(
+                    "Explain this prediction",
+                    key=f"pred_explain_button_{pred_type}",
+                    type="primary",
+                    use_container_width=True,
+                )
 
-available = [pt for pt in order if pt in preds]
-tabs = st.tabs([SESSION_TABS[pt][0] for pt in available])
+            if clicked:
+                with st.spinner("Reading the saved model evidence…"):
+                    text, err = explain_prediction(pred, target)
+                if err:
+                    st.info(err)
+                else:
+                    with st.container(border=True):
+                        st.markdown(f"**Why {target} is here**")
+                        st.markdown(text)
+                        st.caption(
+                            "The saved prediction grid remains the source of truth."
+                        )
 
-for tab, pt in zip(tabs, available):
+    methodology = pred.get("methodology_notes", [])
+    if methodology:
+        with st.expander("How this forecast was built"):
+            st.markdown(
+                "\n".join(
+                    f"- {note}"
+                    for note in methodology
+                )
+            )
+
+            circuit_cfg = CIRCUITS.get(pred.get("circuit_name"), {})
+            if circuit_cfg.get("note"):
+                st.markdown(
+                    f"**Circuit note:** {circuit_cfg['note']}"
+                )
+
+    footnotes = _collect_footnotes(predictions)
+    if footnotes:
+        with st.expander("Model and regulation notes"):
+            for note in footnotes:
+                drivers = ", ".join(note["drivers"])
+                prefix = "⚠ " if note["warn"] else ""
+                st.markdown(
+                    f"**{prefix}{drivers}** — {note['text']}"
+                )
+
+
+page_header(
+    "Forecasts",
+    "Predictions",
+    "Expected pace, not crystal-ball finishing order. LatentLap ranks the likely relative pace and shows the uncertainty around it.",
+)
+
+circuits = list_available_predictions()
+if not circuits:
+    st.warning("No stored predictions are available yet.")
+    st.stop()
+
+circuit = st.selectbox(
+    "Weekend",
+    circuits,
+    index=len(circuits) - 1,
+)
+
+cfg = CIRCUITS.get(circuit, {})
+is_sprint = bool(cfg.get("has_sprint"))
+order = SPRINT_ORDER if is_sprint else NORMAL_ORDER
+
+preds = {
+    pred_type: get_prediction_data(
+        circuit,
+        pred_type=pred_type,
+    )
+    for pred_type in order
+}
+preds = {
+    pred_type: pred
+    for pred_type, pred in preds.items()
+    if pred
+}
+
+if not preds:
+    st.error(f"No stored prediction data found for {circuit}.")
+    st.stop()
+
+ref = next(iter(preds.values()))
+round_num = ref.get("race_round")
+subs = DRIVER_SUBSTITUTIONS.get(round_num, {})
+penalties = GRID_PENALTIES.get(round_num, {})
+
+m1, m2, m3 = st.columns(3, gap="medium")
+m1.metric("Round", f"R{round_num}")
+m2.metric(
+    "Circuit type",
+    str(ref.get("circuit_type", "—")).replace("_", " ").title(),
+)
+m3.metric(
+    "Weekend format",
+    "Sprint weekend" if is_sprint else "Standard weekend",
+)
+
+_render_weekend_notes(subs, penalties)
+
+tab_labels = [
+    SESSION_TABS[pred_type][0]
+    for pred_type in preds
+]
+tabs = st.tabs(tab_labels)
+
+for tab, pred_type in zip(tabs, preds):
     with tab:
-        st.caption(SESSION_TABS[pt][1])
-        render_grid(preds[pt], pt)
+        _render_prediction(
+            preds[pred_type],
+            pred_type,
+            subs,
+        )

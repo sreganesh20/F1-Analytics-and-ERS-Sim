@@ -181,103 +181,41 @@ def _row_line(row, pos):
 
 
 def explain_prediction(pred, driver_code):
-    from app.data_loader import driver_name
-
     rows = pred.get("predictions", [])
-    idx = next(
-        (
-            i
-            for i, row in enumerate(rows)
-            if row["driver_code"] == driver_code
-        ),
-        None,
-    )
+    idx = next((i for i, row in enumerate(rows) if row["driver_code"] == driver_code), None)
     if idx is None:
         return None, "That driver isn't in this prediction."
 
     me = rows[idx]
     pos = idx + 1
-    round_num = pred.get("race_round")
-    pred_type = pred.get("pred_type", "quali")
-    is_race_type = pred_type in ("race", "sprint_race")
-
-    near = [
-        (rows[j], j + 1)
-        for j in (idx - 1, idx + 1)
-        if 0 <= j < len(rows)
-    ]
-
-    context_rows = [(me, pos), (rows[0], 1)] + near
-    seen = set()
-    identities = []
-    for row, row_pos in context_rows:
-        code = row["driver_code"]
-        if code in seen:
-            continue
-        seen.add(code)
-        identities.append(
-            f"{code} = {driver_name(code, round_num)} | "
-            f"team={row['team']} | predicted pace position=P{row_pos}"
-        )
-
+    near = [(rows[j], j + 1) for j in (idx - 1, idx + 1) if 0 <= j < len(rows)]
     ctx_lines = [
         f"SESSION: {pred.get('circuit_name')} 2026, "
-        f"{pred_type} prediction (round {round_num}).",
+        f"{pred.get('pred_type', 'quali')} prediction (round {pred.get('race_round')}).",
         f"Circuit type: {pred.get('circuit_type')}.",
-        (
-            "IMPORTANT: every P-number below is a PREDICTED PACE RANK, "
-            "not a predicted finishing position."
-            if is_race_type
-            else "P-numbers below are predicted qualifying pace ranks."
-        ),
+        "Method: " + " | ".join(pred.get("methodology_notes", [])),
         "",
-        "CANONICAL IDENTITY MAP — use these identities exactly; do not guess or merge names:",
-        *identities,
-        "",
-        "THE SELECTED DRIVER:",
+        "THE DRIVER IN QUESTION:",
         _row_line(me, pos),
         "",
-        "THE FASTEST PREDICTED PACE:",
+        "FOR CONTEXT, THE FASTEST CAR:",
         _row_line(rows[0], 1),
     ]
-
     if near:
         ctx_lines.append("")
-        ctx_lines.append("CARS DIRECTLY AROUND THE SELECTED DRIVER:")
-        ctx_lines.extend(
-            _row_line(row, row_pos)
-            for row, row_pos in near
-        )
-
-    selected_name = driver_name(driver_code, round_num)
-    rank_phrase = (
-        f"P{pos} in expected race pace"
-        if is_race_type
-        else f"P{pos} in expected qualifying pace"
-    )
+        ctx_lines.append("CARS DIRECTLY AROUND THEM:")
+        ctx_lines.extend(_row_line(row, p) for row, p in near)
 
     prompt = (
         "DATA:\n"
         + "\n".join(ctx_lines)
         + "\n\n"
-        + "TASK RULES:\n"
-        + f"- Explain ONLY {driver_code} = {selected_name}.\n"
-        + f"- Describe the model rank as {rank_phrase}; never call it a finishing-position prediction.\n"
-        + "- Use canonical names only from the identity map above. Never substitute another driver name.\n"
-        + "- Keep every regulation/upgrade status exactly as written in the selected driver's row. "
-          "Do not turn deployed into incoming, allocated into deployed, or vice versa.\n"
-        + "- Reference the selected driver's gap, uncertainty/range, confidence and history sample only when useful.\n"
-        + "- Do not invent causes or additional technical context.\n"
-        + "- Answer in 2 short paragraphs maximum.\n"
-        + f"\nExplain why LatentLap places {driver_code} at {rank_phrase}."
+        + f"Explain in 2-4 sentences why the model places {me['driver_code']} "
+        + f"at P{pos} for this session. Reference the specific gap, the "
+        + "confidence, and any relevant regulation note. If a note says an "
+        + "upgrade is incoming, add that the prediction may understate them."
     )
-
-    return ask(
-        prompt,
-        max_tokens=700,
-        temperature=0.2,
-    )
-
+    return ask(prompt, max_tokens=900)
 
 
 # =============================================================
