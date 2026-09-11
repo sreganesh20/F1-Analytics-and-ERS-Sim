@@ -1,0 +1,387 @@
+{
+  "review_status": "approved",
+  "metadata": {
+    "year": 2026,
+    "round": 9,
+    "circuit": "Britain",
+    "venue": "Silverstone Circuit",
+    "date_range": "2026-07-03 to 2026-07-05",
+    "weekend_type": "sprint",
+    "sessions_available": [
+      "SQ",
+      "S",
+      "Q",
+      "R"
+    ]
+  },
+  "weekend_summary": "Silverstone was a split weekend: Hamilton took Sprint pole at home, Antonelli won the Sprint, then Antonelli took Grand Prix pole before Ferrari converted Sunday into victory for Leclerc. The Grand Prix changed late when Antonelli developed a left-front wheel-shield problem while closing on Leclerc, and Verstappen's crash triggered a Safety Car that ended the race under caution. Ferrari's strong Sunday came after a run of difficult weekends, while McLaren brought the largest upgrade set of the event without converting it into a win.",
+  "sessions": {
+    "SQ": {
+      "summary": "Hamilton beat Antonelli by 0.011s for Sprint pole, with Verstappen third.",
+      "key_moments": [
+        {
+          "text": "Hamilton topped all Sprint Qualifying segments and took pole on home soil.",
+          "source_refs": [
+            "f1_sq_report"
+          ]
+        }
+      ]
+    },
+    "S": {
+      "summary": "Antonelli won the Sprint ahead of Hamilton and Norris.",
+      "key_moments": [
+        {
+          "text": "Antonelli won the 17-lap Sprint, Hamilton finished second and Norris third.",
+          "source_refs": [
+            "f1_sprint_results"
+          ]
+        }
+      ]
+    },
+    "Q": {
+      "summary": "Antonelli took Grand Prix pole ahead of Leclerc and Hamilton.",
+      "key_moments": [
+        {
+          "text": "Antonelli led Ferrari's Leclerc and Hamilton in GP qualifying.",
+          "source_refs": [
+            "f1_q_results"
+          ]
+        }
+      ]
+    },
+    "R": {
+      "summary": "Leclerc won from Russell and Hamilton after leading early, while Antonelli's challenge faded with a wheel-shield issue and Verstappen's late crash brought out the Safety Car.",
+      "key_moments": [
+        {
+          "text": "Leclerc jumped Antonelli at the start and led the opening phase.",
+          "source_refs": [
+            "f1_race_report",
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Antonelli closed back towards Leclerc after his stop before a left-front wheel-shield issue damaged his race.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Verstappen crashed late, triggering the Safety Car under which the race finished.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Hamilton recovered from an early penalty to finish third.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    }
+  },
+  "performance_snapshot": {
+    "source": "committed_session_store",
+    "status": "hydrate at query time from committed LatentLap session data"
+  },
+  "driver_insights": {
+    "LEC": {
+      "name": "Charles Leclerc",
+      "team": "Ferrari",
+      "summary": "Leclerc converted strong qualifying into Ferrari's second win of the season, leading early and then gaining breathing room when Antonelli developed a technical issue.",
+      "details": [
+        {
+          "text": "The win is representative of strong Ferrari pace, but the late margin cannot be separated from Antonelli's failure.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "HAM": {
+      "name": "Lewis Hamilton",
+      "team": "Ferrari",
+      "summary": "Hamilton took Sprint pole and finished second in the Sprint, then recovered from a start-related penalty in the Grand Prix to complete the Sunday podium.",
+      "details": [
+        {
+          "text": "His weekend showed Ferrari strength in both short-run and race conditions.",
+          "source_refs": [
+            "f1_sq_report",
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "ANT": {
+      "name": "Andrea Kimi Antonelli",
+      "team": "Mercedes",
+      "summary": "Antonelli won the Sprint and took GP pole, but his Sunday result was wrecked by a left-front wheel-shield problem while he was closing on Leclerc.",
+      "details": [
+        {
+          "text": "Final position is not representative of his weekend pace.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ],
+      "result_context": {
+        "representative_of_pace": false,
+        "reason": "Technical wheel-shield issue and subsequent penalty/result drop."
+      }
+    },
+    "PIA": {
+      "name": "Oscar Piastri",
+      "team": "McLaren",
+      "summary": "Piastri had a difficult Sunday and finished outside the points despite McLaren bringing significant upgrades, making his result a poor proxy for the package's potential.",
+      "details": [
+        {
+          "text": "The weekend highlights the danger of equating upgrade quantity with immediate race outcome.",
+          "source_refs": [
+            "f1_upgrades",
+            "f1_race_report"
+          ]
+        }
+      ]
+    }
+  },
+  "team_insights": {
+    "Ferrari": {
+      "summary": "Ferrari was unexpectedly strong at Silverstone: Sprint pole through Hamilton, front-row GP qualifying through Leclerc and a Sunday win.",
+      "details": [
+        {
+          "text": "Ferrari itself said it arrived expecting a more difficult weekend and needed to study why the car worked so well.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "Mercedes": {
+      "summary": "Mercedes had the fastest car in the Sprint/GP qualifying phases through Antonelli, but a technical failure prevented a clean Sunday conversion.",
+      "details": [
+        {
+          "text": "Russell salvaged second to keep Mercedes on the podium.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "McLaren": {
+      "summary": "McLaren brought the largest upgrade package of the weekend, but its race result was mixed and did not provide clean evidence of a direct hardware gain.",
+      "details": [
+        {
+          "text": "The package belongs in the development history without causal overclaiming.",
+          "source_refs": [
+            "f1_upgrades"
+          ]
+        }
+      ]
+    },
+    "Audi": {
+      "summary": "Bortoleto scored a valuable P8 and Audi described it as evidence of progress from its recent package, while Hulkenberg retired with a gearbox issue.",
+      "details": [
+        {
+          "text": "The split result combines a genuine points result with a reliability-limited second car.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    }
+  },
+  "strategy_and_conditions": [
+    {
+      "text": "The Sprint and Grand Prix told different stories: Antonelli won Saturday but technical trouble prevented a Sunday fight to the flag.",
+      "source_refs": [
+        "f1_sprint_results",
+        "f1_race_report"
+      ]
+    },
+    {
+      "text": "A late Safety Car after Verstappen's crash froze the final phase and influenced Hamilton's late tyre choice.",
+      "source_refs": [
+        "f1_teams_race"
+      ]
+    }
+  ],
+  "performance_interpretation": [
+    {
+      "text": "Ferrari's Silverstone result is a strong weekend-level performance signal, but Antonelli's technical failure makes the final winning margin an imperfect pace measure.",
+      "source_refs": [
+        "f1_teams_race"
+      ],
+      "teams": [
+        "Ferrari",
+        "Mercedes"
+      ]
+    },
+    {
+      "text": "McLaren's large upgrade inventory should not be judged solely by its Sunday finishing positions.",
+      "source_refs": [
+        "f1_upgrades"
+      ],
+      "teams": [
+        "McLaren"
+      ]
+    }
+  ],
+  "upgrades_and_technical_context": [
+    {
+      "team": "Ferrari",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Rear-corner aero/cooling refinement. Rear-corner inlet/outlet, lower deflector and winglet cluster changes.",
+      "reported_intent": "Rear-corner inlet/outlet, lower deflector and winglet cluster changes.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "McLaren",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Front-brake-duct and floor-furniture development. Persistent front-corner/floor-flow refinement.",
+      "reported_intent": "Persistent front-corner/floor-flow refinement.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Red Bull",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Rear-wheel bodywork cascade winglets. Small persistent rear-corner development.",
+      "reported_intent": "Small persistent rear-corner development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "VCARB",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Floor-corner, diffuser and rear-corner package. Notable persistent rear-floor development.",
+      "reported_intent": "Notable persistent rear-floor development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Haas",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Rear-wing profile/endplate refinement. Rear-aero development with some setup-range intent.",
+      "reported_intent": "Rear-aero development with some setup-range intent.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Williams",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "New front-wing geometry. Meaningful front-aero development step.",
+      "reported_intent": "Meaningful front-aero development step.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    }
+  ],
+  "prediction_review": {
+    "status": "unavailable",
+    "prediction_references": [],
+    "overall_assessment": "No genuine saved pre-race LatentLap forecast exists for this round. Do not reconstruct one retrospectively and label it as an original forecast.",
+    "successes": [],
+    "misses": [],
+    "known_exceptions": []
+  },
+  "knowledge_limits": [
+    {
+      "text": "Actual ERS deployment and battery state are not public; LatentLap's energy-management signals remain inferred, not measured."
+    },
+    {
+      "text": "Race-session harvest ratios are not used as reliable comparative evidence because representative laps differ in fuel, compound and track evolution."
+    },
+    {
+      "text": "Stint pace trends are fitted lap-time slopes over filtered green-flag laps, not direct tyre-degradation measurements; fuel burn, traffic, track evolution and driver management can contribute."
+    },
+    {
+      "text": "The presence of a new component at a weekend does not prove it caused an observed pace change. Upgrade effects are only attributed where reviewed reporting explicitly supports an effect."
+    }
+  ],
+  "entities": {
+    "drivers": [
+      "ANT",
+      "HAM",
+      "LEC",
+      "PIA"
+    ],
+    "teams": [
+      "Audi",
+      "Ferrari",
+      "McLaren",
+      "Mercedes"
+    ],
+    "topics": [
+      "sprint",
+      "qualifying",
+      "race pace",
+      "safety car",
+      "technical issue",
+      "upgrades",
+      "Ferrari",
+      "Mercedes"
+    ]
+  },
+  "sources": [
+    {
+      "id": "f1_sq_report",
+      "publisher": "Formula 1",
+      "title": "Hamilton takes British GP Sprint pole",
+      "url": "https://www.formula1.com/en/latest/article/hamilton-snatches-pole-position-in-british-grand-prix-sprint-qualifying-from-antonelli-and-verstappen.52qV7M1yI9KWgWowrlCYlG.52qV7M1yI9KWgWowrlCYlG"
+    },
+    {
+      "id": "f1_sprint_results",
+      "publisher": "Formula 1",
+      "title": "2026 British Grand Prix – Sprint results",
+      "url": "https://www.formula1.com/en/results/2026/races/1289/great-britain/sprint-results"
+    },
+    {
+      "id": "f1_q_results",
+      "publisher": "Formula 1",
+      "title": "2026 British Grand Prix – Qualifying results",
+      "url": "https://www.formula1.com/en/results/2026/races/1289/united-kingdom/qualifying"
+    },
+    {
+      "id": "f1_race_report",
+      "publisher": "Formula 1",
+      "title": "Leclerc wins dramatic British Grand Prix",
+      "url": "https://www.formula1.com/en/latest/article/leclerc-wins-dramatic-british-grand-prix-from-russell-and-hamilton-as-antonelli-suffers-issue.3bGl6laB38GIr1PfxJTNmY"
+    },
+    {
+      "id": "f1_teams_race",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Race day in Great Britain",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-race-day-in-great-britain-2026.5jSmNfGQuYUf6SCtU5iJnR"
+    },
+    {
+      "id": "f1_upgrades",
+      "publisher": "Formula 1",
+      "title": "Every team's updates for the British Grand Prix",
+      "url": "https://www.formula1.com/en/latest/article/mclaren-lead-changes-as-details-revealed-on-every-teams-updates-for-the-british-grand-prix.3zxmmU2UHMQ2JO6x16Im6K"
+    },
+    {
+      "id": "latentlap_upgrade_history",
+      "publisher": "LatentLap",
+      "title": "Audited 2026 team development history",
+      "path": "data/upgrade_history.py"
+    }
+  ]
+}

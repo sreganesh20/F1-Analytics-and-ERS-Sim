@@ -254,7 +254,11 @@ def render_grid(pred, pred_type):
                 gap_str = f"+{delta:.3f}s"
             rng     = f"[{p['delta_range_low']:+.2f} / {p['delta_range_high']:+.2f}]"
             hrv     = p.get("predicted_harvest_ratio", 0)
-            hrv_str = f"{hrv:.3f}" if hrv and hrv < 1.5 else "—"
+            hrv_str = (
+                "—"
+                if is_race_type
+                else (f"{hrv:.3f}" if hrv and hrv < 1.5 else "—")
+)
 
         gap_style = ("font-weight:bold;color:#FFD700;"
                      if (grid_pos == 1 and not out) else "color:#E0E0E0;")

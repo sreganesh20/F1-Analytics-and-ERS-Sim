@@ -1,0 +1,406 @@
+{
+  "review_status": "approved",
+  "metadata": {
+    "year": 2026,
+    "round": 6,
+    "circuit": "Monaco",
+    "venue": "Circuit de Monaco",
+    "date_range": "2026-06-05 to 2026-06-07",
+    "weekend_type": "standard",
+    "sessions_available": [
+      "Q",
+      "R"
+    ]
+  },
+  "weekend_summary": "Monaco was Antonelli's most controlled victory of the opening half: pole, a clean start and a lights-to-flag win through Safety Car and red-flag interruptions. Hamilton finished second and Hadjar scored his first Red Bull podium. The race was unusually attritional, with Verstappen effectively out at the start, Leclerc and Norris among later retirements, and a wave of penalties. The weekend also highlighted how Monaco-specific many aero changes can be: several teams added high-downforce or steering-range parts that should not be treated as permanent baseline upgrades.",
+  "sessions": {
+    "Q": {
+      "summary": "Antonelli edged Verstappen for pole, with Hamilton and Leclerc filling the second row and Hadjar fifth.",
+      "key_moments": [
+        {
+          "text": "Antonelli took pole in 1:12.051, only 0.043s ahead of Verstappen.",
+          "source_refs": [
+            "f1_q_results"
+          ]
+        }
+      ]
+    },
+    "R": {
+      "summary": "Antonelli led from start to finish, managing multiple interruptions, while Hamilton finished second and Hadjar took his first podium for Red Bull.",
+      "key_moments": [
+        {
+          "text": "Verstappen failed to launch properly and retired on the opening lap.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Antonelli built a large advantage before later Safety Car/red-flag interruptions erased parts of the gap.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Russell's afternoon was compromised by penalties, including pit-lane speeding and a later drive-through.",
+          "source_refs": [
+            "f1_russell_context"
+          ]
+        },
+        {
+          "text": "Seven drivers retired in a chaotic race, making finishing position a noisy pace measure for several teams.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    }
+  },
+  "performance_snapshot": {
+    "source": "committed_session_store",
+    "status": "hydrate at query time from committed LatentLap session data"
+  },
+  "driver_insights": {
+    "ANT": {
+      "name": "Andrea Kimi Antonelli",
+      "team": "Mercedes",
+      "summary": "Antonelli delivered a clean pole-to-win weekend and repeatedly handled restarts without losing control of the race.",
+      "details": [
+        {
+          "text": "This is one of the cleaner examples of a result matching underlying front-running pace.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "HAM": {
+      "name": "Lewis Hamilton",
+      "team": "Ferrari",
+      "summary": "Hamilton qualified third and finished second, giving Ferrari a strong Monaco result on a circuit where track position carries unusually high value.",
+      "details": [
+        {
+          "text": "His result is more representative than several rivals because he avoided the major incidents and penalties.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "HAD": {
+      "name": "Isack Hadjar",
+      "team": "Red Bull",
+      "summary": "Hadjar converted fifth on the grid into his first Red Bull podium after Verstappen's early retirement and a chaotic attritional race.",
+      "details": [
+        {
+          "text": "The podium reflects both solid pace and successful avoidance of the weekend's incident/penalty traps.",
+          "source_refs": [
+            "f1_lowdown"
+          ]
+        }
+      ]
+    },
+    "VER": {
+      "name": "Max Verstappen",
+      "team": "Red Bull",
+      "summary": "Verstappen's race ended effectively at the start because of a launch/technical issue, so the DNF says nothing useful about his Monaco race pace.",
+      "details": [
+        {
+          "text": "His P2 qualifying result is the stronger pace reference for the weekend.",
+          "source_refs": [
+            "f1_q_results"
+          ]
+        }
+      ],
+      "result_context": {
+        "representative_of_pace": false,
+        "reason": "Opening-lap start issue and retirement."
+      }
+    },
+    "RUS": {
+      "name": "George Russell",
+      "team": "Mercedes",
+      "summary": "Russell qualified sixth but a sequence of penalties destroyed his race despite the underlying speed of the Mercedes package.",
+      "details": [
+        {
+          "text": "His P13 finish is not representative of the car's pace.",
+          "source_refs": [
+            "f1_russell_context"
+          ]
+        }
+      ],
+      "result_context": {
+        "representative_of_pace": false,
+        "reason": "Multiple penalties materially determined the final position."
+      }
+    }
+  },
+  "team_insights": {
+    "Mercedes": {
+      "summary": "Mercedes had the fastest single-lap car through Antonelli and converted it into victory, but Russell's penalty-heavy race made the team result asymmetric.",
+      "details": [
+        {
+          "text": "The one-car dominance should not be used to infer Russell lacked pace.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "Ferrari": {
+      "summary": "Ferrari placed both cars on the second row and Hamilton finished second, confirming genuine competitiveness on a high-downforce street circuit.",
+      "details": [
+        {
+          "text": "Leclerc's retirement makes the second-car result non-representative.",
+          "source_refs": [
+            "f1_lowdown"
+          ]
+        }
+      ]
+    },
+    "Red Bull": {
+      "summary": "Red Bull had a front-row-level car in Verstappen's hands but lost that benchmark immediately in the race; Hadjar recovered the team result with a podium.",
+      "details": [
+        {
+          "text": "The mixed outcome is driven heavily by the start failure and attrition.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    }
+  },
+  "strategy_and_conditions": [
+    {
+      "text": "A one-stop baseline was expected in dry conditions, but Safety Cars, penalties and a red flag created repeated strategic resets.",
+      "source_refs": [
+        "f1_race_report"
+      ]
+    },
+    {
+      "text": "Many technical changes at Monaco were explicitly circuit-specific high-downforce, steering-range or cooling solutions and should not be read as permanent development steps.",
+      "source_refs": [
+        "f1_upgrades"
+      ]
+    }
+  ],
+  "performance_interpretation": [
+    {
+      "text": "Antonelli's win is comparatively representative of pace and execution; Verstappen and Russell are examples where final position is dominated by non-pace events.",
+      "source_refs": [
+        "f1_teams_race",
+        "f1_russell_context"
+      ],
+      "teams": [
+        "Mercedes",
+        "Red Bull"
+      ],
+      "drivers": [
+        "ANT",
+        "VER",
+        "RUS"
+      ]
+    }
+  ],
+  "upgrades_and_technical_context": [
+    {
+      "team": "Mercedes",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Rear-wing/straight-mode fairing detail. Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_intent": "Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "McLaren",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Cooling, steering-clearance and high-downforce rear-aero options. Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_intent": "Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Alpine",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Rear-wing actuator winglets. Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_intent": "Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Red Bull",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Cooling, brake-duct and steering-clearance changes. Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_intent": "Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Ferrari",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Steering and Monaco floor/diffuser details. Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_intent": "Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Williams",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Exhaust and front-suspension configuration. Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_intent": "Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Aston Martin",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Suspension and cooling configuration. Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_intent": "Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Haas",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Front-suspension and rear-wing actuator details. Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_intent": "Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Audi",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Straight-mode actuator removal and cooling/mirror changes. Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_intent": "Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Cadillac",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "High-load rear-wing configuration. Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_intent": "Monaco-specific high-downforce, steering-clearance or cooling configuration; retained for context but excluded from persistent prediction weighting.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    }
+  ],
+  "prediction_review": {
+    "status": "unavailable",
+    "prediction_references": [],
+    "overall_assessment": "No genuine saved pre-race LatentLap forecast exists for this round. Do not reconstruct one retrospectively and label it as an original forecast.",
+    "successes": [],
+    "misses": [],
+    "known_exceptions": []
+  },
+  "knowledge_limits": [
+    {
+      "text": "Actual ERS deployment and battery state are not public; LatentLap's energy-management signals remain inferred, not measured."
+    },
+    {
+      "text": "Race-session harvest ratios are not used as reliable comparative evidence because representative laps differ in fuel, compound and track evolution."
+    },
+    {
+      "text": "Stint pace trends are fitted lap-time slopes over filtered green-flag laps, not direct tyre-degradation measurements; fuel burn, traffic, track evolution and driver management can contribute."
+    },
+    {
+      "text": "The presence of a new component at a weekend does not prove it caused an observed pace change. Upgrade effects are only attributed where reviewed reporting explicitly supports an effect."
+    }
+  ],
+  "entities": {
+    "drivers": [
+      "ANT",
+      "HAD",
+      "HAM",
+      "RUS",
+      "VER"
+    ],
+    "teams": [
+      "Ferrari",
+      "Mercedes",
+      "Red Bull"
+    ],
+    "topics": [
+      "qualifying",
+      "race pace",
+      "street circuit",
+      "safety car",
+      "red flag",
+      "penalties",
+      "track position",
+      "circuit-specific upgrades"
+    ]
+  },
+  "sources": [
+    {
+      "id": "f1_q_results",
+      "publisher": "Formula 1",
+      "title": "2026 Monaco Grand Prix – Qualifying results",
+      "url": "https://www.formula1.com/en/results/2026/races/1286/monaco/qualifying"
+    },
+    {
+      "id": "f1_race_report",
+      "publisher": "Formula 1",
+      "title": "Antonelli secures victory in chaotic Monaco Grand Prix",
+      "url": "https://www.formula1.com/en/latest/article/antonelli-secures-brilliant-victory-in-chaotic-monaco-grand-prix-amid-multiple-shock-retirements.27e644586K83z0NZd6efsz"
+    },
+    {
+      "id": "f1_teams_race",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Race day in Monaco",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-race-day-in-monaco-2026.2jsmMDo57e454K9ymtAgMs"
+    },
+    {
+      "id": "f1_lowdown",
+      "publisher": "Formula 1",
+      "title": "Monaco Lowdown – key moments from 2026",
+      "url": "https://www.formula1.com/en/latest/article/monaco-lowdown-all-the-key-moments-as-antonelli-makes-it-five-wins-in-a-row-amid-plenty-of-drama.15V47eOZ3Gp6ZRRxg4F2TI.15V47eOZ3Gp6ZRRxg4F2TI"
+    },
+    {
+      "id": "f1_russell_context",
+      "publisher": "Formula 1",
+      "title": "Russell reflects on difficult Monaco weekend",
+      "url": "https://www.formula1.com/en/latest/article/russell-beyond-frustration-as-he-struggles-to-comprehend-difficult-start-to-2026-season.3glG1BnlAOhcLhkgzK31xA"
+    },
+    {
+      "id": "f1_upgrades",
+      "publisher": "Formula 1",
+      "title": "Every team's upgrades for the 2026 Monaco Grand Prix",
+      "url": "https://www.formula1.com/en/latest/article/what-upgrades-have-each-f1-team-brought-to-the-monaco-grand-prix.77ppJ8xOLzsefNOftRIvkG.77ppJ8xOLzsefNOftRIvkG"
+    },
+    {
+      "id": "latentlap_upgrade_history",
+      "publisher": "LatentLap",
+      "title": "Audited 2026 team development history",
+      "path": "data/upgrade_history.py"
+    }
+  ]
+}

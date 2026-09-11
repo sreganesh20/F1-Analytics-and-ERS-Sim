@@ -1,0 +1,473 @@
+{
+  "review_status": "approved",
+  "metadata": {
+    "year": 2026,
+    "round": 10,
+    "circuit": "Belgium",
+    "venue": "Circuit de Spa-Francorchamps",
+    "date_range": "2026-07-17 to 2026-07-19",
+    "weekend_type": "standard",
+    "sessions_available": [
+      "Q",
+      "R"
+    ]
+  },
+  "weekend_summary": "Spa returned Antonelli to winning form after two difficult rounds. He started from pole, briefly lost the lead to Verstappen, then retook it and later had to chase Leclerc after Ferrari gained a cheap stop under a short VSC. Antonelli passed Leclerc with roughly 10 laps remaining and won by under two seconds. Russell's race ended early after contact with Hamilton, while Verstappen completed the podium. The weekend also exposed Aston Martin's severe pre-Hungary deficit and featured several grid penalties that complicate raw start-to-finish comparisons.",
+  "sessions": {
+    "Q": {
+      "summary": "Antonelli took a dominant pole, with Verstappen closest; Norris qualified near the front but carried a 10-place grid penalty.",
+      "key_moments": [
+        {
+          "text": "Antonelli started from pole with Verstappen alongside.",
+          "source_refs": [
+            "f1_grid"
+          ]
+        },
+        {
+          "text": "Norris' 10-place power-unit penalty moved him down the official grid.",
+          "source_refs": [
+            "f1_grid"
+          ]
+        }
+      ]
+    },
+    "R": {
+      "summary": "Antonelli won after retaking the lead from Verstappen early and later chasing down Leclerc, who had gained track position through a VSC-assisted stop.",
+      "key_moments": [
+        {
+          "text": "Verstappen swept past Antonelli at Eau Rouge on Lap 1, but Antonelli reclaimed the lead quickly.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Hamilton and Russell made contact early, sending Russell into the gravel and out of the race.",
+          "source_refs": [
+            "f1_race_report",
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "A short VSC allowed Leclerc to gain track position through a cheaper stop.",
+          "source_refs": [
+            "f1_antonelli_context"
+          ]
+        },
+        {
+          "text": "Antonelli caught and passed Leclerc late to win by 1.952s.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    }
+  },
+  "performance_snapshot": {
+    "source": "committed_session_store",
+    "status": "hydrate at query time from committed LatentLap session data"
+  },
+  "driver_insights": {
+    "ANT": {
+      "name": "Andrea Kimi Antonelli",
+      "team": "Mercedes",
+      "summary": "Antonelli's Spa win was a strong recovery statement: he overcame both an early loss of track position and a later strategy disadvantage to pass Leclerc on track.",
+      "details": [
+        {
+          "text": "This makes the victory a stronger pace/execution signal than a simple inherited win.",
+          "source_refs": [
+            "f1_antonelli_context"
+          ]
+        }
+      ]
+    },
+    "LEC": {
+      "name": "Charles Leclerc",
+      "team": "Ferrari",
+      "summary": "Leclerc used the VSC to jump Antonelli during the stop cycle and then forced Mercedes to win the race back on track.",
+      "details": [
+        {
+          "text": "P2 by less than two seconds shows Ferrari remained a genuine race-winning threat.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "RUS": {
+      "name": "George Russell",
+      "team": "Mercedes",
+      "summary": "Russell's race ended in an opening-lap collision with Hamilton after he had already lost deployment and fallen backwards.",
+      "details": [
+        {
+          "text": "The DNF is not a usable measure of his race pace.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "result_context": {
+        "representative_of_pace": false,
+        "reason": "Early collision ended the race."
+      }
+    },
+    "VER": {
+      "name": "Max Verstappen",
+      "team": "Red Bull",
+      "summary": "Verstappen briefly took the lead and finished third, showing front-running race pace even though he could not sustain Antonelli's pace over the full event.",
+      "details": [
+        {
+          "text": "His podium was Red Bull's third of the season at that point.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "ALO": {
+      "name": "Fernando Alonso",
+      "team": "Aston Martin",
+      "summary": "Aston Martin arrived at Spa at the low point of its season and was badly off the midfield pace, sharpening the importance of the B-spec due in Hungary.",
+      "details": [
+        {
+          "text": "The team's own pre-Hungary comments described the Spa deficit as roughly two seconds to the midfield and more than four seconds to the Q1 benchmark.",
+          "source_refs": [
+            "f1_aston_pre_hungary"
+          ]
+        }
+      ]
+    }
+  },
+  "team_insights": {
+    "Mercedes": {
+      "summary": "Mercedes had a split weekend: Antonelli delivered a mature win while Russell scored zero after the opening-lap collision.",
+      "details": [
+        {
+          "text": "Team-level averages should not treat Russell's DNF as pace weakness.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "Ferrari": {
+      "summary": "Ferrari remained close enough to use strategy to lead and force Antonelli to pass Leclerc late.",
+      "details": [
+        {
+          "text": "Hamilton finished fourth despite serving a penalty for the Russell contact.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "Aston Martin": {
+      "summary": "Spa exposed the depth of Aston Martin's chassis deficit immediately before its planned Hungary B-spec.",
+      "details": [
+        {
+          "text": "That baseline is important when interpreting the size of any Hungary improvement.",
+          "source_refs": [
+            "f1_aston_pre_hungary"
+          ]
+        }
+      ]
+    },
+    "VCARB": {
+      "summary": "Racing Bulls brought a meaningful package but could only allocate it to one car initially, creating a driver-scoped rollout rather than a clean two-car comparison.",
+      "details": [
+        {
+          "text": "The team publicly discussed the practical limitation of only having enough parts for one car at Spa.",
+          "source_refs": [
+            "f1_vcarb_upgrade"
+          ]
+        }
+      ]
+    }
+  },
+  "strategy_and_conditions": [
+    {
+      "text": "A short VSC materially altered the lead battle by giving Leclerc a cheaper stop.",
+      "source_refs": [
+        "f1_antonelli_context"
+      ]
+    },
+    {
+      "text": "Several drivers carried grid penalties, so official starting position and qualifying pace should be kept separate.",
+      "source_refs": [
+        "f1_grid"
+      ]
+    }
+  ],
+  "performance_interpretation": [
+    {
+      "text": "Antonelli's win is strong evidence of Mercedes race pace because he had to recover a strategy disadvantage and pass Leclerc on track.",
+      "source_refs": [
+        "f1_antonelli_context"
+      ],
+      "teams": [
+        "Mercedes"
+      ],
+      "drivers": [
+        "ANT"
+      ]
+    },
+    {
+      "text": "Russell's DNF and Norris' grid penalty make final positions poor standalone pace measures for those drivers.",
+      "source_refs": [
+        "f1_grid",
+        "f1_teams_race"
+      ],
+      "drivers": [
+        "RUS",
+        "NOR"
+      ]
+    }
+  ],
+  "upgrades_and_technical_context": [
+    {
+      "team": "McLaren",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Spa-specific low-drag rear wing. Circuit-specific rear-wing range.",
+      "reported_intent": "Circuit-specific rear-wing range.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "McLaren",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Rear-wing endplate refinement. Small change intended to work across a wider operating range.",
+      "reported_intent": "Small change intended to work across a wider operating range.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Mercedes",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Spa-specific rear wing. Low-drag circuit configuration. This was previously mis-filed at R8.",
+      "reported_intent": "Low-drag circuit configuration. This was previously mis-filed at R8.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Mercedes",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Front-wing endplate and rear-drum winglet refinements. Small persistent aero details; separated from the Spa-only rear wing.",
+      "reported_intent": "Small persistent aero details; separated from the Spa-only rear wing.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Red Bull",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Rear-wing pylon profile refinement. Small persistent rear-wing support/aero development.",
+      "reported_intent": "Small persistent rear-wing support/aero development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Williams",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "New floor body. Meaningful floor development.",
+      "reported_intent": "Meaningful floor development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Williams",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Spa floor trim and rear-brake-duct load configuration. Circuit-specific load/range choice.",
+      "reported_intent": "Circuit-specific load/range choice.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "VCARB",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Major chassis/bodywork and aero package. Engine cover/sidepod, narrower roll hoop, front corner and rear-wing development. Initially limited by parts availability.",
+      "reported_intent": "Engine cover/sidepod, narrower roll hoop, front corner and rear-wing development. Initially limited by parts availability.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Haas",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Front-wing/endplate and front-corner package. Persistent front-aero development.",
+      "reported_intent": "Persistent front-aero development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Haas",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Lower-downforce beam-wing option. Spa-specific drag/load configuration.",
+      "reported_intent": "Spa-specific drag/load configuration.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Audi",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "New diffuser. Persistent rear-floor development.",
+      "reported_intent": "Persistent rear-floor development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Audi",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Upper rear-wing configuration. Spa load-range choice.",
+      "reported_intent": "Spa load-range choice.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Alpine",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Halo winglet refinement. Small local aero change.",
+      "reported_intent": "Small local aero change.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Cadillac",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Front-wing endplate/footplate revision. Small persistent front-aero development.",
+      "reported_intent": "Small persistent front-aero development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    }
+  ],
+  "prediction_review": {
+    "status": "unavailable",
+    "prediction_references": [],
+    "overall_assessment": "No genuine saved pre-race LatentLap forecast exists for this round. Do not reconstruct one retrospectively and label it as an original forecast.",
+    "successes": [],
+    "misses": [],
+    "known_exceptions": []
+  },
+  "knowledge_limits": [
+    {
+      "text": "Actual ERS deployment and battery state are not public; LatentLap's energy-management signals remain inferred, not measured."
+    },
+    {
+      "text": "Race-session harvest ratios are not used as reliable comparative evidence because representative laps differ in fuel, compound and track evolution."
+    },
+    {
+      "text": "Stint pace trends are fitted lap-time slopes over filtered green-flag laps, not direct tyre-degradation measurements; fuel burn, traffic, track evolution and driver management can contribute."
+    },
+    {
+      "text": "The presence of a new component at a weekend does not prove it caused an observed pace change. Upgrade effects are only attributed where reviewed reporting explicitly supports an effect."
+    }
+  ],
+  "entities": {
+    "drivers": [
+      "ALO",
+      "ANT",
+      "LEC",
+      "RUS",
+      "VER"
+    ],
+    "teams": [
+      "Aston Martin",
+      "Ferrari",
+      "Mercedes",
+      "Red Bull",
+      "VCARB"
+    ],
+    "topics": [
+      "qualifying",
+      "race pace",
+      "VSC",
+      "grid penalties",
+      "collision",
+      "strategy",
+      "Aston Martin",
+      "upgrades"
+    ]
+  },
+  "sources": [
+    {
+      "id": "f1_grid",
+      "publisher": "Formula 1",
+      "title": "Official 2026 Belgian Grand Prix grid",
+      "url": "https://www.formula1.com/en/latest/article/official-grid-who-starts-where-for-the-belgian-grand-prix-2026.2Pyth6t2ZEYNSqVWC295C7"
+    },
+    {
+      "id": "f1_race_report",
+      "publisher": "Formula 1",
+      "title": "Antonelli beats Leclerc to Belgian Grand Prix victory",
+      "url": "https://www.formula1.com/en/latest/article/antonelli-beats-leclerc-to-belgian-grand-prix-win-to-extend-title-lead-as-russell-retires.MAqSJSgXvRP6dLbwiRbWI"
+    },
+    {
+      "id": "f1_teams_race",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Race day in Belgium",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-race-day-in-belgium-2026.4Z1G8I8Y5QKDKGeCBDlbIX.4Z1G8I8Y5QKDKGeCBDlbIX"
+    },
+    {
+      "id": "f1_antonelli_context",
+      "publisher": "Formula 1",
+      "title": "Antonelli reflects on title battle after Belgian GP win",
+      "url": "https://www.formula1.com/en/latest/article/got-to-take-every-opportunity-antonelli-reflects-on-title-battle-after-victory-in-belgian-gp.35LA7q5eMj9Tjp7vQwW0G0"
+    },
+    {
+      "id": "f1_vcarb_upgrade",
+      "publisher": "Formula 1",
+      "title": "How Racing Bulls chose who got the Spa upgrades",
+      "url": "https://www.formula1.com/en/latest/article/we-tried-to-put-a-bit-of-fun-into-it-how-racing-bulls-decided-who-got-the-upgrades-in-belgium.2tEbqKcEp260iT6aR19aND"
+    },
+    {
+      "id": "f1_aston_pre_hungary",
+      "publisher": "Formula 1",
+      "title": "Alonso on Aston Martin's upgrade expectations after Spa",
+      "url": "https://www.formula1.com/en/latest/article/alonso-on-aston-martin-updates-zero-doubt-newey-can-deliver-the-best-car.5E9b9dih57mPkAUkaJU2W7"
+    },
+    {
+      "id": "latentlap_upgrade_history",
+      "publisher": "LatentLap",
+      "title": "Audited 2026 team development history",
+      "path": "data/upgrade_history.py"
+    }
+  ]
+}

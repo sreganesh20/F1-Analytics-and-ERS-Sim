@@ -1,0 +1,378 @@
+{
+  "review_status": "approved",
+  "metadata": {
+    "year": 2026,
+    "round": 7,
+    "circuit": "Spain",
+    "venue": "Circuit de Barcelona-Catalunya",
+    "date_range": "2026-06-12 to 2026-06-14",
+    "weekend_type": "standard",
+    "sessions_available": [
+      "Q",
+      "R"
+    ]
+  },
+  "weekend_summary": "Barcelona ended Mercedes' unbeaten Grand Prix run. Russell took pole, Hamilton qualified alongside him and Antonelli started third, but Ferrari's race pace and three-stop strategy moved Hamilton into the winning position. A Virtual Safety Car handed him a cheap final stop and he then pulled away, while Antonelli recorded his first retirement of the season. Ferrari also brought the weekend's most extensive chassis/aero package, making Spain an important development marker — without proving the hardware alone caused the win.",
+  "sessions": {
+    "Q": {
+      "summary": "Russell took pole ahead of Hamilton and Antonelli; Leclerc crashed out and started only 10th.",
+      "key_moments": [
+        {
+          "text": "Russell set 1:14.679 to beat Hamilton and Antonelli.",
+          "source_refs": [
+            "f1_q_report"
+          ]
+        },
+        {
+          "text": "Leclerc crashed out of qualifying, creating a split Ferrari starting picture.",
+          "source_refs": [
+            "f1_q_report"
+          ]
+        }
+      ]
+    },
+    "R": {
+      "summary": "Hamilton won Ferrari's first Grand Prix of 2026 ahead of Russell and Norris, using strong pace plus an aggressive three-stop strategy and a favourable VSC.",
+      "key_moments": [
+        {
+          "text": "Ferrari started Hamilton on Softs and committed to a three-stop strategy.",
+          "source_refs": [
+            "f1_race_report",
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Hamilton had strong Medium/Hard pace and closed on Russell before the decisive final stop.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "A VSC gave Hamilton a cheap final stop and put him into the lead.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Antonelli retired, while Leclerc later retired with a power-steering issue after recovering from P10.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    }
+  },
+  "performance_snapshot": {
+    "source": "committed_session_store",
+    "status": "hydrate at query time from committed LatentLap session data"
+  },
+  "driver_insights": {
+    "HAM": {
+      "name": "Lewis Hamilton",
+      "team": "Ferrari",
+      "summary": "Hamilton took his first Ferrari Grand Prix win through a combination of strong race pace and a bold three-stop strategy that became even stronger when the VSC arrived.",
+      "details": [
+        {
+          "text": "The VSC helped, but Ferrari's own race report says Hamilton already had enough pace to close on Russell before it.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "RUS": {
+      "name": "George Russell",
+      "team": "Mercedes",
+      "summary": "Russell converted pole into second but could not match Hamilton once Ferrari's strategy and pace developed through the race.",
+      "details": [
+        {
+          "text": "The result marked the first clear Sunday defeat for Mercedes in 2026.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "ANT": {
+      "name": "Andrea Kimi Antonelli",
+      "team": "Mercedes",
+      "summary": "Antonelli started third but failed to finish, ending his run of consecutive wins and making the final result non-representative of his qualifying pace.",
+      "details": [
+        {
+          "text": "The retirement cost him a large championship swing to Hamilton.",
+          "source_refs": [
+            "f1_lowdown"
+          ]
+        }
+      ],
+      "result_context": {
+        "representative_of_pace": false,
+        "reason": "Technical retirement."
+      }
+    },
+    "LEC": {
+      "name": "Charles Leclerc",
+      "team": "Ferrari",
+      "summary": "Leclerc's weekend was compromised by his qualifying crash and a later power-steering issue, so the final DNF should not be used as clean evidence of the upgraded car's pace.",
+      "details": [
+        {
+          "text": "He recovered positions from P10 before the late issue.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "result_context": {
+        "representative_of_pace": false,
+        "reason": "Qualifying crash and race power-steering issue materially shaped the result."
+      }
+    }
+  },
+  "team_insights": {
+    "Ferrari": {
+      "summary": "Ferrari converted its largest package of the weekend and strong race pace into its first Grand Prix win of 2026, but strategy and the VSC were important parts of the outcome.",
+      "details": [
+        {
+          "text": "This is a strong development checkpoint, not a clean component-attribution experiment.",
+          "source_refs": [
+            "f1_upgrades",
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "Mercedes": {
+      "summary": "Mercedes retained pole and second place but lost its perfect Grand Prix winning record as Ferrari became more competitive in race trim.",
+      "details": [
+        {
+          "text": "The weekend is an important relative-performance change after the post-Monaco phase.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "McLaren": {
+      "summary": "Norris finished third, keeping McLaren in the front group even though Ferrari and Mercedes controlled the main win fight.",
+      "details": [
+        {
+          "text": "McLaren remained relevant on a circuit that tests broad aero performance.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    }
+  },
+  "strategy_and_conditions": [
+    {
+      "text": "Ferrari used a three-stop strategy for Hamilton and gained a cheap final stop under VSC conditions.",
+      "source_refs": [
+        "f1_race_report",
+        "f1_teams_race"
+      ]
+    },
+    {
+      "text": "Barcelona is a broad aero/mechanical benchmark, but the dossier still avoids assigning Ferrari's win to any single new component.",
+      "source_refs": [
+        "f1_upgrades"
+      ]
+    }
+  ],
+  "performance_interpretation": [
+    {
+      "text": "Hamilton's win is representative of strong Ferrari race pace, but the winning margin is not strategy-neutral because the VSC materially improved the final stop.",
+      "source_refs": [
+        "f1_teams_race"
+      ],
+      "teams": [
+        "Ferrari"
+      ],
+      "drivers": [
+        "HAM"
+      ]
+    },
+    {
+      "text": "Antonelli and Leclerc both had non-representative final results due to technical issues.",
+      "source_refs": [
+        "f1_teams_race"
+      ],
+      "drivers": [
+        "ANT",
+        "LEC"
+      ]
+    }
+  ],
+  "upgrades_and_technical_context": [
+    {
+      "team": "Ferrari",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Major front-wing, full-floor and sidepod package. The weekend's most extensive declared package: front wing/mainplane/endplates/nose, floor body/boards/edge/diffuser and sidepod/cokeline work.",
+      "reported_intent": "The weekend's most extensive declared package: front wing/mainplane/endplates/nose, floor body/boards/edge/diffuser and sidepod/cokeline work.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "McLaren",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Front-wing endplate refinement. Small persistent front-aero change.",
+      "reported_intent": "Small persistent front-aero change.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Mercedes",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Centreline rear-wing winglets. Event/range-specific rear-wing configuration.",
+      "reported_intent": "Event/range-specific rear-wing configuration.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Red Bull",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Front-wing geometry refinement. Small load/balance development.",
+      "reported_intent": "Small load/balance development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Williams",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Rear-wing straight-mode fairing winglets. Circuit/range-specific rear-wing configuration.",
+      "reported_intent": "Circuit/range-specific rear-wing configuration.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "VCARB",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Diffuser/rear-crash integration refinement. Persistent rear-aero detail; front-wing gurneys were primarily balance tuning.",
+      "reported_intent": "Persistent rear-aero detail; front-wing gurneys were primarily balance tuning.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Haas",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Rear-impact geometry/tuning option. Created circuit-tuning flexibility rather than a clearly persistent baseline step.",
+      "reported_intent": "Created circuit-tuning flexibility rather than a clearly persistent baseline step.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Cadillac",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Cooling-louvre and front-wing actuator configuration. Event/range configuration.",
+      "reported_intent": "Event/range configuration.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    }
+  ],
+  "prediction_review": {
+    "status": "unavailable",
+    "prediction_references": [],
+    "overall_assessment": "No genuine saved pre-race LatentLap forecast exists for this round. Do not reconstruct one retrospectively and label it as an original forecast.",
+    "successes": [],
+    "misses": [],
+    "known_exceptions": []
+  },
+  "knowledge_limits": [
+    {
+      "text": "Actual ERS deployment and battery state are not public; LatentLap's energy-management signals remain inferred, not measured."
+    },
+    {
+      "text": "Race-session harvest ratios are not used as reliable comparative evidence because representative laps differ in fuel, compound and track evolution."
+    },
+    {
+      "text": "Stint pace trends are fitted lap-time slopes over filtered green-flag laps, not direct tyre-degradation measurements; fuel burn, traffic, track evolution and driver management can contribute."
+    },
+    {
+      "text": "The presence of a new component at a weekend does not prove it caused an observed pace change. Upgrade effects are only attributed where reviewed reporting explicitly supports an effect."
+    }
+  ],
+  "entities": {
+    "drivers": [
+      "ANT",
+      "HAM",
+      "LEC",
+      "RUS"
+    ],
+    "teams": [
+      "Ferrari",
+      "McLaren",
+      "Mercedes"
+    ],
+    "topics": [
+      "qualifying",
+      "race pace",
+      "strategy",
+      "virtual safety car",
+      "Ferrari win",
+      "upgrades",
+      "technical retirement"
+    ]
+  },
+  "sources": [
+    {
+      "id": "f1_q_report",
+      "publisher": "Formula 1",
+      "title": "Russell storms to Barcelona pole ahead of Hamilton and Antonelli",
+      "url": "https://www.formula1.com/en/latest/article/russell-storms-to-barcelona-catalunya-gp-pole-ahead-of-hamilton-and-antonelli-as-leclerc-crashes-out.5TO9HsowvlMjmFJBPVP3qv.5TO9HsowvlMjmFJBPVP3qv"
+    },
+    {
+      "id": "f1_race_report",
+      "publisher": "Formula 1",
+      "title": "Hamilton claims maiden Ferrari Grand Prix victory in Barcelona",
+      "url": "https://www.formula1.com/en/latest/article/hamilton-claims-stellar-maiden-grand-prix-victory-for-ferrari-in-barcelona-as-antonelli-suffers-shock-retirement.4yCXiPLHUdcnl2BwNpqUIa"
+    },
+    {
+      "id": "f1_teams_race",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Race day in Barcelona-Catalunya",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-race-day-in-barcelona-catalunya-2026.4fWikDvJzMjVCrHCUNG4Hr"
+    },
+    {
+      "id": "f1_lowdown",
+      "publisher": "Formula 1",
+      "title": "Barcelona Lowdown – Hamilton wins and Antonelli retires",
+      "url": "https://www.formula1.com/en/latest/article/barcelona-lowdown-all-the-key-moments-as-hamilton-lands-sublime-maiden-win-with-ferrari-and-antonelli-retires.3uRBVUiY87JTLhM1l9G24K.3uRBVUiY87JTLhM1l9G24K"
+    },
+    {
+      "id": "f1_upgrades",
+      "publisher": "Formula 1",
+      "title": "Every team's upgrades for Barcelona-Catalunya",
+      "url": "https://www.formula1.com/en/latest/article/what-upgrades-have-each-team-brought-to-the-barcelona-catalunya-grand-prix.77PmwSOI3Sxsn79sS1uhAK"
+    },
+    {
+      "id": "latentlap_upgrade_history",
+      "publisher": "LatentLap",
+      "title": "Audited 2026 team development history",
+      "path": "data/upgrade_history.py"
+    }
+  ]
+}

@@ -1,0 +1,360 @@
+{
+  "review_status": "approved",
+  "metadata": {
+    "year": 2026,
+    "round": 3,
+    "circuit": "Japan",
+    "venue": "Suzuka Circuit",
+    "date_range": "2026-03-27 to 2026-03-29",
+    "weekend_type": "standard",
+    "sessions_available": [
+      "Q",
+      "R"
+    ]
+  },
+  "weekend_summary": "Suzuka gave Antonelli a second straight Grand Prix victory and exposed one of the biggest safety questions of the new energy-management era. Antonelli started from pole but fell to sixth at the launch, while Piastri grabbed the lead. Mercedes recovered and Antonelli ultimately benefited from the timing of the Safety Car caused by Bearman's heavy crash, then drove away after the restart. The crash also triggered an FIA statement about the large closing-speed effects created by 2026 energy management.",
+  "sessions": {
+    "Q": {
+      "summary": "Antonelli took pole ahead of Russell as Mercedes retained the benchmark over one lap.",
+      "key_moments": [
+        {
+          "text": "Antonelli secured a second consecutive Grand Prix pole.",
+          "source_refs": [
+            "f1_lowdown"
+          ]
+        }
+      ]
+    },
+    "R": {
+      "summary": "Piastri led early, but Antonelli recovered from sixth and used the Safety Car pit window around Bearman's crash to emerge in front before winning by a comfortable margin.",
+      "key_moments": [
+        {
+          "text": "Piastri made the best start and took the lead into Turn 1 while both Mercedes cars dropped back.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Bearman suffered a heavy crash on Lap 22, bringing out the Safety Car.",
+          "source_refs": [
+            "f1_race_report",
+            "f1_bearman_fia"
+          ]
+        },
+        {
+          "text": "Antonelli had not yet stopped and was able to pit under the Safety Car while retaining the effective lead.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "After the restart Antonelli pulled clear and won ahead of Piastri and Leclerc.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    }
+  },
+  "performance_snapshot": {
+    "source": "committed_session_store",
+    "status": "hydrate at query time from committed LatentLap session data"
+  },
+  "driver_insights": {
+    "ANT": {
+      "name": "Andrea Kimi Antonelli",
+      "team": "Mercedes",
+      "summary": "Antonelli's win combined a strong recovery drive with favourable Safety Car timing. The cheap stop mattered, but his pace after the restart was strong enough to build a clear winning margin.",
+      "details": [
+        {
+          "text": "He recovered from sixth after the start before the Safety Car changed the pit-stop sequence.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "PIA": {
+      "name": "Oscar Piastri",
+      "team": "McLaren",
+      "summary": "Piastri led the opening phase after a superb start and finished second. The result showed McLaren could challenge Mercedes on a high-speed circuit even before its later Miami development step.",
+      "details": [
+        {
+          "text": "He held off Russell before the strategy sequence and Safety Car shifted the race.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "BEA": {
+      "name": "Oliver Bearman",
+      "team": "Haas F1 Team",
+      "summary": "Bearman's high-energy accident became a major safety reference point for the 2026 energy-management discussion.",
+      "details": [
+        {
+          "text": "The FIA explicitly referenced high closing speeds when explaining that energy-management parameters would be reviewed.",
+          "source_refs": [
+            "f1_bearman_fia"
+          ]
+        }
+      ],
+      "result_context": {
+        "representative_of_pace": false,
+        "reason": "Retired after a heavy accident; no finishing result is usable as pace evidence."
+      }
+    },
+    "LEC": {
+      "name": "Charles Leclerc",
+      "team": "Ferrari",
+      "summary": "Leclerc finished third and kept Ferrari on the podium, but McLaren showed stronger race-day potential than in the opening two rounds.",
+      "details": [
+        {
+          "text": "Ferrari remained competitive but did not control the race strategy after the Safety Car.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    }
+  },
+  "team_insights": {
+    "Mercedes": {
+      "summary": "Mercedes retained pole and victory, though poor starts and Safety Car timing made the route to the win less straightforward than the final gap suggests.",
+      "details": [
+        {
+          "text": "Antonelli's final margin reflected both strategy timing and strong restart pace.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "McLaren": {
+      "summary": "McLaren had its clearest early-season demonstration of front-running potential, with Piastri leading and finishing second.",
+      "details": [
+        {
+          "text": "That performance is useful context for the larger development step that followed in Miami.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "Red Bull": {
+      "summary": "Red Bull introduced a major sidepod/engine-cover/floor package aimed at addressing early handling problems.",
+      "details": [
+        {
+          "text": "The dossier records the package as a persistent development step, but does not assign an isolated lap-time gain.",
+          "source_refs": [
+            "f1_upgrades_external"
+          ]
+        }
+      ]
+    }
+  },
+  "strategy_and_conditions": [
+    {
+      "text": "The Safety Car for Bearman was strategically decisive because Antonelli could stop cheaply while still in the lead sequence.",
+      "source_refs": [
+        "f1_race_report"
+      ]
+    },
+    {
+      "text": "The FIA said Bearman's crash and the role of unusually large closing speeds would feed into the planned review of 2026 energy-management parameters.",
+      "source_refs": [
+        "f1_bearman_fia"
+      ]
+    }
+  ],
+  "performance_interpretation": [
+    {
+      "text": "Antonelli's victory is representative of front-running pace but not a clean strategy-neutral comparison because the Safety Car timing materially improved his stop.",
+      "source_refs": [
+        "f1_teams_race"
+      ],
+      "teams": [
+        "Mercedes"
+      ],
+      "drivers": [
+        "ANT"
+      ]
+    },
+    {
+      "text": "Piastri's P2 and early lead are stronger evidence of McLaren's underlying potential than a simple finishing-gap comparison alone.",
+      "source_refs": [
+        "f1_race_report"
+      ],
+      "teams": [
+        "McLaren"
+      ],
+      "drivers": [
+        "PIA"
+      ]
+    }
+  ],
+  "upgrades_and_technical_context": [
+    {
+      "team": "Red Bull",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Sidepod inlet, engine-cover and floor package. Coordinated package targeting load and efficiency; separate cooling-only rear-wheel bodywork change is recorded separately.",
+      "reported_intent": "Coordinated package targeting load and efficiency; separate cooling-only rear-wheel bodywork change is recorded separately.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Red Bull",
+      "category": "reliability",
+      "significance": "minor",
+      "text": "Rear-wheel bodywork cooling change. Cooling/reliability-focused detail rather than a persistent pace step.",
+      "reported_intent": "Cooling/reliability-focused detail rather than a persistent pace step.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Ferrari",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Front brake-duct and floor-stay fairing refinements. Small front-corner/floor-flow evolution.",
+      "reported_intent": "Small front-corner/floor-flow evolution.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Williams",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Front-suspension internal and cladding revisions. Meaningful suspension/aero integration update.",
+      "reported_intent": "Meaningful suspension/aero integration update.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Aston Martin",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Front wing/endplate and floor leading-edge update. Front-aero and floor-flow development.",
+      "reported_intent": "Front-aero and floor-flow development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Alpine",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Front deflector and rear-wing/endplate redesign. Front- and rear-aero development package.",
+      "reported_intent": "Front- and rear-aero development package.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Cadillac",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Diffuser and fence update. Rear-load and ride-height-behaviour refinement.",
+      "reported_intent": "Rear-load and ride-height-behaviour refinement.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    }
+  ],
+  "prediction_review": {
+    "status": "unavailable",
+    "prediction_references": [],
+    "overall_assessment": "No genuine saved pre-race LatentLap forecast exists for this round. Do not reconstruct one retrospectively and label it as an original forecast.",
+    "successes": [],
+    "misses": [],
+    "known_exceptions": []
+  },
+  "knowledge_limits": [
+    {
+      "text": "Actual ERS deployment and battery state are not public; LatentLap's energy-management signals remain inferred, not measured."
+    },
+    {
+      "text": "Race-session harvest ratios are not used as reliable comparative evidence because representative laps differ in fuel, compound and track evolution."
+    },
+    {
+      "text": "Stint pace trends are fitted lap-time slopes over filtered green-flag laps, not direct tyre-degradation measurements; fuel burn, traffic, track evolution and driver management can contribute."
+    },
+    {
+      "text": "The presence of a new component at a weekend does not prove it caused an observed pace change. Upgrade effects are only attributed where reviewed reporting explicitly supports an effect."
+    }
+  ],
+  "entities": {
+    "drivers": [
+      "ANT",
+      "BEA",
+      "LEC",
+      "PIA"
+    ],
+    "teams": [
+      "Ferrari",
+      "Haas F1 Team",
+      "McLaren",
+      "Mercedes",
+      "Red Bull"
+    ],
+    "topics": [
+      "qualifying",
+      "race pace",
+      "safety car",
+      "energy management",
+      "closing speeds",
+      "upgrades",
+      "McLaren",
+      "Mercedes"
+    ]
+  },
+  "sources": [
+    {
+      "id": "f1_race_report",
+      "publisher": "Formula 1",
+      "title": "Antonelli takes championship lead after victory in Japan",
+      "url": "https://www.formula1.com/en/latest/article/antonelli-takes-championship-lead-after-surging-to-victory-in-japan-from.4EC4uZc29IUEO2iE5nKpUp.4EC4uZc29IUEO2iE5nKpUp"
+    },
+    {
+      "id": "f1_lowdown",
+      "publisher": "Formula 1",
+      "title": "Japan Lowdown – key moments from Suzuka",
+      "url": "https://www.formula1.com/en/latest/article/japan-lowdown-all-the-key-moments-as-antonelli-takes-championship-lead-and.7vOFczaFym1E0dor7zK0oC.7vOFczaFym1E0dor7zK0oC"
+    },
+    {
+      "id": "f1_teams_race",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Race day in Japan",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-race-day-in-japan-2026.7ljwEx0ZL2qA0lytKAwXLI"
+    },
+    {
+      "id": "f1_bearman_fia",
+      "publisher": "Formula 1",
+      "title": "Bearman reacts to 50G crash as FIA addresses closing-speed concerns",
+      "url": "https://www.formula1.com/en/latest/article/bearman-reacts-to-50g-crash-during-japanese-grand-prix.7hiNVcluoZHH9AuiQGbQIO.7hiNVcluoZHH9AuiQGbQIO"
+    },
+    {
+      "id": "f1_upgrades_external",
+      "publisher": "RACER",
+      "title": "Technical updates – 2026 Japanese Grand Prix",
+      "url": "https://racer.com/2026/03/26/technical-updates-2026-japanese-grand-prix"
+    },
+    {
+      "id": "latentlap_upgrade_history",
+      "publisher": "LatentLap",
+      "title": "Audited 2026 team development history",
+      "path": "data/upgrade_history.py"
+    }
+  ]
+}

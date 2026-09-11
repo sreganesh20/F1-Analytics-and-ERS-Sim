@@ -1,0 +1,1023 @@
+{
+  "review_status": "approved",
+  "metadata": {
+    "year": 2026,
+    "round": 12,
+    "circuit": "Netherlands",
+    "venue": "Circuit Zandvoort",
+    "date_range": "2026-08-21 to 2026-08-23",
+    "weekend_type": "sprint",
+    "sessions_available": [
+      "SQ",
+      "S",
+      "Q",
+      "R"
+    ]
+  },
+  "weekend_summary": "Zandvoort told two different stories across the same weekend. Mercedes controlled the Sprint side through George Russell, but McLaren improved the car after the Sprint and Lando Norris took Grand Prix pole before winning Sunday. Ferrari's race pace was stronger than its P5/P6 qualifying positions suggested, while Red Bull openly described the weekend as a step backwards in performance. The Grand Prix itself was heavily reshaped by pre-race rain, Max Verstappen's opening-lap crash and red flag, pit-stop timing, a late Virtual Safety Car and tyre behaviour that changed significantly between compounds.",
+  "sessions": {
+    "SQ": {
+      "summary": "Russell put Mercedes on Sprint pole, with Norris second and Leclerc third. Mercedes looked immediately competitive, while Gasly reached the top 10 with Alpine's new package and Lawson's first session back at Red Bull ended in SQ2.",
+      "key_moments": [
+        {
+          "text": "Russell set the Sprint Qualifying benchmark at 1:11.567, with Norris second and Leclerc third.",
+          "source_refs": [
+            "f1_sq_results",
+            "f1_sq_report"
+          ]
+        },
+        {
+          "text": "Verstappen qualified sixth for the Sprint; Gasly, Bortoleto and Lindblad were also inside the top 10.",
+          "source_refs": [
+            "f1_sq_results"
+          ]
+        },
+        {
+          "text": "Lawson qualified 11th after the late call-up to Red Bull, while Tsunoda returned to Racing Bulls and was eliminated in SQ2.",
+          "source_refs": [
+            "f1_hadjar_withdrawal",
+            "f1_lawson_friday",
+            "f1_tsunoda_return"
+          ]
+        }
+      ]
+    },
+    "S": {
+      "summary": "Russell converted Sprint pole into a controlled win. Leclerc's gamble on the Soft tyre paid off and moved him past Norris for second, while Norris' Medium tyres lost rear grip late enough for Ferrari to attack.",
+      "key_moments": [
+        {
+          "text": "Russell won the 24-lap Sprint from Leclerc and Norris.",
+          "source_refs": [
+            "f1_sprint_results"
+          ]
+        },
+        {
+          "text": "Leclerc was the only leading driver to start the Sprint on Soft tyres; lower-than-expected degradation let him close on and pass Norris for second.",
+          "source_refs": [
+            "f1_teams_sprint_q"
+          ]
+        },
+        {
+          "text": "Norris reported rear-grip loss as his Medium tyres faded, while Antonelli moved forward from fifth and pressured Norris late in the Sprint.",
+          "source_refs": [
+            "f1_teams_sprint_q"
+          ]
+        },
+        {
+          "text": "Pirelli's post-Sprint assessment said degradation was limited enough that all three dry compounds remained viable for the Grand Prix, with overtaking difficulty increasing the strategic cost of extra stops.",
+          "source_refs": [
+            "f1_teams_sprint_q"
+          ]
+        }
+      ]
+    },
+    "Q": {
+      "summary": "McLaren found more performance after the Sprint and Norris took pole. Russell and Antonelli put Mercedes second and third, Piastri was fourth, and Ferrari fell back to the third row despite stronger Sprint race pace.",
+      "key_moments": [
+        {
+          "text": "Norris took pole in 1:11.163 ahead of Russell and Antonelli; Piastri was fourth and Ferrari qualified fifth and sixth.",
+          "source_refs": [
+            "f1_q_results",
+            "f1_q_report"
+          ]
+        },
+        {
+          "text": "McLaren said set-up changes after the Sprint improved the car for qualifying; Norris then delivered pole while Piastri could not match his final Q3 extraction.",
+          "source_refs": [
+            "f1_teams_sprint_q"
+          ]
+        },
+        {
+          "text": "Ferrari struggled more with one-lap tyre preparation than in Sprint race trim. Hamilton qualified fifth, just ahead of Leclerc, after set-up changes improved his balance.",
+          "source_refs": [
+            "f1_teams_sprint_q",
+            "f1_ferrari_context"
+          ]
+        },
+        {
+          "text": "Verstappen qualified seventh and Lawson eighth, with Lawson just over a tenth behind despite switching teams at short notice.",
+          "source_refs": [
+            "f1_teams_sprint_q"
+          ]
+        }
+      ]
+    },
+    "R": {
+      "summary": "Norris won after a race whose competitive order changed several times. Verstappen crashed on Lap 1 in damp conditions, Antonelli passed Norris at the restart and led the opening phase, but McLaren's pace improved on the Hard tyre and Norris retook the lead. Mercedes protected a double podium late while Ferrari pressured Russell for third.",
+      "key_moments": [
+        {
+          "text": "Heavy rain before the start left the circuit damp, but the field ultimately started on slick tyres as conditions improved.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Verstappen lost the rear after running onto the slippery painted area on the opening lap and hit the barriers, causing a red flag.",
+          "source_refs": [
+            "f1_race_report",
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Antonelli passed Norris at the restart and led, but Norris closed later in the race and retook first place around the outside of Turn 1.",
+          "source_refs": [
+            "f1_race_report",
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Norris' first stint on Softs was difficult, but McLaren reported that the car came alive on Hard tyres. The team extended his second stint to create an attacking opportunity against Antonelli.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Piastri lost time with a slow pit stop and then struggled to switch on the Hard tyre, dropping behind Russell and both Ferraris before finishing sixth.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Ferrari used different tyre timing between its drivers. Hamilton's longer first stint gave him fresher tyres later, and he was eventually released past Leclerc, but the delay became a point of post-race strategy discussion.",
+          "source_refs": [
+            "f1_teams_race",
+            "f1_ferrari_strategy"
+          ]
+        },
+        {
+          "text": "A late Virtual Safety Car allowed Antonelli and the Ferraris to stop again. Mercedes later inverted its cars so the fresher-tyred Antonelli could pass Russell without costing both cars time to Ferrari.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "The final podium was Norris, Antonelli and Russell; Hamilton and Leclerc finished fourth and fifth.",
+          "source_refs": [
+            "f1_race_results"
+          ]
+        }
+      ]
+    }
+  },
+  "performance_snapshot": {
+    "source": "committed_session_store",
+    "status": "hydrate after local test/review"
+  },
+  "driver_insights": {
+    "NOR": {
+      "name": "Lando Norris",
+      "summary": "Norris' weekend improved after the Sprint: P2 in Sprint Qualifying and P3 in the Sprint became Grand Prix pole and victory. The important context is that his race was not uniformly dominant; he struggled on the Soft tyre before the Hard compound transformed the car's balance and pace.",
+      "details": [
+        {
+          "text": "McLaren adjusted the car after the Sprint, and Norris said his final qualifying lap came from a more committed driving approach.",
+          "source_refs": [
+            "f1_teams_sprint_q"
+          ]
+        },
+        {
+          "text": "In the Grand Prix he lost the lead to Antonelli after the restart, stayed close, then used stronger Hard-tyre pace and McLaren's extended second stint to create the winning pass.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "McLaren still identified slow-speed performance as a weakness after the win, so the result should not be read as evidence that the car had no remaining balance limitations.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_sq_results",
+        "f1_sprint_results",
+        "f1_q_results",
+        "f1_race_results",
+        "f1_teams_sprint_q",
+        "f1_teams_race"
+      ],
+      "team": "McLaren"
+    },
+    "PIA": {
+      "name": "Oscar Piastri",
+      "summary": "Piastri's P6 Grand Prix finish understates the competitiveness he showed earlier in the weekend. He qualified fourth and gained track position early in the race, but a slow pit stop and difficulty generating grip on the Hard tyre damaged the middle phase of his race.",
+      "details": [
+        {
+          "text": "McLaren explicitly said P6 was not a fair reflection of his competitiveness and identified the slow stop plus Hard-tyre warm-up/grip as major contributors.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "His first and final stints were described by the team as more representative than the difficult middle phase.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "result_context": {
+        "representative_of_pace": false,
+        "reason": "Slow pit stop and a poor Hard-tyre phase materially affected the final result."
+      },
+      "source_refs": [
+        "f1_q_results",
+        "f1_race_results",
+        "f1_teams_race"
+      ],
+      "team": "McLaren"
+    },
+    "RUS": {
+      "name": "George Russell",
+      "summary": "Russell was the Sprint benchmark but not the fastest Grand Prix car. He won the Sprint from pole, qualified second, then recovered to third on Sunday and spent the closing laps defending both Ferraris.",
+      "details": [
+        {
+          "text": "Mercedes said the team did not have the pace to fight Norris for the Grand Prix win and treated the double podium as a maximised result.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "A slow McLaren stop helped Russell regain track position over Piastri, and Mercedes later used Russell's position strategically to protect the final podium from Ferrari.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_sq_results",
+        "f1_sprint_results",
+        "f1_q_results",
+        "f1_race_results",
+        "f1_teams_race"
+      ],
+      "team": "Mercedes"
+    },
+    "ANT": {
+      "name": "Kimi Antonelli",
+      "summary": "Antonelli converted a strong qualifying position into a genuine lead fight. He passed Russell at the initial start, Norris at the restart, and led the race before his pace faded relative to McLaren on the later Hard-tyre phase.",
+      "details": [
+        {
+          "text": "Mercedes said Antonelli initially had the measure of Norris but lacked the same pace on his later Hard set, which opened the door for Norris to attack.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "A late VSC stop put Antonelli onto Softs; Mercedes then inverted the cars once he caught Russell to avoid losing time while both Ferraris were close behind.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_q_results",
+        "f1_race_results",
+        "f1_teams_race"
+      ],
+      "team": "Mercedes"
+    },
+    "HAM": {
+      "name": "Lewis Hamilton",
+      "summary": "Hamilton's Grand Prix was stronger than Ferrari's qualifying position suggested. He qualified fifth, ran a longer first stint than the other leaders, later used fresher tyres to catch Leclerc, and finished fourth after pressuring Russell for the final podium place.",
+      "details": [
+        {
+          "text": "Ferrari changed Hamilton's set-up after the Sprint, improving the balance for qualifying even though tyre preparation remained difficult.",
+          "source_refs": [
+            "f1_teams_sprint_q",
+            "f1_ferrari_context"
+          ]
+        },
+        {
+          "text": "During the race Ferrari delayed swapping Hamilton past Leclerc despite Hamilton being on fresher tyres; Hamilton criticised the delay and Vasseur later acknowledged the team's intended sequence and execution issues.",
+          "source_refs": [
+            "f1_ferrari_strategy",
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_q_results",
+        "f1_race_results",
+        "f1_ferrari_context",
+        "f1_ferrari_strategy",
+        "f1_teams_race"
+      ],
+      "team": "Ferrari"
+    },
+    "LEC": {
+      "name": "Charles Leclerc",
+      "summary": "Leclerc showed Ferrari's strongest Sprint pace, using the Soft tyre to pass Norris for second, but the team slipped to the third row in Grand Prix qualifying. In the race he remained in the podium fight and finished fifth after Ferrari's two cars converged late in the strategy cycle.",
+      "details": [
+        {
+          "text": "Ferrari's Sprint Soft-tyre choice was one of the clearest successful strategic calls of the weekend; Leclerc could attack without the degradation penalty the team had feared.",
+          "source_refs": [
+            "f1_teams_sprint_q"
+          ]
+        },
+        {
+          "text": "Leclerc said race pace was strong enough to keep believing in a podium, while Ferrari identified qualifying pace and execution rather than race pace as the larger weakness of the weekend.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_sq_results",
+        "f1_sprint_results",
+        "f1_q_results",
+        "f1_race_results",
+        "f1_teams_sprint_q",
+        "f1_teams_race"
+      ],
+      "team": "Ferrari"
+    },
+    "VER": {
+      "name": "Max Verstappen",
+      "summary": "Verstappen's DNF is not representative of his race pace, but the broader weekend still indicates Red Bull was off the leading pace. He qualified seventh, finished sixth in the Sprint and then crashed out on the opening lap of the Grand Prix in damp conditions.",
+      "details": [
+        {
+          "text": "Red Bull said the car had become more difficult relative to Austria, Belgium and Hungary and described Zandvoort as a step backwards in performance.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Verstappen himself said the team did not have the pace to fight for the win before the accident ended any clean race comparison.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "result_context": {
+        "representative_of_pace": false,
+        "reason": "Opening-lap crash in damp conditions ended the race before representative race pace could be established."
+      },
+      "source_refs": [
+        "f1_q_results",
+        "f1_sprint_results",
+        "f1_race_report",
+        "f1_teams_race"
+      ],
+      "team": "Red Bull"
+    },
+    "LAW": {
+      "name": "Liam Lawson",
+      "summary": "Lawson's Zandvoort result has to be read in the context of a late team switch. He moved from Racing Bulls to Red Bull because Hadjar was injured, reached Q3 only just over a tenth behind Verstappen, and finished seventh in the Grand Prix.",
+      "details": [
+        {
+          "text": "Lawson described adapting to the different car on a sprint weekend as a major challenge, while Red Bull praised how close he was to Verstappen in qualifying.",
+          "source_refs": [
+            "f1_lawson_friday",
+            "f1_teams_sprint_q"
+          ]
+        },
+        {
+          "text": "In the race he said the car lacked the pace to fight the leading group but he extracted the points available to him.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_hadjar_withdrawal",
+        "f1_lawson_friday",
+        "f1_q_results",
+        "f1_race_results",
+        "f1_teams_race"
+      ],
+      "team": "Red Bull"
+    },
+    "ALO": {
+      "name": "Fernando Alonso",
+      "summary": "Alonso turned a back-row qualifying position into points. Aston Martin still had driveability limitations, but the team used a long opening phase and a one-stop-oriented strategy after the red flag to bring him home ninth.",
+      "details": [
+        {
+          "text": "Aston Martin said recent chassis/aero work and Honda's updated PU represented progress, but both drivers still reported driveability and balance issues.",
+          "source_refs": [
+            "f1_teams_sprint_q",
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Alonso defended from Gasly late in the race to secure P9; Stroll retired with a handling issue suspected to be related to damage.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_q_results",
+        "f1_race_results",
+        "f1_teams_race"
+      ],
+      "team": "Aston Martin"
+    }
+  },
+  "team_insights": {
+    "McLaren": {
+      "summary": "McLaren's weekend changed after the Sprint. The car struggled more than expected on Norris' Medium tyres on Saturday, but set-up work improved qualifying and Norris then won on Sunday after the Hard tyre gave him much stronger balance and pace.",
+      "details": [
+        {
+          "text": "Norris' victory should not be reduced to the new aero parts: the reviewed evidence supports that McLaren brought them, but it does not isolate how much lap time those components produced.",
+          "source_refs": [
+            "f1_upgrades",
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Piastri's P6 was affected by a slow stop and Hard-tyre grip problems, so McLaren's second-car result understates the team's overall weekend competitiveness.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_teams_sprint_q",
+        "f1_teams_race",
+        "f1_upgrades"
+      ]
+    },
+    "Mercedes": {
+      "summary": "Mercedes owned the Sprint side and converted strong grid positions into a double Grand Prix podium, but the team itself said it lacked the outright Sunday pace to beat Norris once the race settled.",
+      "details": [
+        {
+          "text": "Russell's Sprint win and Antonelli's early Grand Prix lead show genuine strength, but Mercedes' late-race decisions were increasingly about protecting P2/P3 from Ferrari rather than attacking McLaren.",
+          "source_refs": [
+            "f1_teams_sprint_q",
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "The late VSC and team-order inversion helped Mercedes maximise both cars without spending time fighting while Ferrari was close behind.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_teams_sprint_q",
+        "f1_teams_race"
+      ]
+    },
+    "Ferrari": {
+      "summary": "Ferrari's main contrast was qualifying versus race trim. Leclerc's Sprint Soft strategy worked, both cars had competitive Grand Prix race pace, but P5/P6 qualifying and imperfect execution left the team fighting for the last podium instead of controlling track position.",
+      "details": [
+        {
+          "text": "Vasseur said the team lacked qualifying pace more than race pace and acknowledged execution issues including the timing of Hamilton's release behind Leclerc.",
+          "source_refs": [
+            "f1_teams_race",
+            "f1_ferrari_strategy"
+          ]
+        },
+        {
+          "text": "Ferrari brought further floor/diffuser development, but the dossier does not claim those parts caused the race-pace improvement because no isolated effect is established.",
+          "source_refs": [
+            "f1_upgrades"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_teams_sprint_q",
+        "f1_teams_race",
+        "f1_ferrari_strategy",
+        "f1_upgrades"
+      ]
+    },
+    "Red Bull": {
+      "summary": "Red Bull's home weekend was difficult on underlying performance before Verstappen's crash made the Grand Prix result even worse. Lawson adapted impressively to the senior-team car, but the team said it had taken a step backwards versus the rounds before the summer break.",
+      "details": [
+        {
+          "text": "The only declared chassis change for Zandvoort was a reliability-oriented wishbone-shroud tweak, not a major performance package.",
+          "source_refs": [
+            "f1_upgrades"
+          ]
+        },
+        {
+          "text": "Lawson qualified just over a tenth behind Verstappen and finished seventh, giving a useful indication that the car's limitation was not solely driver-specific.",
+          "source_refs": [
+            "f1_teams_sprint_q",
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_upgrades",
+        "f1_teams_sprint_q",
+        "f1_teams_race"
+      ]
+    },
+    "Alpine": {
+      "summary": "Alpine introduced one of the weekend's largest aero packages, initially only for Gasly. Gasly converted the stronger Friday/Sprint showing into the final Sprint point, then finished 10th on Sunday after missing Q3 in Grand Prix qualifying.",
+      "details": [
+        {
+          "text": "The package covered floor, diffuser, rear-corner/bodywork and rear-wing related areas. Reporting linked the upgrade to Gasly's improved midfield competitiveness, but the weekend still showed variation between low-fuel and race conditions.",
+          "source_refs": [
+            "f1_upgrades",
+            "f1_alpine_context",
+            "f1_teams_sprint_q"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_upgrades",
+        "f1_alpine_context",
+        "f1_teams_sprint_q",
+        "f1_teams_race"
+      ]
+    },
+    "Aston Martin": {
+      "summary": "Aston Martin continued its chassis/aero development while Honda separately debuted an updated power-unit specification. The car remained difficult over one lap, but Alonso recovered from P18 on the grid to score in ninth; the team still identified driveability as a key limitation.",
+      "details": [
+        {
+          "text": "The result should be treated as progress rather than proof that the upgrade package had fully solved the car; both drivers still reported balance/driveability issues.",
+          "source_refs": [
+            "f1_teams_sprint_q",
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_upgrades",
+        "f1_honda_context",
+        "f1_teams_sprint_q",
+        "f1_teams_race"
+      ]
+    },
+    "Audi": {
+      "summary": "Audi had a disrupted Sprint through Hulkenberg's PU problem but remained competitive in the midfield. Bortoleto reached Q3 and Hulkenberg recovered to P8 in the Grand Prix, extending the team's points run.",
+      "details": [
+        {
+          "text": "Bortoleto spun during the chaotic opening lap while reacting to the Verstappen incident and recovered to 13th; Hulkenberg's cleaner race produced the team's points.",
+          "source_refs": [
+            "f1_teams_sprint_q",
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "source_refs": [
+        "f1_teams_sprint_q",
+        "f1_teams_race"
+      ]
+    }
+  },
+  "strategy_and_conditions": [
+    {
+      "text": "Pirelli supplied C2 Hard, C3 Medium and C4 Soft tyres. The Sprint format reduced each driver's dry-tyre allocation to 12 sets for the weekend.",
+      "source_refs": [
+        "f1_tyres"
+      ]
+    },
+    {
+      "text": "The Sprint suggested all three dry compounds could be useful. Pirelli expected a one-stop Medium-to-Hard Grand Prix baseline, while overtaking difficulty made unnecessary extra stops costly.",
+      "source_refs": [
+        "f1_teams_sprint_q"
+      ]
+    },
+    {
+      "text": "Heavy rain before the Grand Prix created a damp grid and uncertain tyre choice, but improving conditions left slicks as the viable start option.",
+      "source_refs": [
+        "f1_race_report"
+      ]
+    },
+    {
+      "text": "Verstappen's Lap 1 crash produced an immediate red flag, resetting tyre and strategy choices before the race had developed normally.",
+      "source_refs": [
+        "f1_race_report"
+      ]
+    },
+    {
+      "teams": [
+        "McLaren"
+      ],
+      "text": "Norris struggled on the Soft tyre early but gained pace on the Hard. McLaren extended his second stint to create the tyre/track-position opportunity used to attack Antonelli.",
+      "source_refs": [
+        "f1_teams_race"
+      ]
+    },
+    {
+      "teams": [
+        "Mercedes"
+      ],
+      "text": "Mercedes covered Norris with Antonelli, then used the late VSC to fit Softs. The team later inverted Antonelli and Russell to minimise intra-team time loss while Ferrari threatened from behind.",
+      "source_refs": [
+        "f1_teams_race"
+      ]
+    },
+    {
+      "teams": [
+        "Ferrari"
+      ],
+      "text": "Ferrari split the early race timing between Leclerc and Hamilton. Hamilton's longer first stint created a fresher-tyre advantage, but the delayed swap between the cars became a point of criticism after the race.",
+      "source_refs": [
+        "f1_teams_race",
+        "f1_ferrari_strategy"
+      ]
+    },
+    {
+      "teams": [
+        "Aston Martin"
+      ],
+      "text": "Aston Martin used a long one-stop-oriented run for Alonso after the red flag and defended track position late to convert P18 on the grid into P9.",
+      "source_refs": [
+        "f1_teams_race"
+      ]
+    }
+  ],
+  "performance_interpretation": [
+    {
+      "teams": [
+        "McLaren"
+      ],
+      "drivers": [
+        "NOR",
+        "PIA"
+      ],
+      "text": "McLaren's GP-side pace was stronger than its Sprint result alone suggests. Norris improved from Sprint P3 to GP pole/win, while Piastri's P6 was compromised by a slow stop and Hard-tyre difficulties rather than being a clean measure of the car's ceiling.",
+      "source_refs": [
+        "f1_teams_sprint_q",
+        "f1_teams_race"
+      ]
+    },
+    {
+      "teams": [
+        "Mercedes"
+      ],
+      "drivers": [
+        "RUS",
+        "ANT"
+      ],
+      "text": "Mercedes was the strongest Sprint package and maximised a double podium on Sunday, but its own post-race assessment says the Grand Prix pace was not enough to beat Norris once tyre phases settled.",
+      "source_refs": [
+        "f1_teams_race"
+      ]
+    },
+    {
+      "teams": [
+        "Ferrari"
+      ],
+      "drivers": [
+        "HAM",
+        "LEC"
+      ],
+      "text": "Ferrari's P5/P6 qualifying understated its race competitiveness. The team identified qualifying pace and execution as the larger weekend limitations, while both cars remained in the final podium fight.",
+      "source_refs": [
+        "f1_teams_race",
+        "f1_ferrari_strategy"
+      ]
+    },
+    {
+      "teams": [
+        "Red Bull"
+      ],
+      "drivers": [
+        "VER",
+        "LAW"
+      ],
+      "text": "Verstappen's DNF cannot be used as a race-pace result, but Red Bull's own comments and Lawson's P7 support the broader conclusion that the car was behind the leading McLaren/Mercedes/Ferrari group at Zandvoort.",
+      "source_refs": [
+        "f1_teams_race"
+      ]
+    },
+    {
+      "teams": [
+        "Aston Martin"
+      ],
+      "drivers": [
+        "ALO"
+      ],
+      "text": "Alonso's P9 was a strategy/execution gain from a poor starting position. It is evidence of improved competitiveness and race execution, not evidence that the car had top-10 qualifying pace.",
+      "source_refs": [
+        "f1_teams_race"
+      ]
+    },
+    {
+      "teams": [
+        "Alpine"
+      ],
+      "drivers": [
+        "GAS"
+      ],
+      "text": "Gasly's Sprint point showed the new package could place Alpine at the front of the midfield in some conditions, but Q11 and P10 in the Grand Prix show that the step was not uniformly large across every session.",
+      "source_refs": [
+        "f1_teams_sprint_q",
+        "f1_teams_race"
+      ]
+    }
+  ],
+  "upgrades_and_technical_context": [
+    {
+      "team": "Mercedes",
+      "category": "persistent",
+      "text": "Modified front-corner duct/drum geometry intended to improve airflow towards the rear of the car.",
+      "reported_intent": "Improve downstream airflow.",
+      "reported_effect": null,
+      "source_refs": [
+        "f1_upgrades"
+      ]
+    },
+    {
+      "team": "Ferrari",
+      "category": "persistent",
+      "text": "Further floor body/board/edge development, revised diffuser expansion/geometry and a minor lower beam-wing change.",
+      "reported_intent": "Increase local load and improve the robustness/energy of flow delivered towards the rear diffuser.",
+      "reported_effect": null,
+      "source_refs": [
+        "f1_upgrades"
+      ]
+    },
+    {
+      "team": "McLaren",
+      "category": "persistent",
+      "text": "New rear-wing assembly, revised central bodywork and a new rear brake duct.",
+      "reported_intent": "Extract additional aerodynamic performance while improving rear-brake cooling/aero performance.",
+      "reported_effect": null,
+      "source_refs": [
+        "f1_upgrades"
+      ]
+    },
+    {
+      "team": "Red Bull",
+      "category": "reliability",
+      "text": "Shortened wishbone-shroud cord to reduce strain on the gaiter at high steering angles.",
+      "reported_intent": "Reliability; not presented as a major performance upgrade.",
+      "reported_effect": null,
+      "source_refs": [
+        "f1_upgrades"
+      ]
+    },
+    {
+      "team": "Alpine",
+      "category": "persistent",
+      "text": "Large package including a new floor, redesigned floor edges, reprofiled diffuser, rear-drum changes, updated rear impact structure, rear-wing flap geometry, floor-board and sidepod work; initially only Gasly received it.",
+      "reported_intent": "Increase local load, improve rear-flow quality and preserve cooling capacity.",
+      "reported_effect": "Official F1 reporting linked the package to Gasly moving to the front of the midfield fight in early weekend running; the later Q/R results remained more mixed.",
+      "source_refs": [
+        "f1_upgrades",
+        "f1_alpine_context",
+        "f1_teams_sprint_q"
+      ]
+    },
+    {
+      "team": "Aston Martin",
+      "category": "persistent",
+      "text": "Further front-wing, floor-fence and diffuser-winglet changes.",
+      "reported_intent": "Increase front/rear local load and broaden the car's usable balance range.",
+      "reported_effect": "Aston Martin reported significant chassis/aero progress but continued driveability limitations; Alonso later recovered to points from P18.",
+      "source_refs": [
+        "f1_upgrades",
+        "f1_teams_sprint_q",
+        "f1_teams_race"
+      ]
+    },
+    {
+      "team": "Aston Martin",
+      "manufacturer": "Honda",
+      "category": "pu",
+      "text": "Honda deployed an updated RA626H power-unit specification / ADUO step for Aston Martin.",
+      "reported_intent": "Honda targeted a previously identified ICE weakness with its homologated update.",
+      "reported_effect": "Honda/Aston Martin reported progress from the updated PU, but the dossier does not isolate a lap-time contribution from the PU alone.",
+      "source_refs": [
+        "f1_honda_context",
+        "f1_teams_sprint_q",
+        "f1_teams_race"
+      ]
+    }
+  ],
+  "prediction_review": {
+    "status": "available",
+    "prediction_references": [
+      "store/predictions/2026_Netherlands_quali_prediction.json",
+      "store/predictions/2026_Netherlands_race_prediction.json",
+      "store/predictions/2026_Netherlands_sprint_quali_prediction.json",
+      "store/predictions/2026_Netherlands_sprint_race_prediction.json"
+    ],
+    "overall_assessment": "The genuine saved forecasts captured Mercedes as a front-running threat but missed the final GP ordering: Antonelli was the qualifying favourite while Norris actually took pole, and Ferrari headed the saved race-pace ranking while Norris won. The review must separate pace-model misses from race-event noise: Verstappen's DNF was caused by an opening-lap accident, and Piastri's P6 was affected by a slow stop and a weak Hard-tyre phase.",
+    "successes": [
+      {
+        "text": "Mercedes was forecast among the leading cars and then delivered Sprint pole/win plus a double Grand Prix podium.",
+        "source_refs": [
+          "pred_quali",
+          "pred_race",
+          "f1_sq_results",
+          "f1_sprint_results",
+          "f1_q_results",
+          "f1_race_results"
+        ]
+      },
+      {
+        "text": "The saved forecasts treated Red Bull as outside the absolute benchmark, which is consistent with the team's own post-weekend view that it lacked leading pace at Zandvoort.",
+        "source_refs": [
+          "pred_quali",
+          "pred_race",
+          "f1_teams_race"
+        ]
+      }
+    ],
+    "misses": [
+      {
+        "text": "The saved GP qualifying forecast ranked Antonelli first and Norris fifth; actual qualifying was Norris P1 and Antonelli P3.",
+        "source_refs": [
+          "pred_quali",
+          "f1_q_results"
+        ]
+      },
+      {
+        "text": "The saved race pace forecast put Hamilton first with Russell and Antonelli immediately behind; Norris was fourth in that pace ranking but won the Grand Prix.",
+        "source_refs": [
+          "pred_race",
+          "f1_race_results"
+        ]
+      }
+    ],
+    "known_exceptions": [
+      {
+        "text": "Hadjar's wrist injury was announced after the genuine pre-race forecast had already been generated. The saved forecast is intentionally preserved; Lawson moved to Red Bull and Tsunoda returned to Racing Bulls for the weekend.",
+        "source_refs": [
+          "f1_hadjar_withdrawal"
+        ]
+      }
+    ]
+  },
+  "knowledge_limits": [
+    {
+      "text": "Actual ERS deployment and battery state are not public; LatentLap's energy-management signals remain inferred, not measured."
+    },
+    {
+      "text": "Race-session harvest ratios are not used as reliable comparative evidence because representative laps differ in fuel, compound and track evolution."
+    },
+    {
+      "text": "Stint pace trends are filtered lap-time slopes, not direct tyre-degradation measurements; fuel burn, traffic, track evolution and management remain mixed in."
+    },
+    {
+      "text": "The presence of a new component at a weekend does not prove it caused the observed pace change. Upgrade effects are only attributed where reviewed reporting explicitly supports an effect."
+    },
+    {
+      "text": "Verstappen's opening-lap retirement makes finishing-position error a poor measure of the prediction model's pace accuracy for him."
+    },
+    {
+      "text": "Piastri's P6 included a slow stop and tyre-phase problem, so final position alone understates his earlier weekend competitiveness."
+    }
+  ],
+  "entities": {
+    "drivers": [
+      "NOR",
+      "PIA",
+      "RUS",
+      "ANT",
+      "HAM",
+      "LEC",
+      "VER",
+      "LAW",
+      "TSU",
+      "LIN",
+      "GAS",
+      "ALO",
+      "HUL",
+      "BOR"
+    ],
+    "teams": [
+      "McLaren",
+      "Mercedes",
+      "Ferrari",
+      "Red Bull",
+      "VCARB",
+      "Alpine",
+      "Aston Martin",
+      "Audi"
+    ],
+    "topics": [
+      "sprint",
+      "qualifying",
+      "race pace",
+      "strategy",
+      "tyres",
+      "red flag",
+      "virtual safety car",
+      "upgrades",
+      "prediction review",
+      "stint pace",
+      "driver substitution"
+    ]
+  },
+  "sources": [
+    {
+      "id": "f1_sq_results",
+      "publisher": "Formula 1",
+      "title": "2026 Dutch Grand Prix — Sprint Qualifying results",
+      "url": "https://www.formula1.com/en/results/2026/races/1292/netherlands/sprint-qualifying"
+    },
+    {
+      "id": "f1_sq_report",
+      "publisher": "Formula 1",
+      "title": "Russell charges to Sprint pole at Zandvoort",
+      "url": "https://www.formula1.com/en/latest/article/russell-charges-to-pole-position-in-dutch-grand-prix-sprint-qualifying-ahead-of-norris.4agXz49Klz5hEljnOkKRwa.4agXz49Klz5hEljnOkKRwa"
+    },
+    {
+      "id": "f1_sprint_results",
+      "publisher": "Formula 1",
+      "title": "2026 Dutch Grand Prix — Sprint results",
+      "url": "https://www.formula1.com/en/results/2026/races/1292/netherlands/sprint-results"
+    },
+    {
+      "id": "f1_q_results",
+      "publisher": "Formula 1",
+      "title": "2026 Dutch Grand Prix — Qualifying results",
+      "url": "https://www.formula1.com/en/results/2026/races/1292/netherlands/qualifying"
+    },
+    {
+      "id": "f1_q_report",
+      "publisher": "Formula 1",
+      "title": "Norris denies Russell pole at Zandvoort",
+      "url": "https://www.formula1.com/en/latest/article/norris-denies-russell-pole-position-in-gripping-conclusion-to-qualifying-for-dutch-grand-prix.2DoHZDC14R5tY7ygGaHCz"
+    },
+    {
+      "id": "f1_race_results",
+      "publisher": "Formula 1",
+      "title": "2026 Dutch Grand Prix — Race result",
+      "url": "https://www.formula1.com/en/results/2026/races/1292/netherlands/race-result"
+    },
+    {
+      "id": "f1_race_report",
+      "publisher": "Formula 1",
+      "title": "Norris wins dramatic Dutch Grand Prix",
+      "url": "https://www.formula1.com/en/latest/article/norris-wins-dramatic-dutch-grand-prix-from-antonelli-and-russell-as-verstappen-crashes-out.Zn7iYevVGp5eHzFkTEAz7.Zn7iYevVGp5eHzFkTEAz7"
+    },
+    {
+      "id": "f1_teams_sprint_q",
+      "publisher": "Formula 1",
+      "title": "What the teams said — Sprint day and Qualifying in the Netherlands",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-sprint-day-and-qualifying-in-the-netherlands-2026.1vJ9dLmIstL3qivbyY0OEu"
+    },
+    {
+      "id": "f1_teams_race",
+      "publisher": "Formula 1",
+      "title": "What the teams said — Race day in the Netherlands",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-race-day-in-the-netherlands-2026.1GTy1x6hObFlkGkaXKqhNS"
+    },
+    {
+      "id": "f1_ferrari_strategy",
+      "publisher": "Formula 1",
+      "title": "Vasseur explains Ferrari's Dutch Grand Prix strategy after Hamilton criticism",
+      "url": "https://www.formula1.com/en/latest/article/vasseur-reveals-ferraris-dutch-grand-prix-strategy-intentions-after-hamilton-criticism.qGLPx8JvariTOrpSjrayR"
+    },
+    {
+      "id": "f1_upgrades",
+      "publisher": "Formula 1",
+      "title": "Every upgrade for the 2026 Dutch Grand Prix",
+      "url": "https://www.formula1.com/en/latest/article/mclaren-and-ferrari-lead-development-charge-as-every-upgrade-for-dutch-grand-prix-revealed.7HfMGggTffSH6eS3lF6Wgu.7HfMGggTffSH6eS3lF6Wgu"
+    },
+    {
+      "id": "f1_alpine_context",
+      "publisher": "Formula 1",
+      "title": "How Alpine's Dutch GP upgrades moved Gasly into the midfield fight",
+      "url": "https://www.formula1.com/en/latest/article/how-alpines-dutch-gp-upgrades-have-propelled-gasly-to-the-front-of-the-midfield-battle.66MuOGDn4ewCtYgzQUUShR"
+    },
+    {
+      "id": "f1_ferrari_context",
+      "publisher": "Formula 1",
+      "title": "Hamilton and Leclerc on Ferrari's Zandvoort changes",
+      "url": "https://www.formula1.com/en/latest/article/the-difference-it-makes-is-unbelievable-hamilton-and-leclerc-split-on-ferraris-zandvoort-changes.3H1Box6iwzvQqsokPx6HDT"
+    },
+    {
+      "id": "f1_honda_context",
+      "publisher": "Formula 1",
+      "title": "Honda details Spec 2 power unit for Zandvoort",
+      "url": "https://www.formula1.com/en/latest/article/honda-reveal-details-of-spec-2-power-unit-set-to-debut-at-dutch-grand-prix.laNvOgrm2aIDTL3SA0Xny.laNvOgrm2aIDTL3SA0Xny"
+    },
+    {
+      "id": "f1_hadjar_withdrawal",
+      "publisher": "Formula 1",
+      "title": "Red Bull confirm Hadjar to miss Dutch Grand Prix as Lawson steps up and Tsunoda returns",
+      "url": "https://www.formula1.com/en/latest/article/red-bull-confirm-hadjar-to-miss-dutch-grand-prix-as-lawson-steps-up-and-tsunoda-returns.3D3k7oc9dUwwEBZC7upjR1.3D3k7oc9dUwwEBZC7upjR1"
+    },
+    {
+      "id": "f1_lawson_friday",
+      "publisher": "Formula 1",
+      "title": "Lawson reflects on first day back at Red Bull in Zandvoort",
+      "url": "https://www.formula1.com/en/latest/article/we-had-the-potential-to-be-right-up-there-lawson-gives-his-take-on-interesting-first-day-back-at-red-bull-in-zandvoort.2KzQD5BMfqmFaIe4aM5Ym4"
+    },
+    {
+      "id": "f1_tsunoda_return",
+      "publisher": "Formula 1",
+      "title": "Tsunoda details the last-minute call that sparked his F1 return",
+      "url": "https://www.formula1.com/en/latest/article/ive-been-dying-to-be-in-the-car-tsunoda-details-the-last-minute-call-that-sparked-his-f1-return.6VvvGN9Bno3ixUaRwpBanA"
+    },
+    {
+      "id": "f1_tyres",
+      "publisher": "Formula 1",
+      "title": "Tyre compounds for the 2026 Dutch Grand Prix",
+      "url": "https://www.formula1.com/en/latest/article/what-tyres-will-the-teams-and-drivers-have-for-the-2026-dutch-grand-prix.402ufleb78rXrqaispof9U"
+    },
+    {
+      "id": "pred_quali",
+      "publisher": "LatentLap",
+      "title": "Saved pre-race Netherlands qualifying prediction",
+      "path": "store/predictions/2026_Netherlands_quali_prediction.json"
+    },
+    {
+      "id": "pred_race",
+      "publisher": "LatentLap",
+      "title": "Saved pre-race Netherlands race prediction",
+      "path": "store/predictions/2026_Netherlands_race_prediction.json"
+    }
+  ]
+}

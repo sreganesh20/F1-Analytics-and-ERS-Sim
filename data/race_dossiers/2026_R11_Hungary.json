@@ -1,0 +1,449 @@
+{
+  "review_status": "approved",
+  "metadata": {
+    "year": 2026,
+    "round": 11,
+    "circuit": "Hungary",
+    "venue": "Hungaroring",
+    "date_range": "2026-07-24 to 2026-07-26",
+    "weekend_type": "standard",
+    "sessions_available": [
+      "Q",
+      "R"
+    ]
+  },
+  "weekend_summary": "Hungary gave McLaren its first Grand Prix win of 2026 and Aston Martin its first clear evidence that the radical B-spec had moved the car back towards the midfield. Norris started from pole but lost the lead to Piastri at Turn 2. The intra-team fight turned when McLaren stopped Piastri again, traffic and contact with Sainz delayed him, and Norris used the clear air to regain track position before passing Antonelli for the lead. Piastri later retired, while Verstappen and Antonelli completed the podium.",
+  "sessions": {
+    "Q": {
+      "summary": "Norris took pole as McLaren arrived with new development, while Ferrari had shown strong Friday pace and Aston Martin began evaluating its major B-spec.",
+      "key_moments": [
+        {
+          "text": "Norris started the Grand Prix from pole.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Aston Martin's 16-part B-spec was one of the biggest chassis changes of the season.",
+          "source_refs": [
+            "f1_aston_tech"
+          ]
+        }
+      ]
+    },
+    "R": {
+      "summary": "Norris won after losing the lead to Piastri early, then using clear air and the differing McLaren stop sequence to regain track position. Verstappen finished second and Antonelli third.",
+      "key_moments": [
+        {
+          "text": "Piastri passed Norris at Turn 2 and led the first half of the race.",
+          "source_refs": [
+            "f1_race_report",
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Piastri encountered backmarker traffic and made contact with Sainz after his second stop.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Norris used the clear-air phase to jump back ahead and later pass Antonelli for the lead.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Piastri retired late, so his final classification does not represent the pace he showed while leading.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    }
+  },
+  "performance_snapshot": {
+    "source": "committed_session_store",
+    "status": "hydrate at query time from committed LatentLap session data"
+  },
+  "driver_insights": {
+    "NOR": {
+      "name": "Lando Norris",
+      "team": "McLaren",
+      "summary": "Norris turned pole into his first Grand Prix win of 2026, but only after losing the lead to Piastri and benefiting from the divergent pit/traffic sequence.",
+      "details": [
+        {
+          "text": "His pace in clear air after Piastri's stop was decisive to regaining track position.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "PIA": {
+      "name": "Oscar Piastri",
+      "team": "McLaren",
+      "summary": "Piastri led much of the opening half and looked capable of winning before his second-stop traffic phase and later retirement.",
+      "details": [
+        {
+          "text": "Final result is not representative of his competitive level.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ],
+      "result_context": {
+        "representative_of_pace": false,
+        "reason": "Traffic/contact after the second stop and a late retirement distorted the result."
+      }
+    },
+    "VER": {
+      "name": "Max Verstappen",
+      "team": "Red Bull",
+      "summary": "Verstappen finished second and capitalised on McLaren's intra-team/strategy complexity to secure another strong result.",
+      "details": [
+        {
+          "text": "The podium provides a cleaner Red Bull race reference than several earlier incident-heavy rounds.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "ALO": {
+      "name": "Fernando Alonso",
+      "team": "Aston Martin",
+      "summary": "Alonso's weekend provided the first competitive signal from Aston Martin's B-spec after the team had been far off the midfield at Spa.",
+      "details": [
+        {
+          "text": "F1 analysis later described Hungary as evidence Aston Martin was back racing, while still far from the front.",
+          "source_refs": [
+            "f1_aston_after"
+          ]
+        }
+      ]
+    },
+    "STR": {
+      "name": "Lance Stroll",
+      "team": "Aston Martin",
+      "summary": "Stroll also benefited from the B-spec step, giving the team a two-car indication rather than a one-driver anomaly.",
+      "details": [
+        {
+          "text": "The improved relative position against Cadillac/Williams/Haas was highlighted in post-race analysis.",
+          "source_refs": [
+            "f1_aston_after"
+          ]
+        }
+      ]
+    }
+  },
+  "team_insights": {
+    "McLaren": {
+      "summary": "McLaren had the quickest car across qualifying/race phases and finally converted that into its first Sunday victory of 2026.",
+      "details": [
+        {
+          "text": "The race was complicated by intra-team strategy and Piastri's traffic/contact, not a simple lights-to-flag win.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "Aston Martin": {
+      "summary": "Aston Martin's 16-part B-spec produced the first clear competitive step of its season, moving the car back into the midfield fight.",
+      "details": [
+        {
+          "text": "F1 analysis explicitly described the team as back racing after being last by a large margin at Spa.",
+          "source_refs": [
+            "f1_aston_after"
+          ]
+        }
+      ]
+    },
+    "Ferrari": {
+      "summary": "Ferrari was very quick on Friday but failed to turn that into the expected race result, with the team later highlighting qualifying/start/execution issues.",
+      "details": [
+        {
+          "text": "The weekend is a reminder that practice pace and race outcome are not interchangeable.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "Mercedes": {
+      "summary": "Antonelli finished third while Russell recovered from an anti-stall problem, keeping Mercedes in the points but without the control seen earlier in the season.",
+      "details": [
+        {
+          "text": "Mercedes entered the break still leading both championships while acknowledging reliability remained a priority.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    }
+  },
+  "strategy_and_conditions": [
+    {
+      "text": "McLaren's split stop sequence and Piastri's traffic after his second stop were central to the lead changing hands.",
+      "source_refs": [
+        "f1_race_report",
+        "f1_teams_race"
+      ]
+    },
+    {
+      "text": "The resurfaced/dusty Hungaroring created grip challenges through practice, complicating upgrade evaluation.",
+      "source_refs": [
+        "f1_mclaren_upgrade"
+      ]
+    }
+  ],
+  "performance_interpretation": [
+    {
+      "text": "Norris' win is representative of McLaren front-running pace, but the final intra-team ordering was materially shaped by Piastri's traffic/contact and retirement.",
+      "source_refs": [
+        "f1_teams_race"
+      ],
+      "teams": [
+        "McLaren"
+      ],
+      "drivers": [
+        "NOR",
+        "PIA"
+      ]
+    },
+    {
+      "text": "Aston Martin's improvement relative to its Spa baseline is one of the few 2026 upgrade effects supported by a clear before/after competitive shift and post-event reporting, though exact lap-time attribution remains unavailable.",
+      "source_refs": [
+        "f1_aston_after"
+      ],
+      "teams": [
+        "Aston Martin"
+      ]
+    }
+  ],
+  "upgrades_and_technical_context": [
+    {
+      "team": "Aston Martin",
+      "category": "persistent",
+      "significance": "new_car",
+      "text": "Sixteen-area B-spec overhaul. New front architecture and extensive floor, diffuser, sidepod, bodywork, cooling, suspension and rear-aero work — effectively a different car baseline.",
+      "reported_intent": "New front architecture and extensive floor, diffuser, sidepod, bodywork, cooling, suspension and rear-aero work — effectively a different car baseline.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "McLaren",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Floor/front-corner/rear-corner package. New floor/floor-board work plus brake-duct and rear-wing/endplate development.",
+      "reported_intent": "New floor/floor-board work plus brake-duct and rear-wing/endplate development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Mercedes",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Rear/tail aero refinement. Small persistent rear-aero detail changes.",
+      "reported_intent": "Small persistent rear-aero detail changes.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Mercedes",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Wider rear-bodywork cooling option. Cooling-range configuration.",
+      "reported_intent": "Cooling-range configuration.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Red Bull",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Rear-wing and diffuser development. Rear-wing pylon/flap and diffuser changes.",
+      "reported_intent": "Rear-wing pylon/flap and diffuser changes.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Ferrari",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Rear-wing/endplate refinement. Small rear-aero load-range development.",
+      "reported_intent": "Small rear-aero load-range development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Williams",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Hungaroring high-downforce rear-wing/floor configuration. Circuit-specific load choice.",
+      "reported_intent": "Circuit-specific load choice.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "VCARB",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Spa package rolled onto Lawson chassis. Rollout of the persistent R10 chassis package to Lawson; no second team-wide weight step is applied here.",
+      "reported_intent": "Rollout of the persistent R10 chassis package to Lawson; no second team-wide weight step is applied here.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ],
+      "drivers": [
+        "LAW"
+      ],
+      "rollout_of_round": 10
+    },
+    {
+      "team": "VCARB",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Rear-wing/cooling/roll-hoop configuration. Hungary-specific configuration details.",
+      "reported_intent": "Hungary-specific configuration details.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Haas",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Rear-wing SLM fairing detail. Track/range-specific rear-wing configuration.",
+      "reported_intent": "Track/range-specific rear-wing configuration.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Audi",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Rear-wing endplate refinement. Small persistent rear-aero change.",
+      "reported_intent": "Small persistent rear-aero change.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Cadillac",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Front-brake cooling change. Cooling configuration.",
+      "reported_intent": "Cooling configuration.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    }
+  ],
+  "prediction_review": {
+    "status": "unavailable",
+    "prediction_references": [],
+    "overall_assessment": "No genuine saved pre-race LatentLap forecast exists for this round. Do not reconstruct one retrospectively and label it as an original forecast.",
+    "successes": [],
+    "misses": [],
+    "known_exceptions": []
+  },
+  "knowledge_limits": [
+    {
+      "text": "Actual ERS deployment and battery state are not public; LatentLap's energy-management signals remain inferred, not measured."
+    },
+    {
+      "text": "Race-session harvest ratios are not used as reliable comparative evidence because representative laps differ in fuel, compound and track evolution."
+    },
+    {
+      "text": "Stint pace trends are fitted lap-time slopes over filtered green-flag laps, not direct tyre-degradation measurements; fuel burn, traffic, track evolution and driver management can contribute."
+    },
+    {
+      "text": "The presence of a new component at a weekend does not prove it caused an observed pace change. Upgrade effects are only attributed where reviewed reporting explicitly supports an effect."
+    }
+  ],
+  "entities": {
+    "drivers": [
+      "ALO",
+      "NOR",
+      "PIA",
+      "STR",
+      "VER"
+    ],
+    "teams": [
+      "Aston Martin",
+      "Ferrari",
+      "McLaren",
+      "Mercedes",
+      "Red Bull"
+    ],
+    "topics": [
+      "qualifying",
+      "race pace",
+      "strategy",
+      "traffic",
+      "intra-team battle",
+      "Aston Martin B-spec",
+      "McLaren upgrades",
+      "summer break"
+    ]
+  },
+  "sources": [
+    {
+      "id": "f1_race_report",
+      "publisher": "Formula 1",
+      "title": "Norris wins dramatic Hungarian Grand Prix",
+      "url": "https://www.formula1.com/en/latest/article/norris-beats-verstappen-and-antonelli-to-victory-in-dramatic-hungarian-gp.5JQmohRAKABD2asRsMWogj"
+    },
+    {
+      "id": "f1_teams_race",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Race day in Hungary",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-race-day-in-hungary-2026.40qHMaNrP6jNXwrULAwt9J"
+    },
+    {
+      "id": "f1_aston_tech",
+      "publisher": "Formula 1",
+      "title": "A closer look at Aston Martin's 16-part Hungary B-spec",
+      "url": "https://www.formula1.com/en/latest/article/a-closer-look-at-aston-martins-major-upgrades-and-the-overall-theme-they-are-chasing.6Ob4CsAvJA3H4ZoB7YYRlk.6Ob4CsAvJA3H4ZoB7YYRlk"
+    },
+    {
+      "id": "f1_aston_after",
+      "publisher": "Formula 1",
+      "title": "How Hungary showed Aston Martin are back racing",
+      "url": "https://www.formula1.com/en/latest/article/how-hungary-showed-aston-martin-is-back-racing-after-upgrades-work.2FxnUtTxAbc3dARczm3lfW"
+    },
+    {
+      "id": "f1_mclaren_upgrade",
+      "publisher": "Formula 1",
+      "title": "Piastri on McLaren's Hungary upgrades",
+      "url": "https://www.formula1.com/en/latest/article/piastri-sees-a-lot-up-for-grabs-for-mclaren-in-hungary-despite-very-challenging-first-day.2rzvag0QfcIm2UlaIkQB0m"
+    },
+    {
+      "id": "latentlap_upgrade_history",
+      "publisher": "LatentLap",
+      "title": "Audited 2026 team development history",
+      "path": "data/upgrade_history.py"
+    }
+  ]
+}

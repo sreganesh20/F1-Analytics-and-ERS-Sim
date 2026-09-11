@@ -1,0 +1,505 @@
+{
+  "review_status": "approved",
+  "metadata": {
+    "year": 2026,
+    "round": 5,
+    "circuit": "Canada",
+    "venue": "Circuit Gilles-Villeneuve",
+    "date_range": "2026-05-22 to 2026-05-24",
+    "weekend_type": "sprint",
+    "sessions_available": [
+      "SQ",
+      "S",
+      "Q",
+      "R"
+    ]
+  },
+  "weekend_summary": "Canada produced another Mercedes-dominated Sprint weekend, but in a much more internally competitive form. Russell took Sprint pole, won the Sprint and then secured Grand Prix pole. On Sunday he and Antonelli fought repeatedly for the lead until Russell retired with a power-unit problem on Lap 30, leaving Antonelli to win ahead of Hamilton and Verstappen. Mercedes' first major chassis/aero package of the year arrived here and F1's technical review judged it a strong debut, while McLaren also brought a substantial follow-up package.",
+  "sessions": {
+    "SQ": {
+      "summary": "Russell beat Antonelli to Sprint pole, with Norris and Piastri filling the second row.",
+      "key_moments": [
+        {
+          "text": "Russell led a Mercedes one-two in Sprint Qualifying.",
+          "source_refs": [
+            "f1_sq_report"
+          ]
+        }
+      ]
+    },
+    "S": {
+      "summary": "Russell resisted Antonelli and Norris to win the Sprint after a tense intra-team fight.",
+      "key_moments": [
+        {
+          "text": "Russell won from Norris and Antonelli.",
+          "source_refs": [
+            "f1_sprint_report"
+          ]
+        },
+        {
+          "text": "Russell and Antonelli made contact while fighting, with Antonelli twice running off track.",
+          "source_refs": [
+            "f1_sprint_report",
+            "f1_teams_sprint_q"
+          ]
+        }
+      ]
+    },
+    "Q": {
+      "summary": "Russell again took pole, Antonelli second and Norris third, confirming Mercedes remained the benchmark over one lap.",
+      "key_moments": [
+        {
+          "text": "Russell took GP pole in 1:12.578, 0.068s ahead of Antonelli.",
+          "source_refs": [
+            "f1_q_results"
+          ]
+        }
+      ]
+    },
+    "R": {
+      "summary": "Antonelli won after an extended fight with Russell ended when the latter retired with a power-unit issue. Hamilton finished second and Verstappen third.",
+      "key_moments": [
+        {
+          "text": "Russell and Antonelli swapped positions repeatedly in the opening half of the race.",
+          "source_refs": [
+            "f1_race_report",
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Russell stopped on Lap 30 after a sudden loss of power.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "The VSC for Russell's stopped car triggered a widespread pit-stop phase.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Antonelli then controlled the race to take his fourth straight Grand Prix victory.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    }
+  },
+  "performance_snapshot": {
+    "source": "committed_session_store",
+    "status": "hydrate at query time from committed LatentLap session data"
+  },
+  "driver_insights": {
+    "RUS": {
+      "name": "George Russell",
+      "team": "Mercedes",
+      "summary": "Russell was arguably the strongest all-round driver through Sprint, Sprint Qualifying and GP Qualifying, but his Sunday result is unusable as a pace outcome because of the power-unit failure.",
+      "details": [
+        {
+          "text": "He led and fought Antonelli repeatedly before the technical retirement.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ],
+      "result_context": {
+        "representative_of_pace": false,
+        "reason": "Retired with a power-unit issue while fighting for the lead."
+      }
+    },
+    "ANT": {
+      "name": "Andrea Kimi Antonelli",
+      "team": "Mercedes",
+      "summary": "Antonelli was closely matched with Russell all weekend and inherited clear control only after his team mate's technical retirement.",
+      "details": [
+        {
+          "text": "The win is consistent with front-running pace but the final margin over the field is influenced by Russell's DNF.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "HAM": {
+      "name": "Lewis Hamilton",
+      "team": "Ferrari",
+      "summary": "Hamilton delivered his strongest Ferrari Sunday to that point with second place, capitalising when Russell retired.",
+      "details": [
+        {
+          "text": "The result kept Ferrari as a credible challenger even without a new Canada-specific package.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "VER": {
+      "name": "Max Verstappen",
+      "team": "Red Bull",
+      "summary": "Verstappen finished third and remained close to Hamilton, giving Red Bull another meaningful race benchmark after the Miami update.",
+      "details": [
+        {
+          "text": "Red Bull continued persistent front/floor development while separating Montreal cooling changes from longer-term upgrades.",
+          "source_refs": [
+            "latentlap_upgrade_history"
+          ]
+        }
+      ]
+    }
+  },
+  "team_insights": {
+    "Mercedes": {
+      "summary": "Mercedes dominated the weekend sessions and introduced its first major development package of the season, but Russell's failure showed that reliability could still turn a pace advantage into a zero.",
+      "details": [
+        {
+          "text": "F1 technical analysis described the Canada package as making a strong debut and increasing the W17's performance spread.",
+          "source_refs": [
+            "f1_mercedes_tech"
+          ]
+        }
+      ]
+    },
+    "McLaren": {
+      "summary": "McLaren remained the nearest qualifying challenger and Norris split the Mercedes pair in the Sprint result, but did not convert that into the Sunday podium.",
+      "details": [
+        {
+          "text": "The team brought another broad aero package after Miami.",
+          "source_refs": [
+            "f1_upgrades"
+          ]
+        }
+      ]
+    },
+    "Ferrari": {
+      "summary": "Ferrari brought no new chassis package, focusing on its Miami specification, yet Hamilton finished second and Leclerc fourth.",
+      "details": [
+        {
+          "text": "That makes Canada useful evidence that not every performance movement should be tied to a new upgrade.",
+          "source_refs": [
+            "f1_upgrades",
+            "f1_race_results"
+          ]
+        }
+      ]
+    }
+  },
+  "strategy_and_conditions": [
+    {
+      "text": "Sprint format limited preparation while Mercedes and McLaren introduced significant packages.",
+      "source_refs": [
+        "f1_upgrades"
+      ]
+    },
+    {
+      "text": "Russell's retirement caused a VSC and reset the strategic picture around the leaders.",
+      "source_refs": [
+        "f1_race_report"
+      ]
+    },
+    {
+      "text": "The race showed the difference between underlying pace and result reliability: Russell had race-winning pace but scored nothing.",
+      "source_refs": [
+        "f1_teams_race"
+      ]
+    }
+  ],
+  "performance_interpretation": [
+    {
+      "text": "Mercedes was the clear pace benchmark, but the team result masks a reliability failure on Russell's car.",
+      "source_refs": [
+        "f1_q_results",
+        "f1_teams_race"
+      ],
+      "teams": [
+        "Mercedes"
+      ]
+    },
+    {
+      "text": "Ferrari's podium without a new package is useful counterevidence against simplistic upgrade-equals-immediate-gain narratives.",
+      "source_refs": [
+        "f1_upgrades",
+        "f1_race_results"
+      ],
+      "teams": [
+        "Ferrari"
+      ]
+    }
+  ],
+  "upgrades_and_technical_context": [
+    {
+      "team": "Mercedes",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Front wing, front/rear corner and floor package. First major Mercedes chassis/aero update of the season.",
+      "reported_intent": "First major Mercedes chassis/aero update of the season.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Mercedes",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Front-brake cooling inlet enlargement. Cooling demand/configuration for Montreal.",
+      "reported_intent": "Cooling demand/configuration for Montreal.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "McLaren",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Front wing, bodywork, floor-edge and rear-aero package. Broad follow-up development across front, floor, rear wing and suspension fairings.",
+      "reported_intent": "Broad follow-up development across front, floor, rear wing and suspension fairings.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "McLaren",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Additional cooling-louvre option. Cooling-range option rather than a persistent baseline step.",
+      "reported_intent": "Cooling-range option rather than a persistent baseline step.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Red Bull",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Front-wing and bib/floor update. Persistent front-aero/floor development.",
+      "reported_intent": "Persistent front-aero/floor development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Red Bull",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Brake-duct and engine-cover cooling options. Montreal cooling configuration.",
+      "reported_intent": "Montreal cooling configuration.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Williams",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Suspension cladding and tailpipe development. Evolution of the Miami package.",
+      "reported_intent": "Evolution of the Miami package.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Williams",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Front-brake cooling geometry. Circuit cooling requirement.",
+      "reported_intent": "Circuit cooling requirement.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "VCARB",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Floor, rear-corner and beam-wing package. Larger development step than Miami.",
+      "reported_intent": "Larger development step than Miami.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Haas",
+      "category": "persistent",
+      "significance": "major",
+      "text": "First major Haas 2026 package. Bodywork/sidepod, bespoke floor/diffuser, rear suspension and rear-corner development.",
+      "reported_intent": "Bodywork/sidepod, bespoke floor/diffuser, rear suspension and rear-corner development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Audi",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Diffuser refinement. Persistent rear-aero development.",
+      "reported_intent": "Persistent rear-aero development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Audi",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Brake-duct and cooling-louvre configuration. Cooling-focused Montreal changes.",
+      "reported_intent": "Cooling-focused Montreal changes.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Alpine",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "New floor and rear wing. Notable aero development step.",
+      "reported_intent": "Notable aero development step.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Cadillac",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Front-corner and diffuser/hanger refinements. Local aerodynamic development.",
+      "reported_intent": "Local aerodynamic development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Cadillac",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Front-brake cooling update. Circuit cooling configuration.",
+      "reported_intent": "Circuit cooling configuration.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    }
+  ],
+  "prediction_review": {
+    "status": "unavailable",
+    "prediction_references": [],
+    "overall_assessment": "No genuine saved pre-race LatentLap forecast exists for this round. Do not reconstruct one retrospectively and label it as an original forecast.",
+    "successes": [],
+    "misses": [],
+    "known_exceptions": []
+  },
+  "knowledge_limits": [
+    {
+      "text": "Actual ERS deployment and battery state are not public; LatentLap's energy-management signals remain inferred, not measured."
+    },
+    {
+      "text": "Race-session harvest ratios are not used as reliable comparative evidence because representative laps differ in fuel, compound and track evolution."
+    },
+    {
+      "text": "Stint pace trends are fitted lap-time slopes over filtered green-flag laps, not direct tyre-degradation measurements; fuel burn, traffic, track evolution and driver management can contribute."
+    },
+    {
+      "text": "The presence of a new component at a weekend does not prove it caused an observed pace change. Upgrade effects are only attributed where reviewed reporting explicitly supports an effect."
+    }
+  ],
+  "entities": {
+    "drivers": [
+      "ANT",
+      "HAM",
+      "RUS",
+      "VER"
+    ],
+    "teams": [
+      "Ferrari",
+      "McLaren",
+      "Mercedes",
+      "Red Bull"
+    ],
+    "topics": [
+      "sprint",
+      "qualifying",
+      "race pace",
+      "reliability",
+      "power unit",
+      "upgrades",
+      "strategy",
+      "VSC"
+    ]
+  },
+  "sources": [
+    {
+      "id": "f1_sq_report",
+      "publisher": "Formula 1",
+      "title": "Russell grabs Canada Sprint pole",
+      "url": "https://www.formula1.com/en/latest/article/russell-grabs-pole-position-in-canada-sprint-qualifying-ahead-of-antonelli-and-norris.7Fm9bjk84nwzOysiMriBCs"
+    },
+    {
+      "id": "f1_sprint_report",
+      "publisher": "Formula 1",
+      "title": "Russell clings on to win Canada Sprint",
+      "url": "https://www.formula1.com/en/latest/article/russell-clings-on-to-win-canada-sprint-after-clashing-with-antonelli.6Ggn92sBNEdqizMYOT44fb"
+    },
+    {
+      "id": "f1_teams_sprint_q",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Sprint day and Qualifying in Canada",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-sprint-day-and-qualifying-in-canada.5K36jKNTRyzhQ6HTirVMgw"
+    },
+    {
+      "id": "f1_q_results",
+      "publisher": "Formula 1",
+      "title": "2026 Canadian Grand Prix – Qualifying results",
+      "url": "https://www.formula1.com/en/results/2026/races/1285/canada/qualifying"
+    },
+    {
+      "id": "f1_race_results",
+      "publisher": "Formula 1",
+      "title": "2026 Canadian Grand Prix – Race result",
+      "url": "https://www.formula1.com/en/results/2026/races/1285/canada/race-result"
+    },
+    {
+      "id": "f1_race_report",
+      "publisher": "Formula 1",
+      "title": "Antonelli wins dramatic Canadian Grand Prix",
+      "url": "https://www.formula1.com/en/latest/article/antonelli-wins-dramatic-canadian-grand-prix-as-russell-retires-amid-thrilling-mercedes-battle.MzvclJaqCidlYMUXonuDq"
+    },
+    {
+      "id": "f1_teams_race",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Race day in Canada",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-race-day-in-canada-2026.4HbLpruv73CXucAxpxWGgC"
+    },
+    {
+      "id": "f1_upgrades",
+      "publisher": "Formula 1",
+      "title": "Every team's upgrades for the Canadian Grand Prix",
+      "url": "https://www.formula1.com/en/latest/article/how-many-upgrades-has-each-team-brought-to-canadian-grand-prix.52nUlxl8OFR9O7YFAgU4Ky"
+    },
+    {
+      "id": "f1_mercedes_tech",
+      "publisher": "Formula 1",
+      "title": "Tech Weekly – Mercedes' potent Canada upgrade package",
+      "url": "https://www.formula1.com/en/latest/article/tech-weekly-how-mercedes-hit-back-at-their-rivals-with-a-potent-canadian-grand-prix-upgrade-package.3gsbmXijbkdHgvf8V9msZ8"
+    },
+    {
+      "id": "latentlap_upgrade_history",
+      "publisher": "LatentLap",
+      "title": "Audited 2026 team development history",
+      "path": "data/upgrade_history.py"
+    }
+  ]
+}

@@ -1,0 +1,395 @@
+{
+  "review_status": "approved",
+  "metadata": {
+    "year": 2026,
+    "round": 8,
+    "circuit": "Austria",
+    "venue": "Red Bull Ring",
+    "date_range": "2026-06-26 to 2026-06-28",
+    "weekend_type": "standard",
+    "sessions_available": [
+      "Q",
+      "R"
+    ]
+  },
+  "weekend_summary": "Austria put Russell back on the top step and gave Red Bull its strongest home-track performance of the season to that point. Russell took pole after Verstappen's late qualifying crash disrupted several final laps, then controlled the race while Verstappen recovered to second and pressured him late. Antonelli completed the podium after a messy opening phase. Red Bull arrived with one of the weekend's largest development packages, while Ferrari's strong qualifying did not translate into the same Sunday result.",
+  "sessions": {
+    "Q": {
+      "summary": "Russell took pole ahead of Leclerc and Hamilton after Verstappen crashed late in Q3 and disrupted the final runs.",
+      "key_moments": [
+        {
+          "text": "Verstappen crashed at Turn 9 during the final Q3 runs.",
+          "source_refs": [
+            "f1_q_report"
+          ]
+        },
+        {
+          "text": "Russell completed his lap under yellow-flag conditions and retained pole after no investigation was pursued.",
+          "source_refs": [
+            "f1_q_report"
+          ]
+        }
+      ]
+    },
+    "R": {
+      "summary": "Russell won from Verstappen and Antonelli, controlling the race through the opening stint and managing Verstappen's late pressure.",
+      "key_moments": [
+        {
+          "text": "Russell converted pole with a clean start and built enough margin to control his stop timing.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Verstappen recovered from a difficult qualifying ending and fought through to P2.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Antonelli ran wide early, lost positions, then recovered to third with strong final-stint pace.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    }
+  },
+  "performance_snapshot": {
+    "source": "committed_session_store",
+    "status": "hydrate at query time from committed LatentLap session data"
+  },
+  "driver_insights": {
+    "RUS": {
+      "name": "George Russell",
+      "team": "Mercedes",
+      "summary": "Russell delivered one of his cleanest weekends: pole followed by a controlled victory, absorbing Verstappen's late pressure without needing a race-changing external event.",
+      "details": [
+        {
+          "text": "He created enough first-stint margin to dictate his pit-stop timing.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "VER": {
+      "name": "Max Verstappen",
+      "team": "Red Bull",
+      "summary": "Verstappen's qualifying crash hid some of the upgraded Red Bull's pace, but his recovery to second and late pressure on Russell made the Sunday performance more representative.",
+      "details": [
+        {
+          "text": "F1's weekend review explicitly highlighted Verstappen's performance in the upgraded Red Bull.",
+          "source_refs": [
+            "f1_lowdown"
+          ]
+        }
+      ]
+    },
+    "ANT": {
+      "name": "Andrea Kimi Antonelli",
+      "team": "Mercedes",
+      "summary": "Antonelli recovered from early mistakes to third and was rapid in the final stint, but ran out of laps to attack Verstappen.",
+      "details": [
+        {
+          "text": "The final podium understates how much ground he lost himself at the start.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "LEC": {
+      "name": "Charles Leclerc",
+      "team": "Ferrari",
+      "summary": "Leclerc started second after a strong qualifying but Ferrari did not convert the front-row speed into a podium on Sunday.",
+      "details": [
+        {
+          "text": "The weekend is a useful example of qualifying strength not guaranteeing equivalent race trim.",
+          "source_refs": [
+            "f1_lowdown"
+          ]
+        }
+      ]
+    }
+  },
+  "team_insights": {
+    "Mercedes": {
+      "summary": "Mercedes returned to winning form through Russell and still placed Antonelli on the podium.",
+      "details": [
+        {
+          "text": "The win was not dependent on a major Safety Car or VSC swing.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "Red Bull": {
+      "summary": "Red Bull's major Austria package coincided with a clear step in competitiveness, with Verstappen finishing second and pressing Russell late.",
+      "details": [
+        {
+          "text": "The package should be treated as a persistent development step, though the exact component contribution is not isolated.",
+          "source_refs": [
+            "f1_upgrades",
+            "f1_lowdown"
+          ]
+        }
+      ]
+    },
+    "Ferrari": {
+      "summary": "Ferrari qualified second and third but struggled to convert that grid position into equivalent Sunday performance.",
+      "details": [
+        {
+          "text": "This contrast is useful context for separating one-lap and race pace.",
+          "source_refs": [
+            "f1_lowdown"
+          ]
+        }
+      ]
+    }
+  },
+  "strategy_and_conditions": [
+    {
+      "text": "Russell's race was relatively conventional strategically, allowing the final gap to be interpreted more cleanly than highly interrupted rounds.",
+      "source_refs": [
+        "f1_teams_race"
+      ]
+    },
+    {
+      "text": "Verstappen's qualifying crash made his grid position less representative of the upgraded car's underlying potential.",
+      "source_refs": [
+        "f1_q_report"
+      ]
+    }
+  ],
+  "performance_interpretation": [
+    {
+      "text": "Red Bull showed a meaningful competitive step after its large package, but LatentLap should phrase this as a weekend-level performance change rather than a measured component gain.",
+      "source_refs": [
+        "f1_lowdown",
+        "f1_upgrades"
+      ],
+      "teams": [
+        "Red Bull"
+      ]
+    },
+    {
+      "text": "Russell's victory is a comparatively clean reference for Mercedes race pace and execution.",
+      "source_refs": [
+        "f1_teams_race"
+      ],
+      "teams": [
+        "Mercedes"
+      ],
+      "drivers": [
+        "RUS"
+      ]
+    }
+  ],
+  "upgrades_and_technical_context": [
+    {
+      "team": "Red Bull",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Major floor, bodywork, suspension and rear-corner package. Broad development across floor/boards, sidepod inlet/engine cover, rear suspension/corner and supporting aero details.",
+      "reported_intent": "Broad development across floor/boards, sidepod inlet/engine cover, rear suspension/corner and supporting aero details.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "McLaren",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Rear brake-duct refinement. Small persistent rear-corner development; alternate rear-wing/SLM items treated separately as configuration.",
+      "reported_intent": "Small persistent rear-corner development; alternate rear-wing/SLM items treated separately as configuration.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "McLaren",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Alternate rear-wing / SLM configuration. Circuit/range-specific aero option.",
+      "reported_intent": "Circuit/range-specific aero option.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Mercedes",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Front-suspension fairing refinement. Small suspension/aero integration development.",
+      "reported_intent": "Small suspension/aero integration development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Mercedes",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Narrower rear engine-cover cooling exit. Cooling-range option.",
+      "reported_intent": "Cooling-range option.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Ferrari",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Front-wing endplate development. Small persistent front-aero change. Test-only parts not raced are excluded.",
+      "reported_intent": "Small persistent front-aero change. Test-only parts not raced are excluded.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Audi",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Large front-wing, floor, diffuser and rear-aero package. Broad package spanning front wing/endplate, front/rear corners, floor, rear suspension, beam and rear wing.",
+      "reported_intent": "Broad package spanning front wing/endplate, front/rear corners, floor, rear suspension, beam and rear wing.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Alpine",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Large front-wing, nose and diffuser package. Broad front- and rear-aero development.",
+      "reported_intent": "Broad front- and rear-aero development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Cadillac",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Substantial bodywork/floor/diffuser package. Large multi-area aero development including beam-wing work.",
+      "reported_intent": "Large multi-area aero development including beam-wing work.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "VCARB",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Tailpipe and diffuser refinement. Small persistent rear-aero/exhaust-integration change.",
+      "reported_intent": "Small persistent rear-aero/exhaust-integration change.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Haas",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Cooling-louvre and front-brake-duct revision. Predominantly circuit/cooling driven.",
+      "reported_intent": "Predominantly circuit/cooling driven.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    }
+  ],
+  "prediction_review": {
+    "status": "unavailable",
+    "prediction_references": [],
+    "overall_assessment": "No genuine saved pre-race LatentLap forecast exists for this round. Do not reconstruct one retrospectively and label it as an original forecast.",
+    "successes": [],
+    "misses": [],
+    "known_exceptions": []
+  },
+  "knowledge_limits": [
+    {
+      "text": "Actual ERS deployment and battery state are not public; LatentLap's energy-management signals remain inferred, not measured."
+    },
+    {
+      "text": "Race-session harvest ratios are not used as reliable comparative evidence because representative laps differ in fuel, compound and track evolution."
+    },
+    {
+      "text": "Stint pace trends are fitted lap-time slopes over filtered green-flag laps, not direct tyre-degradation measurements; fuel burn, traffic, track evolution and driver management can contribute."
+    },
+    {
+      "text": "The presence of a new component at a weekend does not prove it caused an observed pace change. Upgrade effects are only attributed where reviewed reporting explicitly supports an effect."
+    }
+  ],
+  "entities": {
+    "drivers": [
+      "ANT",
+      "LEC",
+      "RUS",
+      "VER"
+    ],
+    "teams": [
+      "Ferrari",
+      "Mercedes",
+      "Red Bull"
+    ],
+    "topics": [
+      "qualifying",
+      "race pace",
+      "upgrades",
+      "Red Bull",
+      "Mercedes",
+      "Ferrari",
+      "driver recovery"
+    ]
+  },
+  "sources": [
+    {
+      "id": "f1_q_report",
+      "publisher": "Formula 1",
+      "title": "Russell takes Austria pole after Verstappen crash",
+      "url": "https://www.formula1.com/en/latest/article/russell-beats-leclerc-and-hamilton-to-austrian-gp-pole-after-dramatic-late-verstappen-crash.6oiA7Tyo3B89DFJNLWtG8P"
+    },
+    {
+      "id": "f1_race_report",
+      "publisher": "Formula 1",
+      "title": "Russell seals Austrian Grand Prix victory",
+      "url": "https://www.formula1.com/en/latest/article/russell-seals-victory-in-thrilling-austrian-grand-prix-ahead-of-verstappen-and-antonelli.5kjw8LmvWRcsaFgjCr8aWw.5kjw8LmvWRcsaFgjCr8aWw"
+    },
+    {
+      "id": "f1_teams_race",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Race day in Austria",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-race-day-in-austria-2026.2c6WyTl6yjshJrSwqRsYAK"
+    },
+    {
+      "id": "f1_lowdown",
+      "publisher": "Formula 1",
+      "title": "Austria Lowdown – Russell triumphs and Verstappen impresses",
+      "url": "https://www.formula1.com/en/latest/article/austria-lowdown-all-the-key-moments-as-russell-triumphs-verstappen-impresses-and-ferrari-struggle.kYlJP2ZACF4ulZVACtFQg"
+    },
+    {
+      "id": "f1_upgrades",
+      "publisher": "Formula 1",
+      "title": "Red Bull's significant Austria upgrade package and every team update",
+      "url": "https://www.formula1.com/en/latest/article/all-the-details-on-red-bulls-significant-upgrade-package-and-every-other-teams-updates-in-austria.HWTF5D6l7LfVlTD9PX59K"
+    },
+    {
+      "id": "latentlap_upgrade_history",
+      "publisher": "LatentLap",
+      "title": "Audited 2026 team development history",
+      "path": "data/upgrade_history.py"
+    }
+  ]
+}

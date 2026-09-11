@@ -1,62 +1,109 @@
-"""
-analysis/llm.py — thin Groq client for PitWall's AI features.
+"""analysis/llm.py — grounded Groq layer for LatentLap.
 
-Design constraints, all deliberate:
-
-  * No SDK. Groq speaks an OpenAI-compatible REST endpoint, so a single
-    requests.post keeps requirements.txt unchanged and removes a dependency
-    that could break a deploy.
-
-  * Non-blocking. Every entry point returns (text, error) and never raises
-    into a Streamlit page. If the key is missing or Groq is down, the feature
-    shows "AI unavailable" and the rest of the app keeps working.
-
-  * Key from st.secrets only. Never a literal, never committed. Falls back to
-    an environment variable for local CLI use (build-digest runs outside
-    Streamlit, where st.secrets does not exist).
-
-  * Strict RAG. The system prompt forbids outside knowledge. The model 
-    from the context block or says it doesn't have the data. This is enforced
-    by instruction, not code — so the caller must still treat output as
-    advisory, and the UI says so.
+Design constraints:
+- deterministic Python/data analytics establish the facts;
+- the LLM retrieves and explains those facts, never invents analytics;
+- query-time knowledge is committed LatentLap data only: no live web and no
+  pretrained-memory filling;
+- race dossiers are usable only after human review_status == "approved";
+- methodology questions retrieve compact implementation-grounded explanations from the
+  actual LatentLap algorithms instead of relying on generic model knowledge;
+- answers adapt to the user's sophistication while staying concise enough for
+  Groq free-tier use;
+- every public AI entry point keeps the (text, error) contract.
 """
 
-import os
 import json
+import os
 
 import requests
 
-GROQ_URL   = "https://api.groq.com/openai/v1/chat/completions"
+GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL = "openai/gpt-oss-120b"
-TIMEOUT_S  = 30
+TIMEOUT_S = 30
 
 STRICT_RAG_SYSTEM = (
-    "You are the PitWall race engineer, explaining a data-driven Formula 1 "
-    "2026 analytics model to a knowledgeable fan.\n\n"
-    "Rules you must follow:\n"
-    "1. Answer ONLY from the DATA block provided in the user message. Treat it "
-    "as the complete truth about this season.\n"
-    "2. If the data does not contain what's needed to answer, say so plainly — "
-    "e.g. 'The model doesn't track that.' Never invent lap times, positions, "
-    "quotes, or events.\n"
-    "3. This is the REAL 2026 Formula 1 season, but it happened after your "
-    "training data ends — so you do not know its results. Anything you think "
-    "you remember about 2026 is unreliable. Never fill a gap from memory: if a "
-    "name, result or figure is not in the DATA block, say you don't have it.\n"
-    "4. Driver codes are three letters. Expand a code to a full name ONLY if "
-    "the roster in the DATA block gives that name. Never guess a driver's name "
-    "from their code.\n"
-    "5. Be concise and specific. Cite the numbers from the data. No preamble, "
-    "no 'as an AI'.\n"
-    "6. Never present a prediction as a certainty. It's a model output with an "
-    "uncertainty range."
+    "You are the LatentLap race engineer: a grounded explanation layer over a "
+    "data-science Formula 1 analytics system. Your job is to explain the race "
+    "story behind the evidence, not to recite a database.\n\n"
+    "NON-NEGOTIABLE RULES:\n"
+    "1. Answer ONLY from the DATA block supplied in the user message. Python, "
+    "committed session data, predictions and reviewed race knowledge are the "
+    "source of truth. Never calculate or invent a new analytical number yourself.\n"
+    "2. If the DATA is insufficient, say plainly: 'LatentLap does not have enough "
+    "committed data to answer that reliably.' Then state what the available data "
+    "does support.\n"
+    "3. This is the REAL 2026 Formula 1 season, which postdates your training. "
+    "Never fill a missing result, event, quote, driver identity, circuit property "
+    "or technical fact from memory.\n"
+    "4. Expand driver codes only when the DATA roster supplies the name. Never "
+    "guess a name from a three-letter code.\n"
+    "5. Preserve evidence type. Observed results/telemetry, inferred behaviour, "
+    "assumed model parameters, optimised outputs, predictions and externally "
+    "reported context are different things. Never blur them.\n"
+    "6. Never present predictions as certainties. Pace forecasts do not model "
+    "incidents, safety cars, strategy calls or reliability unless DATA explicitly "
+    "says otherwise.\n"
+    "7. Adapt depth to the question. Explain jargon for casual questions; expose "
+    "method/formulas/assumptions when the question is technical.\n"
+    "8. Lead with the plain-language answer and the weekend/race story. Use numbers "
+    "as evidence, not as the structure of the answer. Prefer a few decisive metrics "
+    "over a list of every available value.\n"
+    "9. Do NOT mechanically use fixed headings such as 'What the data shows'. Use "
+    "natural paragraphs by default; use bullets or headings only when they genuinely "
+    "make a comparison or technical explanation easier to read.\n"
+    "10. For 'why' or 'what happened' questions, prioritise reviewed race context, "
+    "strategy, incidents and performance interpretation before raw fingerprint rows.\n"
+    "11. Never infer that an upgrade CAUSED a pace change merely because the upgrade "
+    "was fitted when the team was fast. Call an upgrade effective only when the DATA "
+    "contains an explicit reported effect or a deterministic comparison designed to "
+    "isolate it. Otherwise say the team carried the upgrade while the observed pace "
+    "changed, and state that causality cannot be isolated.\n"
+    "12. Distinguish GP Qualifying/Race (Q/R) from Sprint Qualifying/Sprint (SQ/S). "
+    "Two sessions in one sprint weekend are still one weekend. Never subtract or compare "
+    "a Q pace-gap percentage with an R pace-gap percentage and call the difference an "
+    "improvement: they are different session/reference contexts unless DATA explicitly "
+    "provides a precomputed cross-session metric.\n"
+    "13. Keep chassis/aero development separate from power-unit homologation. A Honda "
+    "ADUO update used by Aston Martin is a Honda PU update, not an 'Aston Martin ADUO'. "
+    "Likewise, never attribute a PU-manufacturer update to the customer team as its own.\n"
+    "14. For upgrade/development questions, treat the reviewed weekend UPGRADE INVENTORY "
+    "as authoritative for what arrived at that event. Never say 'the only upgrade' unless "
+    "that inventory explicitly contains only one relevant entry. Discuss reported effects "
+    "separately from observed pace and from unproven causal interpretation.\n"
+    "15. For questions asking which teams improved or declined over the season, use the "
+    "PRECOMPUTED TEAM TREND SNAPSHOT as the evidence for direction of change. Current "
+    "standings, season-average pace, upgrade count and historical reputation do NOT prove "
+    "improvement or decline. Never call a team an early-season benchmark unless the supplied "
+    "early-window data actually establishes that.\n"
+    "16. If the user asks for a race-by-race or round-by-round season story, follow the "
+    "APPROVED SEASON DOSSIER CHRONOLOGY in round order. Do not substitute a generic season "
+    "overview, and do not claim race context is unavailable when that chronology is present.\n"
+    "17. When IMPLEMENTATION-GROUNDED METHODOLOGY is supplied, it is authoritative for how "
+    "LatentLap works. Explain that implementation rather than generic F1 theory or model memory. "
+    "Do not silently upgrade a heuristic proxy into a direct measurement or a modelling assumption "
+    "into established physics.\n"
+    "18. ERS guardrail: LatentLap does NOT observe true battery state-of-charge, exact electrical "
+    "harvest, or exact deployment from public telemetry. Its ERS fingerprint fields are inferred or "
+    "heuristic proxies, while the optimiser is a separate theoretical model. State that distinction "
+    "whenever it matters to the answer.\n"
+    "19. Race-result guardrail: when an OFFICIAL RACE CLASSIFICATION block is supplied, it is the "
+    "sole authority for winner, podium, finishing order, status and race-result claims. A driver at "
+    "+0.000% in a deterministic race-pace snapshot is only the representative pace reference; that "
+    "does NOT mean they won the race. Never infer finishing order from pace ranking.\n"
+    "20. Identity guardrail: never merge, concatenate or hybridise driver names, codes or teams. "
+    "Treat each official-classification row as one indivisible driver identity. If contextual text and "
+    "a pace row could be confused, keep the official code + canonical name + team together exactly as "
+    "supplied in DATA."
 )
+
 
 
 def _api_key():
     """st.secrets when inside Streamlit, else env var for CLI use."""
     try:
         import streamlit as st
+
         if "GROQ_API_KEY" in st.secrets:
             return st.secrets["GROQ_API_KEY"]
     except Exception:
@@ -65,40 +112,35 @@ def _api_key():
 
 
 def available():
-    """True if a key is configured. Lets a page hide AI UI entirely."""
     return bool(_api_key())
 
 
-def ask(user_content, system=STRICT_RAG_SYSTEM, temperature=0.3,
-        max_tokens=1200, reasoning_effort="low"):
-    """
-    Single completion. Returns (text, error): exactly one is non-None.
-
-    error is a short, user-safe string — never a raw exception or stack.
-
-    gpt-oss-120b is a reasoning model: it spends tokens on a hidden reasoning
-    pass before writing visible content, and max_tokens caps the TOTAL. A tight
-    cap can therefore return an empty answer with finish_reason 'length'. So the
-    default ceiling is generous and reasoning_effort defaults to 'low' — these
-    are short, grounded answers that don't need deep deliberation.
-    """
+def ask(
+    user_content,
+    system=STRICT_RAG_SYSTEM,
+    temperature=0.45,
+    max_tokens=1200,
+    reasoning_effort="low",
+):
+    """Single completion. Returns ``(text, error)``."""
     key = _api_key()
     if not key:
         return None, "AI features need a GROQ_API_KEY in Streamlit secrets."
-
     try:
-        r = requests.post(
+        response = requests.post(
             GROQ_URL,
-            headers={"Authorization": f"Bearer {key}",
-                     "Content-Type": "application/json"},
+            headers={
+                "Authorization": f"Bearer {key}",
+                "Content-Type": "application/json",
+            },
             json={
-                "model":            GROQ_MODEL,
-                "temperature":      temperature,
-                "max_tokens":       max_tokens,
+                "model": GROQ_MODEL,
+                "temperature": temperature,
+                "max_tokens": max_tokens,
                 "reasoning_effort": reasoning_effort,
                 "messages": [
                     {"role": "system", "content": system},
-                    {"role": "user",   "content": user_content},
+                    {"role": "user", "content": user_content},
                 ],
             },
             timeout=TIMEOUT_S,
@@ -108,15 +150,17 @@ def ask(user_content, system=STRICT_RAG_SYSTEM, temperature=0.3,
     except requests.RequestException:
         return None, "Couldn't reach the AI service. Try again later."
 
-    if r.status_code == 401:
+    if response.status_code == 401:
         return None, "The AI key was rejected. Check GROQ_API_KEY in secrets."
-    if r.status_code == 429:
+    if response.status_code == 404:
+        return None, "The configured AI model is unavailable. Check GROQ_MODEL."
+    if response.status_code == 429:
         return None, "AI rate limit reached. Give it a minute and retry."
-    if r.status_code >= 400:
-        return None, f"AI service error ({r.status_code}). Try again later."
+    if response.status_code >= 400:
+        return None, f"AI service error ({response.status_code}). Try again later."
 
     try:
-        return r.json()["choices"][0]["message"]["content"].strip(), None
+        return response.json()["choices"][0]["message"]["content"].strip(), None
     except (KeyError, IndexError, json.JSONDecodeError):
         return None, "The AI returned an unexpected response. Try again."
 
@@ -124,34 +168,27 @@ def ask(user_content, system=STRICT_RAG_SYSTEM, temperature=0.3,
 # ─────────────────────────────────────────────
 #  Feature: explain one prediction
 # ─────────────────────────────────────────────
-
-def _row_line(r, pos):
-    note = "; ".join(r.get("regulation_notes", [])) or "none"
+def _row_line(row, pos):
+    note = "; ".join(row.get("regulation_notes", [])) or "none"
     return (
-        f"P{pos} {r['driver_code']} ({r['team']}, {r['pu_name']} PU): "
-        f"predicted {r['predicted_delta_s']:+.3f}s vs the fastest car, "
-        f"range [{r['delta_range_low']:+.2f}, {r['delta_range_high']:+.2f}], "
-        f"model confidence {r['confidence']:.0%}, "
-        f"built from {r.get('n_races_used', '?')} sessions. "
+        f"P{pos} {row['driver_code']} ({row['team']}, {row['pu_name']} PU): "
+        f"predicted {row['predicted_delta_s']:+.3f}s vs the fastest car, "
+        f"range [{row['delta_range_low']:+.2f}, {row['delta_range_high']:+.2f}], "
+        f"model confidence {row['confidence']:.0%}, "
+        f"built from {row.get('n_races_used', '?')} sessions. "
         f"Regulation notes: {note}"
     )
 
 
 def explain_prediction(pred, driver_code):
-    """
-    Plain-English 'why is this driver here' for one grid row.
-    Returns (text, error).
-    """
     rows = pred.get("predictions", [])
-    idx  = next((i for i, r in enumerate(rows)
-                 if r["driver_code"] == driver_code), None)
+    idx = next((i for i, row in enumerate(rows) if row["driver_code"] == driver_code), None)
     if idx is None:
         return None, "That driver isn't in this prediction."
 
-    me   = rows[idx]
-    pos  = idx + 1
+    me = rows[idx]
+    pos = idx + 1
     near = [(rows[j], j + 1) for j in (idx - 1, idx + 1) if 0 <= j < len(rows)]
-
     ctx_lines = [
         f"SESSION: {pred.get('circuit_name')} 2026, "
         f"{pred.get('pred_type', 'quali')} prediction (round {pred.get('race_round')}).",
@@ -167,121 +204,150 @@ def explain_prediction(pred, driver_code):
     if near:
         ctx_lines.append("")
         ctx_lines.append("CARS DIRECTLY AROUND THEM:")
-        ctx_lines.extend(_row_line(r, p) for r, p in near)
+        ctx_lines.extend(_row_line(row, p) for row, p in near)
 
     prompt = (
-        "DATA:\n" + "\n".join(ctx_lines) + "\n\n"
-        f"Explain in 2-4 sentences why the model places {me['driver_code']} "
-        f"at P{pos} for this session. Reference the specific gap, the "
-        f"confidence, and any relevant regulation note. If a note says an "
-        f"upgrade is incoming, add that the prediction may understate them."
+        "DATA:\n"
+        + "\n".join(ctx_lines)
+        + "\n\n"
+        + f"Explain in 2-4 sentences why the model places {me['driver_code']} "
+        + f"at P{pos} for this session. Reference the specific gap, the "
+        + "confidence, and any relevant regulation note. If a note says an "
+        + "upgrade is incoming, add that the prediction may understate them."
     )
     return ask(prompt, max_tokens=900)
 
 
 # =============================================================
-#  Season digest — the RAG context every AI feature reads first
+#  Season digest — committed compact RAG context
 # =============================================================
-#
-#  A compact (~2-3k token) plain-text summary of the whole season: standings,
-#  per-team pace, teammate records, PU/ADUO state, and the upgrade timeline.
-#  Groq has never seen the data, so this packet is injected before every
-#  question. It is a COMMITTED artifact built by `python run.py build-digest`,
-#  regenerated each weekend alongside `predict`, exactly like telemetry
-#  extracts. Building it live on every page load would be slower and burn the
-#  free tier, and the data only changes on race weekends.
+DIGEST_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "store",
+    "season_digest.txt",
+)
 
-import os as _os
 
-DIGEST_PATH = _os.path.join(
-    _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))),
-    "store", "season_digest.txt")
+def _driver_roster_from_data(fps):
+    """Return latest known metadata for every driver present/known in 2026.
+
+    This is intentionally round-aware so temporary drivers such as TSU do not
+    disappear from the digest just because they are absent from the flat CARS
+    baseline.
+    """
+    from config import CARS, ROUND_LINEUP_OVERRIDES
+    from app.data_loader import driver_info
+
+    codes = set(CARS)
+    for overrides in ROUND_LINEUP_OVERRIDES.values():
+        codes.update(overrides)
+    codes.update(fp.driver_code for fp in fps)
+
+    latest_round_for = {}
+    for fp in fps:
+        latest_round_for[fp.driver_code] = max(
+            latest_round_for.get(fp.driver_code, 0), fp.race_round
+        )
+
+    roster = {}
+    for code in codes:
+        round_num = latest_round_for.get(code)
+        if round_num is None:
+            override_rounds = [r for r, data in ROUND_LINEUP_OVERRIDES.items() if code in data]
+            round_num = max(override_rounds, default=None)
+        info = driver_info(code, round_num)
+        if info:
+            roster[code] = info
+    return roster
 
 
 def build_season_digest():
-    """
-    Assemble the digest text from stored data. Pure data assembly, no LLM.
-    Returns the digest string; the caller writes it to disk.
-    """
+    """Assemble the existing compact season digest. Pure data assembly, no LLM."""
     import numpy as np
     from collections import defaultdict
-    from app.data_loader import (get_fingerprints, get_constructor_standings,
-                                 get_driver_standings, get_upgrade_timeline,
-                                 teammate_stats)
-    from config import CARS, CIRCUITS, PU_ADUO_UPGRADES
+
+    from app.data_loader import (
+        get_constructor_standings,
+        get_driver_standings,
+        get_fingerprints,
+        get_upgrade_timeline,
+        teammate_ranking,
+        teammate_season_overall,
+    )
+    from config import CARS, PU_ADUO_UPGRADES
 
     fps = get_fingerprints()
-    out = ["PITWALL 2026 SEASON DIGEST",
-           "(Real 2026 Formula 1 session data from FastF1. Figures are measured, "
-           "except where marked as predictions.)",
-           ""]
+    roster = _driver_roster_from_data(fps)
+    out = [
+        "LATENTLAP 2026 SEASON DIGEST",
+        "(Real 2026 Formula 1 session data from FastF1. Figures are measured, "
+        "except where marked as predictions.)",
+        "",
+    ]
 
-    # ---- Driver roster ----
-    # Without this the model has only three-letter codes and invents full names
-    # for them: STR became "Stoffel Vandoorne", BOR became "Börje Rikardsson",
-    # SAI became "Said Al-Saadi". The numbers were right; the names were fiction.
     out.append("DRIVER ROSTER (code — name — team):")
-    for code, car in sorted(CARS.items(), key=lambda kv: kv[1]["team"]):
-        out.append(f"  {code} — {car['name']} — {car['team']}")
+    for code, car in sorted(roster.items(), key=lambda kv: (kv[1].get("team", ""), kv[0])):
+        out.append(f"  {code} — {car.get('name', code)} — {car.get('team', '?')}")
     out.append("")
 
-    # ---- Constructor standings ----
     cons = get_constructor_standings()
     if cons:
         out.append("CONSTRUCTOR STANDINGS:")
         for row in cons:
-            out.append(f"  P{row['pos']} {row['team']}: {row['points']:.0f} pts, "
-                       f"{row['wins']} wins")
+            out.append(
+                f"  P{row['pos']} {row['team']}: {row['points']:.0f} pts, {row['wins']} wins"
+            )
         out.append("")
 
-    # ---- Driver standings (top 12) ----
     drv = get_driver_standings()
     if drv:
         out.append("DRIVER STANDINGS (top 12):")
         for row in drv[:12]:
-            out.append(f"  P{row['pos']} {row['name']} ({row['team']}): "
-                       f"{row['points']:.0f} pts")
+            out.append(
+                f"  P{row['pos']} {row['name']} ({row['team']}): {row['points']:.0f} pts"
+            )
         out.append("")
 
-    # ---- Per-team qualifying pace (median gap to pole) ----
     gaps = defaultdict(list)
     for fp in fps:
-        if fp.session_type in ("Q", "SQ") and fp.lap_time_gap_pct is not None:
+        if fp.session_type == "Q" and fp.lap_time_gap_pct is not None:
             gaps[fp.team].append(fp.lap_time_gap_pct)
     if gaps:
-        out.append("QUALIFYING PACE (median % off session-fastest, lower = quicker):")
+        out.append("GRAND PRIX QUALIFYING PACE (Q only; median % off session-fastest, lower = quicker):")
         for team in sorted(gaps, key=lambda t: float(np.median(gaps[t]))):
             out.append(f"  {team}: {float(np.median(gaps[team])):.3f}%")
         out.append("")
 
-    # ---- Teammate qualifying battles ----
-    team_drivers = defaultdict(set)
-    for fp in fps:
-        if fp.session_type in ("Q", "SQ"):
-            team_drivers[fp.team].add(fp.driver_code)
-    out.append("TEAMMATE QUALIFYING RECORDS (median gap, head-to-head):")
-    for team, ds in sorted(team_drivers.items()):
-        ds = sorted(ds)
-        if len(ds) != 2:
-            continue
-        ts = teammate_stats(fps, ds[0], ds[1])
-        if ts["total"] == 0:
-            continue
-        faster = ds[0] if ts["med_gap_s"] <= 0 else ds[1]
-        slower = ds[1] if faster == ds[0] else ds[0]
-        w = (ts["d1_wins"], ts["d2_wins"]) if faster == ds[0] else (ts["d2_wins"], ts["d1_wins"])
-        f_name = CARS.get(faster, {}).get("name", faster)
-        s_name = CARS.get(slower, {}).get("name", slower)
-        out.append(f"  {team}: {faster} ({f_name}) ahead of {slower} ({s_name}) by "
-                   f"{abs(ts['med_gap_s']):.3f}s, H2H {w[0]}-{w[1]} over {ts['total']} sessions")
+    overall_h2h = teammate_season_overall(fps)
+    if overall_h2h:
+        out.append("SEASON H2H ACROSS LINEUP CHANGES (Q + SQ; anchor driver vs all teammates faced):")
+        for row in overall_h2h:
+            opponents = ", ".join(row["opponents"])
+            out.append(
+                f"  {row['team']}: {row['driver']} vs {opponents} — H2H "
+                f"{row['wins']}-{row['losses']} over {row['sessions']} sessions / "
+                f"{row['weekends']} weekends ({row['round_label']})"
+            )
+        out.append("")
+
+    out.append("TEAMMATE QUALIFYING HISTORY (every same-team pairing; median gap, head-to-head):")
+    for row in teammate_ranking(fps):
+        faster = row["faster"]
+        slower = row["slower"]
+        f_name = roster.get(faster, {}).get("name", faster)
+        s_name = roster.get(slower, {}).get("name", slower)
+        out.append(
+            f"  {row['team']}: {faster} ({f_name}) ahead of {slower} ({s_name}) by "
+            f"{row['gap_s']:.3f}s, H2H {row['faster_wins']}-{row['slower_wins']} "
+            f"over {row['sessions']} sessions / {row['weekends']} weekends"
+        )
     out.append("")
 
-    # ---- Power units and ADUO state ----
     pu_teams = defaultdict(set)
-    for c in CARS.values():
-        pu = c.get("pu") or c.get("pu_name")
+    for car in CARS.values():
+        pu = car.get("pu") or car.get("pu_name")
         if pu:
-            pu_teams[pu].add(c["team"])
+            pu_teams[pu].add(car["team"])
     out.append("POWER UNITS AND ADUO UPGRADE STATE:")
     for pu, teams in sorted(pu_teams.items()):
         line = f"  {pu} (supplies {', '.join(sorted(teams))})"
@@ -291,92 +357,86 @@ def build_season_digest():
         elif upg.get("round") is None:
             line += ": ADUO allocated but NOT yet deployed"
         else:
-            line += f": ADUO upgrade deployed at round {upg['round']}"
+            line += f": ADUO upgrade 1 deployed at round {upg['round']}"
+            if upg.get("second_round") is not None:
+                line += f"; upgrade 2 deployed at round {upg['second_round']}"
         out.append(line)
     out.append("")
 
-    # ---- Upgrade timeline (confirmed only, chronological) ----
-    ups = [u for u in get_upgrade_timeline() if not u["incoming"]]
-    if ups:
+    upgrades = [u for u in get_upgrade_timeline() if not u["incoming"]]
+    if upgrades:
         out.append("CONFIRMED UPGRADE TIMELINE:")
-        for u in sorted(ups, key=lambda x: x["round"]):
-            tag = f" [{u['pu']} PU]" if u.get("pu") else ""
-            out.append(f"  R{u['round']} {u['team']}{tag}: {u.get('headline', '')}")
+        for upg in sorted(upgrades, key=lambda x: (x["round"], x["team"])):
+            tag = f" [{upg['pu']} PU]" if upg.get("pu") else ""
+            category = upg.get("category", "persistent").replace("_", " ")
+            out.append(
+                f"  R{upg['round']} {upg['team']}{tag} [{category}]: {upg.get('headline', '')}"
+            )
         out.append("")
 
     return "\n".join(out)
 
 
 def load_season_digest():
-    """Read the committed digest, or a short fallback if it hasn't been built."""
     try:
         with open(DIGEST_PATH, encoding="utf-8") as f:
             return f.read()
     except Exception:
-        return ("No season digest has been generated yet. "
-                "Run `python run.py build-digest` and commit store/season_digest.txt.")
+        return (
+            "No season digest has been generated yet. "
+            "Run `python run.py build-digest` and commit store/season_digest.txt."
+        )
 
 
 # =============================================================
-#  Feature: auto-generated race commentary
+#  Existing auto-generated race commentary
 # =============================================================
-#
-#  Supplements the hand-written data/commentary.json. Reads the real finishing
-#  order from the stored race session and asks for a short recap in the same
-#  voice. The result is clearly labelled auto-generated on the page — it is a
-#  convenience for rounds nobody has written up yet, not a replacement for the
-#  editorial entries.
-
 def _race_result_context(race_round):
-    """Assemble the real finishing order for one round from the store."""
-    import glob
-    from app.data_loader import get_fingerprints, driver_name
+    from app.data_loader import get_fingerprints
 
-    fps = [f for f in get_fingerprints()
-           if f.race_round == race_round and f.session_type == "R"]
+    fps = [
+        f
+        for f in get_fingerprints()
+        if f.race_round == race_round and f.session_type == "R"
+    ]
     if not fps:
         return None, None
 
     def sort_key(f):
-        # DNF/NC sink to the bottom; finishers by position
         pos = getattr(f, "finishing_position", None)
         return (pos is None, pos if pos is not None else 999)
 
     fps.sort(key=sort_key)
-    circuit = fps[0].circuit_name if hasattr(fps[0], "circuit_name") else f"Round {race_round}"
-
+    circuit = getattr(fps[0], "circuit_name", f"Round {race_round}")
     lines = []
     for f in fps:
-        pos    = getattr(f, "finishing_position", None)
-        grid   = getattr(f, "grid_position", None)
+        pos = getattr(f, "finishing_position", None)
+        grid = getattr(f, "grid_position", None)
         status = getattr(f, "result_status", "") or ""
-        gained = getattr(f, "positions_gained", None)
         posstr = f"P{pos}" if pos else status or "DNF"
-        extra  = ""
+        extra = ""
         if grid and pos:
             move = grid - pos
-            if move > 0:   extra = f" (+{move} from P{grid})"
-            elif move < 0: extra = f" ({move} from P{grid})"
-            else:          extra = f" (held P{grid})"
+            if move > 0:
+                extra = f" (+{move} from P{grid})"
+            elif move < 0:
+                extra = f" ({move} from P{grid})"
+            else:
+                extra = f" (held P{grid})"
         elif status and status != "Finished":
             extra = f" ({status})"
         lines.append(f"  {posstr} {f.driver_code} ({f.team}){extra}")
-
     return circuit, lines
 
 
 def generate_race_commentary(race_round):
-    """
-    Draft a race recap for one round from stored results. Returns (dict, error)
-    where dict matches the commentary.json schema so it can slot straight in.
-    """
     circuit, lines = _race_result_context(race_round)
     if not lines:
         return None, f"No race result stored for round {race_round}."
-
     prompt = (
         f"DATA — final classification, {circuit} 2026 (round {race_round}):\n"
-        + "\n".join(lines) + "\n\n"
+        + "\n".join(lines)
+        + "\n\n"
         "Write a race recap in this exact style: one punchy headline (max 12 "
         "words), then a 3-4 sentence body. Factual, race-engineer tone, like a "
         "post-race note. Mention the winner, the podium, and the biggest mover "
@@ -386,7 +446,6 @@ def generate_race_commentary(race_round):
         "HEADLINE: <the headline>\n"
         "BODY: <the body>"
     )
-
     text, err = ask(prompt, max_tokens=1400, temperature=0.5)
     if err:
         return None, err
@@ -397,139 +456,808 @@ def generate_race_commentary(race_round):
             headline = line.split(":", 1)[1].strip()
         elif line.upper().startswith("BODY:"):
             body = line.split(":", 1)[1].strip()
-    # if the model ran the body across multiple lines after BODY:
     if "BODY:" in text:
         body = text.split("BODY:", 1)[1].strip()
-
     return {
-        "round":    race_round,
-        "circuit":  circuit,
+        "round": race_round,
+        "circuit": circuit,
         "headline": headline or f"{circuit} race recap",
-        "body":     body,
-        "tags":     ["auto-generated"],
-        "auto":     True,
+        "body": body,
+        "tags": ["auto-generated"],
+        "auto": True,
     }, None
 
 
 # =============================================================
-#  Feature: Ask the F1 Engineer  (whole-season RAG)
+#  Ask the Engineer — compact query-aware RAG
 # =============================================================
-#
-#  The season digest gives the model a whole-season overview on every
-#  question. On top of that, a lightweight retrieval step scans the question
-#  for driver codes, driver surnames, team names and circuits, and appends the
-#  specific fingerprint rows for whatever it finds. The model then sees the
-#  overview plus the exact rows relevant to the question — never the whole raw
-#  dataset, which would be tens of thousands of tokens.
-
 def _entity_index():
-    """Build lookup tables once: code->driver, surname->code, team set, circuit set."""
-    from config import CARS, CIRCUITS
-    codes    = {c: v for c, v in CARS.items()}
+    """Build code/surname/team/circuit lookup including round-specific drivers."""
+    from config import CARS, CIRCUITS, ROUND_LINEUP_OVERRIDES
+
+    codes = {code: dict(value) for code, value in CARS.items()}
+    for round_num in sorted(ROUND_LINEUP_OVERRIDES):
+        for code, override in ROUND_LINEUP_OVERRIDES[round_num].items():
+            codes.setdefault(code, {}).update(override)
+
     surnames = {}
-    for code, v in CARS.items():
-        last = v["name"].split()[-1].lower()
-        surnames[last] = code
-    teams    = {c["team"] for c in CARS.values()}
+    for code, value in codes.items():
+        name = value.get("name")
+        if name:
+            surnames[name.split()[-1].lower()] = code
+
+    teams = {value.get("team") for value in codes.values() if value.get("team")}
     circuits = set(CIRCUITS.keys())
-    # People say the track, not our config key. Map common venue and country
-    # names back to the circuit key so "Zandvoort" or "Monza" resolve.
     aliases = {
-        "zandvoort": "Netherlands", "dutch": "Netherlands",
-        "monza": "Italy", "italian": "Italy",
-        "silverstone": "Britain", "british": "Britain",
-        "spa": "Belgium", "belgian": "Belgium",
-        "monaco": "Monaco", "monte carlo": "Monaco",
-        "montreal": "Canada", "canadian": "Canada",
-        "shanghai": "China", "chinese": "China",
-        "suzuka": "Japan", "japanese": "Japan",
-        "barcelona": "Spain", "spanish": "Spain",
-        "red bull ring": "Austria", "austrian": "Austria",
-        "hungaroring": "Hungary", "hungarian": "Hungary",
-        "miami": "Miami", "imola": "Imola",
-        "singapore": "Singapore", "marina bay": "Singapore",
-        "interlagos": "Brazil", "brazilian": "Brazil", "sao paulo": "Brazil",
-        "las vegas": "LasVegas", "vegas": "LasVegas",
-        "abu dhabi": "AbuDhabi", "yas marina": "AbuDhabi",
-        "baku": "Azerbaijan", "azerbaijan": "Azerbaijan",
-        "melbourne": "Australia", "australian": "Australia",
-        "mexico": "Mexico", "mexican": "Mexico", "austin": "Austin", "cota": "Austin",
+        "zandvoort": "Netherlands",
+        "dutch": "Netherlands",
+        "monza": "Italy",
+        "italian": "Italy",
+        "madrid": "Madrid",
+        "madring": "Madrid",
+        "silverstone": "Britain",
+        "british": "Britain",
+        "spa": "Belgium",
+        "belgian": "Belgium",
+        "monte carlo": "Monaco",
+        "montreal": "Canada",
+        "canadian": "Canada",
+        "shanghai": "China",
+        "chinese": "China",
+        "suzuka": "Japan",
+        "japanese": "Japan",
+        "barcelona": "Spain",
+        "spanish": "Spain",
+        "red bull ring": "Austria",
+        "austrian": "Austria",
+        "hungaroring": "Hungary",
+        "hungarian": "Hungary",
+        "marina bay": "Singapore",
+        "interlagos": "Brazil",
+        "brazilian": "Brazil",
+        "sao paulo": "Brazil",
+        "las vegas": "LasVegas",
+        "vegas": "LasVegas",
+        "abu dhabi": "AbuDhabi",
+        "yas marina": "AbuDhabi",
+        "baku": "Azerbaijan",
+        "azerbaijan": "Azerbaijan",
+        "melbourne": "Australia",
+        "australian": "Australia",
+        "mexico": "Mexico",
+        "mexican": "Mexico",
+        "austin": "USA",
+        "cota": "USA",
+        "sepang": "Malaysia",
+        "malaysia": "Malaysia",
     }
     return codes, surnames, teams, circuits, aliases
 
 
-def _retrieve_rows(question, max_rows=60):
-    """
-    Pull fingerprint rows for entities named in the question.
-    Returns a formatted context string (possibly empty).
-    """
-    from app.data_loader import get_fingerprints
+def _matched_entities(question):
     codes, surnames, teams, circuits, aliases = _entity_index()
     q = question.lower()
+    tokens = q.replace(",", " ").replace("?", " ").split()
 
-    want_codes = {c for c in codes if c.lower() in q.split()
-                  or c.lower() in q.replace(",", " ").split()}
+    want_codes = {code for code in codes if code.lower() in tokens}
     for surname, code in surnames.items():
         if surname in q:
             want_codes.add(code)
-    want_teams = {t for t in teams if t.lower() in q}
-    want_circuits = {c for c in circuits if c.lower() in q}
+
+    want_teams = {team for team in teams if team and team.lower() in q}
+    want_circuits = {circuit for circuit in circuits if circuit.lower() in q}
     for alias, circuit in aliases.items():
         if alias in q and circuit in circuits:
             want_circuits.add(circuit)
 
+    return {
+        "codes": want_codes,
+        "teams": want_teams,
+        "circuits": want_circuits,
+        "codes_index": codes,
+    }
+
+
+def _retrieve_rows(question, max_rows=36):
+    """Compact raw evidence fallback for named entities."""
+    from app.data_loader import get_fingerprints
+
+    matched = _matched_entities(question)
+    want_codes = matched["codes"]
+    want_teams = matched["teams"]
+    want_circuits = matched["circuits"]
+
     if not (want_codes or want_teams or want_circuits):
         return ""
 
-    fps = get_fingerprints()
     rows = []
-    for f in fps:
+    for f in get_fingerprints():
         if f.session_type not in ("Q", "SQ", "R", "S"):
             continue
-        hit = (f.driver_code in want_codes
-               or f.team in want_teams
-               or (hasattr(f, "circuit_name") and f.circuit_name in want_circuits))
-        if not hit:
+        if not (
+            f.driver_code in want_codes
+            or f.team in want_teams
+            or getattr(f, "circuit_name", None) in want_circuits
+        ):
             continue
+
         gap = getattr(f, "lap_time_gap_pct", None)
         pos = getattr(f, "finishing_position", None)
         if f.session_type in ("Q", "SQ") and gap is not None:
-            detail = f"gap {gap:+.3f}% to session-fastest"
-        elif f.session_type in ("R", "S") and pos is not None:
+            detail = f"pace gap {gap:+.3f}% to that session's fastest reference"
+        elif f.session_type in ("R", "S"):
+            pace = f"representative pace gap {gap:+.3f}%" if gap is not None else "pace unavailable"
             status = getattr(f, "result_status", "") or ""
-            detail = f"finished P{pos}" + (f" ({status})" if status and status != "Finished" else "")
+            result = f"finished P{pos}" if pos is not None else (status or "no classified finish")
+            detail = f"{pace}; {result}"
         else:
             detail = "no comparable result"
+
         rows.append(
-            f"  R{f.race_round} {f.session_type} {f.driver_code} ({f.team}): {detail}")
+            f"  R{f.race_round} {f.session_type} {f.driver_code} ({f.team}): {detail}"
+        )
         if len(rows) >= max_rows:
             break
 
+    return "" if not rows else "RELEVANT SESSION ROWS:\n" + "\n".join(rows)
+
+
+def _recent_deterministic_analytics(question):
+    """Small Python-computed trend summaries for named entities; no LLM arithmetic."""
+    import numpy as np
+    from collections import defaultdict
+    from app.data_loader import get_fingerprints
+
+    matched = _matched_entities(question)
+    fps = get_fingerprints()
+    out = []
+
+    # GP Qualifying trend: Q only, last five rounds.
+    for team in sorted(matched["teams"]):
+        by_round = defaultdict(list)
+        for fp in fps:
+            if (
+                fp.team == team
+                and fp.session_type == "Q"
+                and fp.confidence >= 0.5
+                and fp.lap_time_gap_pct is not None
+            ):
+                by_round[fp.race_round].append(fp.lap_time_gap_pct)
+        recent = sorted(by_round)[-5:]
+        if recent:
+            vals = [(r, float(np.median(by_round[r]))) for r in recent]
+            trend = ", ".join(f"R{r} {v:.3f}%" for r, v in vals)
+            out.append(f"  {team} recent GP Q team-median gap: {trend}")
+
+    for code in sorted(matched["codes"]):
+        qs = sorted(
+            [
+                fp for fp in fps
+                if fp.driver_code == code
+                and fp.session_type == "Q"
+                and fp.confidence >= 0.5
+                and fp.lap_time_gap_pct is not None
+            ],
+            key=lambda fp: fp.race_round,
+        )[-5:]
+        if qs:
+            trend = ", ".join(
+                f"R{fp.race_round} {fp.lap_time_gap_pct:.3f}%"
+                for fp in qs
+            )
+            out.append(f"  {code} recent GP Q gap: {trend}")
+
+    return "" if not out else "PRECOMPUTED RECENT TRENDS (GP Q only):\n" + "\n".join(out)
+
+
+def _season_team_trend_snapshot():
+    """Deterministic early-vs-recent GP qualifying trend for every team.
+
+    This is deliberately simple and interpretable: for each team, compare the
+    median of its first four available GP qualifying rounds with the median of
+    its last four available GP qualifying rounds. Lower gap-to-session-fastest
+    is better, so a negative change means improvement.
+
+    Standings, upgrade count and historical reputation are intentionally absent:
+    they are context, not evidence of a pace trend.
+    """
+    import numpy as np
+    from collections import defaultdict
+    from app.data_loader import get_fingerprints
+
+    by_team_round = defaultdict(lambda: defaultdict(list))
+    for fp in get_fingerprints():
+        if (
+            fp.session_type == "Q"
+            and fp.confidence >= 0.5
+            and fp.lap_time_gap_pct is not None
+        ):
+            by_team_round[fp.team][fp.race_round].append(float(fp.lap_time_gap_pct))
+
+    rows = []
+    for team, by_round in by_team_round.items():
+        rounds = sorted(by_round)
+        if len(rounds) < 4:
+            continue
+        # Prefer disjoint four-round windows. With fewer than eight rounds,
+        # use the largest disjoint windows available rather than overlapping.
+        window = min(4, max(2, len(rounds) // 2))
+        early_rounds = rounds[:window]
+        recent_rounds = rounds[-window:]
+        if set(early_rounds) & set(recent_rounds):
+            continue
+
+        early_values = [float(np.median(by_round[r])) for r in early_rounds]
+        recent_values = [float(np.median(by_round[r])) for r in recent_rounds]
+        early = float(np.median(early_values))
+        recent = float(np.median(recent_values))
+        change = recent - early
+        rows.append({
+            "team": team,
+            "early_rounds": early_rounds,
+            "recent_rounds": recent_rounds,
+            "early": early,
+            "recent": recent,
+            "change": change,
+            "rounds_available": len(rounds),
+        })
+
     if not rows:
         return ""
-    return "RELEVANT SESSION ROWS:\n" + "\n".join(rows)
 
+    improvers = sorted(
+        [r for r in rows if r["change"] < -0.02],
+        key=lambda r: r["change"],
+    )
+    decliners = sorted(
+        [r for r in rows if r["change"] > 0.02],
+        key=lambda r: r["change"],
+        reverse=True,
+    )
+    stable = sorted(
+        [r for r in rows if abs(r["change"]) <= 0.02],
+        key=lambda r: abs(r["change"]),
+    )
+
+    def _trend_line(row):
+        er = f"R{row['early_rounds'][0]}-R{row['early_rounds'][-1]}"
+        rr = f"R{row['recent_rounds'][0]}-R{row['recent_rounds'][-1]}"
+        return (
+            f"  {row['team']}: {er} median {row['early']:.3f}% -> "
+            f"{rr} median {row['recent']:.3f}% "
+            f"(change {row['change']:+.3f} percentage points; "
+            f"{row['rounds_available']} Q rounds available)"
+        )
+
+    lines = [
+        "PRECOMPUTED TEAM TREND SNAPSHOT — GP QUALIFYING ONLY:",
+        "Definition: first available 4-round median vs latest available 4-round median; lower gap is quicker.",
+        "The groups below are computed by Python. NEVER move a team between groups.",
+        "",
+        "IMPROVERS — negative change:",
+    ]
+    lines.extend(_trend_line(r) for r in improvers)
+
+    lines.append("")
+    lines.append("DECLINERS — positive change:")
+    lines.extend(_trend_line(r) for r in decliners)
+
+    if stable:
+        lines.append("")
+        lines.append("BROADLY STABLE:")
+        lines.extend(_trend_line(r) for r in stable)
+
+    return "\n".join(lines)
+
+
+def _season_dossier_context(question):
+    """Compact chronology from every approved dossier for season-wide questions."""
+    from data.race_knowledge import season_dossiers_to_text
+    return season_dossiers_to_text(question=question, approved_only=True)
+
+def _race_knowledge_context(question):
+    """Approved dossier + deterministic weekend snapshot for a named circuit."""
+    from config import CIRCUITS
+    from data.race_knowledge import load_dossier, dossier_to_text
+
+    matched = _matched_entities(question)
+    blocks = []
+    for circuit in sorted(matched["circuits"]):
+        cfg = CIRCUITS.get(circuit)
+        if not cfg:
+            continue
+        dossier = load_dossier(cfg["round"], approved_only=True, hydrate_snapshot=True)
+        if dossier:
+            blocks.append(dossier_to_text(dossier, question))
+    return "\n\n".join(blocks)
+
+
+
+# =============================================================
+#  Implementation-grounded methodology knowledge
+# =============================================================
+def _methodology_topics(question):
+    """Return the smallest implementation-method set needed for this question.
+
+    These flags route methodology context; they do not call an LLM and they do
+    not depend on pretrained model knowledge.
+    """
+    q = question.lower()
+    topics = set()
+
+    if any(w in q for w in (
+        "telemetry", "segment", "segmentation", "track segment", "braking zone",
+        "corner detection", "flat-out corner", "throttle", "brake signal",
+    )):
+        topics.add("segmentation")
+
+    if any(w in q for w in (
+        "fingerprint", "speed delta", "corner delta", "straight delta",
+        "braking delta", "lap time gap", "reference car", "pace metric",
+    )):
+        topics.add("fingerprint")
+
+    if any(w in q for w in (
+        "ers", "harvest", "harvesting", "deployment", "deploy", "energy recovery",
+        "battery", "state of charge", "soc", "superclip", "mgu-k",
+    )):
+        topics.add("ers_inference")
+
+    if any(w in q for w in (
+        "optimiser", "optimizer", "optimise", "optimize", "optimal strategy",
+        "bellman", "dynamic programming", "theoretical strategy", "soc strategy",
+    )):
+        topics.add("ers_optimizer")
+
+    if any(w in q for w in (
+        "prediction model", "predictor", "forecast model", "forecast", "prediction",
+        "uncertainty", "confidence", "circuit similarity", "recency weight",
+        "epoch weight", "upgrade weight", "historical weight",
+    )):
+        topics.add("prediction")
+
+    if any(w in q for w in (
+        "stint", "degradation", "tyre degradation", "tire degradation",
+        "pace trend", "representative race lap", "race pace method",
+    )):
+        topics.add("stint")
+
+    # A broad "how does LatentLap work?" request gets a compact overview. More
+    # specific questions stay selective so methodology does not bloat every prompt.
+    broad_method = any(phrase in q for phrase in (
+        "how does latentlap work", "how does this work", "methodology overview",
+        "explain the methodology", "explain the pipeline", "how is latentlap built",
+    ))
+    if broad_method and not topics:
+        topics.add("overview")
+
+    # ERS inference depends on segmentation and on the optimiser's per-segment
+    # max-harvest ceiling, but a casual inference question does not need the full
+    # Bellman mechanics unless it asks for optimisation explicitly.
+    if "ers_inference" in topics:
+        topics.add("segmentation")
+
+    return topics
+
+
+def _methodology_context(question):
+    """Return compact, implementation-grounded methodology selected by query.
+
+    This text is deliberately generated from current runtime constants where
+    possible. The explanatory statements mirror the actual algorithms in
+    models/track.py, models/fingerprint.py, models/optimizer.py,
+    analysis/predictor.py and pipeline/race_pipeline.py.
+    """
+    topics = _methodology_topics(question)
+    if not topics:
+        return ""
+
+    try:
+        from config import REGS
+    except Exception:
+        REGS = {}
+
+    battery = REGS.get("battery_capacity_mj", 4.0)
+    harvest_kw = REGS.get("mgu_k_max_harvest_kw", 350.0)
+    deploy_kw = REGS.get("mgu_k_max_deploy_kw", 350.0)
+    taper_kph = REGS.get("deploy_taper_speed_kph", 290.0)
+    car_mass = REGS.get("car_mass_kg", 805.0)
+
+    blocks = [
+        "IMPLEMENTATION-GROUNDED METHODOLOGY — use this as the source of truth for method questions."
+    ]
+
+    if "overview" in topics:
+        blocks.append(
+            "METHOD OVERVIEW:\n"
+            "- OBSERVED: FastF1 timing/results plus public car telemetry such as speed, throttle, brake, gear and RPM.\n"
+            "- DERIVED: lap segmentation, lap-time gaps, speed deltas, race/stint summaries.\n"
+            "- INFERRED: ERS-behaviour proxy ratios derived from observable speed loss/recovery patterns; these are NOT direct battery measurements.\n"
+            "- OPTIMISED: a separate dynamic-programming model searches a theoretical harvest/deploy strategy under configured limits and modelling assumptions.\n"
+            "- PREDICTED: weighted historical fingerprints estimate relative future pace.\n"
+            "- EXPLAINED: the RAG layer retrieves committed analytics and reviewed race knowledge; it does not create new analytical facts."
+        )
+
+    if "segmentation" in topics:
+        blocks.append(
+            "TELEMETRY SEGMENTATION (models/track.py):\n"
+            "- Speed, throttle and brake are smoothed with a 5-sample rolling window.\n"
+            "- Point labels: brake > 0.3 -> braking; otherwise throttle >= 98% -> straight; throttle < 20% -> lift/coast; everything else -> corner.\n"
+            "- Contiguous labels become track zones; fragments shorter than 30 m are merged into the previous zone.\n"
+            "- Corner classes use minimum/apex speed: slow <130 km/h, medium 130-210 km/h, fast >210 km/h.\n"
+            "- LIMITATION: because classification is throttle/brake based, a flat-out corner can be labelled as a straight. This is a known limitation, not hidden ground truth."
+        )
+
+    if "fingerprint" in topics:
+        blocks.append(
+            "PERFORMANCE FINGERPRINTS (models/fingerprint.py):\n"
+            "- Each session uses the session-fastest valid car by lap time as the reference; that reference is mechanically 0% gap.\n"
+            "- lap_time_gap_pct is the driver's lap-time deficit to that session reference.\n"
+            "- Corner speed deltas use exact fixed-distance mean speed: 3.6*d/car_time - 3.6*d/ref_time. Other zone deltas use mean car speed minus mean reference speed.\n"
+            "- Segment values are aggregated with the MEDIAN to resist one bad/mis-segmented zone.\n"
+            "- Corner-class deltas are retained for qualifying-type sessions only; race laps are not treated as directly comparable corner-by-corner because fuel/tyre/track state differs."
+        )
+
+    if "ers_inference" in topics:
+        blocks.append(
+            "ERS INFERENCE / PROXIES (models/fingerprint.py):\n"
+            "- PUBLIC-DATA LIMIT: LatentLap cannot observe true battery SoC, exact MGU-K harvest, or exact deployment. It infers behaviour from public telemetry.\n"
+            "- For each usable BRAKING zone, it measures the car's kinetic-energy drop from entry speed to minimum speed: 0.5*(v_entry^2 - v_min^2). In the reference-relative branch, mass cancels and the car KE-drop proxy is divided by the session-reference KE-drop proxy.\n"
+            f"- A second utilisation branch converts the car's KE drop using the configured {car_mass:.0f} kg mass and compares it with the optimiser's per-segment max-harvest ceiling.\n"
+            "- braking_harvest_ratio blends those two per-zone proxies 60% reference-relative + 40% optimiser-relative, clips extreme/noisy values, then averages the usable braking-zone ratios. If no usable braking zone exists, the fallback is 0.85.\n"
+            "- This ratio means 'apparent harvest aggressiveness relative to reference/theoretical opportunity'. It is NOT an electrical efficiency measurement and NOT recovered MJ from the real car.\n"
+            "- straight_deploy_ratio is also a heuristic proxy: 0.85 plus straight-speed delta divided by reference top speed, clipped to a bounded range. corner_deploy_ratio currently reuses the corner energy-ratio signal; neither field is direct deployment telemetry.\n"
+            "- time_lost_* fields are model-derived allocations relative to the theoretical optimiser result; they are not measured causal lap-time losses."
+        )
+
+    if "ers_optimizer" in topics:
+        blocks.append(
+            "ERS OPTIMISER (models/optimizer.py):\n"
+            f"- Bellman dynamic programming runs over track segments. State includes battery SoC discretised in 0.1 MJ steps from 0 to {battery:.1f} MJ plus cumulative harvest budget discretised in 0.5 MJ steps.\n"
+            "- Each action chooses a harvest/deploy pair for that segment. The DP enforces battery capacity, remaining harvest budget and segment-level harvest/deploy ceilings.\n"
+            f"- Braking harvest ceiling uses kinetic-energy loss and the configured {harvest_kw:.0f} kW MGU-K harvest-power limit; straight deployment uses the configured {deploy_kw:.0f} kW limit with taper above about {taper_kph:.0f} km/h.\n"
+            "- Reward = assumed time benefit from deployment minus assumed time cost of harvesting. Current coefficients are heuristic modelling assumptions (for example, benefit/cost per MJ varies by segment type); they are NOT FIA rules or measured team efficiencies.\n"
+            "- Therefore the result is a theoretical strategy produced by LatentLap's model under configured constraints/assumptions, NOT the strategy a real team necessarily ran and NOT a reconstruction of true battery SoC.\n"
+            "- Current optimiser does not model full vehicle/fuel-load dynamics; session context is not a substitute for a full vehicle model."
+        )
+
+    if "prediction" in topics:
+        try:
+            from analysis.predictor import HRV_SCALE, CROSS_SESSION_WEIGHT
+        except Exception:
+            HRV_SCALE = 1.0
+            CROSS_SESSION_WEIGHT = 0.85
+        blocks.append(
+            "PACE PREDICTION (analysis/predictor.py):\n"
+            "- The model predicts RELATIVE PACE, not finishing order or race events. Incidents, safety cars, strategy calls and reliability are outside the pace model.\n"
+            "- For each driver, accepted historical fingerprints are weighted by: circuit similarity x recency x regulation epoch x confirmed persistent-upgrade relevance x session-type weight x fingerprint confidence.\n"
+            "- Primary signal is lap_time_gap_pct. Qualifying/SQ predictions may also use the inferred braking_harvest_ratio; pure R/S history does not apply that harvest adjustment.\n"
+            f"- The harvest adjustment scale HRV_SCALE is currently {HRV_SCALE:g}; it is intentionally conservative and has not been retuned without evidence. Sprint cross-session weight is {CROSS_SESSION_WEIGHT:g}.\n"
+            "- Weighted dispersion in historical gap is converted to seconds using an approximate reference lap from circuit length / 250 km/h; uncertainty has a floor of 0.30/sqrt(number of accepted samples), with specific regulation/risk notes added separately.\n"
+            "- After each driver's raw estimate is built, all predicted deltas are normalised so the fastest predicted driver is 0.000 s.\n"
+            "- Round-aware lineup/team identity is used for the target event; persistent upgrades can down-weight older same-team fingerprints, while circuit-specific/reliability items do not redefine the long-term car baseline."
+        )
+
+    if "stint" in topics:
+        blocks.append(
+            "RACE / STINT PACE (pipeline/race_pipeline.py):\n"
+            "- Race pace starts from green-flag laps (TrackStatus == 1) from lap 5 onward. Laps are grouped by stint.\n"
+            "- Within each stint, slow outliers above median + 1.5*IQR are removed. The stored avg_pace is the mean of the remaining laps and stint_length is the number of retained laps.\n"
+            "- degradation_rate is a simple linear slope of retained lap time versus lap number (seconds/lap). It is better described as a STINT PACE TREND or estimated degradation signal.\n"
+            "- It is NOT pure tyre degradation: fuel burn, traffic, track evolution, driver management and changing conditions can affect the slope.\n"
+            "- The representative race lap is an actual retained lap closest to the stint-length-weighted average pace across valid stints; it is intended to represent sustainable pace rather than a one-lap flyer."
+        )
+
+    return "\n\n".join(blocks)
+
+
+def _methodology_source_entries(question):
+    """Internal provenance for the implementation blocks shown to the LLM."""
+    topics = _methodology_topics(question)
+    entries = []
+    seen = set()
+
+    def add(title):
+        if title not in seen:
+            seen.add(title)
+            entries.append({"kind": "internal", "title": title})
+
+    if "overview" in topics:
+        add("LatentLap implementation methodology")
+    if "segmentation" in topics:
+        add("models/track.py — telemetry segmentation")
+    if "fingerprint" in topics or "ers_inference" in topics:
+        add("models/fingerprint.py — performance & ERS inference")
+    if "ers_inference" in topics:
+        add("models/optimizer.py — theoretical max-harvest ceiling used by ERS inference")
+        add("config.py — ERS regulation/model constants")
+    if "ers_optimizer" in topics:
+        add("models/optimizer.py — ERS dynamic-programming optimiser")
+        add("config.py — ERS regulation/model constants")
+    if "prediction" in topics:
+        add("analysis/predictor.py — weighted pace prediction")
+        add("data/upgrade_history.py — persistent-upgrade weighting history")
+    if "stint" in topics:
+        add("pipeline/race_pipeline.py — representative race/stint pace")
+    return entries
+
+def get_answer_sources(question):
+    """Compact provenance list for UI display; does not call Groq."""
+    from config import CIRCUITS
+    from data.race_knowledge import load_dossier, dossier_sources
+
+    matched = _matched_entities(question)
+    flags = _query_flags(question)
+    pure_method = (
+        flags["method"]
+        and not flags["upgrade"]
+        and not flags["trend"]
+        and not flags["season_story"]
+        and not (matched["codes"] or matched["teams"] or matched["circuits"])
+    )
+
+    sources = []
+    if not pure_method:
+        sources.append({"kind": "internal", "title": "LatentLap committed season digest"})
+    sources.extend(_methodology_source_entries(question))
+    if matched["codes"] or matched["teams"] or matched["circuits"]:
+        sources.append(
+            {"kind": "internal", "title": "LatentLap committed session fingerprints"}
+        )
+
+    if flags["season_story"]:
+        try:
+            from data.race_knowledge import list_dossiers
+            dossiers = list_dossiers(approved_only=True)
+        except Exception:
+            dossiers = []
+        if dossiers:
+            sources.append({
+                "kind": "internal",
+                "title": f"Reviewed race dossiers — {len(dossiers)} approved weekends",
+            })
+
+    seen = set()
+    for circuit in sorted(matched["circuits"]):
+        cfg = CIRCUITS.get(circuit)
+        if not cfg:
+            continue
+        dossier = load_dossier(cfg["round"], approved_only=True, hydrate_snapshot=False)
+        if not dossier:
+            continue
+        sources.append(
+            {"kind": "internal", "title": f"Reviewed race dossier — {circuit} R{cfg['round']}"}
+        )
+        for source in dossier_sources(dossier):
+            key = source.get("id") or source.get("url") or source.get("path")
+            if key in seen:
+                continue
+            seen.add(key)
+            sources.append(dict(source))
+    return sources
+
+
+def suggest_followups(question, limit=3):
+    """Deterministic follow-up suggestions; zero extra LLM tokens."""
+    matched = _matched_entities(question)
+    teams = sorted(matched["teams"])
+    circuits = sorted(matched["circuits"])
+    codes = sorted(matched["codes"])
+
+    suggestions = []
+    if len(teams) >= 2:
+        suggestions.extend([
+            f"Compare {teams[0]} and {teams[1]} over the last five GP qualifying sessions.",
+            f"What upgrade context matters for {teams[0]} versus {teams[1]}?",
+        ])
+    elif teams:
+        team = teams[0]
+        suggestions.extend([
+            f"How has {team}'s GP qualifying pace changed recently?",
+            f"What major upgrades has {team} introduced?",
+            f"Where does {team} appear strongest or weakest?",
+        ])
+    elif codes:
+        code = codes[0]
+        suggestions.extend([
+            f"How has {code}'s GP qualifying pace changed recently?",
+            f"How does {code} compare with their current teammate?",
+        ])
+    elif circuits:
+        circuit = circuits[0]
+        suggestions.extend([
+            f"Who had the strongest underlying pace at {circuit}?",
+            f"What were the biggest contextual factors at {circuit}?",
+            f"How did LatentLap's saved prediction compare with {circuit}?",
+        ])
+    else:
+        suggestions.extend([
+            "Which teams have improved most recently in GP qualifying?",
+            "How does LatentLap infer ERS behaviour from public telemetry?",
+            "What can and can't LatentLap conclude from stint pace trends?",
+        ])
+    return suggestions[:limit]
+
+
+def _query_flags(question):
+    q = question.lower()
+    season_story = any(
+        phrase in q
+        for phrase in (
+            "race by race",
+            "round by round",
+            "story of the season",
+            "story of the 2026 season",
+        )
+    )
+    method_topics = _methodology_topics(question)
+    generic_method = any(
+        w in q for w in (
+            "method", "methodology", "formula", "weight", "uncertainty",
+            "how does latentlap", "how do you", "model work", "how is this calculated",
+        )
+    )
+    race_recap = any(
+        phrase in q
+        for phrase in (
+            "recap", "race summary", "summarize the race", "summarise the race",
+            "what happened in the race", "what happened at", "tell me about the race",
+        )
+    )
+    return {
+        "upgrade": any(w in q for w in ("upgrade", "development", "floor", "wing", "technical package", "aduo")),
+        "race_recap": race_recap,
+        "trend": any(w in q for w in ("trend", "recent", "improv", "declin", "changed", "change over", "season", "trajectory")),
+        "raw_metric": any(w in q for w in ("telemetry", "fingerprint", "exact gap", "gap %", "gap percentage", "harvest ratio", "corner delta", "straight delta", "braking delta")),
+        "method": bool(method_topics) or generic_method,
+        "method_topics": method_topics,
+        "season_story": season_story,
+        "race_by_race": any(phrase in q for phrase in ("race by race", "round by round")),
+        "global_team_trend": any(w in q for w in ("improv", "declin", "trend", "trajectory")) and not _matched_entities(question)["teams"],
+        # Only explicit requests for exhaustive detail should unlock long inventory-style answers.
+        "exhaustive": any(
+            phrase in q
+            for phrase in (
+                "list every", "list all", "all upgrades", "every upgrade",
+                "all changes", "every change", "full list", "full breakdown",
+                "all details", "in detail", "detailed breakdown", "exhaustive",
+            )
+        ),
+    }
 
 def ask_engineer(question):
-    """
-    Answer a free-text question about the season under strict RAG.
-    Returns (text, error).
-    """
-    digest = load_season_digest()
-    rows   = _retrieve_rows(question)
+    flags = _query_flags(question)
+    matched = _matched_entities(question)
+    race_ctx = _race_knowledge_context(question)
+    season_ctx = _season_dossier_context(question) if flags["season_story"] else ""
+    method_ctx = _methodology_context(question) if flags["method"] else ""
+    pure_method = (
+        flags["method"]
+        and not flags["upgrade"]
+        and not flags["trend"]
+        and not flags["season_story"]
+        and not (matched["codes"] or matched["teams"] or matched["circuits"])
+    )
+    # A pure implementation/method question does not need the whole season digest.
+    # This keeps Groq context small while preserving the digest for mixed method +
+    # driver/team/race questions.
+    digest = "" if pure_method else load_season_digest()
 
-    context = digest
+    # Named-weekend questions use the reviewed dossier first. Season-wide story
+    # questions use a compact chronology across all approved dossiers. Raw session
+    # rows are fallback evidence, not the default context dump.
+    trends = _recent_deterministic_analytics(question) if flags["trend"] else ""
+    season_trends = _season_team_trend_snapshot() if flags["global_team_trend"] else ""
+    rows = _retrieve_rows(question) if (
+        (not race_ctx and not season_ctx and not flags["global_team_trend"])
+        or flags["raw_metric"]
+    ) else ""
+
+    blocks = []
+    if digest:
+        blocks.append(digest)
+    # Method questions get implementation-grounded context early so the LLM does
+    # not fall back to generic F1 knowledge or claim the method is unavailable.
+    if method_ctx:
+        blocks.append(method_ctx)
+    if season_ctx:
+        blocks.append(season_ctx)
+    if race_ctx:
+        blocks.append(race_ctx)
+    if season_trends:
+        blocks.append(season_trends)
+    if trends:
+        blocks.append(trends)
     if rows:
-        context += "\n\n" + rows
+        blocks.append(rows)
+
+    if flags["race_by_race"]:
+        answer_style = (
+            "The user explicitly asked for a race-by-race chronology. Give exactly one bullet "
+            "per approved round in numerical order. Keep each round to roughly 45-65 words and "
+            "focus on the decisive story of that weekend. Do not append separate Qualifying, "
+            "Sprint Qualifying, Sprint and Race result lines after each bullet; weave only the "
+            "important results into the summary. Continue until EVERY approved round has been "
+            "covered. If a round lacks an approved dossier, say so rather than inventing it. "
+        )
+    elif flags["race_recap"]:
+        answer_style = (
+            "This is a race recap. Establish the actual race outcome first from OFFICIAL RACE "
+            "CLASSIFICATION: identify the winner and podium exactly as supplied there. Then use the "
+            "reviewed dossier for the decisive incidents, strategy and weekend context. Deterministic "
+            "race-pace rows may explain underlying pace only; never use them to assign finishing order. "
+            "Keep every driver identity intact — never combine one driver's first name/team with another "
+            "driver's surname, code or result. "
+        )
+    elif flags["global_team_trend"]:
+        answer_style = (
+            "For this season improvement/decline question, base every direction-of-change claim on the "
+            "PRECOMPUTED TEAM TREND SNAPSHOT. Rank only the clearest movers supported by that table. "
+            "Use current standings and upgrade history only as context after the pace trend is established. "
+            "Do not infer that a team improved because it has more points/upgrades, and never claim it "
+            "started as the benchmark unless the early-window trend data explicitly shows that. "
+        )
+    elif flags["method"]:
+        answer_style = (
+            "This is a LatentLap methodology question. Lead with a plain-language explanation of what the "
+            "system actually does, then give the technical mechanism from IMPLEMENTATION-GROUNDED METHODOLOGY. "
+            "Explicitly label what is observed, derived, inferred, assumed, optimised or predicted when those "
+            "categories are relevant. For ERS, state early that true battery SoC and exact harvest/deployment "
+            "are not public measurements in LatentLap. Do not supplement the implementation with generic F1 "
+            "facts from memory. If the implementation uses a heuristic proxy or assumed coefficient, call it "
+            "that rather than describing it as measured physics. Technical questions may include compact formulas "
+            "or exact constants already present in DATA; casual questions should translate them first. "
+        )
+    elif flags["upgrade"]:
+        if flags["exhaustive"]:
+            answer_style = (
+                "For this explicit detailed upgrade/development request: state the complete relevant "
+                "weekend inventory, keeping chassis/aero changes separate from PU/ADUO changes. Then "
+                "summarize reported effects and the causal limits. Do not compare Q and R gap percentages "
+                "as an improvement metric and do not invent a ranking of which upgrade was 'best'. "
+                "A compact bullet list is fine. "
+            )
+        else:
+            answer_style = (
+                "For this upgrade/development question: answer the user's actual question first. Summarize "
+                "the weekend inventory instead of reproducing every component. Prioritize at most 3-5 "
+                "materially relevant teams/changes and group minor or reliability-only items when possible. "
+                "Keep chassis/aero separate from PU/ADUO. Explain only reported effects or relevant weekend "
+                "context, then give one short causal caveat if needed. Do not compare Q and R gap percentages "
+                "as an improvement metric and do not rank upgrades as 'best' without explicit evidence. "
+            )
+    else:
+        answer_style = (
+            "Start with the useful F1 answer in ordinary language, then connect only the most relevant "
+            "session progression, strategy, incidents and reported team/driver context. Use a few decisive "
+            "numbers when they sharpen the explanation; omit supporting figures that do not change the answer. "
+        )
 
     prompt = (
-        "DATA:\n" + context + "\n\n"
-        f"QUESTION: {question}\n\n"
-        "Answer from the DATA only. If the data doesn't cover it, say so.\n"
-        "Formatting: when listing several drivers or teams, use a markdown "
-        "bulleted list with one item per line — never a run-on paragraph of "
-        "dash-separated entries. Use full driver names from the roster, with "
-        "the code in brackets on first mention. Keep it under 200 words unless "
-        "the question needs more."
+        "DATA:\n"
+        + "\n\n".join(blocks)
+        + "\n\nQUESTION: "
+        + question
+        + "\n\n"
+        + "Answer only from DATA. "
+        + answer_style
+        + (
+            "For normal questions, target roughly 200-350 words: 2-3 short paragraphs, or a maximum "
+            "of 5 concise bullets when comparison is clearer. Only exceed this when the user explicitly "
+            "asks for a detailed/full breakdown. "
+            if not flags["exhaustive"] and not flags["race_by_race"]
+            else "A longer structured answer is allowed because the requested format needs it. "
+        )
+        + "Do not repeat the same figures in a separate 'Key supporting figures' section after already "
+        + "using them in the explanation. Add a limitation only when it materially changes interpretation. "
+        + "Do not perform fresh arithmetic: any numeric comparison must already exist in DATA. For race "
+        + "results, OFFICIAL RACE CLASSIFICATION overrides pace snapshots and narrative shorthand. Never "
+        + "construct a new driver identity by combining names, codes or teams from separate rows. Never claim "
+        + "an upgrade caused a performance change unless DATA explicitly supplies a reported effect or "
+        + "isolated evidence. Distinguish GP Q/R from SQ/S and never treat two sessions in one sprint "
+        + "weekend as two weekends."
     )
-    return ask(prompt, max_tokens=1400, temperature=0.3)
+    output_budget = 1800 if flags["race_by_race"] else (1200 if (flags["exhaustive"] or flags["method"]) else 950)
+    temperature = 0.25 if flags["race_recap"] else 0.45
+    return ask(prompt, max_tokens=output_budget, temperature=temperature)
+

@@ -304,5 +304,23 @@
     "session_type": "S",
     "n_fingerprints": 21,
     "path": "2026_R12_S.json"
+  },
+  "2026_R13_Q": {
+    "circuit_name": "Italy",
+    "circuit_type": "power",
+    "race_round": 13,
+    "year": 2026,
+    "session_type": "Q",
+    "n_fingerprints": 22,
+    "path": "2026_R13_Q.json"
+  },
+  "2026_R13_R": {
+    "circuit_name": "Italy",
+    "circuit_type": "power",
+    "race_round": 13,
+    "year": 2026,
+    "session_type": "R",
+    "n_fingerprints": 21,
+    "path": "2026_R13_R.json"
   }
 }

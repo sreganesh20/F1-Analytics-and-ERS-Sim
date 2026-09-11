@@ -9,7 +9,6 @@ from models.track import TrackSegment, segment_lap
 from models.optimizer import OptimalStrategy, OptimalSegment, max_harvestable_mj
 from config import CARS, CIRCUIT_TYPES, REGS, regulation_epoch_for_round, lineup_for_round
 
-
 @dataclass
 class CarFingerprint:
     # Identity
@@ -26,7 +25,6 @@ class CarFingerprint:
     lap_time_s:       float
     lap_time_rank:    int
     lap_time_gap_pct: float
-
     # Segment-level speed deltas vs reference car
     straight_speed_delta_kph:   float
     braking_speed_delta_kph:    float
@@ -42,7 +40,6 @@ class CarFingerprint:
     time_lost_braking_s:    float
     time_lost_corners_s:    float
     time_lost_total_s:      float
-
     # Reliability signal
     completed_race:   bool
     laps_completed:   int
@@ -55,18 +52,15 @@ class CarFingerprint:
     # Default "A_pre_miami" ensures backward compatibility with stored JSONs
     # that predate this field. Derive via regulation_epoch_for_round(race_round).
     regulation_epoch: str = "A_pre_miami"
-
     # ── WAVE 1: Race result fields (race sessions only; None for quali) ──
     finishing_position: int | None   = None   # classified finishing position
     grid_position:      int | None   = None   # starting grid slot
     positions_gained:   int | None   = None   # grid - finish (+ve = gained places)
     result_status:      str          = ""     # "Finished" | "+1 Lap" | "Retired" | "DSQ" ...
-
     # ── WAVE 1: Sector times of the representative/fastest lap ──
     sector_1_s:  float | None = None
     sector_2_s:  float | None = None
     sector_3_s:  float | None = None
-
     # ── WAVE 3: PERSONAL BEST sector across the whole session ──
     # Distinct from the above: sector_N_s are the splits of ONE lap, so the
     # fastest driver sweeps all three. These are each driver's best individual
@@ -74,14 +68,12 @@ class CarFingerprint:
     best_sector_1_s: float | None = None
     best_sector_2_s: float | None = None
     best_sector_3_s: float | None = None
-
     # ── WAVE 1: Race operations ──
     pit_stops:          int          = 0      # tyre changes (compound changes)
-    tyre_compounds:     list          = field(default_factory=list)  # e.g. ["MEDIUM","HARD","SOFT"]
+    tyre_compounds:     list         = field(default_factory=list)  # e.g. ["MEDIUM","HARD","SOFT"]
     pit_lane_time_s:    float | None = None   # BEST pit lane transit (in->out), NOT stationary
     fastest_lap_s:      float | None = None   # driver's outright fastest lap of session
     fastest_lap_number: int | None   = None
-
     # ── WAVE 1: Corner speed deltas split by corner type (kph vs reference) ──
     corner_slow_delta_kph:   float | None = None
     corner_medium_delta_kph: float | None = None
@@ -96,7 +88,6 @@ class RaceFingerprints:
     year:          int
     session_type:  str
     fingerprints:  list[CarFingerprint] = field(default_factory=list)
-
     def by_driver(self, driver_code: str) -> CarFingerprint | None:
         return next((f for f in self.fingerprints if f.driver_code == driver_code), None)
 
@@ -105,6 +96,70 @@ class RaceFingerprints:
 
     def ranked(self) -> list[CarFingerprint]:
         return sorted(self.fingerprints, key=lambda f: f.lap_time_s)
+
+
+def _distance_integrated_mean_speed_kph(
+    df: pd.DataFrame,
+    d_start: float,
+    d_end: float,
+    resolution_m: float = 2.0,
+) -> float | None:
+    """
+    Mean traversal speed through a fixed distance window.
+
+    Telemetry samples are not guaranteed to land on identical distance points for
+    every driver. Summing per-sample DeltaTime inside a short corner therefore
+    makes the result depend on sample boundaries (e.g. 6 samples for one driver,
+    7 for another). Instead, interpolate speed onto the SAME distance grid for
+    every car and integrate dt = dx / v.
+
+    This keeps the comparison in the fixed-distance domain used by the corner
+    segments while removing sampling-density/boundary artefacts.
+    """
+    if df.empty or d_end <= d_start:
+        return None
+    if "Distance" not in df.columns or "Speed" not in df.columns:
+        return None
+
+    work = df[["Distance", "Speed"]].replace([np.inf, -np.inf], np.nan).dropna()
+    work = work[work["Speed"] > 1.0]
+    if len(work) < 2:
+        return None
+
+    # np.interp requires monotonically increasing x values. FastF1 can contain
+    # duplicate distance samples, so collapse them deterministically first.
+    work = (
+        work.sort_values("Distance")
+        .groupby("Distance", as_index=False, sort=True)["Speed"]
+        .mean()
+    )
+    distances = work["Distance"].to_numpy(dtype=float)
+    speeds_kph = work["Speed"].to_numpy(dtype=float)
+    if len(distances) < 2:
+        return None
+
+    # Never silently extrapolate beyond the driver's recorded lap coverage.
+    if d_start < distances[0] or d_end > distances[-1]:
+        return None
+
+    seg_len = float(d_end - d_start)
+    n_points = max(3, int(np.ceil(seg_len / max(resolution_m, 0.5))) + 1)
+    grid = np.linspace(float(d_start), float(d_end), n_points)
+    interp_speed_kph = np.interp(grid, distances, speeds_kph)
+    interp_speed_ms = interp_speed_kph / 3.6
+
+    if np.any(~np.isfinite(interp_speed_ms)) or np.any(interp_speed_ms <= 0):
+        return None
+
+    # Trapezoidal integration of reciprocal speed gives traversal time over the
+    # exact same metres for every driver.
+    reciprocal_speed = 1.0 / interp_speed_ms
+    dx = np.diff(grid)
+    traversal_time_s = float(np.sum(0.5 * (reciprocal_speed[:-1] + reciprocal_speed[1:]) * dx))
+    if not np.isfinite(traversal_time_s) or traversal_time_s <= 0:
+        return None
+
+    return 3.6 * seg_len / traversal_time_s
 
 
 def compute_speed_deltas(
@@ -123,32 +178,25 @@ def compute_speed_deltas(
         "corner_medium": [],
         "corner_fast":   [],
     }
-
     for seg in segments:
         if seg.seg_type == "corner":
-            car_mask = (car_df["Distance"] >= seg.d_start) & (car_df["Distance"] < seg.d_end)
-            ref_mask = (ref_df["Distance"] >= seg.d_start) & (ref_df["Distance"] < seg.d_end)
-            car_time = float(np.sum(car_df.loc[car_mask, "DeltaTime"].values)) \
-                       if car_df.loc[car_mask].shape[0] > 0 else 0
-            ref_time = float(np.sum(ref_df.loc[ref_mask, "DeltaTime"].values)) \
-                       if ref_df.loc[ref_mask].shape[0] > 0 else 0
-            # Exact mean speed through a fixed distance window:
-            #   v = distance / time,  *3.6 to convert m/s -> kph
-            # The previous form was  -(car_time - ref_time)/ref_time * speed_mean,
-            # a first-order approximation that put ref_time in the denominator
-            # where the exact form needs car_time. It exaggerated slow cars,
-            # was unbounded, and imported the reference lap's time-weighted
-            # sample average (speed_mean) into a distance-domain calculation.
-            if ref_time > 0 and car_time > 0:
-                seg_len = seg.d_end - seg.d_start
-                delta = 3.6 * seg_len / car_time - 3.6 * seg_len / ref_time
+            # Exact fixed-distance comparison on a shared interpolation grid.
+            # This replaces summing whatever DeltaTime samples happened to fall
+            # inside the window, which was unstable on short corners/chicanes.
+            car_speed = _distance_integrated_mean_speed_kph(
+                car_df, seg.d_start, seg.d_end
+            )
+            ref_speed = _distance_integrated_mean_speed_kph(
+                ref_df, seg.d_start, seg.d_end
+            )
+            if car_speed is not None and ref_speed is not None:
+                delta = car_speed - ref_speed
                 deltas["corner"].append(delta)
                 # Also bucket by corner speed class
                 sc = getattr(seg, "speed_class", "")
                 if sc in ("slow", "medium", "fast"):
                     deltas[f"corner_{sc}"].append(delta)
             continue
-
         car_mask = (car_df["Distance"] >= seg.d_start) & (car_df["Distance"] < seg.d_end)
         ref_mask = (ref_df["Distance"] >= seg.d_start) & (ref_df["Distance"] < seg.d_end)
 
@@ -157,11 +205,9 @@ def compute_speed_deltas(
 
         if len(car_speeds) == 0 or len(ref_speeds) == 0:
             continue
-
         delta   = np.mean(car_speeds) - np.mean(ref_speeds)
         seg_key = seg.seg_type if seg.seg_type in deltas else "corner"
         deltas[seg_key].append(delta)
-
     # Median, not mean, across segments within a lap. A single mis-segmented
     # or compromised corner can otherwise define the whole lap: at Britain SQ
     # Piastri's mean across 8 corners was +24.48 kph while his median was
@@ -184,7 +230,6 @@ def compute_harvest_ratios(
 ) -> dict:
     """
     Infer effective harvest ratio using kinetic energy domain.
-
     For each braking zone:
       - Compute KE drop: ½v_entry² - ½v_min²  (mass cancels in ratio)
       - Compare car KE drop vs reference KE drop → relative harvest aggressiveness
@@ -195,7 +240,6 @@ def compute_harvest_ratios(
     """
     KPH_TO_MS   = 1 / 3.6
     car_mass_kg = REGS["car_mass_kg"]   # was previously hardcoded as 798
-
     ratios = {"braking": [], "superclip": [], "corner": []}
 
     for opt_seg in optimal.segments:
@@ -209,7 +253,6 @@ def compute_harvest_ratios(
                    (car_df["Distance"] <  opt_seg.d_end)
         ref_mask = (ref_df["Distance"] >= opt_seg.d_start) & \
                    (ref_df["Distance"] <  opt_seg.d_end)
-
         car_data = car_df.loc[car_mask]
         ref_data = ref_df.loc[ref_mask]
 
@@ -220,7 +263,6 @@ def compute_harvest_ratios(
         car_v_min   = car_data["Speed"].min()    * KPH_TO_MS
         ref_v_entry = ref_data["Speed"].iloc[0]  * KPH_TO_MS
         ref_v_min   = ref_data["Speed"].min()    * KPH_TO_MS
-
         car_ke_drop = max(0.0, 0.5 * (car_v_entry**2 - car_v_min**2))
         ref_ke_drop = max(0.0, 0.5 * (ref_v_entry**2 - ref_v_min**2))
 
@@ -231,7 +273,6 @@ def compute_harvest_ratios(
 
         car_ke_mj = 0.5 * car_mass_kg * car_ke_drop * 1e-6
         util_ratio = np.clip(car_ke_mj / opt_seg.max_harvest, 0.4, 1.2)
-
         blended = 0.60 * rel_ratio + 0.40 * util_ratio
         ratios[seg_type].append(float(np.clip(blended, 0.4, 1.1)))
 
@@ -247,21 +288,18 @@ def compute_time_deltas(
     ct = CIRCUIT_TYPES.get(circuit_type, CIRCUIT_TYPES["balanced"])
 
     total_gap = lap_time_s - (lap_time_s + optimal.lap_time_delta_s)
-
     straight_delta_contribution = abs(speed_deltas.get("straight", 0))
     braking_delta_contribution  = abs(speed_deltas.get("braking",  0))
     corner_delta_contribution   = abs(speed_deltas.get("corner",   0))
 
     total_contribution = (straight_delta_contribution + braking_delta_contribution
                           + corner_delta_contribution + 1e-9)
-
     if total_contribution < 1.0:
         return {
             "straights": total_gap * ct["straight_weight"],
             "braking":   total_gap * ct["braking_weight"],
             "corners":   total_gap * ct["corner_weight"],
         }
-
     return {
         "straights": total_gap * (straight_delta_contribution / total_contribution),
         "braking":   total_gap * (braking_delta_contribution  / total_contribution),
@@ -295,7 +333,6 @@ def fingerprint_car(
     car_info     = lineup_for_round(race_round).get(
         driver_code, {"team": "Unknown", "pu": "Unknown"})
     epoch        = regulation_epoch_for_round(race_round)
-
     speed_deltas   = compute_speed_deltas(car_df, ref_df, segments)
     harvest_ratios = compute_harvest_ratios(car_df, ref_df, segments, optimal)
     time_deltas    = compute_time_deltas(lap_time_s, optimal, speed_deltas, circuit_type)
@@ -303,13 +340,11 @@ def fingerprint_car(
     str_delta         = speed_deltas.get("straight", 0.0)
     ref_top_speed     = ref_df["Speed"].max() if not ref_df.empty else 300.0
     straight_deploy_ratio = np.clip(0.85 + (str_delta / ref_top_speed), 0.4, 1.05)
-
     confidence = 1.0
     if car_df["Source"].iloc[0] == "Synthetic":
         confidence = 0.5
     if not completed_race:
         confidence *= 0.6
-
     # Corrupted telemetry detection — only flags physically impossible data.
     # Large speed deltas vs reference are EXPECTED for midfield/backmarker cars
     # and must never trigger exclusion. A legitimate Aston Martin at Austria Q
@@ -320,7 +355,6 @@ def fingerprint_car(
             or car_df["Throttle"].isnull().any():
         confidence = 0.1
         print(f"  {driver_code} flagged — corrupted telemetry (NaN/negative speed)")
-
     return CarFingerprint(
         driver_code               = driver_code,
         team                      = car_info["team"],
@@ -387,7 +421,6 @@ def fingerprint_race(
     retirements        = retirements        or []
     laps_completed_map = laps_completed_map or {}
     result_map         = result_map         or {}
-
     if not lap_times:
         raise ValueError("No lap times provided")
 
@@ -399,7 +432,6 @@ def fingerprint_race(
     pole_time      = lap_times[ref_driver]
     ref_df         = driver_telemetry[ref_driver]
     ranked_drivers = sorted(valid_drivers, key=lambda d: lap_times[d])
-
     result = RaceFingerprints(
         circuit_name = circuit_name,
         circuit_type = circuit_cfg.get("circuit_type", "balanced"),
@@ -407,14 +439,12 @@ def fingerprint_race(
         year         = circuit_cfg.get("fastf1_year", 2026),
         session_type = circuit_cfg.get("fastf1_session", "Q"),
     )
-
     for rank, driver in enumerate(ranked_drivers, 1):
         car_df   = driver_telemetry[driver]
         lap_time = lap_times[driver]
         retired  = driver in retirements
         gap_pct  = (lap_times[driver] - pole_time) / pole_time * 100
         laps_done = laps_completed_map.get(driver, 1)
-
         fp = fingerprint_car(
             driver_code      = driver,
             car_df           = car_df,
@@ -430,7 +460,6 @@ def fingerprint_race(
             laps_completed   = laps_done,
             result_data      = result_map.get(driver, {}),
         )
-
         if fp.confidence < 0.12:
             print(f"  {fp.driver_code} excluded — corrupted telemetry (confidence {fp.confidence:.2f})")
             continue
@@ -449,7 +478,6 @@ def print_race_fingerprints(rf: RaceFingerprints):
           f"{'Str Δ':>7} {'Brk Δ':>7} {'Hrv':>6} {'Dep':>6} {'Conf':>5} {'Epoch'}")
     print(f"  {'─'*6} {'─'*18} {'─'*14} {'─'*8}  "
           f"{'─'*7} {'─'*7} {'─'*6} {'─'*6} {'─'*5} {'─'*14}")
-
     for fp in rf.ranked():
         lap_str = f"{int(fp.lap_time_s//60)}:{fp.lap_time_s%60:06.3f}"
         print(f"  {fp.driver_code:<6} {fp.team:<18} {fp.pu_name:<14} {lap_str:>8}  "

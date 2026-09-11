@@ -1,0 +1,568 @@
+{
+  "review_status": "approved",
+  "metadata": {
+    "year": 2026,
+    "round": 13,
+    "circuit": "Italy",
+    "venue": "Autodromo Nazionale Monza",
+    "date_range": "2026-09-04 to 2026-09-06",
+    "weekend_type": "standard",
+    "sessions_available": [
+      "Q",
+      "R"
+    ]
+  },
+  "weekend_summary": "Monza was one of the most eventful weekends of the season before the lights even went out. Gasly took a shock pole, several drivers carried grid or pit-lane penalties, and championship leader Antonelli started only 19th after planned power-unit changes. On Sunday Leclerc's early crash caused a red flag, Antonelli surged through the field, and Mercedes split strategies under a mid-race VSC: Antonelli stopped for fresh Mediums while Russell stayed out on older Hards. Antonelli caught and passed Russell with four laps remaining to win his home Grand Prix, with Verstappen third. Ferrari's second ADUO power-unit step debuted at home, Haas introduced its biggest chassis package since Canada, and Monza's low-drag/energy-management demands made the weekend a poor place to generalise every aero result to Madrid.",
+  "sessions": {
+    "Q": {
+      "summary": "Gasly produced a shock pole for Alpine ahead of Russell. Piastri qualified third on raw result but received a three-place penalty, while Antonelli's planned power-unit penalty meant his qualifying pace and starting position were very different concepts.",
+      "key_moments": [
+        {
+          "text": "Gasly was classified on pole, with Russell alongside on the front row.",
+          "source_refs": [
+            "f1_grid"
+          ]
+        },
+        {
+          "text": "Piastri dropped three grid places for impeding Lawson in Q2.",
+          "source_refs": [
+            "f1_grid"
+          ]
+        },
+        {
+          "text": "Antonelli and Albon were sent to the back for excess power-unit changes; Lawson and Alonso were among drivers starting from the pit lane.",
+          "source_refs": [
+            "f1_grid"
+          ]
+        }
+      ]
+    },
+    "R": {
+      "summary": "Antonelli recovered from P19 to win ahead of Russell and Verstappen after a red flag and a decisive Mercedes strategy split under VSC conditions.",
+      "key_moments": [
+        {
+          "text": "Antonelli reached P12 before the early red flag, then gained more ground at the restart.",
+          "source_refs": [
+            "f1_antonelli_win"
+          ]
+        },
+        {
+          "text": "Leclerc crashed heavily at the final corner early in the race, bringing out the red flag.",
+          "source_refs": [
+            "f1_lowdown"
+          ]
+        },
+        {
+          "text": "Russell led after passing Gasly, while Verstappen and Antonelli both challenged through the opening/middle phases.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Under a mid-race VSC Mercedes pitted Antonelli for fresh Mediums while Russell stayed on used Hards.",
+          "source_refs": [
+            "f1_race_report",
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Antonelli caught and passed Russell with four laps remaining to win from P19.",
+          "source_refs": [
+            "f1_antonelli_win"
+          ]
+        }
+      ]
+    }
+  },
+  "performance_snapshot": {
+    "source": "committed_session_store",
+    "status": "hydrate at query time from committed LatentLap session data"
+  },
+  "driver_insights": {
+    "ANT": {
+      "name": "Andrea Kimi Antonelli",
+      "team": "Mercedes",
+      "summary": "Antonelli's P19-to-P1 home victory combined exceptional overtaking pace with a favourable but not automatic VSC strategy split. He still had to catch and pass Russell late.",
+      "details": [
+        {
+          "text": "The result is a strong race-performance signal even though grid position was penalty-driven.",
+          "source_refs": [
+            "f1_antonelli_win"
+          ]
+        }
+      ]
+    },
+    "RUS": {
+      "name": "George Russell",
+      "team": "Mercedes",
+      "summary": "Russell led much of the race and finished second after Mercedes kept him on older Hards under the VSC while Antonelli took fresh Mediums.",
+      "details": [
+        {
+          "text": "The final intra-team order reflects tyre-age offset as well as underlying pace.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "VER": {
+      "name": "Max Verstappen",
+      "team": "Red Bull",
+      "summary": "Verstappen finished third and remained close enough to influence Mercedes' management of the intra-team fight.",
+      "details": [
+        {
+          "text": "The podium was achieved in a weekend where Red Bull had both persistent front/floor changes and separate reliability items.",
+          "source_refs": [
+            "latentlap_upgrade_history"
+          ]
+        }
+      ]
+    },
+    "LEC": {
+      "name": "Charles Leclerc",
+      "team": "Ferrari",
+      "summary": "Leclerc's home race ended in an early heavy crash, so his final result cannot be used to judge Ferrari's new PU specification or Monza race pace.",
+      "details": [
+        {
+          "text": "The retirement is an external result-context event, not evidence that the second ADUO step failed.",
+          "source_refs": [
+            "f1_lowdown"
+          ]
+        }
+      ],
+      "result_context": {
+        "representative_of_pace": false,
+        "reason": "Early crash caused a DNF."
+      }
+    },
+    "HAM": {
+      "name": "Lewis Hamilton",
+      "team": "Ferrari",
+      "summary": "Hamilton finished sixth and was Ferrari's only classified car, providing the cleaner race reference for the new Ferrari PU specification.",
+      "details": [
+        {
+          "text": "Even so, Monza's unusual low-drag sensitivity means this single race should not be generalized as the new baseline everywhere.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "GAS": {
+      "name": "Pierre Gasly",
+      "team": "Alpine",
+      "summary": "Gasly's shock pole was the standout qualifying result, but the race order changed quickly after the start and red flag.",
+      "details": [
+        {
+          "text": "The pole is important one-lap evidence but should not be treated as equivalent to dominant race pace.",
+          "source_refs": [
+            "f1_grid"
+          ]
+        }
+      ]
+    },
+    "BEA": {
+      "name": "Oliver Bearman",
+      "team": "Haas F1 Team",
+      "summary": "Bearman received the sole latest-spec Ferrari PU available to Haas alongside the team's major chassis/aero package, and reported a night-and-day improvement in the car's feel on Friday.",
+      "details": [
+        {
+          "text": "That is useful reported context, but LatentLap still should not convert the subjective improvement into an invented lap-time gain.",
+          "source_refs": [
+            "f1_haas_upgrade"
+          ]
+        }
+      ]
+    }
+  },
+  "team_insights": {
+    "Mercedes": {
+      "summary": "Mercedes dominated the Grand Prix result with a one-two despite Antonelli starting near the back, and the team said both drivers had significantly stronger race pace than their rivals.",
+      "details": [
+        {
+          "text": "The VSC strategy split decided the late intra-team tyre-age difference.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "Ferrari": {
+      "summary": "Ferrari introduced its second ADUO power-unit step at Monza but did not get the home result it wanted: Leclerc crashed and Hamilton finished sixth.",
+      "details": [
+        {
+          "text": "The weekend should not be used as a clean causal test of the PU update because one car retired and Monza is an outlier circuit.",
+          "source_refs": [
+            "f1_ferrari_pu",
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "Haas": {
+      "summary": "Haas introduced its biggest chassis package since Canada and reported a much better underlying foundation, although setup/parts consistency remained an issue.",
+      "details": [
+        {
+          "text": "Bearman described the difference as night and day; post-race comments still noted inconsistency.",
+          "source_refs": [
+            "f1_haas_upgrade",
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "Alpine": {
+      "summary": "Alpine produced the shock qualifying headline through Gasly, while both cars also ran the R12 major package at Monza.",
+      "details": [
+        {
+          "text": "Gasly's pole and later race order should be kept separate when discussing the package.",
+          "source_refs": [
+            "f1_grid",
+            "latentlap_upgrade_history"
+          ]
+        }
+      ]
+    },
+    "Red Bull": {
+      "summary": "Red Bull remained a podium threat through Verstappen and continued persistent development around the front wing/floor while separating reliability changes from performance items.",
+      "details": [
+        {
+          "text": "The podium does not isolate the benefit of those components.",
+          "source_refs": [
+            "latentlap_upgrade_history"
+          ]
+        }
+      ]
+    }
+  },
+  "strategy_and_conditions": [
+    {
+      "text": "C3/C4/C5 were used at Monza, with Pirelli expecting a one-stop race to be viable and rear-axle thermal management to matter.",
+      "source_refs": [
+        "f1_tyres"
+      ]
+    },
+    {
+      "text": "Leclerc's early crash caused a red flag and reset the race before the normal first stint had fully developed.",
+      "source_refs": [
+        "f1_lowdown"
+      ]
+    },
+    {
+      "text": "The mid-race VSC created the decisive Mercedes strategy split: fresh Mediums for Antonelli versus older Hards for Russell.",
+      "source_refs": [
+        "f1_teams_race"
+      ]
+    },
+    {
+      "text": "Several final-grid penalties were announced after the saved pre-race pace forecast; LatentLap should annotate them rather than rewrite the original prediction order.",
+      "source_refs": [
+        "f1_grid"
+      ]
+    }
+  ],
+  "performance_interpretation": [
+    {
+      "text": "Antonelli's win is a strong race-pace/execution signal because he recovered from P19 and still passed Russell late, but the exact winning margin is not strategy-neutral because the VSC created a tyre offset.",
+      "source_refs": [
+        "f1_antonelli_win",
+        "f1_teams_race"
+      ],
+      "teams": [
+        "Mercedes"
+      ],
+      "drivers": [
+        "ANT",
+        "RUS"
+      ]
+    },
+    {
+      "text": "Ferrari's Monza result cannot isolate the second ADUO effect: Leclerc retired and Hamilton's P6 is one observation on a circuit with unusually extreme drag/energy characteristics.",
+      "source_refs": [
+        "f1_ferrari_pu",
+        "f1_teams_race"
+      ],
+      "teams": [
+        "Ferrari"
+      ]
+    },
+    {
+      "text": "Haas has explicit driver/team reporting that the new package improved the car's foundation, but no public controlled test quantifies the exact lap-time gain.",
+      "source_refs": [
+        "f1_haas_upgrade"
+      ],
+      "teams": [
+        "Haas F1 Team"
+      ]
+    }
+  ],
+  "upgrades_and_technical_context": [
+    {
+      "team": "McLaren",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Rear-wing and floor-furniture development. Changes combined drag reduction with broader aero-performance intent.",
+      "reported_intent": "Changes combined drag reduction with broader aero-performance intent.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Mercedes",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Monza low-drag rear-wing/mirror configuration. Rear-wing winglet removal and trimmed mirror-stay work for drag reduction.",
+      "reported_intent": "Rear-wing winglet removal and trimmed mirror-stay work for drag reduction.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Red Bull",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Front-wing endplate and floor-bib development. Persistent front/floor performance changes.",
+      "reported_intent": "Persistent front/floor performance changes.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Red Bull",
+      "category": "reliability",
+      "significance": "minor",
+      "text": "Rear suspension/wheel-bodywork and exhaust-bracket reliability details. Structural/reliability changes separated from the performance package.",
+      "reported_intent": "Structural/reliability changes separated from the performance package.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Ferrari",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Monza drag-range floor/mirror/rear-brake/tailpipe configuration. Circuit-specific low-drag configuration. Ferrari's second ADUO step is tracked separately as a PU event.",
+      "reported_intent": "Circuit-specific low-drag configuration. Ferrari's second ADUO step is tracked separately as a PU event.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Williams",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Front-wing/floor-board Monza balance configuration. Low-drag/balance range changes.",
+      "reported_intent": "Low-drag/balance range changes.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "VCARB",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Rear-wing SLM and tailpipe configuration. Predominantly Monza drag/efficiency configuration.",
+      "reported_intent": "Predominantly Monza drag/efficiency configuration.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Aston Martin",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Front-suspension fairing and rear-floor development. Persistent aero refinements around suspension and floor ahead of the rear tyre.",
+      "reported_intent": "Persistent aero refinements around suspension and floor ahead of the rear tyre.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Haas",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Largest Haas package since Canada. New floor/side geometry/diffuser, sidepod/rear bodywork, narrower roll hoop/engine cover, rear suspension and rear-corner development.",
+      "reported_intent": "New floor/side geometry/diffuser, sidepod/rear bodywork, narrower roll hoop/engine cover, rear suspension and rear-corner development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Alpine",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Zandvoort package rolled out to Colapinto. Colapinto received the major R12 floor/bodywork specification at Monza; driver-scoped so Gasly is not double-weighted.",
+      "reported_intent": "Colapinto received the major R12 floor/bodywork specification at Monza; driver-scoped so Gasly is not double-weighted.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ],
+      "drivers": [
+        "COL"
+      ],
+      "rollout_of_round": 12
+    },
+    {
+      "team": "Alpine",
+      "category": "circuit_specific",
+      "significance": "minor",
+      "text": "Monza front-wing/endplate and SLM configuration. Low-drag circuit-specific details.",
+      "reported_intent": "Low-drag circuit-specific details.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Cadillac",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Floor-board stay and diffuser-vane refinement. Small persistent floor/diffuser development.",
+      "reported_intent": "Small persistent floor/diffuser development.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    }
+  ],
+  "prediction_review": {
+    "status": "available_pending_ingestion",
+    "prediction_references": [
+      "store/predictions/2026_Italy_quali_prediction.json",
+      "store/predictions/2026_Italy_race_prediction.json"
+    ],
+    "overall_assessment": "Genuine pre-race Italy qualifying and race forecasts are preserved. Do not overwrite them. The deterministic comparison should be generated after the Monza Q/R pipeline is ingested locally so the review uses LatentLap's committed session data rather than rebuilding a forecast after the fact.",
+    "successes": [],
+    "misses": [],
+    "known_exceptions": [
+      {
+        "text": "The saved forecast already accounted for Hadjar being unavailable and Tsunoda remaining in the Racing Bulls car; this is not a prediction-system error."
+      },
+      {
+        "text": "Antonelli's heavy power-unit grid penalty was known before the weekend forecast context, while several other final-grid penalties/changes arose later in the weekend. LatentLap predicts pace and should preserve the forecast order rather than retroactively rewriting it to match the final grid."
+      }
+    ]
+  },
+  "knowledge_limits": [
+    {
+      "text": "Actual ERS deployment and battery state are not public; LatentLap's energy-management signals remain inferred, not measured."
+    },
+    {
+      "text": "Race-session harvest ratios are not used as reliable comparative evidence because representative laps differ in fuel, compound and track evolution."
+    },
+    {
+      "text": "Stint pace trends are fitted lap-time slopes over filtered green-flag laps, not direct tyre-degradation measurements; fuel burn, traffic, track evolution and driver management can contribute."
+    },
+    {
+      "text": "The presence of a new component at a weekend does not prove it caused an observed pace change. Upgrade effects are only attributed where reviewed reporting explicitly supports an effect."
+    },
+    {
+      "text": "The Monza deterministic performance snapshot is intentionally empty until the local R13 Q/R pipeline is ingested. External race context is present, but LatentLap numerical pace comparisons should wait for the committed session store."
+    },
+    {
+      "text": "Monza is an extreme low-drag/energy-management circuit, so one-weekend performance should not be treated as a universal post-upgrade baseline."
+    }
+  ],
+  "entities": {
+    "drivers": [
+      "ANT",
+      "BEA",
+      "GAS",
+      "HAM",
+      "LEC",
+      "RUS",
+      "VER"
+    ],
+    "teams": [
+      "Alpine",
+      "Ferrari",
+      "Haas",
+      "Haas F1 Team",
+      "Mercedes",
+      "Red Bull"
+    ],
+    "topics": [
+      "qualifying",
+      "race pace",
+      "grid penalties",
+      "red flag",
+      "VSC",
+      "strategy",
+      "ADUO",
+      "Haas upgrades",
+      "home race",
+      "prediction review"
+    ]
+  },
+  "sources": [
+    {
+      "id": "f1_grid",
+      "publisher": "Formula 1",
+      "title": "Official 2026 Italian Grand Prix grid",
+      "url": "https://www.formula1.com/en/latest/article/official-grid-who-starts-where-for-the-italian-grand-prix-2026.18oNflCZ6vMKCASJEMERzi"
+    },
+    {
+      "id": "f1_race_report",
+      "publisher": "Formula 1",
+      "title": "Antonelli beats Russell to Italian Grand Prix victory",
+      "url": "https://www.formula1.com/en/latest/article/antonelli-beats-russell-to-italian-grand-prix-win-with-stunning-comeback-drive.15WtFEBT5JEe4drdeO88t2"
+    },
+    {
+      "id": "f1_lowdown",
+      "publisher": "Formula 1",
+      "title": "Italy Lowdown – Antonelli wins from the back and Ferrari struggle",
+      "url": "https://www.formula1.com/en/latest/article/italy-lowdown-all-the-key-moments-as-antonelli-wins-from-the-back-and-ferrari-face-home-struggles.5HEczFUv2tUUZXtWi2CQCQ.5HEczFUv2tUUZXtWi2CQCQ"
+    },
+    {
+      "id": "f1_teams_race",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Race day in Italy",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-race-day-in-italy-2026.43DzkIlg5jfZZOc1IBjSv3"
+    },
+    {
+      "id": "f1_antonelli_win",
+      "publisher": "Formula 1",
+      "title": "Antonelli reflects on P19-to-P1 home victory",
+      "url": "https://www.formula1.com/en/latest/article/could-never-have-imagined-antonellis-italian-grand-prix-victory-from-p19-a-dream-coming-true.7oXpbc6pFWmhLpIULsFBfG"
+    },
+    {
+      "id": "f1_haas_upgrade",
+      "publisher": "Formula 1",
+      "title": "Bearman praises Haas' Monza upgrades",
+      "url": "https://www.formula1.com/en/latest/article/night-and-day-difference-bearman-praises-haas-upgrades-after-encouraging-italian-grand-prix-friday-performance.1MZMIAYiNXvNEHBlP5Mbra"
+    },
+    {
+      "id": "f1_ferrari_pu",
+      "publisher": "Formula 1",
+      "title": "Ferrari deploys further ADUO power-unit changes at Monza",
+      "url": "https://www.formula1.com/en/latest/article/leclerc-targets-very-special-monza-weekend-with-more-power-from-new-ferrari-engine.5R0ZYizMM9sHZ2raSfLnRX"
+    },
+    {
+      "id": "f1_tyres",
+      "publisher": "Formula 1",
+      "title": "Tyres and energy-management context for the 2026 Italian Grand Prix",
+      "url": "https://www.formula1.com/en/latest/article/what-tyres-will-the-teams-and-drivers-have-for-the-2026-italian-grand-prix.7nOpWdCgvCBFDGlnODs0gk"
+    },
+    {
+      "id": "f1_technical",
+      "publisher": "RACER",
+      "title": "Technical updates – 2026 Italian Grand Prix",
+      "url": "https://racer.com/2026/09/04/technical-updates-2026-italian-grand-prix"
+    },
+    {
+      "id": "latentlap_upgrade_history",
+      "publisher": "LatentLap",
+      "title": "Audited 2026 team development history",
+      "path": "data/upgrade_history.py"
+    }
+  ]
+}

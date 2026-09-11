@@ -1,0 +1,272 @@
+{
+  "review_status": "approved",
+  "metadata": {
+    "year": 2026,
+    "round": 1,
+    "circuit": "Australia",
+    "venue": "Albert Park Grand Prix Circuit",
+    "date_range": "2026-03-06 to 2026-03-08",
+    "weekend_type": "standard",
+    "sessions_available": [
+      "Q",
+      "R"
+    ]
+  },
+  "weekend_summary": "Mercedes opened the 2026 rules era with a one-two, but the race was more competitive than the result alone suggests. Russell and Antonelli locked out the front row, Ferrari challenged immediately and Leclerc briefly led, before Mercedes used Virtual Safety Car timing and a one-stop strategy to take control. McLaren's weekend was badly compromised before the race when home favourite Oscar Piastri crashed on the way to the grid and did not start, while Verstappen recovered from the back row to sixth.",
+  "sessions": {
+    "Q": {
+      "summary": "Russell took pole with Antonelli alongside, giving Mercedes a clear front-row statement at the first qualifying session of the new regulations.",
+      "key_moments": [
+        {
+          "text": "Mercedes locked out the front row with Russell ahead of Antonelli.",
+          "source_refs": [
+            "f1_lowdown"
+          ]
+        },
+        {
+          "text": "Ferrari remained close enough to make the race start strategically relevant rather than a foregone conclusion.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "R": {
+      "summary": "Russell won from Antonelli and Leclerc after Ferrari led early but Mercedes gained control through VSC-assisted pit timing and a one-stop approach.",
+      "key_moments": [
+        {
+          "text": "Leclerc jumped Russell and led during an aggressive opening phase in which the lead changed repeatedly.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Mercedes stopped both cars under the VSC triggered by Hadjar, while Ferrari stayed out and lost strategic leverage.",
+          "source_refs": [
+            "f1_race_report",
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Piastri crashed while heading to the grid and did not start his home Grand Prix.",
+          "source_refs": [
+            "f1_lowdown"
+          ]
+        },
+        {
+          "text": "Verstappen recovered from P20 to P6, making his finishing position more representative of recovery/execution than qualifying pace.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    }
+  },
+  "performance_snapshot": {
+    "source": "committed_session_store",
+    "status": "hydrate at query time from committed LatentLap session data"
+  },
+  "driver_insights": {
+    "RUS": {
+      "name": "George Russell",
+      "team": "Mercedes",
+      "summary": "Russell converted pole into victory, but the key was not simply raw pace: Mercedes used the first VSC to create the strategic position that allowed a one-stop race to work.",
+      "details": [
+        {
+          "text": "He lost the lead to Leclerc at the start and had to fight back before strategy settled the race.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "ANT": {
+      "name": "Andrea Kimi Antonelli",
+      "team": "Mercedes",
+      "summary": "Antonelli recovered from a poor opening lap to complete the Mercedes one-two in his first race of the season.",
+      "details": [
+        {
+          "text": "His start dropped him backwards before the Mercedes strategy brought him back into the lead fight.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "LEC": {
+      "name": "Charles Leclerc",
+      "team": "Ferrari",
+      "summary": "Leclerc showed Ferrari could challenge the Mercedes on track, leading early and finishing third, but Ferrari lost ground by staying out through the first VSC.",
+      "details": [
+        {
+          "text": "The early lead exchanges show the final one-two margin should not be read as Mercedes being uncontested all weekend.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "PIA": {
+      "name": "Oscar Piastri",
+      "team": "McLaren",
+      "summary": "Piastri did not start after crashing on the way to the grid, so the weekend provides no usable Grand Prix result for judging his race pace.",
+      "details": [
+        {
+          "text": "The DNS is an external event, not evidence of McLaren race-pace weakness.",
+          "source_refs": [
+            "f1_lowdown"
+          ]
+        }
+      ],
+      "result_context": {
+        "representative_of_pace": false,
+        "reason": "Did not start after a pre-race crash."
+      }
+    }
+  },
+  "team_insights": {
+    "Mercedes": {
+      "summary": "Mercedes started the season as the benchmark team, combining front-row qualifying speed with better race-day timing and execution.",
+      "details": [
+        {
+          "text": "The VSC stop was the decisive strategic lever in the one-two.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "Ferrari": {
+      "summary": "Ferrari was the closest early challenger and led on merit in the opening phase, but strategy left both cars behind the Mercedes pair.",
+      "details": [
+        {
+          "text": "The result is better read as strong pace plus weaker timing than as a large underlying car deficit.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "McLaren": {
+      "summary": "McLaren left Australia with an incomplete picture because Piastri never started; Norris carried the race result alone.",
+      "details": [
+        {
+          "text": "Any team-level race conclusion should account for the missing second car.",
+          "source_refs": [
+            "f1_lowdown"
+          ]
+        }
+      ]
+    }
+  },
+  "strategy_and_conditions": [
+    {
+      "text": "Two VSC periods influenced stop timing, with Mercedes exploiting the first while Ferrari stayed out.",
+      "source_refs": [
+        "f1_race_report"
+      ]
+    },
+    {
+      "text": "The season opener contained multiple early lead changes, so track position and pit timing mattered immediately under the new regulations.",
+      "source_refs": [
+        "f1_race_report"
+      ]
+    }
+  ],
+  "performance_interpretation": [
+    {
+      "text": "Mercedes was the strongest complete package across qualifying and race execution, but Ferrari demonstrated enough early-race pace that the one-two should not be interpreted as an uncontested performance gap.",
+      "source_refs": [
+        "f1_race_report",
+        "f1_teams_race"
+      ],
+      "teams": [
+        "Mercedes",
+        "Ferrari"
+      ]
+    },
+    {
+      "text": "Piastri's DNS makes McLaren's team race result structurally incomplete.",
+      "source_refs": [
+        "f1_lowdown"
+      ],
+      "teams": [
+        "McLaren"
+      ],
+      "drivers": [
+        "PIA"
+      ]
+    }
+  ],
+  "upgrades_and_technical_context": [],
+  "prediction_review": {
+    "status": "unavailable",
+    "prediction_references": [],
+    "overall_assessment": "No genuine saved pre-race LatentLap forecast exists for this round. Do not reconstruct one retrospectively and label it as an original forecast.",
+    "successes": [],
+    "misses": [],
+    "known_exceptions": []
+  },
+  "knowledge_limits": [
+    {
+      "text": "Actual ERS deployment and battery state are not public; LatentLap's energy-management signals remain inferred, not measured."
+    },
+    {
+      "text": "Race-session harvest ratios are not used as reliable comparative evidence because representative laps differ in fuel, compound and track evolution."
+    },
+    {
+      "text": "Stint pace trends are fitted lap-time slopes over filtered green-flag laps, not direct tyre-degradation measurements; fuel burn, traffic, track evolution and driver management can contribute."
+    },
+    {
+      "text": "The presence of a new component at a weekend does not prove it caused an observed pace change. Upgrade effects are only attributed where reviewed reporting explicitly supports an effect."
+    }
+  ],
+  "entities": {
+    "drivers": [
+      "ANT",
+      "LEC",
+      "PIA",
+      "RUS"
+    ],
+    "teams": [
+      "Ferrari",
+      "McLaren",
+      "Mercedes"
+    ],
+    "topics": [
+      "season opener",
+      "qualifying",
+      "race pace",
+      "strategy",
+      "virtual safety car",
+      "DNS",
+      "new regulations"
+    ]
+  },
+  "sources": [
+    {
+      "id": "f1_race_report",
+      "publisher": "Formula 1",
+      "title": "Russell wins action-packed Australian GP from Antonelli",
+      "url": "https://www.formula1.com/en/latest/article/russell-wins-action-packed-australian-gp-from-antonelli-as-melbourne-secure-1.4WRxPAtF4dFtrKCsWIiQX2"
+    },
+    {
+      "id": "f1_teams_race",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Race day in Australia",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-race-day-in-australia-2026.1uqgmKjDMHI81ZPeEgGNsr.1uqgmKjDMHI81ZPeEgGNsr"
+    },
+    {
+      "id": "f1_lowdown",
+      "publisher": "Formula 1",
+      "title": "Australia Lowdown – key moments from the 2026 season opener",
+      "url": "https://www.formula1.com/en/latest/article/australia-lowdown-2026-all-the-key-moments-as-mercedes-enjoy-a-perfect-start.538A9JyEiem5LTfO4gkmr2"
+    },
+    {
+      "id": "latentlap_upgrade_history",
+      "publisher": "LatentLap",
+      "title": "Audited 2026 team development history",
+      "path": "data/upgrade_history.py"
+    }
+  ]
+}

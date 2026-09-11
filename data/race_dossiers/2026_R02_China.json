@@ -1,0 +1,356 @@
+{
+  "review_status": "approved",
+  "metadata": {
+    "year": 2026,
+    "round": 2,
+    "circuit": "China",
+    "venue": "Shanghai International Circuit",
+    "date_range": "2026-03-13 to 2026-03-15",
+    "weekend_type": "sprint",
+    "sessions_available": [
+      "SQ",
+      "S",
+      "Q",
+      "R"
+    ]
+  },
+  "weekend_summary": "Shanghai reinforced Mercedes' early advantage across both parts of the Sprint weekend. Russell won the Sprint after an early fight with Hamilton, then Antonelli took Grand Prix pole and converted it into his maiden F1 victory ahead of Russell and Hamilton. Ferrari had genuine front-running moments, especially off the start and through the Sprint, but Mercedes was the more complete package over the weekend.",
+  "sessions": {
+    "SQ": {
+      "summary": "Russell earned Sprint pole and Mercedes again put a car at the front of the grid.",
+      "key_moments": [
+        {
+          "text": "Russell started the Sprint from pole.",
+          "source_refs": [
+            "f1_sprint_results"
+          ]
+        }
+      ]
+    },
+    "S": {
+      "summary": "Russell won the Sprint after Hamilton briefly led and the pair traded positions early; Leclerc completed a Ferrari two-three behind him.",
+      "key_moments": [
+        {
+          "text": "Russell won ahead of Leclerc and Hamilton.",
+          "source_refs": [
+            "f1_sprint_report"
+          ]
+        },
+        {
+          "text": "Antonelli had a messy Sprint and received a 10-second penalty after contact with Hadjar.",
+          "source_refs": [
+            "f1_teams_sprint_q"
+          ]
+        }
+      ]
+    },
+    "Q": {
+      "summary": "Antonelli took Grand Prix pole, becoming the youngest polesitter at the time, with Mercedes again setting the single-lap benchmark.",
+      "key_moments": [
+        {
+          "text": "Antonelli secured pole for the Grand Prix.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "R": {
+      "summary": "Antonelli won from Russell and Hamilton after briefly losing the lead at the start, then retaking it before the end of Lap 2 and controlling the rest of the race.",
+      "key_moments": [
+        {
+          "text": "Hamilton launched from P3 into the lead at the start before Antonelli repassed him.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Russell lost ground in the early Ferrari fight and had to recover through traffic after the Safety Car pit cycle.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Antonelli took his maiden Grand Prix win; Russell completed another Mercedes one-two and Hamilton scored his first Ferrari GP podium.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    }
+  },
+  "performance_snapshot": {
+    "source": "committed_session_store",
+    "status": "hydrate at query time from committed LatentLap session data"
+  },
+  "driver_insights": {
+    "ANT": {
+      "name": "Andrea Kimi Antonelli",
+      "team": "Mercedes",
+      "summary": "Antonelli turned pole into his first Grand Prix victory. Unlike his Sprint, the Sunday race was composed after he recovered from losing the lead at the start.",
+      "details": [
+        {
+          "text": "He retook first place before the end of Lap 2 and controlled the race thereafter.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "RUS": {
+      "name": "George Russell",
+      "team": "Mercedes",
+      "summary": "Russell won the Sprint and finished second in the Grand Prix, giving him a strong weekend even though Sunday required a recovery after losing places at the start.",
+      "details": [
+        {
+          "text": "Traffic after the Safety Car pit cycle prevented him from challenging Antonelli late.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "HAM": {
+      "name": "Lewis Hamilton",
+      "team": "Ferrari",
+      "summary": "Hamilton was one of the main threats across the weekend: he led early in both Sprint and Grand Prix phases and finished third on Sunday.",
+      "details": [
+        {
+          "text": "His launch into the Grand Prix lead showed Ferrari had competitive traction/launch performance even if Mercedes controlled the full stint picture.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "LEC": {
+      "name": "Charles Leclerc",
+      "team": "Ferrari",
+      "summary": "Leclerc finished second in the Sprint and remained part of the Mercedes/Ferrari fight on Sunday, supporting the view that Ferrari was the nearest consistent challenger.",
+      "details": [
+        {
+          "text": "The Sprint result shows Ferrari was not merely a distant third force in Shanghai.",
+          "source_refs": [
+            "f1_sprint_report"
+          ]
+        }
+      ]
+    }
+  },
+  "team_insights": {
+    "Mercedes": {
+      "summary": "Mercedes swept the weekend victories through Russell in the Sprint and Antonelli in the Grand Prix.",
+      "details": [
+        {
+          "text": "The team combined qualifying speed, tyre management and recovery ability even when starts were imperfect.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "Ferrari": {
+      "summary": "Ferrari repeatedly inserted itself into the lead fight but did not sustain the same full-race control as Mercedes.",
+      "details": [
+        {
+          "text": "Hamilton and Leclerc finished second and third in the Sprint; Hamilton then podiumed on Sunday.",
+          "source_refs": [
+            "f1_sprint_report",
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "Audi": {
+      "summary": "Audi brought one of the more substantial early-season chassis updates, centered on a new nose/front-wing tandem.",
+      "details": [
+        {
+          "text": "The upgrade is recorded as a persistent development step in LatentLap, but this dossier does not claim an isolated lap-time gain.",
+          "source_refs": [
+            "latentlap_upgrade_history"
+          ]
+        }
+      ]
+    }
+  },
+  "strategy_and_conditions": [
+    {
+      "text": "China was the first Sprint weekend of the season, compressing preparation into one practice session.",
+      "source_refs": [
+        "f1_tyres"
+      ]
+    },
+    {
+      "text": "The Sprint included a late Safety Car, while the Grand Prix featured an early Safety Car that reshaped Russell's recovery.",
+      "source_refs": [
+        "f1_sprint_report",
+        "f1_teams_race"
+      ]
+    }
+  ],
+  "performance_interpretation": [
+    {
+      "text": "Mercedes was the strongest all-round team across the Sprint format, but Ferrari had enough launch and short-run pace to challenge repeatedly for track position.",
+      "source_refs": [
+        "f1_sprint_report",
+        "f1_race_report"
+      ],
+      "teams": [
+        "Mercedes",
+        "Ferrari"
+      ]
+    }
+  ],
+  "upgrades_and_technical_context": [
+    {
+      "team": "Ferrari",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Halo/front-of-halo winglet refinement. Small aerodynamic load refinement.",
+      "reported_intent": "Small aerodynamic load refinement.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "VCARB",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Rear brake-duct winglet update. Local aerodynamic refinement around the rear corner.",
+      "reported_intent": "Local aerodynamic refinement around the rear corner.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Haas",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Rear crash-structure winglet refinement. Small local-load change.",
+      "reported_intent": "Small local-load change.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Audi",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "New nose and front-wing tandem. Front-end package intended to improve downstream/global flow structures.",
+      "reported_intent": "Front-end package intended to improve downstream/global flow structures.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Cadillac",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Diffuser trailing-edge and mirror-stay revisions. Local rear-load and mirror-support/aero changes.",
+      "reported_intent": "Local rear-load and mirror-support/aero changes.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    }
+  ],
+  "prediction_review": {
+    "status": "unavailable",
+    "prediction_references": [],
+    "overall_assessment": "No genuine saved pre-race LatentLap forecast exists for this round. Do not reconstruct one retrospectively and label it as an original forecast.",
+    "successes": [],
+    "misses": [],
+    "known_exceptions": []
+  },
+  "knowledge_limits": [
+    {
+      "text": "Actual ERS deployment and battery state are not public; LatentLap's energy-management signals remain inferred, not measured."
+    },
+    {
+      "text": "Race-session harvest ratios are not used as reliable comparative evidence because representative laps differ in fuel, compound and track evolution."
+    },
+    {
+      "text": "Stint pace trends are fitted lap-time slopes over filtered green-flag laps, not direct tyre-degradation measurements; fuel burn, traffic, track evolution and driver management can contribute."
+    },
+    {
+      "text": "The presence of a new component at a weekend does not prove it caused an observed pace change. Upgrade effects are only attributed where reviewed reporting explicitly supports an effect."
+    }
+  ],
+  "entities": {
+    "drivers": [
+      "ANT",
+      "HAM",
+      "LEC",
+      "RUS"
+    ],
+    "teams": [
+      "Audi",
+      "Ferrari",
+      "Mercedes"
+    ],
+    "topics": [
+      "sprint",
+      "qualifying",
+      "race pace",
+      "strategy",
+      "safety car",
+      "Mercedes",
+      "Ferrari",
+      "upgrades"
+    ]
+  },
+  "sources": [
+    {
+      "id": "f1_sprint_results",
+      "publisher": "Formula 1",
+      "title": "2026 Chinese Grand Prix – Sprint results",
+      "url": "https://www.formula1.com/en/results/2026/races/1280/china/sprint-results"
+    },
+    {
+      "id": "f1_sprint_report",
+      "publisher": "Formula 1",
+      "title": "Russell wins thrilling China Sprint",
+      "url": "https://www.formula1.com/en/latest/article/russell-wins-thrilling-china-sprint-from-ferrari-s-leclerc-and-hamilton.3HLw6daSkBmV0rPREohMwQ"
+    },
+    {
+      "id": "f1_teams_sprint_q",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Sprint day and Qualifying in China",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-sprint-day-and-qualifying-in-china-2026.5lj6M3G7xZ5MgrPpRLtHbZ"
+    },
+    {
+      "id": "f1_race_report",
+      "publisher": "Formula 1",
+      "title": "Antonelli beats Russell to maiden F1 victory in China",
+      "url": "https://www.formula1.com/en/latest/article/antonelli-beats-russell-to-maiden-f1-victory-in-china-as-hamilton-takes.5aJsWCPiRhp2euZctEwEYA"
+    },
+    {
+      "id": "f1_teams_race",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Race day in China",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-race-day-in-china-2026.6hVXOFx0F2xachN46KTtrL"
+    },
+    {
+      "id": "f1_tyres",
+      "publisher": "Formula 1",
+      "title": "Tyre compounds for the 2026 Chinese Grand Prix",
+      "url": "https://www.formula1.com/en/latest/article/what-tyres-will-the-teams-and-drivers-have-for-the-2026-chinese-grand-prix.3XkKc3AWcBACR36IhWpKOS"
+    },
+    {
+      "id": "f1_upgrades_external",
+      "publisher": "RACER",
+      "title": "Technical updates – 2026 Chinese Grand Prix",
+      "url": "https://racer.com/2026/03/13/technical-updates-2026-chinese-grand-prix"
+    },
+    {
+      "id": "latentlap_upgrade_history",
+      "publisher": "LatentLap",
+      "title": "Audited 2026 team development history",
+      "path": "data/upgrade_history.py"
+    }
+  ]
+}

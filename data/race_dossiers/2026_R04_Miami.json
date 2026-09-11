@@ -1,0 +1,442 @@
+{
+  "review_status": "approved",
+  "metadata": {
+    "year": 2026,
+    "round": 4,
+    "circuit": "Miami",
+    "venue": "Miami International Autodrome",
+    "date_range": "2026-05-01 to 2026-05-03",
+    "weekend_type": "sprint",
+    "sessions_available": [
+      "SQ",
+      "S",
+      "Q",
+      "R"
+    ]
+  },
+  "weekend_summary": "Miami was the first major development flashpoint of the season and the first weekend under the post-Suzuka energy-management refinements. McLaren converted Sprint pole into a one-two, but Antonelli took Grand Prix pole and won Sunday after a chaotic race with repeated lead changes, an early Safety Car and a successful Mercedes undercut on Norris. The weekend showed the field closing around Mercedes without removing the Silver Arrows from the top step.",
+  "sessions": {
+    "SQ": {
+      "summary": "Norris took Sprint pole ahead of Antonelli and Piastri, giving McLaren its clearest single-lap result of the opening phase.",
+      "key_moments": [
+        {
+          "text": "Norris started the Sprint from pole.",
+          "source_refs": [
+            "f1_sprint_results"
+          ]
+        }
+      ]
+    },
+    "S": {
+      "summary": "Norris controlled the Sprint ahead of Piastri for a McLaren one-two, with Leclerc third.",
+      "key_moments": [
+        {
+          "text": "Norris won the 19-lap Sprint from Piastri and Leclerc.",
+          "source_refs": [
+            "f1_sprint_report"
+          ]
+        },
+        {
+          "text": "Antonelli dropped from the front row and was later penalised for track limits.",
+          "source_refs": [
+            "f1_sprint_report"
+          ]
+        }
+      ]
+    },
+    "Q": {
+      "summary": "Antonelli responded by taking Grand Prix pole, ahead of Verstappen, Leclerc and Norris.",
+      "key_moments": [
+        {
+          "text": "Antonelli set a 1:27.798 to take pole ahead of Verstappen.",
+          "source_refs": [
+            "f1_q_results"
+          ]
+        }
+      ]
+    },
+    "R": {
+      "summary": "Antonelli won from Norris and Piastri after a race with multiple leaders, an early Safety Car and a decisive Mercedes undercut.",
+      "key_moments": [
+        {
+          "text": "Antonelli, Verstappen and Leclerc converged at Turn 1; Verstappen later spun and dropped back.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Separate incidents for Gasly and Hadjar brought out the Safety Car early.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        },
+        {
+          "text": "Mercedes undercut Norris with Antonelli, putting the teenager onto fresh tyres and into control of the race.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        },
+        {
+          "text": "Antonelli managed late gearbox/downshift concerns while holding Norris off to win.",
+          "source_refs": [
+            "f1_race_report"
+          ]
+        }
+      ]
+    }
+  },
+  "performance_snapshot": {
+    "source": "committed_session_store",
+    "status": "hydrate at query time from committed LatentLap session data"
+  },
+  "driver_insights": {
+    "ANT": {
+      "name": "Andrea Kimi Antonelli",
+      "team": "Mercedes",
+      "summary": "Antonelli paired Grand Prix pole with his third straight win, but Sunday required recovery after another imperfect first corner and sustained pressure from Norris.",
+      "details": [
+        {
+          "text": "Mercedes' undercut was central to turning his fresh-tyre pace into track position.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "NOR": {
+      "name": "Lando Norris",
+      "team": "McLaren",
+      "summary": "Norris won the Sprint and then pushed Antonelli closely in the Grand Prix, making Miami the clearest proof to that point that McLaren had moved into genuine win contention.",
+      "details": [
+        {
+          "text": "McLaren's large upgrade package coincided with the step, but the dossier does not isolate how many tenths came from the hardware itself.",
+          "source_refs": [
+            "f1_sprint_report",
+            "latentlap_upgrade_history"
+          ]
+        }
+      ]
+    },
+    "PIA": {
+      "name": "Oscar Piastri",
+      "team": "McLaren",
+      "summary": "Piastri completed the Sprint one-two and finished third in the Grand Prix, giving McLaren two cars consistently near the front across both races.",
+      "details": [
+        {
+          "text": "The result supports a team-level step rather than a one-driver anomaly.",
+          "source_refs": [
+            "f1_sprint_report",
+            "f1_race_report"
+          ]
+        }
+      ]
+    },
+    "VER": {
+      "name": "Max Verstappen",
+      "team": "Red Bull",
+      "summary": "Verstappen qualified on the front row after Red Bull's major update, but a spin in the Grand Prix damaged his track position and made the final result less representative of qualifying potential.",
+      "details": [
+        {
+          "text": "F1 technical analysis described the Miami package as a very major project linked with Red Bull's competitive turnaround.",
+          "source_refs": [
+            "f1_redbull_tech"
+          ]
+        }
+      ]
+    }
+  },
+  "team_insights": {
+    "Mercedes": {
+      "summary": "Mercedes retained the Grand Prix victory even as the field compressed, relying on Antonelli's pace plus a successful undercut.",
+      "details": [
+        {
+          "text": "Miami was the first weekend where the margin looked materially less comfortable than the opening rounds.",
+          "source_refs": [
+            "f1_teams_race"
+          ]
+        }
+      ]
+    },
+    "McLaren": {
+      "summary": "McLaren was transformed into a direct win threat across the Sprint and Grand Prix, with Norris and Piastri both consistently at the front.",
+      "details": [
+        {
+          "text": "The large package worked in the same weekend as the performance jump, but LatentLap should still avoid component-level causal attribution.",
+          "source_refs": [
+            "latentlap_upgrade_history"
+          ]
+        }
+      ]
+    },
+    "Red Bull": {
+      "summary": "Red Bull's major package substantially changed the car and Verstappen qualified P2, but race execution was compromised by the spin.",
+      "details": [
+        {
+          "text": "F1 technical reporting explicitly described the package as a major turnaround point.",
+          "source_refs": [
+            "f1_redbull_tech"
+          ]
+        }
+      ]
+    },
+    "Ferrari": {
+      "summary": "Ferrari remained in the lead fight early and Leclerc qualified third, but the team did not match McLaren/Mercedes over the full race.",
+      "details": [
+        {
+          "text": "Ferrari also brought the largest item count in its early-season development push.",
+          "source_refs": [
+            "latentlap_upgrade_history"
+          ]
+        }
+      ]
+    }
+  },
+  "strategy_and_conditions": [
+    {
+      "text": "The Sprint format limited practice time while several teams introduced major packages.",
+      "source_refs": [
+        "f1_sprint_report"
+      ]
+    },
+    {
+      "text": "The Grand Prix featured an early Safety Car and repeated lead changes before the strategy sequence settled.",
+      "source_refs": [
+        "f1_race_report"
+      ]
+    },
+    {
+      "text": "Regulation refinements agreed after the opening races reduced maximum qualifying recharge to 7MJ and increased peak superclip power, with changes applied from Miami.",
+      "source_refs": [
+        "f1_reg_changes"
+      ]
+    }
+  ],
+  "performance_interpretation": [
+    {
+      "text": "McLaren's Sprint one-two and GP double podium show a genuine team-level competitive step; the exact share attributable to the upgrade package versus circuit/setup cannot be isolated from the public data.",
+      "source_refs": [
+        "f1_sprint_report",
+        "f1_race_report"
+      ],
+      "teams": [
+        "McLaren"
+      ]
+    },
+    {
+      "text": "Antonelli's GP win remained representative of Mercedes front-running pace, but the undercut was a meaningful execution factor.",
+      "source_refs": [
+        "f1_teams_race"
+      ],
+      "teams": [
+        "Mercedes"
+      ],
+      "drivers": [
+        "ANT"
+      ]
+    }
+  ],
+  "upgrades_and_technical_context": [
+    {
+      "team": "Mercedes",
+      "category": "persistent",
+      "significance": "minor",
+      "text": "Tailpipe winglet and front-brake-drum refinement. Small aerodynamic detail changes.",
+      "reported_intent": "Small aerodynamic detail changes.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "McLaren",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Major floor and front-aero development package. Front/rear corner structures, bodywork/sidepod inlet, floor/bargeboard, rear-wing and cooling-detail changes.",
+      "reported_intent": "Front/rear corner structures, bodywork/sidepod inlet, floor/bargeboard, rear-wing and cooling-detail changes.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "VCARB",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Large front/rear aero and floor package. Front and rear wings, floor edge, rear brake ducts, rear suspension and endplate work.",
+      "reported_intent": "Front and rear wings, floor edge, rear brake ducts, rear suspension and endplate work.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Audi",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Front corner, suspension, floor-edge and diffuser package. First broad post-opening-round development step.",
+      "reported_intent": "First broad post-opening-round development step.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Alpine",
+      "category": "persistent",
+      "significance": "medium",
+      "text": "Front-brake, rear-suspension and rear-wing development. Also included nose-camera mounting and rear-impact-structure detail changes.",
+      "reported_intent": "Also included nose-camera mounting and rear-impact-structure detail changes.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Cadillac",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Comprehensive nine-area aero development package. Front wing, mirror stays, floor/diffuser, suspension fairings and other ride-height/aero changes.",
+      "reported_intent": "Front wing, mirror stays, floor/diffuser, suspension fairings and other ride-height/aero changes.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Red Bull",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Very large floor/bodywork/wing package. Front wing, brake ducts, floor, sidepods, engine cover, diffuser, rear wing and related details.",
+      "reported_intent": "Front wing, brake ducts, floor, sidepods, engine cover, diffuser, rear wing and related details.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Ferrari",
+      "category": "persistent",
+      "significance": "major",
+      "text": "Eleven-part aero package. Front wing/endplate, front deflector, suspension fairings, floor and sidepod work.",
+      "reported_intent": "Front wing/endplate, front deflector, suspension fairings, floor and sidepod work.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    },
+    {
+      "team": "Williams",
+      "category": "persistent",
+      "significance": "major",
+      "text": "First major 2026 development package. Floor, bodywork, front wing, rear suspension, exhaust interaction and weight-reduction work.",
+      "reported_intent": "Floor, bodywork, front wing, rear suspension, exhaust interaction and weight-reduction work.",
+      "reported_effect": null,
+      "source_refs": [
+        "latentlap_upgrade_history"
+      ]
+    }
+  ],
+  "prediction_review": {
+    "status": "available_legacy",
+    "prediction_references": [
+      "store/predictions/2026_Miami_prediction.json",
+      "store/predictions/2026_Miami_actual.json"
+    ],
+    "overall_assessment": "A genuine pre-race Miami forecast exists in the repository, but it predates the newer four-file Q/R/SQ/S prediction format. Keep it as a legacy original forecast and evaluate it from the saved prediction/actual artifacts rather than reconstructing a modern forecast retrospectively.",
+    "successes": [],
+    "misses": [],
+    "known_exceptions": [
+      {
+        "text": "Miami uses the legacy blended prediction schema, so it is not directly comparable field-for-field with the later Netherlands/Italy prediction files."
+      }
+    ]
+  },
+  "knowledge_limits": [
+    {
+      "text": "Actual ERS deployment and battery state are not public; LatentLap's energy-management signals remain inferred, not measured."
+    },
+    {
+      "text": "Race-session harvest ratios are not used as reliable comparative evidence because representative laps differ in fuel, compound and track evolution."
+    },
+    {
+      "text": "Stint pace trends are fitted lap-time slopes over filtered green-flag laps, not direct tyre-degradation measurements; fuel burn, traffic, track evolution and driver management can contribute."
+    },
+    {
+      "text": "The presence of a new component at a weekend does not prove it caused an observed pace change. Upgrade effects are only attributed where reviewed reporting explicitly supports an effect."
+    }
+  ],
+  "entities": {
+    "drivers": [
+      "ANT",
+      "NOR",
+      "PIA",
+      "VER"
+    ],
+    "teams": [
+      "Ferrari",
+      "McLaren",
+      "Mercedes",
+      "Red Bull"
+    ],
+    "topics": [
+      "sprint",
+      "qualifying",
+      "race pace",
+      "upgrades",
+      "strategy",
+      "safety car",
+      "energy regulations",
+      "prediction review"
+    ]
+  },
+  "sources": [
+    {
+      "id": "f1_sprint_results",
+      "publisher": "Formula 1",
+      "title": "2026 Miami Grand Prix – Sprint results",
+      "url": "https://www.formula1.com/en/results/2026/races/1284/miami/sprint-results"
+    },
+    {
+      "id": "f1_sprint_report",
+      "publisher": "Formula 1",
+      "title": "Norris beats Piastri and Leclerc to Miami Sprint victory",
+      "url": "https://www.formula1.com/en/latest/article/norris-beats-piastri-and-leclerc-to-victory-in-miami-sprint.4H4WI3lnIs7jOZ8lSBIp6X"
+    },
+    {
+      "id": "f1_q_results",
+      "publisher": "Formula 1",
+      "title": "2026 Miami Grand Prix – Qualifying results",
+      "url": "https://www.formula1.com/en/results/2026/races/1284/miami/qualifying"
+    },
+    {
+      "id": "f1_race_report",
+      "publisher": "Formula 1",
+      "title": "Antonelli wins thrilling Miami Grand Prix",
+      "url": "https://www.formula1.com/en/latest/article/antonelli-wins-thrilling-miami-grand-prix-from-norris-and-piastri.2bxaKuYKJjxlXx8KOJf7lc.2bxaKuYKJjxlXx8KOJf7lc"
+    },
+    {
+      "id": "f1_teams_race",
+      "publisher": "Formula 1",
+      "title": "What the teams said – Race day in Miami",
+      "url": "https://www.formula1.com/en/latest/article/what-the-teams-said-race-day-in-miami-2026.735vCOOrEcCRd8AzIAyb9l"
+    },
+    {
+      "id": "f1_redbull_tech",
+      "publisher": "Formula 1",
+      "title": "Tech Weekly – Red Bull's transformative Miami upgrades",
+      "url": "https://www.formula1.com/en/latest/article/tech-weekly-the-transformative-upgrades-that-contributed-to-red-bulls-dramatic-turnaround-in-miami.5lAsZJupFnu4uC0y2mpnbs"
+    },
+    {
+      "id": "f1_reg_changes",
+      "publisher": "Formula 1",
+      "title": "Refinements to 2026 F1 regulations agreed by stakeholders",
+      "url": "https://www.formula1.com/en/latest/article/refinements-to-2026-f1-regulations-agreed-by-all-stakeholders.1xA0TRau0DvyId6R7oZjFv"
+    },
+    {
+      "id": "latentlap_upgrade_history",
+      "publisher": "LatentLap",
+      "title": "Audited 2026 team development history",
+      "path": "data/upgrade_history.py"
+    }
+  ]
+}
