@@ -5,5 +5,18 @@ __pycache__/
 venv/
 .vscode/
 .DS_Store
-viz/outputs/*.png
+
+# Local / generated Streamlit secrets
 .streamlit/secrets.toml
+
+# Generated visual outputs
+viz/outputs/*.png
+
+# Local diagnostics, scratch output, and manual backups
+*_backup.py
+*_backup_*.py
+*.pre_*
+store_backup*/
+store_output.txt
+corner_diagnostic.json
+*.tmp
