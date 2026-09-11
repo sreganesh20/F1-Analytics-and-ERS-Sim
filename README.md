@@ -71,21 +71,124 @@ LatentLap does not manufacture historical predictions for rounds where forecasts
 
 ### Ask the Engineer
 
-Ask the Engineer is the explanation layer over LatentLap’s committed evidence.
+Ask the Engineer is the natural-language interface over LatentLap’s committed evidence. It is intentionally designed as a **RAG system**, not a generic F1 chatbot.
 
-At query time it can retrieve deterministic session analytics, saved predictions, implementation-grounded methodology and **human-approved race dossiers**. It does not perform a live web search at question time, and the prompt explicitly forbids filling missing 2026 facts from pretrained model memory.
+The retrieval layer decides what evidence a question actually needs, assembles only that context, and gives the language model a constrained explanation task. The model does not create new analytical numbers and does not become the source of truth simply because it can produce fluent prose.
 
 If the available evidence is insufficient, the expected behaviour is to state that limitation instead of improvising an answer.
 
-Driver and team identity is deterministic and round-aware. Race classification is authoritative for winner, podium and finishing-order claims; representative race pace cannot be substituted for official results.
+---
 
-Reviewed race dossiers may add externally reported context, but only approved dossiers are eligible for retrieval and their source provenance is stored with the dossier.
+## RAG architecture
+
+The RAG layer is one of the core engineering components of LatentLap. It is implemented in `analysis/llm.py` and is deliberately **query-aware, provenance-aware and fail-closed**.
+
+### 1. Deterministic query routing
+
+Before the LLM is called, Python classifies the question and identifies relevant entities. The router detects:
+
+- named drivers, teams and circuits;
+- methodology questions;
+- race recaps and official-result questions;
+- recent team/driver trend questions;
+- season-wide improvement/decline questions;
+- upgrade/development questions;
+- raw-metric requests;
+- race-by-race season chronology requests;
+- explicitly exhaustive requests.
+
+Driver codes, names, teams and circuit aliases are resolved deterministically. Driver/team identity is round-aware so substitutions and lineup changes are not left to model memory.
+
+### 2. Multiple evidence stores, selected by intent
+
+The retrieval layer can assemble context from several committed sources:
+
+| Retrieval source | Used for |
+|---|---|
+| **Season digest** | Compact championship, pace, teammate, PU and upgrade context. |
+| **Committed session fingerprints** | Named driver/team/circuit evidence and exact stored metrics. |
+| **Approved race dossiers** | Reviewed weekend narrative, incidents, strategy, conditions and technical context. |
+| **Deterministic dossier snapshots** | Session pace, official classification and stint context hydrated from the committed store. |
+| **Season dossier chronology** | Race-by-race season-story questions. |
+| **Recent deterministic trends** | Latest team/driver Q and R pace context. |
+| **Season team-trend snapshot** | Python-computed early-vs-recent qualifying direction of change. |
+| **Implementation-grounded methodology** | Technical explanations generated from the actual LatentLap algorithms and current constants. |
+| **Saved prediction artifacts** | Grounded explanations of forecasts that have actually been run and committed. |
+
+This is **selective retrieval**, not a full-context dump. For example, a pure methodology question can skip the season digest entirely; a named race-weekend question prioritises its approved dossier; raw session rows are used as fallback evidence or when the user explicitly asks for a metric.
+
+### 3. Implementation-grounded methodology retrieval
+
+Technical questions are not answered from generic LLM knowledge. A deterministic methodology router selects compact explanations tied to the current implementation, including:
+
+- telemetry segmentation in `models/track.py`;
+- performance and ERS-proxy construction in `models/fingerprint.py`;
+- Bellman ERS optimisation in `models/optimizer.py`;
+- weighted pace prediction in `analysis/predictor.py`;
+- representative race/stint pace construction in `pipeline/race_pipeline.py`;
+- current regulation/model constants from `config.py`.
+
+Where possible, those blocks are populated from runtime constants rather than duplicated hand-written values. This reduces the chance of an explanation silently drifting away from the code.
+
+### 4. Reviewed knowledge + provenance
+
+External race context is stored in structured race dossiers under `data/race_dossiers/`. A dossier is eligible for retrieval only when:
+
+```text
+review_status == "approved"
+```
+
+Dossiers carry source references for externally reported context. Deterministic performance snapshots are hydrated from committed LatentLap artifacts instead of being manually invented inside the narrative.
+
+`get_answer_sources()` builds the provenance list shown in the UI. Depending on the query, it can expose internal analytical sources, implementation files, committed fingerprints, the season digest and the source references attached to reviewed dossiers.
+
+### 5. Strict grounding guardrails
+
+The system prompt contains explicit rules designed around failure modes discovered during testing. Among them:
+
+- answer only from the supplied `DATA` block;
+- never fill missing 2026 facts from pretrained model memory;
+- never calculate or invent a new analytical number;
+- official race classification is the authority for winner, podium and finishing order;
+- never infer race result from a representative pace ranking;
+- never merge or hybridise driver identities;
+- keep observed, inferred, assumed, optimised, predicted and externally reported evidence distinct;
+- never claim an upgrade **caused** a pace change without explicit evidence;
+- keep Q, SQ, S and R as distinct session/reference contexts;
+- for ERS, never present inferred proxies as true battery SoC, exact harvest or exact deployment;
+- when committed evidence is insufficient, say so explicitly.
+
+The identity rules were added after testing exposed a real entity-resolution failure in a prediction explanation. That failure was fixed by supplying a deterministic canonical identity map for the relevant drivers rather than asking the LLM to infer names from three-letter codes.
+
+### 6. Context budgeting and response control
+
+Retrieval and generation are intentionally separated. Python determines the evidence first; Groq receives only the selected context plus a question-specific answer style.
+
+Different query types receive different context and output budgets. Race recaps prioritise official classification and reviewed narrative; methodology questions prioritise implementation blocks; trend questions prioritise precomputed trend tables; detailed requests are allowed a larger response budget.
+
+This keeps the RAG layer useful under constrained token budgets while avoiding the common failure mode of stuffing the entire project state into every prompt.
+
+### 7. The LLM remains an explanation layer
+
+The most important architectural boundary is simple:
+
+```text
+Python + committed artifacts establish facts
+                 ↓
+query-aware retrieval selects evidence
+                 ↓
+LLM explains that evidence
+```
+
+The LLM cannot mutate saved predictions, recompute rankings or overwrite deterministic analytics. In prediction explanations, the stored forecast remains the source of truth.
+
+The current release therefore demonstrates practical RAG engineering around **retrieval routing, structured knowledge, provenance, context selection, deterministic entity resolution, implementation grounding, failure handling and LLM guardrails** — not merely prompt-writing around a large language model.
 
 ---
 
 ## The app
 
-LatentLap is a six-page Streamlit application:
+LatentLap has **seven navigable views**: Home plus six feature pages.
 
 | Page | Purpose |
 |---|---|
@@ -95,7 +198,7 @@ LatentLap is a six-page Streamlit application:
 | **Teams & Drivers** | Teammate comparisons, driver trends, straight-vs-corner analysis, corner profiles and power-unit views. |
 | **Upgrades & News** | Reviewed development context, upgrade timelines, PU/ADUO state and race commentary. |
 | **ERS Explorer** | Theoretical harvest/deploy optimisation with explicit observed / inferred / assumed / optimised separation. |
-| **Ask the Engineer** | Free-text questions answered from committed LatentLap evidence and approved knowledge. |
+| **Ask the Engineer** | Query-aware RAG over committed LatentLap evidence, reviewed race knowledge and implementation-grounded methodology. |
 
 The UI is designed so a casual F1 viewer can start with a question rather than with a model name, while the methodology remains available for deeper inspection.
 
@@ -136,13 +239,14 @@ data/race_store.py  ───────────────► store/
                                 │
                                 ▼
                          analysis/llm.py
-                    provenance-constrained explanation
+                    query-aware retrieval + provenance
+                    + grounded Groq explanation
                                 │
                                 ▼
                          Streamlit application
 ```
 
-The separation is intentional: deterministic Python and committed data establish analytical facts; the LLM explains retrieved evidence.
+The separation is intentional: deterministic Python and committed data establish analytical facts; the RAG layer selects evidence; the LLM explains it.
 
 ---
 
@@ -296,7 +400,7 @@ analysis/
   predictor.py                  deterministic relative-pace forecasting
   prediction_store.py           saved prediction I/O
   compare.py                    post-event forecast comparison
-  llm.py                        grounded retrieval + Groq explanation layer
+  llm.py                        query-aware RAG + Groq explanation layer
 data/
   race_store.py                 committed session-store access
   race_knowledge.py             approved dossier + deterministic snapshot access
@@ -329,7 +433,7 @@ LatentLap is explicit about the boundaries of the current release.
 
 **Predictions are relative-pace models.** They do not attempt to predict every stochastic race event.
 
-**The LLM is an explanation layer.** Guardrails and provenance materially reduce unsupported answers, but generated language should still be checked against the displayed deterministic evidence for high-confidence use.
+**The LLM is an explanation layer.** Retrieval constraints, provenance and explicit guardrails materially reduce unsupported answers, but generated language should still be checked against the displayed deterministic evidence for high-confidence use.
 
 ---
 
@@ -341,6 +445,7 @@ LatentLap is explicit about the boundaries of the current release.
 - **Streamlit** for the application
 - **Plotly** for interactive visualisation
 - **Groq / GPT-OSS-120B** for grounded natural-language explanation
+- **Custom query-aware RAG** over committed analytics, reviewed race dossiers and implementation-grounded methodology
 
 ---
 
